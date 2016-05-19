@@ -11,8 +11,7 @@ using Selama.ViewModels.Manage;
 
 namespace Selama.Controllers
 {
-    [Authorize]
-    public class ManageController : Controller
+    public class ManageController : _BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

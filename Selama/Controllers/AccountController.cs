@@ -13,8 +13,7 @@ using Selama.ViewModels.Account;
 
 namespace Selama.Controllers
 {
-    [Authorize]
-    public class AccountController : Controller
+    public class AccountController : _BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

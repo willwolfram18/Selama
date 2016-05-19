@@ -6,7 +6,8 @@ using System.Web.Mvc;
 
 namespace Selama.Controllers
 {
-    public class HomeController : Controller
+    [AllowAnonymous]
+    public class HomeController : _BaseController
     {
         public ActionResult Index()
         {
@@ -20,7 +21,7 @@ namespace Selama.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Join()
         {
             ViewBag.Message = "Your contact page.";
 
