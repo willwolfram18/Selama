@@ -25,7 +25,7 @@ namespace Selama
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap/bootstrap.css",
-                      "~/Content/Bootstrap/site.css"));
+                      "~/Content/site.css"));
         }
     }
 }
