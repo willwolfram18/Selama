@@ -3,6 +3,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Selama.Areas.Forums.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Selama.Models
 {
@@ -16,6 +19,11 @@ namespace Selama.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        #region Navigation properties
+        public virtual ICollection<Thread> Threads { get; set; }
+        public virtual ICollection<ThreadReply> ThreadReplies { get; set; }
+        #endregion
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -25,9 +33,32 @@ namespace Selama.Models
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Don't delete Threads/Thread Replies on delete
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(u => u.Threads)
+                .WithRequired(t => t.Author)
+                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(u => u.ThreadReplies)
+                .WithRequired(t => t.Author)
+                .WillCascadeOnDelete(false);
+                
+        }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        #region Forums Area Models
+        public DbSet<ForumSection> ForumSections { get; set; }
+        public DbSet<Forum> Forums { get; set; }
+        public DbSet<Thread> Threads { get; set; }
+        public DbSet<ThreadReply> ThreadReplies { get; set; }
+        #endregion
     }
 }
