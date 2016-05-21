@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Selama.Areas.Forums.Models
 {
@@ -29,7 +30,19 @@ namespace Selama.Areas.Forums.Models
         #region Navigation properties
         public virtual ForumSection ForumSection { get; set; }
         public virtual ICollection<Thread> Threads { get; set; }
-        public virtual ICollection<Thread> PinnedThreads { get; set; }
         #endregion
+
+        [NotMapped]
+        public virtual ICollection<Thread> PinnedThreads
+        {
+            get
+            {
+                if (Threads == null)
+                {
+                    return null;
+                }
+                return Threads.Where(t => t.IsPinned).ToList();
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Selama.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201605190406441_ForumModelsCreate"; }
+            get { return "201605191308483_ForumModelsCreate"; }
         }
         
         string IMigrationMetadata.Source

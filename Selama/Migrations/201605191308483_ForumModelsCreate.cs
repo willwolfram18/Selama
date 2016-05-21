@@ -43,6 +43,7 @@ namespace Selama.Migrations
                         AuthorID = c.String(nullable: false, maxLength: 128),
                         ForumID = c.Int(nullable: false),
                         IsActive = c.Boolean(nullable: false),
+                        IsPinned = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AspNetUsers", t => t.AuthorID)
@@ -70,8 +71,6 @@ namespace Selama.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Threads", "Forum_ID1", "dbo.Forums");
-            DropForeignKey("dbo.Threads", "Forum_ID", "dbo.Forums");
             DropForeignKey("dbo.Threads", "ForumID", "dbo.Forums");
             DropForeignKey("dbo.Threads", "AuthorID", "dbo.AspNetUsers");
             DropForeignKey("dbo.ThreadReplies", "AuthorID", "dbo.AspNetUsers");
@@ -79,8 +78,6 @@ namespace Selama.Migrations
             DropForeignKey("dbo.Forums", "ForumSectionID", "dbo.ForumSections");
             DropIndex("dbo.ThreadReplies", new[] { "ThreadID" });
             DropIndex("dbo.ThreadReplies", new[] { "AuthorID" });
-            DropIndex("dbo.Threads", new[] { "Forum_ID1" });
-            DropIndex("dbo.Threads", new[] { "Forum_ID" });
             DropIndex("dbo.Threads", new[] { "ForumID" });
             DropIndex("dbo.Threads", new[] { "AuthorID" });
             DropIndex("dbo.Forums", new[] { "ForumSectionID" });

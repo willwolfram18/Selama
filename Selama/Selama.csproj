@@ -211,9 +211,9 @@
     <Compile Include="Migrations\201605190240140_InitialCreate.Designer.cs">
       <DependentUpon>201605190240140_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605190406441_ForumModelsCreate.cs" />
-    <Compile Include="Migrations\201605190406441_ForumModelsCreate.Designer.cs">
-      <DependentUpon>201605190406441_ForumModelsCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201605191308483_ForumModelsCreate.cs" />
+    <Compile Include="Migrations\201605191308483_ForumModelsCreate.Designer.cs">
+      <DependentUpon>201605191308483_ForumModelsCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -317,8 +317,8 @@
     <EmbeddedResource Include="Migrations\201605190240140_InitialCreate.resx">
       <DependentUpon>201605190240140_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605190406441_ForumModelsCreate.resx">
-      <DependentUpon>201605190406441_ForumModelsCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605191308483_ForumModelsCreate.resx">
+      <DependentUpon>201605191308483_ForumModelsCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

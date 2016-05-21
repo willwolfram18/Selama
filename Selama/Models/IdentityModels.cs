@@ -37,7 +37,7 @@ namespace Selama.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Don't delete Threads/Thread Replies on delete
+            // Don't delete Threads/Thread Replies on user delete
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Threads)
                 .WithRequired(t => t.Author)
@@ -46,7 +46,10 @@ namespace Selama.Models
                 .HasMany(u => u.ThreadReplies)
                 .WithRequired(t => t.Author)
                 .WillCascadeOnDelete(false);
-                
+
+            //modelBuilder.Entity<Forum>()
+            //    .HasMany<Thread>(f => f.Threads)
+            //    .WithRequired(t => t.Forum);
         }
 
         public static ApplicationDbContext Create()
