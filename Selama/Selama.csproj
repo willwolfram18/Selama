@@ -195,6 +195,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Forums\Controllers\ForumController.cs" />
     <Compile Include="Areas\Forums\ForumsAreaRegistration.cs" />
     <Compile Include="Areas\Forums\Models\Forum.cs" />
     <Compile Include="Areas\Forums\Models\ForumSection.cs" />
@@ -214,6 +215,10 @@
     <Compile Include="Migrations\201605191308483_ForumModelsCreate.cs" />
     <Compile Include="Migrations\201605191308483_ForumModelsCreate.Designer.cs">
       <DependentUpon>201605191308483_ForumModelsCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605210138196_ForumSubTitleLenChange.cs" />
+    <Compile Include="Migrations\201605210138196_ForumSubTitleLenChange.Designer.cs">
+      <DependentUpon>201605210138196_ForumSubTitleLenChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -252,6 +257,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Forums\Views\web.config" />
+    <Content Include="Areas\Forums\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Forums\Views\Forum\Index.cshtml" />
+    <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jQuery\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jQuery\jquery-2.2.3.js" />
     <Content Include="Scripts\jQuery\jquery-2.2.3.min.js" />
@@ -303,7 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Forums\Controllers\" />
+    <Folder Include="Areas\Forums\ViewModels\" />
     <Folder Include="Areas\Forums\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605191308483_ForumModelsCreate.resx">
       <DependentUpon>201605191308483_ForumModelsCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605210138196_ForumSubTitleLenChange.resx">
+      <DependentUpon>201605210138196_ForumSubTitleLenChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

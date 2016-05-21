@@ -16,7 +16,7 @@ namespace Selama.Areas.Forums.Models
         [StringLength(30, ErrorMessage = "The title's length must be between {0} and {1} characters", MinimumLength = 4)]
         public string Title { get; set; }
 
-        [StringLength(60, ErrorMessage = "The subtitle's length cannot exceed {0}")]
+        [StringLength(85, ErrorMessage = "The subtitle's length cannot exceed {0}")]
         public string SubTitle { get; set; }
 
         [Required]

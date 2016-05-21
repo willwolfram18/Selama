@@ -1,0 +1,53 @@
+﻿@using Selama.Areas.Forums.Models
+@model IEnumerable<ForumSection>
+
+@{ 
+    ViewBag.Title = "Forums";
+}
+
+<h2>Forums</h2>
+@foreach (ForumSection forumSection in Model)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading" style="padding-right: 0;">
+            <table style="width: 100%;">
+                <tr>
+                    <th style="width: 75%;">
+                        @forumSection.Title
+                    </th>
+                    <th style="width: 10%; text-align: center;">
+                        Threads
+                    </th>
+                    <th align="center" style="width: 15%; text-align: center">
+                        Last Post
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-body" style="padding: 0;">
+            <table class="table table-striped" style="margin-bottom: 0;">
+                @foreach (Forum forum in forumSection.Forums)
+                {
+                    <tr>
+                        <td style="width: 75%; padding-left: 30px;">
+                            @forum.Title
+                            @if (!string.IsNullOrWhiteSpace(forum.SubTitle))
+                            {
+                                <text>
+                                <br />
+                                @forum.SubTitle
+                                </text>
+                            }
+                        </td>
+                        <td align="center" style="width: 10%;">
+                            @forum.Threads.Count
+                        </td>
+                        <td align="center" style="width: 15%;">
+                            TBD
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}

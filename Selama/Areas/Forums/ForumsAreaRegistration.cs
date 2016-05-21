@@ -17,7 +17,7 @@ namespace Selama.Areas.Forums
             context.MapRoute(
                 "Forums_default",
                 "Forums/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional },
+                new { controller = "Forum", action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "Selama.Areas.Forums.Controllers" }
             );
         }
