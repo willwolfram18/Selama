@@ -201,6 +201,8 @@
     <Compile Include="Areas\Forums\Models\ForumSection.cs" />
     <Compile Include="Areas\Forums\Models\Thread.cs" />
     <Compile Include="Areas\Forums\Models\ThreadReply.cs" />
+    <Compile Include="Areas\Forums\ViewModels\ForumSectionViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -322,7 +324,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Forums\ViewModels\" />
     <Folder Include="Areas\Forums\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

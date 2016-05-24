@@ -1,12 +1,12 @@
-﻿@using Selama.Areas.Forums.Models
-@model IEnumerable<ForumSection>
+﻿@using Selama.Areas.Forums.ViewModels
+@model IEnumerable<ForumSectionViewModel>
 
 @{ 
     ViewBag.Title = "Forums";
 }
 
 <h2>Forums</h2>
-@foreach (ForumSection forumSection in Model)
+@foreach (ForumSectionViewModel forumSection in Model)
 {
     <div class="panel panel-default">
         <div class="panel-heading" style="padding-right: 0;">
@@ -26,11 +26,11 @@
         </div>
         <div class="panel-body" style="padding: 0;">
             <table class="table table-striped" style="margin-bottom: 0;">
-                @foreach (Forum forum in forumSection.Forums)
+                @foreach (ForumViewModel forum in forumSection.Forums)
                 {
                     <tr>
                         <td style="width: 75%; padding-left: 30px;">
-                            @forum.Title
+                            @Html.ActionLink(forum.Title, "Threads", new { id = forum.ID })
                             @if (!string.IsNullOrWhiteSpace(forum.SubTitle))
                             {
                                 <text>
@@ -40,7 +40,7 @@
                             }
                         </td>
                         <td align="center" style="width: 10%;">
-                            @forum.Threads.Count
+                            @forum.NumThreads
                         </td>
                         <td align="center" style="width: 15%;">
                             TBD
