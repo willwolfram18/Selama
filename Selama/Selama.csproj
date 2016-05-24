@@ -220,6 +220,14 @@
     <Compile Include="Migrations\201605210138196_ForumSubTitleLenChange.Designer.cs">
       <DependentUpon>201605210138196_ForumSubTitleLenChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605240354396_ForumSectionTitleLenIncrease_Testing.cs" />
+    <Compile Include="Migrations\201605240354396_ForumSectionTitleLenIncrease_Testing.Designer.cs">
+      <DependentUpon>201605240354396_ForumSectionTitleLenIncrease_Testing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605240402543_FixedForumSectionTitleLen.cs" />
+    <Compile Include="Migrations\201605240402543_FixedForumSectionTitleLen.Designer.cs">
+      <DependentUpon>201605240402543_FixedForumSectionTitleLen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -333,6 +341,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605210138196_ForumSubTitleLenChange.resx">
       <DependentUpon>201605210138196_ForumSubTitleLenChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605240354396_ForumSectionTitleLenIncrease_Testing.resx">
+      <DependentUpon>201605240354396_ForumSectionTitleLenIncrease_Testing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605240402543_FixedForumSectionTitleLen.resx">
+      <DependentUpon>201605240402543_FixedForumSectionTitleLen.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
