@@ -11,15 +11,15 @@ namespace Selama.Areas.Forums.ViewModels
         public ForumSectionViewModel(ForumSection section)
         {
             Title = section.Title;
-            Forums = new List<ForumViewModel>();
+            Forums = new List<ForumOverviewViewModel>();
             foreach (Forum f in section.Forums)
             {
-                ((List<ForumViewModel>)Forums).Add(new ForumViewModel(f));
+                ((List<ForumOverviewViewModel>)Forums).Add(new ForumOverviewViewModel(f));
             }
         }
 
         public string Title { get; set; }
 
-        public IEnumerable<ForumViewModel> Forums { get; set; }
+        public IEnumerable<ForumOverviewViewModel> Forums { get; set; }
     }
 }

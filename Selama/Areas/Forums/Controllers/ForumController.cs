@@ -24,6 +24,17 @@ namespace Selama.Areas.Forums.Controllers
             return View(forums);
         }
 
+        public ActionResult Threads(int id = 0)
+        {
+            Forum forum = _db.Forums.Find(id);
+            if (forum == null)
+            {
+                return HttpNotFound();
+            }
+
+            return null;
+        }
+
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();

@@ -7,24 +7,26 @@ using System.Web;
 
 namespace Selama.Areas.Forums.ViewModels
 {
-    public class ForumViewModel
+    public class ForumOverviewViewModel
     {
-        public ForumViewModel(Forum f)
+        public ForumOverviewViewModel(Forum f)
         {
+            ID = f.ID;
             Title = f.Title;
             SubTitle = f.SubTitle;
-            Threads = new List<ThreadOverviewViewModel>();
-            foreach (Thread t in f.Threads)
-            {
-                ((List<ThreadOverviewViewModel>)Threads).Add(new ThreadOverviewViewModel(t));
-            }
+            NumThreads = f.Threads.Count();
         }
+
+        public int ID { get; set; }
 
         public string Title { get; set; }
 
         [Display(Name = "Subtitle")]
         public string SubTitle { get; set; }
 
-        public IEnumerable<ThreadOverviewViewModel> Threads { get; set; }
+        [Display(Name = "Threads")]
+        public int NumThreads { get; set; }
+
+        // TODO: Add LastPost attribute
     }
 }
