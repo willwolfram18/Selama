@@ -1,4 +1,5 @@
 ﻿using Selama.Areas.Forums.Models;
+using Selama.Classes.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,10 @@ namespace Selama.Areas.Forums.ViewModels
         public ForumSectionViewModel(ForumSection section)
         {
             Title = section.Title;
-            Forums = new List<ForumOverviewViewModel>();
-            foreach (Forum f in section.Forums)
-            {
-                ((List<ForumOverviewViewModel>)Forums).Add(new ForumOverviewViewModel(f));
-            }
+            Forums = Util.ConvertLists<Forum, ForumOverviewViewModel>(
+                section.Forums.Where(f => f.IsActive),
+                f => new ForumOverviewViewModel(f)
+            );
         }
 
         public string Title { get; set; }

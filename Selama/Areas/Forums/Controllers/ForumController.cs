@@ -1,5 +1,6 @@
 ﻿using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.ViewModels;
+using Selama.Classes.Utility;
 using Selama.Models;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,11 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums/Forum
         public ActionResult Index()
         {
-            List<ForumSectionViewModel> forums = new List<ForumSectionViewModel>();
-            foreach (ForumSection section in _db.ForumSections.Where(f => f.IsActive).OrderBy(f => f.DisplayOrder))
-            {
-                forums.Add(new ForumSectionViewModel(section));
-            }
+            List<ForumSectionViewModel> forums = Util.ConvertLists<ForumSection, ForumSectionViewModel>(
+                _db.ForumSections.Where(f => f.IsActive).OrderBy(f => f.DisplayOrder),
+                section => new ForumSectionViewModel(section)
+            );
+            
             return View(forums);
         }
 
@@ -32,7 +33,7 @@ namespace Selama.Areas.Forums.Controllers
                 return HttpNotFound();
             }
 
-            return null;
+            return View(new ForumViewModel(forum));
         }
 
         protected override void Dispose(bool disposing)

@@ -41,7 +41,7 @@ namespace Selama.Areas.Forums.Models
                 {
                     return null;
                 }
-                return Threads.Where(t => t.IsPinned).ToList();
+                return Threads.Where(t => t.IsPinned && t.IsActive).ToList();
             }
         }
     }

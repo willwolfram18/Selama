@@ -1,0 +1,60 @@
+﻿@using Selama.Areas.Forums.ViewModels
+@model ForumViewModel
+
+@{
+    ViewBag.Title = "Threads";
+}
+
+<ul class="breadcrumb">
+    <li>@Html.ActionLink("Forums", "Index", "Forum")</li>
+    <li class="active">@Model.Title</li>
+</ul>
+
+<h2>@Model.Title</h2>
+@if (!string.IsNullOrWhiteSpace(Model.SubTitle))
+{
+    <h5>@Model.SubTitle</h5>
+}
+
+@Html.ActionLink("Add thread", "CreateThread", "Forum", new { area = "Forums" })
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 80%;" >Thread</th>
+            <th style="width: 5%; text-align: center;">Replies</th>
+            <th style="width: 15%; text-align: center;">Last Post</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ThreadOverviewViewModel thread in Model.PinnedThreads)
+        {
+            <tr>
+                <td>
+                    @thread.Title
+                </td>
+                <td style="text-align: center;">
+                    @thread.NumReplies
+                </td>
+                <td>
+                    TBD
+                </td>
+            </tr>
+        }
+        @foreach (ThreadOverviewViewModel thread in Model.Threads)
+        {
+            <tr>
+                <td>
+                    @thread.Title
+                </td>
+                <td style="text-align: center;">
+                    @thread.NumReplies
+                </td>
+                <td>
+                    TBD
+                </td>
+            </tr>
+        }
+        <tr></tr>
+    </tbody>
+</table>

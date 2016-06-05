@@ -205,6 +205,7 @@
     <Compile Include="Areas\Forums\ViewModels\ForumOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
+    <Compile Include="Classes\Utility\Util.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -271,6 +272,7 @@
     <Content Include="Areas\Forums\Views\web.config" />
     <Content Include="Areas\Forums\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Forums\Views\Forum\Index.cshtml" />
+    <Content Include="Areas\Forums\Views\Forum\Threads.cshtml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
