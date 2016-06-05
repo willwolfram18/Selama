@@ -1,1 +1,48 @@
-﻿
+﻿textarea.mdd_editor {
+    max-width: none;
+    height: 100%;
+    overflow: auto;
+}
+
+div.mdd_editor_wrap {
+    display: table;
+    width: 100%;
+    min-height: 250px;
+    margin-top: 12px;
+}
+
+    div.mdd_editor_wrap div.mdd_preview,
+    div.mdd_editor_wrap textarea.mdd_editor {
+        display: inline-block;
+        float: left;
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    div.mdd_editor_wrap div.mdd_preview {
+        min-height: 1px;
+    }
+
+@media(min-width: 768px) {
+    div.mdd_toolbar_wrap {
+        width: 50%;
+    }
+
+    div.mdd_editor_wrap div.mdd_preview,
+    div.mdd_editor_wrap textarea.mdd_editor {
+        width: 49%;
+        margin-top: 0;
+    }
+
+    div.mdd_editor_wrap textarea.mdd_editor {
+        margin-right: 1%;
+    }
+
+    div.mdd_editor_wrap div.mdd_preview {
+        margin-left: 1%;
+    }
+}
+
+div.mdd_modal div.mdd_modal_frame {
+    margin-top: 111px;
+}

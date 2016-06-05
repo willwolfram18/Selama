@@ -4,6 +4,17 @@
     ViewBag.Title = "CreateThread";
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/MarkdownDeep")
+    @Styles.Render("~/Content/MarkdownDeep/css")
+    <script type="text/javascript">
+        // Define the link to the help html
+        var Selama = Selama || {};
+        Selama.MarkdownEditor = Selama.MarkdownEditor || {};
+        Selama.MarkdownEditor.HelpLocation = '@Url.Content("~/Content/MarkdownDeep/mdd_help.htm")';
+    </script>
+}
+
 <h2>CreateThread</h2>
 
 @using (Html.BeginForm()) 
@@ -24,8 +35,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10" style="display: table; width: 100%;">
+                @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>

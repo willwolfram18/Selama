@@ -15,8 +15,8 @@ namespace Selama
                         "~/Scripts/jQuery/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/MarkdownDeep").Include(
-                "~/Scripts/MarkdownDeepLib.min.js",
-                "~/Scripts/MarkdownDeep.js"
+                "~/Scripts/MarkdownDeep/MarkdownDeepLib.min.js",
+                "~/Scripts/MarkdownDeep/MarkdownDeep.js"
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
