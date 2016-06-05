@@ -30,10 +30,33 @@ namespace Selama.Areas.Forums.Controllers
             Forum forum = _db.Forums.Find(id);
             if (forum == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
 
             return View(new ForumViewModel(forum));
+        }
+
+        public ActionResult CreateThread(int id = 0)
+        {
+            Forum forum = _db.Forums.Find(id);
+            if (forum == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateThread(ThreadCreateViewModel thread, int id = 0)
+        {
+            Forum forum = _db.Forums.Find(id);
+            if (forum == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(thread);
         }
 
         protected override void Dispose(bool disposing)

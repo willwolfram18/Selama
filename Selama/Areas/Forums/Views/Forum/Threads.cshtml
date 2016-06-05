@@ -16,7 +16,7 @@
     <h5>@Model.SubTitle</h5>
 }
 
-@Html.ActionLink("Add thread", "CreateThread", "Forum", new { area = "Forums" })
+@Html.ActionLink("Add thread", "CreateThread", "Forum", new { area = "Forums", id = Model.ID })
 
 <table class="table table-striped">
     <thead>

@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MarkdownDeep, Version=1.5.4615.26275, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MarkdownDeep.Full.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -203,6 +207,7 @@
     <Compile Include="Areas\Forums\Models\ThreadReply.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumSectionViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumOverviewViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\ThreadCreateViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
     <Compile Include="Classes\Utility\Util.cs" />
@@ -258,6 +263,7 @@
   <ItemGroup>
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
+    <Content Include="Content\MarkdownDeep\MarkdownDeep.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -273,6 +279,7 @@
     <Content Include="Areas\Forums\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Forums\Views\Forum\Index.cshtml" />
     <Content Include="Areas\Forums\Views\Forum\Threads.cshtml" />
+    <Content Include="Areas\Forums\Views\Forum\CreateThread.cshtml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -286,6 +293,15 @@
     <Content Include="Scripts\jQuery\jquery.validate.min.js" />
     <Content Include="Scripts\jQuery\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MarkdownDeep License.txt" />
+    <Content Include="Scripts\MarkdownDeep Quick Reference.txt" />
+    <Content Include="Scripts\MarkdownDeepLib.min.js" />
+    <Content Include="Content\MarkdownDeep\mdd_ajax_loader.gif" />
+    <Content Include="Content\MarkdownDeep\mdd_gripper.png" />
+    <Content Include="Content\MarkdownDeep\mdd_help.htm" />
+    <Content Include="Content\MarkdownDeep\mdd_modal_background.png" />
+    <Content Include="Content\MarkdownDeep\mdd_styles.css" />
+    <Content Include="Content\MarkdownDeep\mdd_toolbar.png" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Bootstrap\respond.js" />
     <Content Include="Scripts\Bootstrap\respond.min.js" />
