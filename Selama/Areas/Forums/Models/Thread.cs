@@ -1,4 +1,5 @@
-﻿using Selama.Models;
+﻿using Selama.Areas.Forums.ViewModels;
+using Selama.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,18 @@ namespace Selama.Areas.Forums.Models
 {
     public class Thread
     {
+        public Thread() { }
+        public Thread(ThreadViewModel model, string authorId, int forumId)
+        {
+            Title = model.Title;
+            Content = model.Content;
+            PostDate = DateTime.Now;
+            AuthorID = authorId;
+            ForumID = forumId;
+            IsActive = true;
+            IsPinned = model.IsPinned;
+        }
+
         #region Database columns
         [Key]
         public int ID { get; set; }

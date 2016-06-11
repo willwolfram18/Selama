@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MarkdownDeep;
+using Selama.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.ViewModels
 {
-    public class ThreadViewModel
+    public class ThreadViewModel : __BaseEditableViewModel
     {
         public int ID { get; set; }
 
@@ -19,5 +21,13 @@ namespace Selama.Areas.Forums.ViewModels
         [AllowHtml]
         [MinLength(10)]
         public string Content { get; set; }
+
+        [Display(Name = "Is pinned?")]
+        public bool IsPinned { get; set; }
+
+        public override void ValidateModel(ModelStateDictionary ModelState)
+        {
+            // Nothing to validate
+        }
     }
 }

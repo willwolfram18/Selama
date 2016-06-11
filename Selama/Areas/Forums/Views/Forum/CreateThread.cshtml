@@ -1,10 +1,13 @@
 ﻿@model Selama.Areas.Forums.ViewModels.ThreadViewModel
 
 @{
-    ViewBag.Title = "CreateThread";
+    ViewBag.Title = "Add a thread";
 }
 
-<h2>CreateThread</h2>
+<h2>Add a thread</h2>
+<p>
+    @Html.ActionLink("Back to forum", "Index")
+</p>
 
 @using (Html.BeginForm()) 
 {
@@ -24,7 +27,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

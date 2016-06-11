@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.form-horizontal .control-label {
+    padding-top: 0;
+}

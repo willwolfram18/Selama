@@ -1,6 +1,8 @@
-﻿using Selama.Areas.Forums.Models;
+﻿using Microsoft.AspNet.Identity;
+using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.ViewModels;
 using Selama.Classes.Utility;
+using Selama.Controllers;
 using Selama.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Controllers
 {
-    public class ForumController : Controller
+    public class ForumController : _BaseController
     {
         public ApplicationDbContext _db = new ApplicationDbContext();
 
@@ -54,6 +56,16 @@ namespace Selama.Areas.Forums.Controllers
             if (forum == null)
             {
                 return RedirectToAction("Index");
+            }
+
+            thread.ValidateModel(ModelState);
+            if (ModelState.IsValid)
+            {
+                _db.Threads.Add(new Thread(thread, User.Identity.GetUserId(), id));
+                if (TrySaveChanges(_db))
+                {
+                    return RedirectToAction("Threads", new { id = id });
+                }
             }
 
             return View(thread);
