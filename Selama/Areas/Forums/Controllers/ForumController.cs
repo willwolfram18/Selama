@@ -48,7 +48,7 @@ namespace Selama.Areas.Forums.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateThread(ThreadCreateViewModel thread, int id = 0)
+        public ActionResult CreateThread(ThreadViewModel thread, int id = 0)
         {
             Forum forum = _db.Forums.Find(id);
             if (forum == null)

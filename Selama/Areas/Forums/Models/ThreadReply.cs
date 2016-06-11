@@ -30,6 +30,9 @@ namespace Selama.Areas.Forums.Models
         [Required]
         [ForeignKey("Thread")]
         public int ThreadID { get; set; }
+
+        [Timestamp]
+        public byte[] Version { get; set; }
         #endregion
 
         #region Navigation properties

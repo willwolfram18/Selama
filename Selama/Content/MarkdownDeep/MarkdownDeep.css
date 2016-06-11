@@ -45,4 +45,5 @@ div.mdd_editor_wrap {
 
 div.mdd_modal div.mdd_modal_frame {
     margin-top: 111px;
+    /* Normal margin is 60px, navbar is 51px tall*/
 }

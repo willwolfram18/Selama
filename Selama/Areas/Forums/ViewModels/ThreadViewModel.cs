@@ -7,12 +7,14 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.ViewModels
 {
-    public class ThreadCreateViewModel
+    public class ThreadViewModel
     {
+        public int ID { get; set; }
+
         [Required]
         [StringLength(60, MinimumLength = 4)]
         public string Title { get; set; }
-        
+
         [Required]
         [AllowHtml]
         [MinLength(10)]

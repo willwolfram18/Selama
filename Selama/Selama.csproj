@@ -207,9 +207,9 @@
     <Compile Include="Areas\Forums\Models\ThreadReply.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumSectionViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumOverviewViewModel.cs" />
-    <Compile Include="Areas\Forums\ViewModels\ThreadCreateViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\ThreadViewModel.cs" />
     <Compile Include="Classes\Utility\Util.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -237,6 +237,10 @@
     <Compile Include="Migrations\201605240402543_FixedForumSectionTitleLen.cs" />
     <Compile Include="Migrations\201605240402543_FixedForumSectionTitleLen.Designer.cs">
       <DependentUpon>201605240402543_FixedForumSectionTitleLen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606110434568_RowVersioning.cs" />
+    <Compile Include="Migrations\201606110434568_RowVersioning.Designer.cs">
+      <DependentUpon>201606110434568_RowVersioning.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -280,6 +284,7 @@
     <Content Include="Areas\Forums\Views\Forum\Index.cshtml" />
     <Content Include="Areas\Forums\Views\Forum\Threads.cshtml" />
     <Content Include="Areas\Forums\Views\Forum\CreateThread.cshtml" />
+    <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadViewModel.cshtml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -345,7 +350,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Forums\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -369,6 +373,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605240402543_FixedForumSectionTitleLen.resx">
       <DependentUpon>201605240402543_FixedForumSectionTitleLen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606110434568_RowVersioning.resx">
+      <DependentUpon>201606110434568_RowVersioning.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

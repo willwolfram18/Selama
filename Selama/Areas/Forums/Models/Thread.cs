@@ -41,6 +41,9 @@ namespace Selama.Areas.Forums.Models
 
         [Required]
         public bool IsPinned { get; set; }
+
+        [Timestamp]
+        public byte[] Version { get; set; }
         #endregion
 
         #region Navigation properties

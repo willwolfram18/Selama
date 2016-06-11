@@ -25,6 +25,9 @@ namespace Selama.Areas.Forums.Models
         [Required]
         [ForeignKey("ForumSection")]
         public int ForumSectionID { get; set; }
+
+        [Timestamp]
+        public byte[] Version { get; set; }
         #endregion
 
         #region Navigation properties
