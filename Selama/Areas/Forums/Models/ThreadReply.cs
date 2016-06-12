@@ -35,6 +35,7 @@ namespace Selama.Areas.Forums.Models
 
         [Required]
         [ForeignKey("Author")]
+        [InverseProperty("ThreadReplies")]
         public string AuthorID { get; set; }
 
         [Required]

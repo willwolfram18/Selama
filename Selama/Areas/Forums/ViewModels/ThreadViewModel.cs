@@ -2,6 +2,7 @@
 using Selama.Areas.Forums.Models;
 using Selama.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
@@ -29,6 +30,12 @@ namespace Selama.Areas.Forums.ViewModels
             IsPinned = thread.IsPinned;
             PostDate = thread.PostDate;
             Author = thread.Author.UserName;
+
+            Replies = new List<ThreadReplyViewModel>();
+            foreach (ThreadReply reply in thread.Replies)
+            {
+                Replies.Add(new ThreadReplyViewModel(reply));
+            }
         }
 
         public int ID { get; set; }
@@ -56,6 +63,8 @@ namespace Selama.Areas.Forums.ViewModels
         public DateTime PostDate { get; set; }
 
         public string Author { get; set; }
+
+        public List<ThreadReplyViewModel> Replies { get; set; }
 
         public override void ValidateModel(ModelStateDictionary ModelState)
         {

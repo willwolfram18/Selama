@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201606110434568_RowVersioning.Designer.cs">
       <DependentUpon>201606110434568_RowVersioning.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606120620322_ThreadReplyInverseProperty.cs" />
+    <Compile Include="Migrations\201606120620322_ThreadReplyInverseProperty.Designer.cs">
+      <DependentUpon>201606120620322_ThreadReplyInverseProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
@@ -290,6 +294,7 @@
     <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadViewModel.cshtml" />
     <Content Include="Areas\Forums\Views\Forum\Thread.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadReplyViewModel.cshtml" />
+    <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadReplyViewModel.cshtml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -382,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606110434568_RowVersioning.resx">
       <DependentUpon>201606110434568_RowVersioning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606120620322_ThreadReplyInverseProperty.resx">
+      <DependentUpon>201606120620322_ThreadReplyInverseProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

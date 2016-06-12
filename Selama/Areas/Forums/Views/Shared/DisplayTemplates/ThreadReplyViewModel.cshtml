@@ -1,0 +1,17 @@
+﻿@model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @Html.DisplayFor(model => model.PostDate)
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                @Model.Author
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-10">
+                @Model.HtmlContent
+            </div>
+        </div>
+    </div>
+</div>

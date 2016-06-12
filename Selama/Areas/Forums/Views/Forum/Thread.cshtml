@@ -68,6 +68,9 @@
     </div>
 </div>
 
-<div id="ThreadReplyEditor" class="row hidden">
-    @Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })
-</div>
+@foreach (ThreadReplyViewModel reply in Model.Replies)
+{
+    @Html.DisplayFor(model => reply)
+}
+
+@Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })

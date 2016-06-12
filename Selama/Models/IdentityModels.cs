@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Selama.Areas.Forums.Models;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Selama.Models
 {
