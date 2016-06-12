@@ -209,6 +209,7 @@
     <Compile Include="Areas\Forums\ViewModels\ForumOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\ThreadReplyViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadViewModel.cs" />
     <Compile Include="Classes\Enum\SaveChangeError.cs" />
     <Compile Include="Classes\Utility\Util.cs" />
@@ -245,7 +246,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\__BaseEditableViewModel.cs" />
+    <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
@@ -288,6 +289,7 @@
     <Content Include="Areas\Forums\Views\Forum\CreateThread.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadViewModel.cshtml" />
     <Content Include="Areas\Forums\Views\Forum\Thread.cshtml" />
+    <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadReplyViewModel.cshtml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -314,6 +316,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Bootstrap\respond.js" />
     <Content Include="Scripts\Bootstrap\respond.min.js" />
+    <Content Include="Scripts\Selama.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

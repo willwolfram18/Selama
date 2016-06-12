@@ -1,4 +1,5 @@
-﻿using Selama.Models;
+﻿using Selama.Areas.Forums.ViewModels;
+using Selama.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,15 @@ namespace Selama.Areas.Forums.Models
 {
     public class ThreadReply
     {
+        public ThreadReply() { }
+        public ThreadReply(ThreadReplyViewModel model, string authorId, int threadId)
+        {
+            Content = model.Content;
+            PostDate = model.PostDate;
+            ThreadID = threadId;
+            AuthorID = authorId;
+        }
+
         #region Database columns
         [Key]
         public int ID { get; set; }
@@ -20,7 +30,7 @@ namespace Selama.Areas.Forums.Models
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Posted On")]
-        [DisplayFormat(DataFormatString = "{0:g}")]
+        [DisplayFormat(DataFormatString = "{0:f}")]
         public DateTime PostDate { get; set; }
 
         [Required]

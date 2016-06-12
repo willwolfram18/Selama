@@ -9,7 +9,8 @@ namespace Selama
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jQuery/jquery-{version}.js"));
+                        "~/Scripts/jQuery/jquery-{version}.js",
+                        "~/Scripts/Selama.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jQuery/jquery.validate*"));

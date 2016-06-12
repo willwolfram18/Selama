@@ -8,6 +8,7 @@ using Selama.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -71,6 +72,7 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Index");
             }
 
+            thread.PostDate = DateTime.Now;
             thread.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
@@ -85,6 +87,50 @@ namespace Selama.Areas.Forums.Controllers
             return View(thread);
         }
         #endregion
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PostReply(ThreadReplyViewModel reply, int id = 0)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null)
+            {
+                return HttpNotFound();
+            }
+
+            reply.PostDate = DateTime.Now;
+            reply.ValidateModel(ModelState);
+            if (ModelState.IsValid)
+            {
+                ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), id);
+                _db.ThreadReplies.Add(dbReply);
+                if (TrySaveChanges(_db))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+            }
+
+            List<object> errors = new List<object>();
+            foreach (var error in ModelState)
+            {
+                if (error.Value.Errors.Count > 0)
+                {
+                    var errorObj = new
+                    {
+                        Property = error.Key,
+                        Errors = new List<string>()
+                    };
+                    foreach (var errorMsg in error.Value.Errors)
+                    {
+                        errorObj.Errors.Add(errorMsg.ErrorMessage);
+                    }
+                    errors.Add(errorObj);
+                }
+            }
+
+            Response.StatusCode = 400; // Bad Request
+            return Json(errors);
+        }
 
         protected override void Dispose(bool disposing)
         {

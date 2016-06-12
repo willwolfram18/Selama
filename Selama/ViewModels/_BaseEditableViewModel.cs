@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
 
-namespace Selama.Models
+namespace Selama.ViewModels
 {
-    public abstract class __BaseEditableViewModel
+    public abstract class _BaseEditableViewModel
     {
         public abstract void ValidateModel(ModelStateDictionary ModelState);
     }

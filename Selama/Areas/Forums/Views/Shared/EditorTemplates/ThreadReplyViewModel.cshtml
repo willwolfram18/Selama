@@ -1,0 +1,92 @@
+﻿@model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
+
+<script type="text/javascript">
+    function onCancelClick()
+    {
+        $("#ThreadReplyEditor").addClass("hidden");
+    }
+
+    function onPostClick()
+    {
+        var content = $(".mdd_editor").val().trim();
+
+        if ($("#ThreadReplyForm").validate().valid())
+        {
+            $.ajax({
+                url: '@Url.Action("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID})',
+                type: "POST",
+                data: {
+                    Content: content,
+                    __RequestVerificationToken: $("input[type='hidden'][name='__RequestVerificationToken']").val()
+                },
+                success: onPostClick_Success,
+                error: onPostClick_Error,
+            });
+        }
+    }
+    function onPostClick_Success()
+    {
+        console.log("Success");
+    }
+    function onPostClick_Error(response)
+    {
+        var modelState = response.responseJSON;
+        for (var i = 0; i < modelState.length; i++)
+        {
+            var error = {};
+            error[modelState[i].Property] = [];
+            for (var j = 0; j < modelState[i].Errors.length; j++)
+            {
+                error[modelState[i].Property].push("<li>" + modelState[i].Errors[j] + "</li>");
+            }
+
+            if (modelState[i].Property !== "")
+            {
+                $("#ThreadReplyForm").validate().showErrors(error);
+            }
+            else
+            {
+                for (var j = 0; j < error[""].length; j++)
+                {
+                    $("#ThreadReplyForm .validation-summary-valid ul").append(error[""][j]);
+                }
+            }
+        }
+    }
+
+    $(document).ready(function ()
+    {
+        $(ReplyCancelBtn).click(onCancelClick);
+        $(ReplyPostBtn).click(onPostClick);
+    });
+</script>
+
+@using (Html.BeginForm("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID }, FormMethod.Post, new { id = "ThreadReplyForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                <div style="display: table; width: 100%;">
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-2">
+                <div id="ReplyPostBtn" class="btn btn-default">
+                    Post
+                </div>
+                <div id="ReplyCancelBtn" class="btn btn-default">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    </div>
+}

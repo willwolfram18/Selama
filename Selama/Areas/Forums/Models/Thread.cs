@@ -15,7 +15,7 @@ namespace Selama.Areas.Forums.Models
         {
             Title = model.Title;
             Content = model.Content;
-            PostDate = DateTime.Now;
+            PostDate = model.PostDate;
             AuthorID = authorId;
             ForumID = forumId;
             IsActive = true;

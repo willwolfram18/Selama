@@ -1,11 +1,38 @@
-﻿@model Selama.Areas.Forums.ViewModels.ThreadViewModel
+﻿@using Selama.Areas.Forums.ViewModels
+@model ThreadViewModel
 @{
     ViewBag.Title = Model.Title;
 }
 
+@section Scripts {
+    @Styles.Render("~/Content/MarkdownDeep/css")
+    @Scripts.Render("~/bundles/MarkdownDeep")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        // Define the link to the help html
+        var Selama = Selama || {};
+        Selama.MarkdownEditor = Selama.MarkdownEditor || {};
+        Selama.MarkdownEditor.HelpLocation = '@Url.Content("~/Content/MarkdownDeep/mdd_help.htm")';
+
+        function onPostReplyClick()
+        {
+            $("#ThreadReplyEditor").removeClass("hidden")
+                .find(".mdd_editor").val("").focus();
+            $("#ThreadReplyEditor .mdd_preview").text("");
+        }
+
+        
+
+        $(document).ready(function ()
+        {
+            $(PostReply).click(onPostReplyClick);
+        });
+    </script>
+}
+
 <ul class="breadcrumb">
     <li>
-        @Html.ActionLink("Forums", "Index", "Forum", new { area = "Forums" })
+        @Html.ActionLink("Forums", "Index", "Forum", new { area = "Forums" }, null)
     </li>
     <li>
         @Html.ActionLink(Model.ForumName, "Threads", "Forum", new { area = "Forums", id = Model.ForumID }, null)
@@ -15,19 +42,32 @@
     </li>
 </ul>
 
-<h2>Thread</h2>
+<h2>@if (Model.IsPinned)
+{ <text>[Pinned] </text>;
+}@Model.Title</h2>
+<div class="row" style="margin: 12px 0;">
+    <div class="col-md-12" style="padding: 0;">
+        <div id="PostReply" class="btn btn-default">
+            Add Reply
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
             @Html.DisplayFor(model => model.PostDate)
         </div>
         <div class="panel-body">
-            <div class="col-sm-2 col-md-2">
+            <div class="col-xs-12 col-sm-12 col-md-2">
                 @Model.Author
             </div>
-            <div class="col-sm-2 col-md-10">
+            <div class="col-xs-12 col-sm-12 col-md-10">
                 @Model.HtmlContent
             </div>
         </div>
     </div>
+</div>
+
+<div id="ThreadReplyEditor" class="row hidden">
+    @Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })
 </div>

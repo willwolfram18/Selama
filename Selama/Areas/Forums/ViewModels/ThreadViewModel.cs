@@ -1,16 +1,14 @@
 ﻿using MarkdownDeep;
 using Selama.Areas.Forums.Models;
-using Selama.Models;
+using Selama.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.ViewModels
 {
-    public class ThreadViewModel : __BaseEditableViewModel
+    public class ThreadViewModel : _BaseEditableViewModel
     {
         public ThreadViewModel() { }
         public ThreadViewModel(Thread thread)
