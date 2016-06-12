@@ -1,4 +1,5 @@
 ﻿@using Selama.Areas.Forums.ViewModels
+@using Microsoft.AspNet.Identity;
 @model ThreadViewModel
 @{
     ViewBag.Title = Model.Title;
@@ -21,11 +22,9 @@
             $("#ThreadReplyEditor .mdd_preview").text("");
         }
 
-        
-
         $(document).ready(function ()
         {
-            $(PostReply).click(onPostReplyClick);
+            $(".btn.btn-post-reply").click(onPostReplyClick);
         });
     </script>
 }
@@ -42,20 +41,31 @@
     </li>
 </ul>
 
-<h2>@if (Model.IsPinned)
-{ <text>[Pinned] </text>;
-}@Model.Title</h2>
+<h2>@if (Model.IsPinned){ <text>[Pinned] </text>;}@Model.Title</h2>
 <div class="row" style="margin: 12px 0;">
     <div class="col-md-12" style="padding: 0;">
-        <div id="PostReply" class="btn btn-default">
+        <div class="btn btn-default btn-post-reply">
             Add Reply
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" data-thread="@Model.ID">
     <div class="panel panel-default">
         <div class="panel-heading">
-            @Html.DisplayFor(model => model.PostDate)
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    @Html.DisplayFor(model => model.PostDate)
+                </div>
+                @if (User.Identity.GetUserId() == Model.AuthorID || User.IsInRole("Admin"))
+                {
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
+                        <ul class="edit-options-list">
+                            <li>Edit</li>
+                            <li>Delete</li>
+                        </ul>
+                    </div>
+                }
+            </div>
         </div>
         <div class="panel-body">
             <div class="col-xs-12 col-sm-12 col-md-2">
@@ -72,5 +82,13 @@
 {
     @Html.DisplayFor(model => reply)
 }
+
+<div class="row" style="margin: 0;">
+    <div class="col-md-12" style="padding: 0;">
+        <div class="btn btn-default btn-post-reply">
+            Add Reply
+        </div>
+    </div>
+</div>
 
 @Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })

@@ -207,6 +207,8 @@
     <Compile Include="Areas\Forums\Models\ThreadReply.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumSectionViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumOverviewViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\LastForumPostViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\LastThreadPostViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadReplyViewModel.cs" />
@@ -247,6 +249,14 @@
     <Compile Include="Migrations\201606120620322_ThreadReplyInverseProperty.cs" />
     <Compile Include="Migrations\201606120620322_ThreadReplyInverseProperty.Designer.cs">
       <DependentUpon>201606120620322_ThreadReplyInverseProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606120728499_CreateRoles.cs" />
+    <Compile Include="Migrations\201606120728499_CreateRoles.Designer.cs">
+      <DependentUpon>201606120728499_CreateRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606120740410_AddUsersToRoles.cs" />
+    <Compile Include="Migrations\201606120740410_AddUsersToRoles.Designer.cs">
+      <DependentUpon>201606120740410_AddUsersToRoles.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -390,6 +400,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606120620322_ThreadReplyInverseProperty.resx">
       <DependentUpon>201606120620322_ThreadReplyInverseProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606120728499_CreateRoles.resx">
+      <DependentUpon>201606120728499_CreateRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606120740410_AddUsersToRoles.resx">
+      <DependentUpon>201606120740410_AddUsersToRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

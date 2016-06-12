@@ -15,6 +15,17 @@ namespace Selama.Areas.Forums.ViewModels
             Title = f.Title;
             SubTitle = f.SubTitle;
             NumThreads = f.Threads.Count();
+
+            Thread lastPost = f.Threads.OrderByDescending(t => t.Replies.Select(r => r.PostDate)).FirstOrDefault();
+            if (lastPost != null)
+            {
+                LastPost = new LastForumPostViewModel
+                {
+                    ThreadID = lastPost.ID,
+                    ThreadTitle = lastPost.Title,
+                    Author = lastPost.Author.UserName,
+                };
+            }
         }
 
         public int ID { get; set; }
@@ -27,6 +38,7 @@ namespace Selama.Areas.Forums.ViewModels
         [Display(Name = "Threads")]
         public int NumThreads { get; set; }
 
+        public LastForumPostViewModel LastPost { get; set; }
         // TODO: Add LastPost attribute
     }
 }

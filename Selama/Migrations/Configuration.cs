@@ -1,5 +1,8 @@
 namespace Selama.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,18 +18,30 @@ namespace Selama.Migrations
 
         protected override void Seed(Selama.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            //context.Roles.AddOrUpdate(new IdentityRole
+            //{
+            //    Name = "Admin"
+            //},
+            //new IdentityRole
+            //{
+            //    Name = "User"
+            //});
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            IdentityRole admin = context.Roles.Where(r => r.Name == "Admin").FirstOrDefault();
+            IdentityRole user = context.Roles.Where(r => r.Name == "User").FirstOrDefault();
+            ApplicationUser billy = context.Users.Where(u => u.UserName == "billy@example.com").FirstOrDefault();
+            ApplicationUser billy2 = context.Users.Where(u => u.UserName == "billy2@example.com").FirstOrDefault();
+
+            billy2.Roles.Add(new IdentityUserRole()
+            {
+                RoleId = admin.Id,
+                UserId = billy2.Id
+            });
+            billy.Roles.Add(new IdentityUserRole()
+            {
+                RoleId = user.Id,
+                UserId = billy.Id
+            });
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using Selama.Areas.Forums.ViewModels
 @model IEnumerable<ForumSectionViewModel>
 
-@{ 
+@{
     ViewBag.Title = "Forums";
 }
 
@@ -18,7 +18,7 @@
                     <th style="width: 10%; text-align: center;">
                         Threads
                     </th>
-                    <th align="center" style="width: 15%; text-align: center">
+                    <th align="center" style="width: 15%;">
                         Last Post
                     </th>
                 </tr>
@@ -34,16 +34,26 @@
                             @if (!string.IsNullOrWhiteSpace(forum.SubTitle))
                             {
                                 <text>
-                                <br />
-                                @forum.SubTitle
+                                    <br />
+                                    @forum.SubTitle
                                 </text>
                             }
                         </td>
                         <td align="center" style="width: 10%;">
                             @forum.NumThreads
                         </td>
-                        <td align="center" style="width: 15%;">
-                            TBD
+                        <td style="width: 15%;">
+                            @if (forum.LastPost == null)
+                            {
+                                <text>None</text>
+                            }
+                            else
+                            {
+                                <div>
+                                    @Html.ActionLink(forum.LastPost.ThreadTitle, "Thread", "Forum", new { area = "Forums", id = forum.LastPost.ThreadID}, null)<br />
+                                    @forum.LastPost.Author
+                                </div>
+                            }
                         </td>
                     </tr>
                 }

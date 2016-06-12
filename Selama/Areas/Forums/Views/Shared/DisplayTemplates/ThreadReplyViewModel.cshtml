@@ -1,9 +1,25 @@
-﻿@model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
+﻿@using Microsoft.AspNet.Identity;
+@model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
 
-<div class="row">
+<div class="row" data-thread-reply="@Model.ID">
     <div class="panel panel-default">
         <div class="panel-heading">
-            @Html.DisplayFor(model => model.PostDate)
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    @Html.DisplayFor(model => model.PostDate)
+                </div>
+                @if (User.Identity.GetUserId() == Model.AuthorID || User.IsInRole("Admin"))
+                {
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
+                        <ul class="edit-options-list">
+                            <li>
+                                <a href="#">Edit</a>
+                            </li>
+                            <li>Delete</li>
+                        </ul>
+                    </div>
+                }
+            </div>
         </div>
         <div class="panel-body">
             <div class="col-xs-12 col-sm-12 col-md-2">

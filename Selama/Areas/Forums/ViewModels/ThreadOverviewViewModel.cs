@@ -1,5 +1,6 @@
 ﻿using Selama.Areas.Forums.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Selama.Areas.Forums.ViewModels
 {
@@ -10,6 +11,22 @@ namespace Selama.Areas.Forums.ViewModels
             ID = t.ID;
             Title = t.Title;
             NumReplies = t.Replies.Count;
+
+            ThreadReply tr = t.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault();
+            if (tr == null)
+            {
+                LastPost = new LastThreadPostViewModel
+                {
+                    Author = tr.Author.UserName
+                };
+            }
+            else
+            {
+                LastPost = new LastThreadPostViewModel
+                {
+                    Author = t.Author.UserName
+                };
+            }
         }
 
         public int ID { get; set; }
@@ -19,6 +36,6 @@ namespace Selama.Areas.Forums.ViewModels
         [Display(Name = "Replies")]
         public int NumReplies { get; set; }
 
-        // TODO: Add LastPost/Reply property
+        public LastThreadPostViewModel LastPost { get; set; }
     }
 }

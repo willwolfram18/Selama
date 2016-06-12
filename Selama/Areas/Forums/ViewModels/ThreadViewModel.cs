@@ -29,6 +29,7 @@ namespace Selama.Areas.Forums.ViewModels
 
             IsPinned = thread.IsPinned;
             PostDate = thread.PostDate;
+            AuthorID = thread.AuthorID;
             Author = thread.Author.UserName;
 
             Replies = new List<ThreadReplyViewModel>();
@@ -62,6 +63,7 @@ namespace Selama.Areas.Forums.ViewModels
         [DisplayFormat(DataFormatString = "{0:f}")]
         public DateTime PostDate { get; set; }
 
+        public string AuthorID { get; set; }
         public string Author { get; set; }
 
         public List<ThreadReplyViewModel> Replies { get; set; }

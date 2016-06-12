@@ -22,6 +22,7 @@ namespace Selama.Areas.Forums.ViewModels
             };
             HtmlContent = new HtmlString(markdownTransform.Transform(Content));
             PostDate = reply.PostDate;
+            AuthorID = reply.AuthorID;
             Author = reply.Author.UserName;
         }
 
@@ -42,6 +43,7 @@ namespace Selama.Areas.Forums.ViewModels
         [DisplayFormat(DataFormatString = "{0:f}")]
         public DateTime PostDate { get; set; }
 
+        public string AuthorID { get; set; }
         public string Author { get; set; }
 
         public override void ValidateModel(ModelStateDictionary ModelState)

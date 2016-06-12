@@ -8,8 +8,6 @@ using Selama.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Controllers
@@ -80,7 +78,7 @@ namespace Selama.Areas.Forums.Controllers
                 SaveChangeError result;
                 if (TrySaveChanges(_db, out result))
                 {
-                    return RedirectToAction("Threads", new { id = id });
+                    return RedirectToAction("Thread", new { id = id });
                 }
             }
 
