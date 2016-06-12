@@ -22,7 +22,7 @@ namespace Selama.Areas.Forums.ViewModels
             );
 
             Threads = Util.ConvertLists<Thread, ThreadOverviewViewModel>(
-                f.Threads.Where(t => !t.IsActive),
+                f.Threads.Where(t => t.IsActive),
                 t => new ThreadOverviewViewModel(t)
             );
         }

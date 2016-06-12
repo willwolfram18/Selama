@@ -21,9 +21,9 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th style="width: 80%;" >Thread</th>
-            <th style="width: 5%; text-align: center;">Replies</th>
-            <th style="width: 15%; text-align: center;">Last Post</th>
+            <th style="width: 75%;" >Thread</th>
+            <th style="width: 10%; text-align: center; padding-right: 8px;">Replies</th>
+            <th style="width: 15%;">Last Post</th>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +45,7 @@
         {
             <tr>
                 <td>
-                    @thread.Title
+                    @Html.ActionLink(thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
                 </td>
                 <td style="text-align: center;">
                     @thread.NumReplies

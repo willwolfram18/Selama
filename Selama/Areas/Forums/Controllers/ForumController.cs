@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.ViewModels;
+using Selama.Classes.Enum;
 using Selama.Classes.Utility;
 using Selama.Controllers;
 using Selama.Models;
@@ -12,7 +13,7 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Controllers
 {
-    public class ForumController : _BaseController
+    public class ForumController : _BaseAuthorizeController
     {
         public ApplicationDbContext _db = new ApplicationDbContext();
 
@@ -38,9 +39,21 @@ namespace Selama.Areas.Forums.Controllers
             return View(new ForumViewModel(forum));
         }
 
+        public ActionResult Thread(int id = 0)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(new ThreadViewModel(thread));
+        }
+
+        #region Create thread
         public ActionResult CreateThread(int id = 0)
         {
-            Forum forum = _db.Forums.Find(id);
+            Forum forum = _db.Forums.Where(f => f.IsActive && f.ID == id).FirstOrDefault();
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -52,7 +65,7 @@ namespace Selama.Areas.Forums.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateThread(ThreadViewModel thread, int id = 0)
         {
-            Forum forum = _db.Forums.Find(id);
+            Forum forum = _db.Forums.Where(f => f.IsActive && f.ID == id).FirstOrDefault();
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -62,7 +75,8 @@ namespace Selama.Areas.Forums.Controllers
             if (ModelState.IsValid)
             {
                 _db.Threads.Add(new Thread(thread, User.Identity.GetUserId(), id));
-                if (TrySaveChanges(_db))
+                SaveChangeError result;
+                if (TrySaveChanges(_db, out result))
                 {
                     return RedirectToAction("Threads", new { id = id });
                 }
@@ -70,6 +84,7 @@ namespace Selama.Areas.Forums.Controllers
 
             return View(thread);
         }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

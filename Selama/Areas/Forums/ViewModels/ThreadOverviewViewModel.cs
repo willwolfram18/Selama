@@ -7,7 +7,9 @@ namespace Selama.Areas.Forums.ViewModels
     {
         public ThreadOverviewViewModel(Thread t)
         {
-
+            ID = t.ID;
+            Title = t.Title;
+            NumReplies = t.Replies.Count;
         }
 
         public int ID { get; set; }

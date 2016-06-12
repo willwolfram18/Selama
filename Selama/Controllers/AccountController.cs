@@ -13,7 +13,7 @@ using Selama.ViewModels.Account;
 
 namespace Selama.Controllers
 {
-    public class AccountController : _BaseController
+    public class AccountController : _BaseAuthorizeController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -392,7 +392,7 @@ namespace Selama.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         //

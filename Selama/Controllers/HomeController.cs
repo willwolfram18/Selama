@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace Selama.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : _BaseController
+    public class HomeController : _BaseAuthorizeController
     {
         public ActionResult Index()
         {

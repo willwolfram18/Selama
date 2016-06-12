@@ -1,0 +1,33 @@
+﻿@model Selama.Areas.Forums.ViewModels.ThreadViewModel
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<ul class="breadcrumb">
+    <li>
+        @Html.ActionLink("Forums", "Index", "Forum", new { area = "Forums" })
+    </li>
+    <li>
+        @Html.ActionLink(Model.ForumName, "Threads", "Forum", new { area = "Forums", id = Model.ForumID }, null)
+    </li>
+    <li class="active">
+        @Model.Title
+    </li>
+</ul>
+
+<h2>Thread</h2>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @Html.DisplayFor(model => model.PostDate)
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-2 col-md-2">
+                @Model.Author
+            </div>
+            <div class="col-sm-2 col-md-10">
+                @Model.HtmlContent
+            </div>
+        </div>
+    </div>
+</div>

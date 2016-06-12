@@ -9,10 +9,10 @@ using System.Web.Mvc;
 
 namespace Selama.Controllers
 {
-    //[Authorize]
+    [Authorize]
     // TODO: Enable HTTPS for _Base
     // [RequireHttps]
-    public class _BaseController : Controller
+    public class _BaseAuthorizeController : Controller
     {
         protected bool TrySaveChanges(DbContext db)
         {
