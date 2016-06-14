@@ -83,6 +83,8 @@
     @Html.DisplayFor(model => reply)
 }
 
+@Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })
+
 <div class="row" style="margin: 0;">
     <div class="col-md-12" style="padding: 0;">
         <div class="btn btn-default btn-post-reply">
@@ -90,5 +92,3 @@
         </div>
     </div>
 </div>
-
-@Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })

@@ -96,6 +96,11 @@ namespace Selama.Areas.Forums.Controllers
                 return HttpNotFound();
             }
 
+            //if (id != reply.ThreadID)
+            //{
+                ModelState.AddModelError("ThreadID", "Invalid thread selected");
+            //}
+            ModelState.AddModelError("Content", "This is a test error");
             reply.PostDate = DateTime.Now;
             reply.ValidateModel(ModelState);
             if (ModelState.IsValid)

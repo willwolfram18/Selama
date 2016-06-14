@@ -1,5 +1,7 @@
 ﻿@model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
 
+<div id="ThreadReplyResult"></div>
+
 <div id="ThreadReplyEditor" class="row hidden">
     <script type="text/javascript">
         function onCancelClick()
@@ -7,28 +9,9 @@
             $("#ThreadReplyEditor").addClass("hidden");
         }
 
-        function onPostClick()
-        {
-            var content = $(".mdd_editor").val().trim();
-
-            if ($("#ThreadReplyForm").validate().valid())
-            {
-                $.ajax({
-                    url: '@Url.Action("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID})',
-                    type: "POST",
-                    data: {
-                        Content: content,
-                        ThreadID: @Model.ThreadID,
-                        __RequestVerificationToken: $("input[type='hidden'][name='__RequestVerificationToken']").val()
-                    },
-                    success: onPostClick_Success,
-                    error: onPostClick_Error,
-                });
-            }
-        }
         function onPostClick_Success(response)
         {
-            $("#ThreadReplyEditor").addClass("hidden").before($(response));
+            $("#ThreadReplyEditor").addClass("hidden");
         }
         function onPostClick_Error(response)
         {
@@ -66,7 +49,15 @@
         });
     </script>
 
-    @using (Html.BeginForm("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID }, FormMethod.Post, new { id = "ThreadReplyForm" }))
+    @using (Ajax.BeginForm("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID },
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "ThreadReplyResult",
+                    OnSuccess = "onPostClick_Success",
+                    OnFailure = "onPostClick_Error"
+                })
+            )
     {
         @Html.AntiForgeryToken()
 
@@ -85,8 +76,9 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-2">
+                    <input type="submit" value="Post" class="btn btn-default" />
                     <div id="ReplyPostBtn" class="btn btn-default">
-                        Post
+                        Old Post
                     </div>
                     <div id="ReplyCancelBtn" class="btn btn-default">
                         Cancel
