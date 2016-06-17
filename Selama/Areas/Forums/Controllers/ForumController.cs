@@ -23,7 +23,7 @@ namespace Selama.Areas.Forums.Controllers
                 _db.ForumSections.Where(f => f.IsActive).OrderBy(f => f.DisplayOrder),
                 section => new ForumSectionViewModel(section)
             );
-            
+
             return View(forums);
         }
 
@@ -96,11 +96,10 @@ namespace Selama.Areas.Forums.Controllers
                 return HttpNotFound();
             }
 
-            //if (id != reply.ThreadID)
-            //{
+            if (id != reply.ThreadID)
+            {
                 ModelState.AddModelError("ThreadID", "Invalid thread selected");
-            //}
-            ModelState.AddModelError("Content", "This is a test error");
+            }
             reply.PostDate = DateTime.Now;
             reply.ValidateModel(ModelState);
             if (ModelState.IsValid)
@@ -112,7 +111,7 @@ namespace Selama.Areas.Forums.Controllers
                     _db = new ApplicationDbContext();
                     dbReply = _db.ThreadReplies.Find(dbReply.ID);
                     Response.StatusCode = 200;
-                    
+
                     return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply));
                 }
             }

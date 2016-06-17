@@ -29,6 +29,7 @@ namespace Selama.Areas.Forums.ViewModels
         public int ID { get; set; }
 
         [Required]
+        [HiddenInput(DisplayValue = false)]
         public int ThreadID { get; set; }
 
         [Required]

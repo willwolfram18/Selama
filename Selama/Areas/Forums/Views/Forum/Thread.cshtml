@@ -17,7 +17,7 @@
 
         function onPostReplyClick()
         {
-            $("#ThreadReplyEditor").removeClass("hidden")
+            $("#ThreadReplyEditor").show("blind")
                 .find(".mdd_editor").val("").focus();
             $("#ThreadReplyEditor .mdd_preview").text("");
         }
@@ -25,6 +25,7 @@
         $(document).ready(function ()
         {
             $(".btn.btn-post-reply").click(onPostReplyClick);
+            $("#ThreadReplyEditor").hide();
         });
     </script>
 }
