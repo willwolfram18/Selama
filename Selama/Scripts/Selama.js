@@ -11,7 +11,31 @@ Selama.SpinShield = Selama.SpinShield || {
         var $shield = $("#SpinShield");
         if ($shield.length === 0)
         {
-
+            $("body").append(
+                Selama.createElem("div", "spin-wrapper hidden", "SpinShield").append(
+                    Selama.createElem("div", "spin-wrapper-inner").append(
+                        Selama.createElem("div", "spin spin-gleam").spin("show")
+                    )
+                )
+            );
         }
-    }
+        return this;
+    },
+
+    raiseShield: function Selama_SpinShield_RaiseSheild()
+    {
+        $("#SpinShield.hidden").removeClass("hidden");
+        return this;
+    },
+
+    lowerSheild: function Selama_SpinShield_lowerShield()
+    {
+        $("#SpinShield").addClass("hidden");
+        return this;
+    },
 };
+
+$(document).ready(function ()
+{
+    Selama.SpinShield.init().lowerSheild();
+});

@@ -12,6 +12,7 @@ namespace Selama
                         "~/Scripts/jQuery/jquery-{version}.js",
                         "~/Scripts/jQuery/jquery.unobtrusive-ajax.js",
                         "~/Scripts/jQuery/jquery-ui-{version}.js",
+                        "~/Scripts/jQuery/jquery.spin.js",
                         "~/Scripts/Selama.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -33,6 +34,7 @@ namespace Selama
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap/bootstrap.css",
+                      "~/Content/jquery.spin.css",
                       "~/Content/site.css"));
             bundles.Add(new StyleBundle("~/Content/MarkdownDeep/css").Include(
                 "~/Content/MarkdownDeep/mdd_styles.css",

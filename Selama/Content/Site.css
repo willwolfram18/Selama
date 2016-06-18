@@ -38,6 +38,7 @@ textarea {
         padding: 0 5px;
     }
 
+/* #region Bootstrap navbar style overrides */
 @media (min-width: 768px) and (max-width: 991px) {
     .navbar .container {
         max-width: none;
@@ -113,3 +114,34 @@ textarea {
         padding: 5px 15px 5px 25px;
     }
 }
+/* #endregion */
+
+/* #region SpinShield */
+.spin-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: table;
+    z-index: 9999;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(35, 35, 35, 0.65);
+}
+
+    .spin-wrapper .spin-wrapper-inner {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .spin-wrapper .spin {
+        background-color: transparent;
+    }
+
+@media(min-width: 768px) {
+    .spin-wrapper .spin {
+        height: 178px;
+        width: 178px;
+    }
+}
+/* #endregion */
