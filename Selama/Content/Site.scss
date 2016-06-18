@@ -1,0 +1,183 @@
+﻿body
+{
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content
+{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt
+{
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea
+{
+    max-width: 280px;
+}
+
+.form-horizontal .control-label
+{
+    padding-top: 0;
+}
+
+.edit-options-list li
+{
+    display: inline-block;
+}
+
+.edit-options-list li:not(:first-child)::before
+{
+    content: "| ";
+    position: relative;
+    top: -1px;
+    padding: 0 5px;
+}
+
+
+/* #region Bootstrap navbar style overrides */
+@media (min-width: 768px) and (max-width: 991px)
+{
+    .navbar
+    {
+        .contaier
+        {
+            max-width: none;
+
+            > .navbar-header,
+            > .navbar-collapse
+            {
+                $margin_padding_px: 15px;
+                margin-left: -$margin_padding_px;
+                margin-right: -$margin_padding_px;
+                padding-left: $margin_padding_px;
+                padding-right: $margin_padding_px;
+                overflow-y: auto;
+            }
+        }
+    }
+
+    .navbar-header,
+    .navbar-right
+    {
+        float: none !important;
+    }
+
+    .navbar-toggle
+    {
+        display: block;
+    }
+
+    .navbar-collapse
+    {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+
+        &.collapse
+        {
+            display: none !important;
+        }
+    }
+
+    .navbar-nav
+    {
+        float: none !important;
+        margin: 7.5px -15px;
+
+        > li
+        {
+            float: none;
+
+            > a
+            {
+                $padding: 10px;
+                padding-top: $padding;
+                padding-bottom: $padding;
+            }
+        }
+
+        .open
+        {
+            .dropdown-menu
+            {
+                $dropdown_item_padding: 5px 15px 5px 25px;
+                position: static;
+                float: none;
+                width: auto;
+                margin-top: 0;
+                background-color: transparent;
+                border: 0;
+                box-shadow: none;
+
+                > li
+                {
+                    > a
+                    {
+                        padding: $dropdown_item_padding;
+                        line-height: 20px;
+                    }
+                }
+
+                .dropdown-header
+                {
+                    padding: $dropdown_item_padding;
+                }
+            }
+        }
+    }
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a
+    {
+        color: #999;
+
+        &:hover,
+        &:focus
+        {
+            color: #ffffff;
+            background-color: transparent;
+        }
+    }
+}
+/* #endregion */
+
+/* #region SpinShield */
+.spin-wrapper
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: table;
+    z-index: 9999;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(35, 35, 35, 0.65);
+
+    .spin-wrapper-inner {
+        display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+
+        .spin {
+            background-color: transparent;
+        }
+    }
+
+    @media(min-width: 768px) {
+        .spin {
+            height: 178px;
+            width: 178px;
+        }
+    }
+}
+/* #endregion */

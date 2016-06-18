@@ -286,6 +286,12 @@
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\jquery.spin.css" />
     <Content Include="Content\MarkdownDeep\MarkdownDeep.css" />
+    <Content Include="Content\MarkdownDeep\MarkdownDeep.min.css">
+      <DependentUpon>MarkdownDeep.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -339,6 +345,12 @@
     <Content Include="Areas\Forums\Views\Forum\Thread.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadReplyViewModel.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadReplyViewModel.cshtml" />
+    <Content Include="Content\Site.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\MarkdownDeep\MarkdownDeep.scss" />
     <None Include="Scripts\jQuery\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jQuery\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jQuery\jquery-ui-1.11.4.min.js" />
