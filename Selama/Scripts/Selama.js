@@ -5,6 +5,7 @@ Selama.createElem = Selama.createElem || function __Selama_CreateElem(tagName, c
     return $(document.createElement(tagName)).addClass(cssClassStr).attr("id", id);
 }
 
+// #region SpinShield
 Selama.SpinShield = Selama.SpinShield || {
     init: function Selama_SpinShield_Init()
     {
@@ -34,8 +35,11 @@ Selama.SpinShield = Selama.SpinShield || {
         return this;
     },
 };
+// #endregion
 
+// #region Page load
 $(document).ready(function ()
 {
     Selama.SpinShield.init().lowerSheild();
 });
+// #endregion

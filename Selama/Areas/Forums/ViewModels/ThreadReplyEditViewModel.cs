@@ -1,31 +1,27 @@
-﻿using MarkdownDeep;
-using Selama.Areas.Forums.Models;
+﻿using Selama.Areas.Forums.Models;
 using Selama.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.ViewModels
 {
-    public class ThreadReplyViewModel : _BaseEditableViewModel
+    public class ThreadReplyEditViewModel : _BaseEditableViewModel
     {
-        public ThreadReplyViewModel() { }
-        public ThreadReplyViewModel(ThreadReply reply)
+        public ThreadReplyEditViewModel() { }
+        public ThreadReplyEditViewModel(ThreadReply reply)
         {
             ID = reply.ID;
             ThreadID = reply.ThreadID;
             Content = reply.Content;
-            Markdown markdownTransform = new Markdown()
-            {
-                SafeMode = true
-            };
-            HtmlContent = new HtmlString(markdownTransform.Transform(Content));
-            PostDate = reply.PostDate;
-            AuthorID = reply.AuthorID;
-            Author = reply.Author.UserName;
+            Version = Convert.ToBase64String(reply.Version);
         }
 
+        [Required]
+        [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
 
         [Required]
@@ -38,14 +34,9 @@ namespace Selama.Areas.Forums.ViewModels
         [MinLength(50, ErrorMessage = "A reply to a thread must contain at least {1} characters")]
         public string Content { get; set; }
 
-        public HtmlString HtmlContent { get; set; }
-
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:f}")]
-        public DateTime PostDate { get; set; }
-
-        public string AuthorID { get; set; }
-        public string Author { get; set; }
+        [Required]
+        [HiddenInput(DisplayValue = false)]
+        public string Version { get; set; }
 
         public override void ValidateModel(ModelStateDictionary ModelState)
         {

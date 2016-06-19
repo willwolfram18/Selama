@@ -211,6 +211,7 @@
     <Compile Include="Areas\Forums\ViewModels\LastThreadPostViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\ThreadReplyEditViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadReplyViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadViewModel.cs" />
     <Compile Include="Classes\Enum\SaveChangeError.cs" />
@@ -346,6 +347,7 @@
     <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadReplyViewModel.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadReplyViewModel.cshtml" />
     <Content Include="Content\Site.scss" />
+    <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadReplyEditViewModel.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

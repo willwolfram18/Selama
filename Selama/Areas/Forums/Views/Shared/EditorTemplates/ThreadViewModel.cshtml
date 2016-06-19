@@ -2,12 +2,7 @@
 
 @Scripts.Render("~/bundles/MarkdownDeep")
 @Styles.Render("~/Content/MarkdownDeep/css")
-<script type="text/javascript">
-    // Define the link to the help html
-    var Selama = Selama || {};
-    Selama.MarkdownEditor = Selama.MarkdownEditor || {};
-    Selama.MarkdownEditor.HelpLocation = '@Url.Content("~/Content/MarkdownDeep/mdd_help.htm")';
-</script>
+
 
 <div class="form-group">
     @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })

@@ -116,6 +116,7 @@ namespace Selama.Areas.Forums.Controllers
                 }
             }
 
+            // Generate the errors as a seriarlizable list of objects
             List<object> errors = new List<object>();
             foreach (var error in ModelState)
             {
@@ -136,6 +137,17 @@ namespace Selama.Areas.Forums.Controllers
 
             Response.StatusCode = 400; // Bad Request
             return Json(errors);
+        }
+
+        public ActionResult EditReply(int id = 0)
+        {
+            ThreadReply reply = _db.ThreadReplies.Find(id);
+            if (reply == null)
+            {
+                return HttpNotFound("Invalid ID");
+            }
+
+            return PartialView("EditorTemplates/ThreadReplyEditViewModel", new ThreadReplyEditViewModel(reply));
         }
 
         protected override void Dispose(bool disposing)

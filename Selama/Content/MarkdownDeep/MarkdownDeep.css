@@ -30,7 +30,9 @@ div.mdd_editor_wrap {
   div.mdd_toolbar_wrap {
     width: 50%; } }
 
-div.mdd_modal div.mdd_modal_frame {
-  margin-top: 111px;
-  /* Normal margin is 60px, navbar is 51px tall*/ }
+div.mdd_modal {
+  z-index: 9999999; }
+  div.mdd_modal div.mdd_modal_frame {
+    margin-top: 111px;
+    /* Normal margin is 60px, navbar is 51px tall*/ }
 

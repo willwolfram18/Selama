@@ -55,8 +55,13 @@ div.mdd_editor_wrap
     }
 }
 
-div.mdd_modal div.mdd_modal_frame
+div.mdd_modal
 {
-    margin-top: 111px;
-    /* Normal margin is 60px, navbar is 51px tall*/
+    z-index: 9999999;
+
+    div.mdd_modal_frame
+    {
+        margin-top: 111px;
+        /* Normal margin is 60px, navbar is 51px tall*/
+    }
 }

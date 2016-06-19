@@ -6,15 +6,8 @@
 }
 
 @section Scripts {
-    @Styles.Render("~/Content/MarkdownDeep/css")
-    @Scripts.Render("~/bundles/MarkdownDeep")
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-        // Define the link to the help html
-        var Selama = Selama || {};
-        Selama.MarkdownEditor = Selama.MarkdownEditor || {};
-        Selama.MarkdownEditor.HelpLocation = '@Url.Content("~/Content/MarkdownDeep/mdd_help.htm")';
-
         function onPostReplyClick()
         {
             $("#ThreadReplyEditor").show("blind")
@@ -22,10 +15,56 @@
             $("#ThreadReplyEditor .mdd_preview").text("");
         }
 
+        function onAjaxRequestBegin()
+        {
+            Selama.SpinShield.raiseShield();
+        }
+        function onAjaxRequestComplete()
+        {
+            Selama.SpinShield.lowerSheild();
+        }
+
+        function onReplyEditLinkClick(e)
+        {
+            var replyId = $(e.target).closest(".row[data-thread-reply]").attr("data-thread-reply");
+            
+            onAjaxRequestBegin();
+            $.ajax({
+                url: '@Url.Action("EditReply", "Forum", new { area = "Forums" })',
+                data: { id: replyId },
+                type: 'GET',
+                complete: onAjaxRequestComplete,
+                success: onReplyEditLinkClick_Success,
+                error: onReplyEditLinkClick_Error,
+            });
+        }
+        function onReplyEditLinkClick_Success(response)
+        {
+            $("#ThreadReplyEditModal").modal("show").find(".modal-body").html(response);
+        }
+        function onReplyEditLinkClick_Error(response)
+        {
+            if (response.statusText === "Invalid ID")
+            {
+                alert("An invalid thread reply ID was provided");
+            }
+            // TODO: Create shared Bootstrap alert window
+            alert("Error occurred");
+        }
+
+        function onReplyEditModalShown(e)
+        {
+            var $replyEditTextarea = $("#ThreadReplyEditModal textarea.mdd_editor");
+            $replyEditTextarea.MarkdownDeep(Selama.MarkdownEditor.Options);
+            var m = new MarkdownDeepEditor.Editor($replyEditTextarea[0], $("#ThreadReplyEditModal div.mdd_preview")[0]);
+        }
+
         $(document).ready(function ()
         {
             $(".btn.btn-post-reply").click(onPostReplyClick);
             $("#ThreadReplyEditor").hide();
+            $(".row[data-thread-reply]").on("click", ".edit-options-list a", onReplyEditLinkClick);
+            $("#ThreadReplyEditModal").on("shown.bs.modal", onReplyEditModalShown);
         });
     </script>
 }
@@ -42,7 +81,11 @@
     </li>
 </ul>
 
-<h2>@if (Model.IsPinned){ <text>[Pinned] </text>;}@Model.Title</h2>
+<h2>
+    @if (Model.IsPinned)
+{ <text>[Pinned] </text>;
+}@Model.Title
+</h2>
 <div class="row" style="margin: 12px 0;">
     <div class="col-md-12" style="padding: 0;">
         <div class="btn btn-default btn-post-reply">
@@ -90,6 +133,40 @@
     <div class="col-md-12" style="padding: 0;">
         <div class="btn btn-default btn-post-reply">
             Add Reply
+        </div>
+    </div>
+</div>
+
+<div id="ThreadReplyEditModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Edit reply
+                </h4>
+            </div>
+            @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
+            {
+                OnBegin = "onReplyUpdateRequestBegin",
+                OnComplete = "onReplyUpdateRequestComplete"
+            }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                <div class="modal-body">
+                    The content goes here
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            }
         </div>
     </div>
 </div>

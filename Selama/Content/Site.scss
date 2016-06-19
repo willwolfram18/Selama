@@ -163,21 +163,33 @@ textarea
     width: 100%;
     background-color: rgba(35, 35, 35, 0.65);
 
-    .spin-wrapper-inner {
+    .spin-wrapper-inner
+    {
         display: table-cell;
-    vertical-align: middle;
-    text-align: center;
+        vertical-align: middle;
+        text-align: center;
 
-        .spin {
+        .spin
+        {
             background-color: transparent;
         }
     }
 
-    @media(min-width: 768px) {
-        .spin {
+    @media(min-width: 768px)
+    {
+        .spin
+        {
             height: 178px;
             width: 178px;
         }
     }
 }
 /* #endregion */
+
+@media (min-width: 992px)
+{
+    .modal-lg
+    {
+        width: 900px;
+    }
+}

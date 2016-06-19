@@ -13,6 +13,12 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        // Define the link to the help html
+        var Selama = Selama || {};
+        Selama.MarkdownEditor = Selama.MarkdownEditor || {};
+        Selama.MarkdownEditor.HelpLocation = '@Url.Content("~/Content/MarkdownDeep/mdd_help.htm")';
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
