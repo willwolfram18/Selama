@@ -44,12 +44,35 @@
         }
         function onReplyEditLinkClick_Error(response)
         {
+            // TODO: Create shared Bootstrap alert window
             if (response.statusText === "Invalid ID")
             {
                 alert("An invalid thread reply ID was provided");
             }
-            // TODO: Create shared Bootstrap alert window
-            alert("Error occurred");
+            else
+            {
+                alert("Error occurred");
+            }
+        }
+
+        function onReplyUpdateRequestBegin()
+        {
+            Selama.SpinShield.raiseShield();
+        }
+        function onReplyUpdateRequestComplete()
+        {
+            Selama.SpinShield.lowerSheild();
+        }
+        function onReplyUpdateRequestSuccess(response)
+        {
+            $(".thread-reply[data-thread-reply='" + response.id + "']")
+                .find(".thread-reply-content").html(response.content);
+            $("#ThreadReplyEditModal").modal("hide");
+        }
+        function onReplyUpdateRequestFailure(response)
+        {
+            // TODO: Bootstrap styled alert
+            alert("An error occured while updating");
         }
 
         function onReplyEditModalShown(e)
@@ -148,7 +171,9 @@
             @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
             {
                 OnBegin = "onReplyUpdateRequestBegin",
-                OnComplete = "onReplyUpdateRequestComplete"
+                OnComplete = "onReplyUpdateRequestComplete",
+                OnFailure = "onReplyUpdateRequestFailure",
+                OnSuccess = "onReplyUpdateRequestSuccess"
             }))
             {
                 @Html.AntiForgeryToken()

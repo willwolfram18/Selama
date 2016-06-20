@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,6 +53,15 @@ namespace Selama.Controllers
                 }
                 return false;
             }
+        }
+
+        protected ActionResult HttpUnprocessable()
+        {
+            return new HttpStatusCodeResult(422);
+        }
+        protected ActionResult HttpUnprocessable(string description)
+        {
+            return new HttpStatusCodeResult(422, description);
         }
     }
 }

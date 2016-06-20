@@ -18,6 +18,12 @@ namespace Selama.Areas.Forums.Models
             AuthorID = authorId;
         }
 
+        public void UpdateFromViewModel(ThreadReplyEditViewModel viewModel)
+        {
+            Content = viewModel.Content;
+            Version = Convert.FromBase64String(viewModel.Version);
+        }
+
         #region Database columns
         [Key]
         public int ID { get; set; }

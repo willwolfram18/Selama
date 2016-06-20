@@ -150,6 +150,38 @@ namespace Selama.Areas.Forums.Controllers
             return PartialView("EditorTemplates/ThreadReplyEditViewModel", new ThreadReplyEditViewModel(reply));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditReply(ThreadReplyEditViewModel reply)
+        {
+            ThreadReply dbReply = _db.ThreadReplies.Find(reply.ID);
+            if (reply == null)
+            {
+                return HttpNotFound("Invalid ID");
+            }
+
+            reply.ValidateModel(ModelState);
+            if (dbReply.ThreadID != reply.ThreadID)
+            {
+                ModelState.AddModelError("ThreadID", "Invalid Thread ID");
+            }
+            if (dbReply.AuthorID != User.Identity.GetUserId())
+            {
+                ModelState.AddModelError("", "You are not the author of this post, and therfore cannot edit it");
+            }
+            if (ModelState.IsValid)
+            {
+                dbReply.UpdateFromViewModel(reply);
+                if (TrySaveChanges(_db))
+                {
+                    _db.Entry(dbReply).Reload();
+                    return Json(new { id = dbReply.ID, content = new ThreadReplyViewModel(dbReply).HtmlContent.ToString() });
+                }
+            }
+
+            return HttpUnprocessable();
+        }
+
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();

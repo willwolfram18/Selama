@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity;
 @model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
 
-<div class="row" data-thread-reply="@Model.ID">
+<div class="row thread-reply" data-thread-reply="@Model.ID">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
@@ -22,10 +22,10 @@
             </div>
         </div>
         <div class="panel-body">
-            <div class="col-xs-12 col-sm-12 col-md-2">
+            <div class="col-xs-12 col-sm-12 col-md-2 thread-reply-author">
                 @Model.Author
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-10">
+            <div class="col-xs-12 col-sm-12 col-md-10 thread-reply-content">
                 @Model.HtmlContent
             </div>
         </div>
