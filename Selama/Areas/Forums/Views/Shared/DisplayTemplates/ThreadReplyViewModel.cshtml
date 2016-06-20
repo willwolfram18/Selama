@@ -12,9 +12,12 @@
                 {
                     <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                         <ul class="edit-options-list">
-                            <li>
-                                <a href="#">Edit</a>
-                            </li>
+                            @if (User.Identity.GetUserId() == Model.AuthorID)
+                            {
+                                <li>
+                                    <a href="#">Edit</a>
+                                </li>
+                            }
                             <li>Delete</li>
                         </ul>
                     </div>

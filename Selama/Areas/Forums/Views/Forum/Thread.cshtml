@@ -127,7 +127,10 @@
                 {
                     <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                         <ul class="edit-options-list">
-                            <li>Edit</li>
+                            @if (User.Identity.GetUserId() == Model.AuthorID)
+                            {
+                                <li>Edit</li>
+                            }
                             <li>Delete</li>
                         </ul>
                     </div>
