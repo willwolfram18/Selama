@@ -44,14 +44,13 @@
         }
         function onReplyEditLinkClick_Error(response)
         {
-            // TODO: Create shared Bootstrap alert window
             if (response.statusText === "Invalid ID")
             {
-                alert("An invalid thread reply ID was provided");
+                Selama.Alert.raiseAlert("An invalid thread reply ID was provided", "Invalid ID");
             }
             else
             {
-                alert("Error occurred");
+                Selama.Alert.raiseAlert("An error occurred");
             }
         }
 
@@ -71,8 +70,7 @@
         }
         function onReplyUpdateRequestFailure(response)
         {
-            // TODO: Bootstrap styled alert
-            alert("An error occured while updating");
+            Selama.Alert.raiseAlert("An error occured while updating");
         }
 
         function onReplyEditModalShown(e)
@@ -80,13 +78,14 @@
             var $replyEditTextarea = $("#ThreadReplyEditModal textarea.mdd_editor");
             $replyEditTextarea.MarkdownDeep(Selama.MarkdownEditor.Options);
             var m = new MarkdownDeepEditor.Editor($replyEditTextarea[0], $("#ThreadReplyEditModal div.mdd_preview")[0]);
+            $("#ThreadReplyEditModal textarea.mdd_editor").focus();
         }
 
         $(document).ready(function ()
         {
             $(".btn.btn-post-reply").click(onPostReplyClick);
             $("#ThreadReplyEditor").hide();
-            $(".row[data-thread-reply]").on("click", ".edit-options-list a", onReplyEditLinkClick);
+            $(".row[data-thread-reply]").on("click", ".edit-options-list .thread-reply-edit", onReplyEditLinkClick);
             $("#ThreadReplyEditModal").on("shown.bs.modal", onReplyEditModalShown);
         });
     </script>
@@ -123,14 +122,11 @@
                 <div class="col-xs-6 col-sm-6 col-md-6">
                     @Html.DisplayFor(model => model.PostDate)
                 </div>
-                @if (User.Identity.GetUserId() == Model.AuthorID || User.IsInRole("Admin"))
+                @if (User.Identity.GetUserId() == Model.AuthorID)
                 {
                     <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                         <ul class="edit-options-list">
-                            @if (User.Identity.GetUserId() == Model.AuthorID)
-                            {
-                                <li>Edit</li>
-                            }
+                            <li>Edit</li>
                             <li>Delete</li>
                         </ul>
                     </div>

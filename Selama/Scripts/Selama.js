@@ -37,9 +37,82 @@ Selama.SpinShield = Selama.SpinShield || {
 };
 // #endregion
 
+// #region Alert
+Selama.Alert = Selama.Alert || {
+    init: function Selama_Alert_Init()
+    {
+        var $modal = $("#AlertModal.modal");
+        if ($modal.length === 0)
+        {
+            var $modalContent = Selama.createElem("div", "modal-content")
+                .append(
+                    Selama.createElem("div", "modal-header")
+                    .append(
+                        Selama.createElem("button", "close")
+                        .attr("type", "button")
+                        .attr("data-dismiss", "modal")
+                        .html("&times;")
+                    )
+                    .append(
+                        Selama.createElem("h4", "modal-title")
+                    )
+                )
+                .append(
+                    Selama.createElem("div", "modal-body")
+                )
+                .append(
+                    Selama.createElem("div", "modal-footer")
+                    .append(
+                        Selama.createElem("button", "btn btn-primary")
+                        .attr("type", "button")
+                        .attr("data-dismiss", "modal")
+                        .text("OK")
+                    )
+                );
+                
+
+            $("body").append(
+                Selama.createElem("div", "modal fade", "AlertModal")
+                .attr("role", "dialog")
+                .attr("data-backdrop", "static")
+                .attr("data-keyboard", "false")
+                .append(
+                    Selama.createElem("div", "modal-dialog")
+                    .append(
+                        $modalContent
+                    )
+                )
+            );
+
+            $modal = $("#AlertModal");
+        }
+        
+        return $modal;
+    },
+    raiseAlert: function Selama_Alert_RaiseAlert(text, title)
+    {
+        if (title === undefined)
+        {
+            title = "Alert";
+        }
+        var $modal = $("#AlertModal");
+        if ($modal.length === 0)
+        {
+            $modal = this.init();
+        }
+
+        $modal.find(".modal-body").text(text);
+        $modal.find(".modal-title").text(title);
+        $modal.modal("show");
+        return $modal;
+    },
+};
+// #endregion
+
 // #region Page load
 $(document).ready(function ()
 {
     Selama.SpinShield.init().lowerSheild();
+    Selama.Alert.init();
 });
 // #endregion
