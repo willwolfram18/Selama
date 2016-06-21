@@ -1,0 +1,27 @@
+﻿@model Selama.Areas.Forums.ViewModels.ThreadEditViewModel
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control mdd_editor" } })
+            <div class="mdd_preview"></div>
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsPinned, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.IsPinned)
+                @Html.ValidationMessageFor(model => model.IsPinned, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    @Html.EditorFor(model => model.Version, new { htmlAttributes = new { @class = "form-control" } })
+</div>

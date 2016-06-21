@@ -22,6 +22,13 @@ namespace Selama.Areas.Forums.Models
             IsPinned = model.IsPinned;
         }
 
+        public void UpdateFromViewModel(ThreadEditViewModel viewModel)
+        {
+            Content = viewModel.Content;
+            IsPinned = viewModel.IsPinned;
+            Convert.FromBase64String(viewModel.Version).CopyTo(Version, 0);
+        }
+
         #region Database columns
         [Key]
         public int ID { get; set; }

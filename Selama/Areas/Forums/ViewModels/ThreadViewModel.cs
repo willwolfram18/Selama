@@ -70,7 +70,14 @@ namespace Selama.Areas.Forums.ViewModels
 
         public override void ValidateModel(ModelStateDictionary ModelState)
         {
-            // Nothing to validate
+            if (!string.IsNullOrEmpty(Content))
+            {
+                Content = Content.Trim();
+            }
+            if (!string.IsNullOrEmpty(Title))
+            {
+                Title = Title.Trim();
+            }
         }
     }
 }

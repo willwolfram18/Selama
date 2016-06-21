@@ -182,6 +182,45 @@ namespace Selama.Areas.Forums.Controllers
             return HttpUnprocessable();
         }
 
+        public ActionResult EditThread(int id = 0)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null)
+            {
+                return HttpNotFound("Invalid ID");
+            }
+
+            return PartialView("EditorTemplates/ThreadEditViewModel", new ThreadEditViewModel(thread));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditThread(ThreadEditViewModel thread)
+        {
+            Thread dbThread = _db.Threads.Find(thread.ID);
+            if (dbThread == null)
+            {
+                return HttpNotFound("Invalid ID");
+            }
+
+            thread.ValidateModel(ModelState);
+            if (dbThread.AuthorID == User.Identity.GetUserId())
+            {
+                ModelState.AddModelError("", "You are not the author of this post");
+            }
+            if (ModelState.IsValid)
+            {
+                dbThread.UpdateFromViewModel(thread);
+                if (TrySaveChanges(_db))
+                {
+                    _db.Entry(dbThread).Reload();
+                    return Json(new { content = new ThreadViewModel(dbThread).HtmlContent.ToString() });
+                }
+            }
+
+            return HttpUnprocessable();
+        }
+
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();

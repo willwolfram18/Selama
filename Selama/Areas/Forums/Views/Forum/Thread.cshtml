@@ -27,7 +27,7 @@
         function onReplyEditLinkClick(e)
         {
             var replyId = $(e.target).closest(".row[data-thread-reply]").attr("data-thread-reply");
-            
+
             onAjaxRequestBegin();
             $.ajax({
                 url: '@Url.Action("EditReply", "Forum", new { area = "Forums" })',
@@ -54,14 +54,33 @@
             }
         }
 
-        function onReplyUpdateRequestBegin()
+        function onThreadEditLinkClick(e)
         {
-            Selama.SpinShield.raiseShield();
+            onAjaxRequestBegin();
+            $.ajax({
+                url: '@Url.Action("EditThread", "Forum", new { area = "Forums", id = Model.ID})',
+                type: 'GET',
+                complete: onAjaxRequestComplete,
+                success: onThreadEditLinkClick_Success,
+                error: onThreadEditLinkClick_Error,
+            });
         }
-        function onReplyUpdateRequestComplete()
+        function onThreadEditLinkClick_Success(response)
         {
-            Selama.SpinShield.lowerSheild();
+            $("#ThreadEditModal").modal("show").find(".modal-body").html(response);
         }
+        function onThreadEditLinkClick_Error(response)
+        {
+            if (response.statusText === "Invalid ID")
+            {
+                Selama.Alert.raiseAlert("An invalid thread ID was provided", "Invalid ID");
+            }
+            else
+            {
+                Selama.Alert.raiseAlert("An error occurred");
+            }
+        }
+
         function onReplyUpdateRequestSuccess(response)
         {
             $(".thread-reply[data-thread-reply='" + response.id + "']")
@@ -71,6 +90,15 @@
         function onReplyUpdateRequestFailure(response)
         {
             Selama.Alert.raiseAlert("An error occured while updating");
+        }
+
+        function onThreadUpdateRequestSuccess(response)
+        {
+
+        }
+        function onThreadUpdateRequestFailure(response)
+        {
+
         }
 
         function onReplyEditModalShown(e)
@@ -87,6 +115,7 @@
             $("#ThreadReplyEditor").hide();
             $(".row[data-thread-reply]").on("click", ".edit-options-list .thread-reply-edit", onReplyEditLinkClick);
             $("#ThreadReplyEditModal").on("shown.bs.modal", onReplyEditModalShown);
+            $(".row[data-thread]").on("click", ".edit-options-list .thread-edit", onThreadEditLinkClick);
         });
     </script>
 }
@@ -105,8 +134,8 @@
 
 <h2>
     @if (Model.IsPinned)
-{ <text>[Pinned] </text>;
-}@Model.Title
+    { <text>[Pinned] </text>;
+    }@Model.Title
 </h2>
 <div class="row" style="margin: 12px 0;">
     <div class="col-md-12" style="padding: 0;">
@@ -126,7 +155,9 @@
                 {
                     <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                         <ul class="edit-options-list">
-                            <li>Edit</li>
+                            <li class="thread-edit">
+                                Edit
+                            </li>
                             <li>Delete</li>
                         </ul>
                     </div>
@@ -159,6 +190,38 @@
     </div>
 </div>
 
+<div id="ThreadEditModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Edit Thread
+                </h4>
+            </div>
+            @using (Ajax.BeginForm("EditThread", "Forum", new { area = "Forums", id = Model.ID }, new AjaxOptions
+            {
+                OnBegin = "onAjaxRequestBegin",
+                OnComplete = "onAjaxRequestComplete",
+                OnSuccess = "onThreadUpdateSuccess",
+                OnFailure = "onThreadUpdateFailure"
+            }))
+            {
+                <div class="modal-body">
+                    The editor goes here
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 <div id="ThreadReplyEditModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -169,8 +232,8 @@
             </div>
             @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
             {
-                OnBegin = "onReplyUpdateRequestBegin",
-                OnComplete = "onReplyUpdateRequestComplete",
+                OnBegin = "onAjaxRequestBegin",
+                OnComplete = "onAjaxRequestComplete",
                 OnFailure = "onReplyUpdateRequestFailure",
                 OnSuccess = "onReplyUpdateRequestSuccess"
             }))
