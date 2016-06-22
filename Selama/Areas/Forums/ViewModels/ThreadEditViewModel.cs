@@ -37,7 +37,10 @@ namespace Selama.Areas.Forums.ViewModels
 
         public override void ValidateModel(ModelStateDictionary ModelState)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(Content))
+            {
+                Content = Content.Trim();
+            }
         }
     }
 }

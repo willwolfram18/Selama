@@ -1,12 +1,10 @@
-﻿body
-{
+﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
-.body-content
-{
+.body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -14,50 +12,40 @@
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt
-{
+.dl-horizontal dt {
     white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
-textarea
-{
+textarea {
     max-width: 280px;
 }
 
-.form-horizontal .control-label
-{
+.form-horizontal .control-label {
     padding-top: 0;
 }
 
-.edit-options-list li
-{
+.edit-options-list li {
     display: inline-block;
-}
 
-.edit-options-list li:not(:first-child)::before
-{
-    content: "| ";
-    position: relative;
-    top: -1px;
-    padding: 0 5px;
+    &:not(:first-child)::before {
+        content: "| ";
+        position: relative;
+        top: -1px;
+        padding: 0 5px;
+    }
 }
-
 
 /* #region Bootstrap navbar style overrides */
-@media (min-width: 768px) and (max-width: 991px)
-{
-    .navbar
-    {
-        .contaier
-        {
+@media (min-width: 768px) and (max-width: 991px) {
+    .navbar {
+        .contaier {
             max-width: none;
 
             > .navbar-header,
-            > .navbar-collapse
-            {
+            > .navbar-collapse {
                 $margin_padding_px: 15px;
                 margin-left: -$margin_padding_px;
                 margin-right: -$margin_padding_px;
@@ -69,48 +57,39 @@ textarea
     }
 
     .navbar-header,
-    .navbar-right
-    {
+    .navbar-right {
         float: none !important;
     }
 
-    .navbar-toggle
-    {
+    .navbar-toggle {
         display: block;
     }
 
-    .navbar-collapse
-    {
+    .navbar-collapse {
         border-top: 1px solid transparent;
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
 
-        &.collapse
-        {
+        &.collapse {
             display: none !important;
         }
     }
 
-    .navbar-nav
-    {
+    .navbar-nav {
         float: none !important;
         margin: 7.5px -15px;
 
-        > li
-        {
+        > li {
             float: none;
 
-            > a
-            {
+            > a {
                 $padding: 10px;
                 padding-top: $padding;
                 padding-bottom: $padding;
             }
         }
 
-        .open
-        {
-            .dropdown-menu
-            {
+        .open {
+            .dropdown-menu {
                 $dropdown_item_padding: 5px 15px 5px 25px;
                 position: static;
                 float: none;
@@ -120,30 +99,25 @@ textarea
                 border: 0;
                 box-shadow: none;
 
-                > li
-                {
-                    > a
-                    {
+                > li {
+                    > a {
                         padding: $dropdown_item_padding;
                         line-height: 20px;
                     }
                 }
 
-                .dropdown-header
-                {
+                .dropdown-header {
                     padding: $dropdown_item_padding;
                 }
             }
         }
     }
 
-    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a
-    {
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
         color: #999;
 
         &:hover,
-        &:focus
-        {
+        &:focus {
             color: #ffffff;
             background-color: transparent;
         }
@@ -152,8 +126,7 @@ textarea
 /* #endregion */
 
 /* #region SpinShield */
-.spin-wrapper
-{
+.spin-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -163,22 +136,18 @@ textarea
     width: 100%;
     background-color: rgba(35, 35, 35, 0.65);
 
-    .spin-wrapper-inner
-    {
+    .spin-wrapper-inner {
         display: table-cell;
         vertical-align: middle;
         text-align: center;
 
-        .spin
-        {
+        .spin {
             background-color: transparent;
         }
     }
 
-    @media(min-width: 768px)
-    {
-        .spin
-        {
+    @media(min-width: 768px) {
+        .spin {
             height: 178px;
             width: 178px;
         }
@@ -186,10 +155,12 @@ textarea
 }
 /* #endregion */
 
-@media (min-width: 992px)
-{
-    .modal-lg
-    {
+#AlertModal {
+    background-color: rgba(63, 63, 63, 0.75); 
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
         width: 900px;
     }
 }

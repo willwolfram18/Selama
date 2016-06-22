@@ -24,12 +24,11 @@ textarea {
 
 .edit-options-list li {
   display: inline-block; }
-
-.edit-options-list li:not(:first-child)::before {
-  content: "| ";
-  position: relative;
-  top: -1px;
-  padding: 0 5px; }
+  .edit-options-list li:not(:first-child)::before {
+    content: "| ";
+    position: relative;
+    top: -1px;
+    padding: 0 5px; }
 
 /* #region Bootstrap navbar style overrides */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -102,6 +101,9 @@ textarea {
       width: 178px; } }
 
 /* #endregion */
+#AlertModal {
+  background-color: rgba(63, 63, 63, 0.75); }
+
 @media (min-width: 992px) {
   .modal-lg {
     width: 900px; } }

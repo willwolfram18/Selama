@@ -204,7 +204,7 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             thread.ValidateModel(ModelState);
-            if (dbThread.AuthorID == User.Identity.GetUserId())
+            if (dbThread.AuthorID != User.Identity.GetUserId())
             {
                 ModelState.AddModelError("", "You are not the author of this post");
             }
@@ -214,7 +214,7 @@ namespace Selama.Areas.Forums.Controllers
                 if (TrySaveChanges(_db))
                 {
                     _db.Entry(dbThread).Reload();
-                    return Json(new { content = new ThreadViewModel(dbThread).HtmlContent.ToString() });
+                    return Json(new ThreadViewModel(dbThread).HtmlContent.ToString());
                 }
             }
 
