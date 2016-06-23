@@ -139,6 +139,45 @@ namespace Selama.Areas.Forums.Controllers
             return Json(errors);
         }
 
+        public ActionResult EditThread(int id = 0)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null || !thread.IsActive)
+            {
+                return HttpNotFound("Invalid ID");
+            }
+
+            return PartialView("EditorTemplates/ThreadEditViewModel", new ThreadEditViewModel(thread));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditThread(ThreadEditViewModel thread)
+        {
+            Thread dbThread = _db.Threads.Find(thread.ID);
+            if (dbThread == null || !dbThread.IsActive)
+            {
+                return HttpNotFound("Invalid ID");
+            }
+
+            thread.ValidateModel(ModelState);
+            if (dbThread.AuthorID != User.Identity.GetUserId())
+            {
+                ModelState.AddModelError("", "You are not the author of this post");
+            }
+            if (ModelState.IsValid)
+            {
+                dbThread.UpdateFromViewModel(thread);
+                if (TrySaveChanges(_db))
+                {
+                    _db.Entry(dbThread).Reload();
+                    return Json(new ThreadViewModel(dbThread).HtmlContent.ToString());
+                }
+            }
+
+            return HttpUnprocessable();
+        }
+
         public ActionResult EditReply(int id = 0)
         {
             ThreadReply reply = _db.ThreadReplies.Find(id);
@@ -176,45 +215,6 @@ namespace Selama.Areas.Forums.Controllers
                 {
                     _db.Entry(dbReply).Reload();
                     return Json(new { id = dbReply.ID, content = new ThreadReplyViewModel(dbReply).HtmlContent.ToString() });
-                }
-            }
-
-            return HttpUnprocessable();
-        }
-
-        public ActionResult EditThread(int id = 0)
-        {
-            Thread thread = _db.Threads.Find(id);
-            if (thread == null)
-            {
-                return HttpNotFound("Invalid ID");
-            }
-
-            return PartialView("EditorTemplates/ThreadEditViewModel", new ThreadEditViewModel(thread));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditThread(ThreadEditViewModel thread)
-        {
-            Thread dbThread = _db.Threads.Find(thread.ID);
-            if (dbThread == null)
-            {
-                return HttpNotFound("Invalid ID");
-            }
-
-            thread.ValidateModel(ModelState);
-            if (dbThread.AuthorID != User.Identity.GetUserId())
-            {
-                ModelState.AddModelError("", "You are not the author of this post");
-            }
-            if (ModelState.IsValid)
-            {
-                dbThread.UpdateFromViewModel(thread);
-                if (TrySaveChanges(_db))
-                {
-                    _db.Entry(dbThread).Reload();
-                    return Json(new ThreadViewModel(dbThread).HtmlContent.ToString());
                 }
             }
 

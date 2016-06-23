@@ -27,20 +27,25 @@ namespace Selama.Migrations
             //    Name = "User"
             //});
 
-            IdentityRole admin = context.Roles.Where(r => r.Name == "Admin").FirstOrDefault();
-            IdentityRole user = context.Roles.Where(r => r.Name == "User").FirstOrDefault();
-            ApplicationUser billy = context.Users.Where(u => u.UserName == "billy@example.com").FirstOrDefault();
-            ApplicationUser billy2 = context.Users.Where(u => u.UserName == "billy2@example.com").FirstOrDefault();
+            //IdentityRole admin = context.Roles.Where(r => r.Name == "Admin").FirstOrDefault();
+            //IdentityRole user = context.Roles.Where(r => r.Name == "User").FirstOrDefault();
+            //ApplicationUser billy = context.Users.Where(u => u.UserName == "billy@example.com").FirstOrDefault();
+            //ApplicationUser billy2 = context.Users.Where(u => u.UserName == "billy2@example.com").FirstOrDefault();
 
-            billy2.Roles.Add(new IdentityUserRole()
+            //billy2.Roles.Add(new IdentityUserRole()
+            //{
+            //    RoleId = admin.Id,
+            //    UserId = billy2.Id
+            //});
+            //billy.Roles.Add(new IdentityUserRole()
+            //{
+            //    RoleId = user.Id,
+            //    UserId = billy.Id
+            //});
+            context.ThreadReplies.ToList().ForEach(r =>
             {
-                RoleId = admin.Id,
-                UserId = billy2.Id
-            });
-            billy.Roles.Add(new IdentityUserRole()
-            {
-                RoleId = user.Id,
-                UserId = billy.Id
+                r.IsActive = true;
+                context.ThreadReplies.AddOrUpdate(r);
             });
         }
     }

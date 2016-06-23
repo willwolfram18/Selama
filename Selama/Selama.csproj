@@ -260,6 +260,10 @@
     <Compile Include="Migrations\201606120740410_AddUsersToRoles.Designer.cs">
       <DependentUpon>201606120740410_AddUsersToRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606230149274_RequiredField_ThreadReply.cs" />
+    <Compile Include="Migrations\201606230149274_RequiredField_ThreadReply.Designer.cs">
+      <DependentUpon>201606230149274_RequiredField_ThreadReply.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
@@ -457,6 +461,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606120740410_AddUsersToRoles.resx">
       <DependentUpon>201606120740410_AddUsersToRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606230149274_RequiredField_ThreadReply.resx">
+      <DependentUpon>201606230149274_RequiredField_ThreadReply.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

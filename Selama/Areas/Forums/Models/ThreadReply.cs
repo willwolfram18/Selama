@@ -48,6 +48,9 @@ namespace Selama.Areas.Forums.Models
         [ForeignKey("Thread")]
         public int ThreadID { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
         [Timestamp]
         public byte[] Version { get; set; }
         #endregion
