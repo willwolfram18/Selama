@@ -139,14 +139,20 @@
     }@Model.Title
 </h2>
 <div class="row" style="margin: 12px 0;">
-    <div class="col-md-12" style="padding: 0;">
+    <div class="col-sm-6 col-md-6" style="padding: 0;">
         <div class="btn btn-default btn-post-reply">
             Add Reply
         </div>
     </div>
+    <div class="col-sm-6 col-md-6" style="padding: 0;">
+        @Html.Partial("_ThreadPager", Model)
+    </div>
+</div>
+<div class="row">
+    
 </div>
 
-@if (Model.PageNum == 0)
+@if (Model.ViewPageNum == 1)
 {
     <div class="row thread" data-thread="@Model.ID">
         <div class="panel panel-default">
@@ -188,15 +194,18 @@
     @Html.DisplayFor(model => reply)
 }
 
-@Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })
-
 <div class="row" style="margin: 0;">
-    <div class="col-md-12" style="padding: 0;">
+    <div class="col-sm-6 col-md-6" style="padding: 0;">
         <div class="btn btn-default btn-post-reply">
             Add Reply
         </div>
     </div>
+    <div class="col-sm-6 col-md-6" style="padding: 0;">
+        @Html.Partial("_ThreadPager", Model)
+    </div>
 </div>
+
+@Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })
 
 <div id="ThreadEditModal" class="modal fade" role="dialog"  data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">

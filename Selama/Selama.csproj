@@ -354,6 +354,7 @@
     <Content Include="Content\Site.scss" />
     <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadReplyEditViewModel.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\EditorTemplates\ThreadEditViewModel.cshtml" />
+    <Content Include="Areas\Forums\Views\Shared\_ThreadPager.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

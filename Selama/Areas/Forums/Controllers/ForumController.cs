@@ -15,7 +15,7 @@ namespace Selama.Areas.Forums.Controllers
     public class ForumController : _BaseAuthorizeController
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
-        private const int _pageSize = 5;
+        private const int _pageSize = 2;
 
         // GET: Forums/Forum
         public ActionResult Index()
@@ -51,7 +51,7 @@ namespace Selama.Areas.Forums.Controllers
             int pageSize = _pageSize;
             if (page <= 0)
             {
-                return RedirectToAction("Thread", new { id = id, page = page });
+                return RedirectToAction("Thread", new { id = id, page = 1 });
             }
             if (page == 1)
             {
@@ -61,9 +61,9 @@ namespace Selama.Areas.Forums.Controllers
 
             // Generate view model and redirect to last page if beyond
             ThreadViewModel viewModel = new ThreadViewModel(thread, pageSize, page);
-            if (viewModel.PageNum != page)
+            if (viewModel.ViewPageNum != page + 1)
             {
-                return RedirectToAction("Thread", new { id = id, page = viewModel.PageNum + 1 });
+                return RedirectToAction("Thread", new { id = id, page = viewModel.ViewPageNum });
             }
             return View(viewModel);
         }

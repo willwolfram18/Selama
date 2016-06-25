@@ -33,11 +33,14 @@ namespace Selama.Areas.Forums.ViewModels
             AuthorID = thread.AuthorID;
             Author = thread.Author.UserName;
 
+            int pageSizeOffset = (pageNum == 0 ? 1 : 0);
             PageSize = pageSize;
-            PageNum = pageNum;
+            _pageNum = pageNum;
+            // Add 1 for the thread content itself
+            NumPages = (thread.Replies.Count + 1) / (PageSize + pageSizeOffset);
             if (StartingIndex >= thread.Replies.Count)
             {
-                PageNum = thread.Replies.Count / PageSize;
+                _pageNum = NumPages;
             }
 
             Replies = new List<ThreadReplyViewModel>();
@@ -45,7 +48,7 @@ namespace Selama.Areas.Forums.ViewModels
                 .Skip(StartingIndex)
                 .Take(PageSize)
                 .ToList();
-            int indexOffset = (PageNum == 0 ? 0 : 1);
+            int indexOffset = (_pageNum == 0 ? 0 : 1);
             for (int i = 0; i < dbReplies.Count; i++)
             {
                 ThreadReply reply = dbReplies[i];
@@ -56,6 +59,7 @@ namespace Selama.Areas.Forums.ViewModels
             }
         }
 
+        #region Forum/Thread properties
         public int ID { get; set; }
 
         public int ForumID { get; set; }
@@ -84,24 +88,57 @@ namespace Selama.Areas.Forums.ViewModels
         public string Author { get; set; }
 
         public List<ThreadReplyViewModel> Replies { get; set; }
+        #endregion
 
-        public int PageNum { get; set; }
+        #region Pagination properties
+        private int _pageNum { get; set; }
 
-        public int PageSize { get; set; }
-
-        public int StartingIndex
+        public int ViewPageNum
         {
             get
             {
-                if (PageNum == 0)
+                return _pageNum + 1;
+            }
+        }
+
+        public int PageSize { get; set; }
+
+        public int NumPages { get; set; }
+
+        private int StartingIndex
+        {
+            get
+            {
+                if (_pageNum == 0)
                 {
                     return 0;
                 }
 
-                return (PageNum * PageSize) - 1;
+                return (_pageNum * PageSize) - 1;
             }
         }
 
+        public int PagerStartingIndex
+        {
+            get
+            {
+                if (ViewPageNum == 1)
+                {
+                    return 0;
+                }
+                else if (ViewPageNum == NumPages)
+                {
+                    return -2;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+        }
+        #endregion
+
+        #region Methods
         public override void ValidateModel(ModelStateDictionary ModelState)
         {
             if (!string.IsNullOrEmpty(Content))
@@ -113,5 +150,6 @@ namespace Selama.Areas.Forums.ViewModels
                 Title = Title.Trim();
             }
         }
+        #endregion
     }
 }

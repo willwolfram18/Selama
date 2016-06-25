@@ -156,11 +156,21 @@ textarea {
 /* #endregion */
 
 #AlertModal {
-    background-color: rgba(63, 63, 63, 0.75); 
+    background-color: rgba(63, 63, 63, 0.75);
 }
 
-.anchor {
-    padding-top: 86px;
+.pager {
+    margin: 0;
+
+    &.pager-right {
+        text-align: right;
+    }
+
+    .pager-btn.selected {
+        > a {
+            
+        }
+    }
 }
 
 @media (min-width: 992px) {

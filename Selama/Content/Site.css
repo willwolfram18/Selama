@@ -104,8 +104,10 @@ textarea {
 #AlertModal {
   background-color: rgba(63, 63, 63, 0.75); }
 
-.anchor {
-  padding-top: 86px; }
+.pager {
+  margin: 0; }
+  .pager.pager-right {
+    text-align: right; }
 
 @media (min-width: 992px) {
   .modal-lg {
