@@ -104,6 +104,9 @@ textarea {
 #AlertModal {
   background-color: rgba(63, 63, 63, 0.75); }
 
+.anchor {
+  padding-top: 86px; }
+
 @media (min-width: 992px) {
   .modal-lg {
     width: 900px; } }

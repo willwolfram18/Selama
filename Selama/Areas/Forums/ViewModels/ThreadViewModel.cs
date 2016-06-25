@@ -35,7 +35,10 @@ namespace Selama.Areas.Forums.ViewModels
             Replies = new List<ThreadReplyViewModel>();
             foreach (ThreadReply reply in thread.Replies)
             {
-                Replies.Add(new ThreadReplyViewModel(reply));
+                if (reply.IsActive)
+                {
+                    Replies.Add(new ThreadReplyViewModel(reply));
+                }
             }
         }
 

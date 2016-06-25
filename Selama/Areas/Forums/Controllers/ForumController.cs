@@ -91,7 +91,7 @@ namespace Selama.Areas.Forums.Controllers
         public ActionResult PostReply(ThreadReplyViewModel reply, int id = 0)
         {
             Thread thread = _db.Threads.Find(id);
-            if (thread == null)
+            if (thread == null || !thread.IsActive)
             {
                 return HttpNotFound();
             }
@@ -181,7 +181,7 @@ namespace Selama.Areas.Forums.Controllers
         public ActionResult EditReply(int id = 0)
         {
             ThreadReply reply = _db.ThreadReplies.Find(id);
-            if (reply == null)
+            if (reply == null || !reply.IsActive)
             {
                 return HttpNotFound("Invalid ID");
             }
@@ -194,7 +194,7 @@ namespace Selama.Areas.Forums.Controllers
         public ActionResult EditReply(ThreadReplyEditViewModel reply)
         {
             ThreadReply dbReply = _db.ThreadReplies.Find(reply.ID);
-            if (reply == null)
+            if (reply == null || !dbReply.IsActive)
             {
                 return HttpNotFound("Invalid ID");
             }
