@@ -4,6 +4,7 @@ using Selama.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,7 +13,7 @@ namespace Selama.Areas.Forums.ViewModels
     public class ThreadViewModel : _BaseEditableViewModel
     {
         public ThreadViewModel() { }
-        public ThreadViewModel(Thread thread)
+        public ThreadViewModel(Thread thread, int pageSize, int pageNum)
         {
             ID = thread.ID;
             ForumID = thread.ForumID;
@@ -32,12 +33,25 @@ namespace Selama.Areas.Forums.ViewModels
             AuthorID = thread.AuthorID;
             Author = thread.Author.UserName;
 
-            Replies = new List<ThreadReplyViewModel>();
-            foreach (ThreadReply reply in thread.Replies)
+            PageSize = pageSize;
+            PageNum = pageNum;
+            if (StartingIndex >= thread.Replies.Count)
             {
+                PageNum = thread.Replies.Count / PageSize;
+            }
+
+            Replies = new List<ThreadReplyViewModel>();
+            var dbReplies = thread.Replies.OrderBy(r => r.PostDate)
+                .Skip(StartingIndex)
+                .Take(PageSize)
+                .ToList();
+            int indexOffset = (PageNum == 0 ? 0 : 1);
+            for (int i = 0; i < dbReplies.Count; i++)
+            {
+                ThreadReply reply = dbReplies[i];
                 if (reply.IsActive)
                 {
-                    Replies.Add(new ThreadReplyViewModel(reply));
+                    Replies.Add(new ThreadReplyViewModel(reply, StartingIndex + i));
                 }
             }
         }
@@ -70,6 +84,23 @@ namespace Selama.Areas.Forums.ViewModels
         public string Author { get; set; }
 
         public List<ThreadReplyViewModel> Replies { get; set; }
+
+        public int PageNum { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int StartingIndex
+        {
+            get
+            {
+                if (PageNum == 0)
+                {
+                    return 0;
+                }
+
+                return (PageNum * PageSize) - 1;
+            }
+        }
 
         public override void ValidateModel(ModelStateDictionary ModelState)
         {

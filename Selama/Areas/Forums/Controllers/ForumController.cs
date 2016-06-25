@@ -14,7 +14,8 @@ namespace Selama.Areas.Forums.Controllers
 {
     public class ForumController : _BaseAuthorizeController
     {
-        public ApplicationDbContext _db = new ApplicationDbContext();
+        private ApplicationDbContext _db = new ApplicationDbContext();
+        private const int _pageSize = 5;
 
         // GET: Forums/Forum
         public ActionResult Index()
@@ -38,7 +39,7 @@ namespace Selama.Areas.Forums.Controllers
             return View(new ForumViewModel(forum));
         }
 
-        public ActionResult Thread(int id = 0)
+        public ActionResult Thread(int id = 0, int page = 1)
         {
             Thread thread = _db.Threads.Find(id);
             if (thread == null)
@@ -46,7 +47,25 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(new ThreadViewModel(thread));
+            // Subtract 1 on the first page to compensate for thread showing
+            int pageSize = _pageSize;
+            if (page <= 0)
+            {
+                return RedirectToAction("Thread", new { id = id, page = page });
+            }
+            if (page == 1)
+            {
+                pageSize = _pageSize - 1;
+            }
+            page--;
+
+            // Generate view model and redirect to last page if beyond
+            ThreadViewModel viewModel = new ThreadViewModel(thread, pageSize, page);
+            if (viewModel.PageNum != page)
+            {
+                return RedirectToAction("Thread", new { id = id, page = viewModel.PageNum + 1 });
+            }
+            return View(viewModel);
         }
 
         #region Create thread
@@ -112,7 +131,7 @@ namespace Selama.Areas.Forums.Controllers
                     dbReply = _db.ThreadReplies.Find(dbReply.ID);
                     Response.StatusCode = 200;
 
-                    return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply));
+                    return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply, thread.Replies.Count));
                 }
             }
 
@@ -139,6 +158,7 @@ namespace Selama.Areas.Forums.Controllers
             return Json(errors);
         }
 
+        #region Thread editing
         public ActionResult EditThread(int id = 0)
         {
             Thread thread = _db.Threads.Find(id);
@@ -171,13 +191,15 @@ namespace Selama.Areas.Forums.Controllers
                 if (TrySaveChanges(_db))
                 {
                     _db.Entry(dbThread).Reload();
-                    return Json(new ThreadViewModel(dbThread).HtmlContent.ToString());
+                    return Json(new ThreadViewModel(dbThread, _pageSize, 0).HtmlContent.ToString());
                 }
             }
 
             return HttpUnprocessable();
         }
+        #endregion
 
+        #region Reply editing
         public ActionResult EditReply(int id = 0)
         {
             ThreadReply reply = _db.ThreadReplies.Find(id);
@@ -214,12 +236,13 @@ namespace Selama.Areas.Forums.Controllers
                 if (TrySaveChanges(_db))
                 {
                     _db.Entry(dbReply).Reload();
-                    return Json(new { id = dbReply.ID, content = new ThreadReplyViewModel(dbReply).HtmlContent.ToString() });
+                    return Json(new { id = dbReply.ID, content = new ThreadReplyViewModel(dbReply, 0).HtmlContent.ToString() });
                 }
             }
 
             return HttpUnprocessable();
         }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

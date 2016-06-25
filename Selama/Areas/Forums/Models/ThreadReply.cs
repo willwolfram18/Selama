@@ -16,6 +16,7 @@ namespace Selama.Areas.Forums.Models
             PostDate = model.PostDate;
             ThreadID = threadId;
             AuthorID = authorId;
+            IsActive = true;
         }
 
         public void UpdateFromViewModel(ThreadReplyEditViewModel viewModel)

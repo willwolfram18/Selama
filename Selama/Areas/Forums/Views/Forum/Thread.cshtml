@@ -145,43 +145,47 @@
         </div>
     </div>
 </div>
-<div class="row thread" data-thread="@Model.ID">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    @Html.DisplayFor(model => model.PostDate)
-                </div>
-                @if (User.Identity.GetUserId() == Model.AuthorID)
-                {
-                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
-                        <a class="anchor" name="1" href="#1">#1</a>
-                        <ul class="edit-options-list">
-                            <li>
-                                <a href="#" class="thread-edit">
-                                    Edit
-                                </a>
-                            </li>
-                            <li>Delete</li>
-                        </ul>
+
+@if (Model.PageNum == 0)
+{
+    <div class="row thread" data-thread="@Model.ID">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        @Html.DisplayFor(model => model.PostDate)
                     </div>
-                }
+                    @if (User.Identity.GetUserId() == Model.AuthorID)
+                    {
+                        <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
+                            <a class="anchor" name="1" href="#1">#1</a>
+                            <ul class="edit-options-list">
+                                <li>
+                                    <a href="#" class="thread-edit">
+                                        Edit
+                                    </a>
+                                </li>
+                                <li>Delete</li>
+                            </ul>
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-        <div class="panel-body">
-            <div class="col-xs-12 col-sm-12 col-md-2 thread-author">
-                @Model.Author
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-10 thread-content">
-                @Model.HtmlContent
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12 col-md-2 thread-author">
+                    @Model.Author
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-10 thread-content">
+                    @Model.HtmlContent
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
 
-@for(int i = 0; i < Model.Replies.Count; i++)
+@foreach(var reply in Model.Replies)
 {
-    @Html.DisplayFor(model => model.Replies[i], new { Index = (i + 2) })
+    @Html.DisplayFor(model => reply)
 }
 
 @Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })

@@ -11,7 +11,7 @@ namespace Selama.Areas.Forums.ViewModels
     public class ThreadReplyViewModel : _BaseEditableViewModel
     {
         public ThreadReplyViewModel() { }
-        public ThreadReplyViewModel(ThreadReply reply)
+        public ThreadReplyViewModel(ThreadReply reply, int replyIndex)
         {
             ID = reply.ID;
             ThreadID = reply.ThreadID;
@@ -24,6 +24,9 @@ namespace Selama.Areas.Forums.ViewModels
             PostDate = reply.PostDate;
             AuthorID = reply.AuthorID;
             Author = reply.Author.UserName;
+            // Add 2 because index has a base 0, and want base 1, and the thread content
+            // itself is part of the index
+            ReplyIndex = replyIndex + 2;
         }
 
         public int ID { get; set; }
@@ -46,6 +49,8 @@ namespace Selama.Areas.Forums.ViewModels
 
         public string AuthorID { get; set; }
         public string Author { get; set; }
+
+        public int ReplyIndex { get; set; }
 
         public override void ValidateModel(ModelStateDictionary ModelState)
         {
