@@ -15,7 +15,7 @@ namespace Selama.Areas.Forums.Controllers
     public class ForumController : _BaseAuthorizeController
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
-        private const int _pageSize = 2;
+        private const int _pageSize = 20;
 
         // GET: Forums/Forum
         public ActionResult Index()

@@ -105,9 +105,14 @@ textarea {
   background-color: rgba(63, 63, 63, 0.75); }
 
 .pager {
-  margin: 0; }
+  margin: 0;
+  font-size: 12px; }
+  .pager > li {
+    vertical-align: bottom; }
   .pager.pager-right {
     text-align: right; }
+  .pager .pager-btn > a {
+    border-radius: 4px; }
 
 @media (min-width: 992px) {
   .modal-lg {

@@ -161,14 +161,19 @@ textarea {
 
 .pager {
     margin: 0;
+    font-size: 12px;
+
+    > li {
+        vertical-align: bottom;
+    }
 
     &.pager-right {
         text-align: right;
     }
 
-    .pager-btn.selected {
+    .pager-btn {
         > a {
-            
+            border-radius: 4px;
         }
     }
 }
