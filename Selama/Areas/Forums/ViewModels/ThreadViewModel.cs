@@ -32,6 +32,7 @@ namespace Selama.Areas.Forums.ViewModels
             PostDate = thread.PostDate;
             AuthorID = thread.AuthorID;
             Author = thread.Author.UserName;
+            IsLocked = thread.IsLocked;
 
             int pageSizeOffset = (pageNum == 0 ? 1 : 0);
             PageSize = pageSize;
@@ -86,6 +87,8 @@ namespace Selama.Areas.Forums.ViewModels
 
         public string AuthorID { get; set; }
         public string Author { get; set; }
+
+        public bool IsLocked { get; set; }
 
         public List<ThreadReplyViewModel> Replies { get; set; }
         #endregion

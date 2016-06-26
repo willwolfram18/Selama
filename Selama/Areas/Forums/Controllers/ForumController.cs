@@ -114,6 +114,10 @@ namespace Selama.Areas.Forums.Controllers
             {
                 return HttpNotFound();
             }
+            if (thread.IsLocked)
+            {
+                return HttpUnprocessable("Thread is locked");
+            }
 
             if (id != reply.ThreadID)
             {
@@ -166,6 +170,10 @@ namespace Selama.Areas.Forums.Controllers
             {
                 return HttpNotFound("Invalid ID");
             }
+            else if (thread.IsLocked)
+            {
+                return HttpUnprocessable("Thread is locked");
+            }
 
             return PartialView("EditorTemplates/ThreadEditViewModel", new ThreadEditViewModel(thread));
         }
@@ -178,6 +186,10 @@ namespace Selama.Areas.Forums.Controllers
             if (dbThread == null || !dbThread.IsActive)
             {
                 return HttpNotFound("Invalid ID");
+            }
+            else if (dbThread.IsLocked)
+            {
+                return HttpUnprocessable("Thread is locked");
             }
 
             thread.ValidateModel(ModelState);
@@ -207,6 +219,10 @@ namespace Selama.Areas.Forums.Controllers
             {
                 return HttpNotFound("Invalid ID");
             }
+            if (reply.Thread.IsLocked)
+            {
+                return HttpUnprocessable("Thread is locked");
+            }
 
             return PartialView("EditorTemplates/ThreadReplyEditViewModel", new ThreadReplyEditViewModel(reply));
         }
@@ -219,6 +235,10 @@ namespace Selama.Areas.Forums.Controllers
             if (reply == null || !dbReply.IsActive)
             {
                 return HttpNotFound("Invalid ID");
+            }
+            if (dbReply.Thread.IsLocked)
+            {
+                return HttpUnprocessable("Thread is locked");
             }
 
             reply.ValidateModel(ModelState);

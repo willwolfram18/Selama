@@ -282,6 +282,10 @@
     <Compile Include="Migrations\201606230149274_RequiredField_ThreadReply.Designer.cs">
       <DependentUpon>201606230149274_RequiredField_ThreadReply.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606260259353_ThreadLocking.cs" />
+    <Compile Include="Migrations\201606260259353_ThreadLocking.Designer.cs">
+      <DependentUpon>201606260259353_ThreadLocking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
@@ -470,6 +474,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606230149274_RequiredField_ThreadReply.resx">
       <DependentUpon>201606230149274_RequiredField_ThreadReply.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606260259353_ThreadLocking.resx">
+      <DependentUpon>201606260259353_ThreadLocking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -27,6 +27,7 @@ namespace Selama.Areas.Forums.ViewModels
             // Add 2 because index has a base 0, and want base 1, and the thread content
             // itself is part of the index
             ReplyIndex = replyIndex + 2;
+            IsThreadLocked = reply.Thread.IsLocked;
         }
 
         public int ID { get; set; }
@@ -51,6 +52,8 @@ namespace Selama.Areas.Forums.ViewModels
         public string Author { get; set; }
 
         public int ReplyIndex { get; set; }
+
+        public bool IsThreadLocked { get; set; }
 
         public override void ValidateModel(ModelStateDictionary ModelState)
         {

@@ -56,27 +56,34 @@
         }
         function onPostClick_Error(response)
         {
-            var modelState = response.responseJSON;
-            if (modelState !== undefined)
+            if (response.statusText === "Thread is locked")
             {
-                for (var i = 0; i < modelState.length; i++)
+                Selama.Alert.raiseAlert("The thread you're trying to reply to is locked from editing.", "Thread is locked");
+            }
+            else
+            {
+                var modelState = eval(response.responseText);
+                if (modelState !== undefined)
                 {
-                    var error = {};
-                    error[modelState[i].Property] = [];
-                    for (var j = 0; j < modelState[i].Errors.length; j++)
+                    for (var i = 0; i < modelState.length; i++)
                     {
-                        error[modelState[i].Property].push("<li>" + modelState[i].Errors[j] + "</li>");
-                    }
-
-                    if (modelState[i].Property !== "")
-                    {
-                        $("#ThreadReplyEditor form").validate().showErrors(error);
-                    }
-                    else
-                    {
-                        for (var j = 0; j < error[""].length; j++)
+                        var error = {};
+                        error[modelState[i].Property] = [];
+                        for (var j = 0; j < modelState[i].Errors.length; j++)
                         {
-                            $("#ThreadReplyEditor form .validation-summary-valid ul").append(error[""][j]);
+                            error[modelState[i].Property].push("<li>" + modelState[i].Errors[j] + "</li>");
+                        }
+
+                        if (modelState[i].Property !== "")
+                        {
+                            $("#ThreadReplyEditor form").validate().showErrors(error);
+                        }
+                        else
+                        {
+                            for (var j = 0; j < error[""].length; j++)
+                            {
+                                $("#ThreadReplyEditor form .validation-summary-valid ul").append(error[""][j]);
+                            }
                         }
                     }
                 }

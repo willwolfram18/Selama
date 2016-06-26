@@ -16,7 +16,26 @@ namespace Selama.Areas.Forums.ViewModels
             SubTitle = f.SubTitle;
             NumThreads = f.Threads.Count();
 
-            Thread lastPost = f.Threads.OrderByDescending(t => t.Replies.Select(r => r.PostDate)).FirstOrDefault();
+            Thread lastPost = null;
+            foreach (Thread thread in f.Threads)
+            {
+                if (thread.Replies.Count > 0)
+                {
+                    if (lastPost == null)
+                    {
+                        lastPost = thread;
+                    }
+                    else
+                    {
+                        DateTime currentLastPost = lastPost.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault().PostDate;
+                        DateTime threadPost = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault().PostDate;
+                        if (currentLastPost < threadPost)
+                        {
+                            lastPost = thread;
+                        }
+                    }
+                }
+            }
             if (lastPost != null)
             {
                 LastPost = new LastForumPostViewModel

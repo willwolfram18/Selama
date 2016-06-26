@@ -27,6 +27,15 @@ namespace Selama.Migrations
             //    Name = "User"
             //});
 
+            context.Roles.AddOrUpdate(new IdentityRole
+            {
+                Name = "ForumMod"
+            },
+            new IdentityRole
+            {
+                Name = "GuildOfficer"
+            });
+
             //IdentityRole admin = context.Roles.Where(r => r.Name == "Admin").FirstOrDefault();
             //IdentityRole user = context.Roles.Where(r => r.Name == "User").FirstOrDefault();
             //ApplicationUser billy = context.Users.Where(u => u.UserName == "billy@example.com").FirstOrDefault();
@@ -42,11 +51,12 @@ namespace Selama.Migrations
             //    RoleId = user.Id,
             //    UserId = billy.Id
             //});
-            context.ThreadReplies.ToList().ForEach(r =>
-            {
-                r.IsActive = true;
-                context.ThreadReplies.AddOrUpdate(r);
-            });
+
+            //context.ThreadReplies.ToList().ForEach(r =>
+            //{
+            //    r.IsActive = true;
+            //    context.ThreadReplies.AddOrUpdate(r);
+            //});
         }
     }
 }

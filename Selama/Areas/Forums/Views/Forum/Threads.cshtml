@@ -31,7 +31,7 @@
         {
             <tr>
                 <td>
-                    @thread.Title
+                    @Html.ActionLink("[Pinned] " + thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
                 </td>
                 <td style="text-align: center;">
                     @thread.NumReplies

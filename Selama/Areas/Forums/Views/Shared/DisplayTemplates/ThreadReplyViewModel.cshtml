@@ -12,12 +12,15 @@
                 {
                     <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                         <a class="anchor" name="@Model.ReplyIndex" href="#@Model.ReplyIndex">#@Model.ReplyIndex</a>
-                        <ul class="edit-options-list">
-                            <li>
-                                <a class="thread-reply-edit" href="#">Edit</a>
-                            </li>
-                            <li>Delete</li>
-                        </ul>
+                        @if (!Model.IsThreadLocked)
+                        {
+                            <ul class="edit-options-list">
+                                <li>
+                                    <a class="thread-reply-edit" href="#">Edit</a>
+                                </li>
+                                <li>Delete</li>
+                            </ul>
+                        }
                     </div>
                 }
             </div>

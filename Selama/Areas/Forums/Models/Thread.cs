@@ -20,6 +20,7 @@ namespace Selama.Areas.Forums.Models
             ForumID = forumId;
             IsActive = true;
             IsPinned = model.IsPinned;
+            IsLocked = false;
         }
 
         public void UpdateFromViewModel(ThreadEditViewModel viewModel)
@@ -61,6 +62,9 @@ namespace Selama.Areas.Forums.Models
 
         [Required]
         public bool IsPinned { get; set; }
+
+        [Required]
+        public bool IsLocked { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }

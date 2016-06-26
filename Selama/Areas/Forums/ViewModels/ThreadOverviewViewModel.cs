@@ -6,25 +6,26 @@ namespace Selama.Areas.Forums.ViewModels
 {
     public class ThreadOverviewViewModel
     {
-        public ThreadOverviewViewModel(Thread t)
+        public ThreadOverviewViewModel(Thread thread)
         {
-            ID = t.ID;
-            Title = t.Title;
-            NumReplies = t.Replies.Count;
+            ID = thread.ID;
+            Title = thread.Title;
+            NumReplies = thread.Replies.Count;
 
-            ThreadReply tr = t.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault();
-            if (tr == null)
+            
+            if (thread.Replies.Count > 0)
             {
+
                 LastPost = new LastThreadPostViewModel
                 {
-                    Author = tr.Author.UserName
+                    Author = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault().Author.UserName
                 };
             }
             else
             {
                 LastPost = new LastThreadPostViewModel
                 {
-                    Author = t.Author.UserName
+                    Author = thread.Author.UserName
                 };
             }
         }
