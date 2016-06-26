@@ -297,6 +297,8 @@
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
+    <Content Include="Content\FontAwesome\font-awesome.css" />
+    <Content Include="Content\FontAwesome\font-awesome.min.css" />
     <Content Include="Content\jquery.spin.css" />
     <Content Include="Content\MarkdownDeep\MarkdownDeep.css" />
     <Content Include="Content\MarkdownDeep\MarkdownDeep.min.css">
@@ -339,6 +341,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -397,6 +400,11 @@
     <Content Include="Content\Bootstrap\bootstrap.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-theme.css.map" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jQuery\jquery-2.2.4-vsdoc.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />

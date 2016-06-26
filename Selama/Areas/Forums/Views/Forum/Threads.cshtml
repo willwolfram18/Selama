@@ -5,6 +5,37 @@
     ViewBag.Title = "Threads";
 }
 
+@section Scripts {
+    <script type="text/javascript">
+        function onThreadTitleMouseMove(e)
+        {
+            $(e.target).popover("show");
+            var height = $(".popover .popover-title").outerHeight() + $(".popover .popover-content").outerHeight();
+            $(".popover").css({ top: e.pageY - 14, left: e.pageX + 6 }).find(".arrow").css("top", "14px");
+        }
+        function onThreadTitleMouseLeave(e)
+        {
+            $(e.target).popover("hide");
+        }
+
+        $(document).ready(function ()
+        {
+            $("td.thread-title").on("mousemove", "", onThreadTitleMouseMove).on("mouseleave", "", onThreadTitleMouseLeave)
+            .each(function ()
+            {
+                $(this).popover({
+                    animation: false,
+                    container: "body",
+                    html: true,
+                    placement: "right",
+                    trigger: "manual",
+                });
+            });
+            
+        });
+    </script>
+}
+
 <ul class="breadcrumb">
     <li>@Html.ActionLink("Forums", "Index", "Forum")</li>
     <li class="active">@Model.Title</li>
@@ -21,7 +52,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th style="width: 75%;" >Thread</th>
+            <th style="width: 75%;">Thread</th>
             <th style="width: 10%; text-align: center; padding-right: 8px;">Replies</th>
             <th style="width: 15%;">Last Post</th>
         </tr>
@@ -30,8 +61,12 @@
         @foreach (ThreadOverviewViewModel thread in Model.PinnedThreads)
         {
             <tr>
-                <td>
+                <td class="thread-title" data-content="@thread.Preview">
                     @Html.ActionLink("[Pinned] " + thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
+                    @if (thread.IsLocked)
+                    {
+                        <span class="fa fa-lock"></span>
+                    }
                 </td>
                 <td style="text-align: center;">
                     @thread.NumReplies
@@ -44,8 +79,12 @@
         @foreach (ThreadOverviewViewModel thread in Model.Threads)
         {
             <tr>
-                <td>
+                <td class="thread-title" data-content="@thread.Preview">
                     @Html.ActionLink(thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
+                    @if (thread.IsLocked)
+                    {
+                        <span class="fa fa-lock"></span>
+                    }
                 </td>
                 <td style="text-align: center;">
                     @thread.NumReplies
@@ -58,3 +97,8 @@
         <tr></tr>
     </tbody>
 </table>
+
+<div id="ThreadPreviewTooltip" class="popover" style="position: absolute;" data-toggle="popover"
+     data-placement="right" data-animation="false" title="Sample text"
+     data-content="Here is some sample text for the paragraph!" data-trigger="manual">
+</div>
