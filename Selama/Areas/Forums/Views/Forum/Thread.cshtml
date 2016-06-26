@@ -185,6 +185,14 @@
     }@Model.Title @if (Model.IsLocked)
     { <i class="fa fa-lock"></i>}
 </h2>
+
+@if (!string.IsNullOrWhiteSpace(ViewBag.Message.ToString()))
+{
+    <div class="alert alert-warning alert-icontext">
+        <span class="fa fa-2x fa-exclamation-circle"></span>
+        <span>@ViewBag.Message</span>
+    </div>
+}
 <div class="row" style="margin: 12px 0;">
     <div class="col-sm-3 col-md-3" style="padding: 0;">
         @if (!Model.IsLocked)

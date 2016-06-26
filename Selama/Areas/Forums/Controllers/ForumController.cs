@@ -46,7 +46,7 @@ namespace Selama.Areas.Forums.Controllers
             return View(new ForumViewModel(forum));
         }
 
-        public ActionResult Thread(int id = 0, int page = 1)
+        public ActionResult Thread(int id = 0, int page = 1, string msg = null)
         {
             Thread thread = _db.Threads.Find(id);
             if (thread == null || !thread.IsActive)
@@ -72,6 +72,7 @@ namespace Selama.Areas.Forums.Controllers
             {
                 return RedirectToAction("Thread", new { id = id, page = viewModel.ViewPageNum });
             }
+            ViewBag.Message = msg;
             return View(viewModel);
         }
 
@@ -278,11 +279,15 @@ namespace Selama.Areas.Forums.Controllers
             Thread thread = _db.Threads.Find(id);
             if (thread == null || !thread.IsActive)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", new { redirectFrom = "Thread" });
             }
             if (thread.IsLocked)
             {
-                return HttpUnprocessable("Thread is locked");
+                return RedirectToAction("Thread", new { id = thread.ID, page = page, msg = "This thread is locked from editing and cannot be deleted" });
+            }
+            if (thread.AuthorID != User.Identity.GetUserId())
+            {
+                return RedirectToAction("Thread", new { id = thread.ID, page = page, msg = "You are not the author of this thread and cannot delete it" });
             }
 
             // Mark thread "deleted"
@@ -312,7 +317,11 @@ namespace Selama.Areas.Forums.Controllers
             }
             if (reply.Thread.IsLocked)
             {
-                return HttpUnprocessable("Thread is locked");
+                return RedirectToAction("Thread", new { id = threadId, page = page, msg = "The thread is locked for editing and therefore the reply cannot be deleted" });
+            }
+            if (reply.AuthorID != User.Identity.GetUserId())
+            {
+                return RedirectToAction("Thread", new { id = threadId, page = page, msg = "You are not the author of this reply and cannot delete it" });
             }
 
             reply.IsActive = false;
