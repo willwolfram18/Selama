@@ -293,6 +293,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bootstrap\bootstrap-theme.css" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\jquery.spin.css" />
@@ -342,6 +344,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -385,15 +389,26 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Content\MarkdownDeep\MarkdownDeep.scss" />
-    <None Include="Scripts\jQuery\jquery-2.2.3.intellisense.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Bootstrap\bootstrap.min.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.min.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.css.map" />
+    <None Include="Scripts\jQuery\jquery-2.2.4-vsdoc.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jQuery\jquery-2.2.4.js" />
+    <Content Include="Scripts\jQuery\jquery-2.2.4.min.js" />
+    <Content Include="Scripts\jQuery\jquery-2.2.4.min.map" />
     <Content Include="Scripts\jQuery\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jQuery\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jQuery\jquery.spin.js" />
     <Content Include="Scripts\jQuery\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jQuery\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jQuery\jquery-2.2.3.js" />
-    <Content Include="Scripts\jQuery\jquery-2.2.3.min.js" />
-    <Content Include="Scripts\jQuery\jquery-2.2.3.min.map" />
     <None Include="Scripts\jQuery\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jQuery\jquery.validate.js" />
     <Content Include="Scripts\jQuery\jquery.validate.min.js" />
@@ -438,9 +453,6 @@
     <Folder Include="Areas\Account\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

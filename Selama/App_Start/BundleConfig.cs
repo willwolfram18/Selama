@@ -34,6 +34,7 @@ namespace Selama
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap/bootstrap.css",
+                      "~/Content/Bootstrap/bootstrap-theme.css",
                       "~/Content/jquery.spin.css",
                       "~/Content/site.css"));
             bundles.Add(new StyleBundle("~/Content/MarkdownDeep/css").Include(
