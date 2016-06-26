@@ -1,0 +1,12 @@
+﻿@model Selama.Areas.Forums.ViewModels.ThreadReplyQuoteViewModel
+
+<blockquote markdown="1">
+<div class="quote-head" markdown="1">
+Posted by [@Model.Author](?page=@Model.PageNum#@Model.ReplyIndex)
+<div class="quote-post-date" markdown="1">
+@Model.PostDate
+</div>
+</div>
+
+@Model.Content
+</blockquote>

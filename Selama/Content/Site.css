@@ -25,13 +25,17 @@ textarea {
 .form-horizontal .control-label {
   padding-top: 0; }
 
-.edit-options-list li {
-  display: inline-block; }
-  .edit-options-list li:not(:first-child)::before {
-    content: "| ";
-    position: relative;
-    top: -1px;
-    padding: 0 5px; }
+.post-options-list {
+  margin-top: 8px;
+  margin-bottom: 0px; }
+  .post-options-list li {
+    display: inline-block; }
+    .post-options-list li > a.btn {
+      font-size: 12px;
+      padding: 4px 8px; }
+
+.btn.btn-icontext > .fa {
+  margin-right: 4px; }
 
 /* #region Bootstrap navbar style overrides */
 @media (min-width: 768px) and (max-width: 991px) {

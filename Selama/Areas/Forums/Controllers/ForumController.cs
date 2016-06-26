@@ -340,6 +340,17 @@ namespace Selama.Areas.Forums.Controllers
             return RedirectToAction("Thread", new { id = threadId, page = page });
         }
 
+        public ActionResult GetReplyQuote(int id = 0, int page = 1)
+        {
+            ThreadReply reply = _db.ThreadReplies.Find(id);
+            if (reply == null || !reply.IsActive)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+
+            return PartialView("DisplayTemplates/ThreadReplyQuoteViewModel", new ThreadReplyQuoteViewModel(reply, page));
+        }
+
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();

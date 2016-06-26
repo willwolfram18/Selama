@@ -10,19 +10,28 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                     <a class="anchor" name="@Model.ReplyIndex" href="#@Model.ReplyIndex">#@Model.ReplyIndex</a>
-                    @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsThreadLocked)
-                    {
-                        <ul class="edit-options-list">
+                    <ul class="post-options-list">
+                        <li>
+                            <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-quote">
+                                <i class="fa fa-comment"></i>Quote
+                            </a>
+                        </li>
+                        @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsThreadLocked)
+                        {
                             <li>
-                                <a class="thread-reply-edit" href="#">Edit</a>
+                                <a class="btn btn-default thread-reply-edit" href="#">
+                                    Edit
+                                </a>
                             </li>
                             <li>
-                                <a class="thread-reply-delete" href="#">
+                                <a class="btn btn-default thread-reply-delete" href="#">
                                     Delete
                                 </a>
                             </li>
-                        </ul>
-                    }
+                        }
+
+
+                    </ul>
                 </div>
             </div>
         </div>

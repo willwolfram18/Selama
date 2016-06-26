@@ -43,7 +43,7 @@ namespace Selama.Areas.Forums.ViewModels
         public HtmlString HtmlContent { get; set; }
 
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:f}")]
+        [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime PostDate { get; set; }
 
         public string AuthorID { get; set; }

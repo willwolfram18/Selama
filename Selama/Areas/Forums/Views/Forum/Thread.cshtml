@@ -150,16 +150,33 @@
             Selama.SpinShield.raiseShield();
         }
 
+        function onQuoteBtnClick(e)
+        {
+            var threadReplyId = $(e.target).closest(".thread-reply[data-thread-reply]").attr("data-thread-reply");
+            $.ajax({
+                url: '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })',
+                data: { id: threadReplyId },
+                success: onQuoteBtnClick_Success,
+            });
+        }
+        function onQuoteBtnClick_Success(response)
+        {
+            var $editor = $("#ThreadReplyEditor textarea.mdd_editor");
+            $editor.val(response);
+            // Triggers transfromation of the content
+            var m = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview"));
+        }
+
         $(document).ready(function ()
         {
             $(".btn.btn-post-reply").click(onPostReplyClick);
             $("#ThreadReplyEditor").hide();
 
             // Edit option link clicks
-            $(".row.thread[data-thread]").on("click", ".edit-options-list .thread-edit", onThreadEditLinkClick)
-            .on("click", ".edit-options-list .thread-delete", onThreadDeleteClick);
-            $(".row.thread-reply[data-thread-reply]").on("click", ".edit-options-list .thread-reply-edit", onReplyEditLinkClick)
-            .on("click", ".edit-options-list .thread-reply-delete", onReplyDeleteClick);;
+            $(".row.thread[data-thread]").on("click", ".post-options-list .thread-edit", onThreadEditLinkClick)
+            .on("click", ".post-options-list .thread-delete", onThreadDeleteClick);
+            $(".row.thread-reply[data-thread-reply]").on("click", ".post-options-list .thread-reply-edit", onReplyEditLinkClick)
+            .on("click", ".post-options-list .thread-reply-delete", onReplyDeleteClick);;
 
             $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", onEditorModalShown);
             $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(onDeletFormSubmitClick)
@@ -219,21 +236,26 @@
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                         <a class="anchor" name="1" href="#1">#1</a>
-                        @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
-                        {
-                            <ul class="edit-options-list">
+                        <ul class="post-options-list">
+                            <li>
+                                <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-quote">
+                                    <i class="fa fa-comment"></i>Quote
+                                </a>
+                            </li>
+                            @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
+                            {
                                 <li>
-                                    <a href="#" class="thread-edit">
+                                    <a href="#" class="btn btn-default thread-edit">
                                         Edit
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="thread-delete">
+                                    <a href="#" class="btn btn-default thread-delete">
                                         Delete
                                     </a>
                                 </li>
-                            </ul>
-                        }
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -31,15 +31,22 @@ textarea {
     padding-top: 0;
 }
 
-.edit-options-list li {
-    display: inline-block;
+.post-options-list {
+    margin-top: 8px;
+    margin-bottom: 0px;
 
-    &:not(:first-child)::before {
-        content: "| ";
-        position: relative;
-        top: -1px;
-        padding: 0 5px;
+    li {
+        display: inline-block;
+
+        > a.btn {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
     }
+}
+
+.btn.btn-icontext > .fa {
+    margin-right: 4px;
 }
 
 /* #region Bootstrap navbar style overrides */

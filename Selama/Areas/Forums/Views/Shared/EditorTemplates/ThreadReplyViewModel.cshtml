@@ -2,14 +2,15 @@
 
 <div id="ThreadReplyEditor" class="row">
     @using (Ajax.BeginForm("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID },
-                new AjaxOptions
-                {
-                    HttpMethod = "POST",
-                    UpdateTargetId = "ThreadReplyResult",
-                    OnSuccess = "onPostClick_Success",
-                    OnFailure = "onPostClick_Error"
-                })
-            )
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            UpdateTargetId = "ThreadReplyResult",
+            OnSuccess = "onPostClick_Success",
+            OnFailure = "onPostClick_Error"
+        },
+        new { id = "ThreadReplyEditorForm" })
+    )
     {
         @Html.AntiForgeryToken()
 
@@ -43,55 +44,55 @@
 @Styles.Render("~/Content/MarkdownDeep/css")
 @Scripts.Render("~/bundles/MarkdownDeep")
 <script type="text/javascript">
-        function onCancelClick()
-        {
-            $("#ThreadReplyEditor").effect("blind");
-        }
+    function onCancelClick()
+    {
+        $("#ThreadReplyEditor").effect("blind");
+    }
 
-        function onPostClick_Success(response)
+    function onPostClick_Success(response)
+    {
+        $("#ThreadReplyEditor").effect("blind");
+        $(".row.thread-reply.last").removeClass("last");
+        $(".row.thread-reply:last").addClass("last");
+    }
+    function onPostClick_Error(response)
+    {
+        if (response.statusText === "Thread is locked")
         {
-            $("#ThreadReplyEditor").effect("blind");
-            $(".row.thread-reply.last").removeClass("last");
-            $(".row.thread-reply:last").addClass("last");
+            Selama.Alert.raiseAlert("The thread you're trying to reply to is locked from editing.", "Thread is locked");
         }
-        function onPostClick_Error(response)
+        else
         {
-            if (response.statusText === "Thread is locked")
+            var modelState = eval(response.responseText);
+            if (modelState !== undefined)
             {
-                Selama.Alert.raiseAlert("The thread you're trying to reply to is locked from editing.", "Thread is locked");
-            }
-            else
-            {
-                var modelState = eval(response.responseText);
-                if (modelState !== undefined)
+                for (var i = 0; i < modelState.length; i++)
                 {
-                    for (var i = 0; i < modelState.length; i++)
+                    var error = {};
+                    error[modelState[i].Property] = [];
+                    for (var j = 0; j < modelState[i].Errors.length; j++)
                     {
-                        var error = {};
-                        error[modelState[i].Property] = [];
-                        for (var j = 0; j < modelState[i].Errors.length; j++)
-                        {
-                            error[modelState[i].Property].push("<li>" + modelState[i].Errors[j] + "</li>");
-                        }
+                        error[modelState[i].Property].push("<li>" + modelState[i].Errors[j] + "</li>");
+                    }
 
-                        if (modelState[i].Property !== "")
+                    if (modelState[i].Property !== "")
+                    {
+                        $("#ThreadReplyEditor form").validate().showErrors(error);
+                    }
+                    else
+                    {
+                        for (var j = 0; j < error[""].length; j++)
                         {
-                            $("#ThreadReplyEditor form").validate().showErrors(error);
-                        }
-                        else
-                        {
-                            for (var j = 0; j < error[""].length; j++)
-                            {
-                                $("#ThreadReplyEditor form .validation-summary-valid ul").append(error[""][j]);
-                            }
+                            $("#ThreadReplyEditor form .validation-summary-valid ul").append(error[""][j]);
                         }
                     }
                 }
             }
         }
+    }
 
-        $(document).ready(function ()
-        {
-            $(ReplyCancelBtn).click(onCancelClick);
-        });
+    $(document).ready(function ()
+    {
+        $(ReplyCancelBtn).click(onCancelClick);
+    });
 </script>
