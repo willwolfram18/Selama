@@ -135,14 +135,14 @@ namespace Selama.Areas.Forums.Controllers
             reply.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
-                ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), id);
+                ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), id, thread.Replies.Count + 1);
                 _db.ThreadReplies.Add(dbReply);
                 if (TrySaveChanges(_db))
                 {
                     dbReply.Author = _db.Users.Find(User.Identity.GetUserId());
                     Response.StatusCode = 200;
 
-                    return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply, thread.Replies.Where(r => r.IsActive).Count() - 1));
+                    return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply));
                 }
             }
 
@@ -263,7 +263,7 @@ namespace Selama.Areas.Forums.Controllers
                 if (TrySaveChanges(_db))
                 {
                     _db.Entry(dbReply).Reload();
-                    return Json(new { id = dbReply.ID, content = new ThreadReplyViewModel(dbReply, 0).HtmlContent.ToString() });
+                    return Json(new { id = dbReply.ID, content = new ThreadReplyViewModel(dbReply).HtmlContent.ToString() });
                 }
             }
 

@@ -10,12 +10,13 @@ namespace Selama.Areas.Forums.Models
     public class ThreadReply
     {
         public ThreadReply() { }
-        public ThreadReply(ThreadReplyViewModel model, string authorId, int threadId)
+        public ThreadReply(ThreadReplyViewModel model, string authorId, int threadId, int replyIndex)
         {
             Content = model.Content;
             PostDate = model.PostDate;
             ThreadID = threadId;
             AuthorID = authorId;
+            ReplyIndex = replyIndex;
             IsActive = true;
         }
 
@@ -51,6 +52,9 @@ namespace Selama.Areas.Forums.Models
 
         [Required]
         public bool IsActive { get; set; }
+
+        [Required]
+        public int ReplyIndex { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }

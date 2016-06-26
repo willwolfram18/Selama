@@ -1,5 +1,6 @@
 namespace Selama.Migrations
 {
+    using Areas.Forums.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
@@ -27,14 +28,14 @@ namespace Selama.Migrations
             //    Name = "User"
             //});
 
-            context.Roles.AddOrUpdate(new IdentityRole
-            {
-                Name = "ForumMod"
-            },
-            new IdentityRole
-            {
-                Name = "GuildOfficer"
-            });
+            //context.Roles.AddOrUpdate(new IdentityRole
+            //{
+            //    Name = "ForumMod"
+            //},
+            //new IdentityRole
+            //{
+            //    Name = "GuildOfficer"
+            //});
 
             //IdentityRole admin = context.Roles.Where(r => r.Name == "Admin").FirstOrDefault();
             //IdentityRole user = context.Roles.Where(r => r.Name == "User").FirstOrDefault();
@@ -57,6 +58,16 @@ namespace Selama.Migrations
             //    r.IsActive = true;
             //    context.ThreadReplies.AddOrUpdate(r);
             //});
+
+            context.Threads.ToList().ForEach(t =>
+            {
+                int index = 1;
+                foreach (ThreadReply reply in t.Replies.OrderBy(r => r.PostDate))
+                {
+                    reply.ReplyIndex = index++;
+                    context.ThreadReplies.AddOrUpdate(reply);
+                }
+            });
         }
     }
 }

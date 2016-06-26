@@ -12,7 +12,7 @@ namespace Selama.Areas.Forums.ViewModels
     public class ThreadReplyViewModel : _BaseEditableViewModel
     {
         public ThreadReplyViewModel() { }
-        public ThreadReplyViewModel(ThreadReply reply, int replyIndex)
+        public ThreadReplyViewModel(ThreadReply reply)
         {
             ID = reply.ID;
             ThreadID = reply.ThreadID;
@@ -24,7 +24,7 @@ namespace Selama.Areas.Forums.ViewModels
             Author = reply.Author.UserName;
             // Add 2 because index has a base 0, and want base 1, and the thread content
             // itself is part of the index
-            ReplyIndex = replyIndex + 2;
+            ReplyIndex = reply.ReplyIndex + 1;
             IsThreadLocked = reply.Thread.IsLocked;
         }
 

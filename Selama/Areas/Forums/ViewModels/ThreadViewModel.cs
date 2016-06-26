@@ -47,17 +47,14 @@ namespace Selama.Areas.Forums.ViewModels
             Replies = new List<ThreadReplyViewModel>();
             var dbReplies = thread.Replies.Where(r => r.IsActive)
                 .OrderBy(r => r.PostDate)
+                .ThenBy(r => r.ReplyIndex)
                 .Skip(StartingIndex)
                 .Take(PageSize)
                 .ToList();
             int indexOffset = (_pageNum == 0 ? 0 : 1);
-            for (int i = 0; i < dbReplies.Count; i++)
+            foreach (ThreadReply reply in dbReplies)
             {
-                ThreadReply reply = dbReplies[i];
-                if (reply.IsActive)
-                {
-                    Replies.Add(new ThreadReplyViewModel(reply, StartingIndex + i));
-                }
+                Replies.Add(new ThreadReplyViewModel(reply));
             }
             #endregion
         }
