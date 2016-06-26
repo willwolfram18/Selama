@@ -10,7 +10,7 @@
 
 <h2>Add a thread</h2>
 <p>
-    @Html.ActionLink("Back to forum", "Index")
+    @Html.ActionLink("Back to forum", "Threads", new { id = Model.ForumID })
 </p>
 
 @using (Html.BeginForm()) 

@@ -51,6 +51,8 @@
         function onPostClick_Success(response)
         {
             $("#ThreadReplyEditor").effect("blind");
+            $(".row.thread-reply.last").removeClass("last");
+            $(".row.thread-reply:last").addClass("last");
         }
         function onPostClick_Error(response)
         {

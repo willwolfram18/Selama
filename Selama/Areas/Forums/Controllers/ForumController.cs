@@ -79,12 +79,12 @@ namespace Selama.Areas.Forums.Controllers
         #region Create thread
         public ActionResult CreateThread(int id = 0)
         {
-            Forum forum = _db.Forums.Where(f => f.IsActive && f.ID == id).FirstOrDefault();
-            if (forum == null)
+            Forum forum = _db.Forums.Find(id);
+            if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(new ThreadViewModel { ForumID = id });
         }
 
         [HttpPost]

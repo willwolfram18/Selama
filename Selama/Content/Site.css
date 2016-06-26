@@ -124,15 +124,22 @@ textarea {
 #AlertModal {
   background-color: rgba(63, 63, 63, 0.75); }
 
-.pager {
-  margin: 0;
-  font-size: 12px; }
-  .pager > li {
-    vertical-align: bottom; }
-  .pager.pager-right {
-    text-align: right; }
-  .pager .pager-btn > a {
-    border-radius: 4px; }
+/* #region Pager */
+.row.pager-row {
+  margin: 12px 0; }
+  .row.pager-row .pager {
+    margin: 0;
+    font-size: 12px; }
+    .row.pager-row .pager > li {
+      vertical-align: bottom; }
+    .row.pager-row .pager.pager-right {
+      text-align: right; }
+    .row.pager-row .pager .pager-btn > a {
+      border-radius: 4px; }
+
+/* #endregion */
+.row.thread-reply[data-thread-reply].last .panel {
+  margin-bottom: 0; }
 
 @media (min-width: 990px) {
   .modal-lg {

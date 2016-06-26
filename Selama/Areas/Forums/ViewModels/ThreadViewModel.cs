@@ -36,7 +36,7 @@ namespace Selama.Areas.Forums.ViewModels
             PageSize = pageSize;
             _pageNum = pageNum;
             // Add 1 for the thread content itself
-            NumPages = (thread.Replies.Count + 1) / (PageSize + pageSizeOffset);
+            NumPages = (int)Math.Ceiling((thread.Replies.Count + 1.0) / (PageSize + pageSizeOffset));
             if (StartingIndex >= thread.Replies.Count)
             {
                 _pageNum = NumPages;

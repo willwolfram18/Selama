@@ -149,7 +149,7 @@ $maxScreenWidth: 991px;
 
 @media screen and (min-width: $minScreenWidth) and (max-width: $maxScreenWidth) {
     .jumbotron {
-        padding: 30px 15px!important;
+        padding: 30px 15px !important;
         border-radius: 6px;
 
         h1 {
@@ -193,21 +193,35 @@ $maxScreenWidth: 991px;
     background-color: rgba(63, 63, 63, 0.75);
 }
 
-.pager {
-    margin: 0;
-    font-size: 12px;
+/* #region Pager */
+.row.pager-row {
+    margin: 12px 0;
 
-    > li {
-        vertical-align: bottom;
+    .pager {
+        margin: 0;
+        font-size: 12px;
+
+        > li {
+            vertical-align: bottom;
+        }
+
+        &.pager-right {
+            text-align: right;
+        }
+
+        .pager-btn {
+            > a {
+                border-radius: 4px;
+            }
+        }
     }
+}
+/* #endregion */
 
-    &.pager-right {
-        text-align: right;
-    }
-
-    .pager-btn {
-        > a {
-            border-radius: 4px;
+.row.thread-reply[data-thread-reply] {
+    &.last {
+        .panel {
+            margin-bottom: 0;
         }
     }
 }

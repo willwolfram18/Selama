@@ -1,4 +1,5 @@
-﻿@model Selama.Areas.Forums.ViewModels.ThreadViewModel
+﻿@using Microsoft.AspNet.Identity
+@model Selama.Areas.Forums.ViewModels.ThreadViewModel
 
 @Scripts.Render("~/bundles/MarkdownDeep")
 @Styles.Render("~/Content/MarkdownDeep/css")
@@ -22,10 +23,13 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.IsPinned, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.IsPinned, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.IsPinned, "", new { @class = "text-danger" })
+@if (User.IsInRole("Admin") || User.IsInRole("ForumMod"))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsPinned, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IsPinned, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsPinned, "", new { @class = "text-danger" })
+        </div>
     </div>
-</div>
+}

@@ -163,6 +163,7 @@
 
             $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", onEditorModalShown);
             $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(onDeletFormSubmitClick)
+            $(".row.thread-reply:last").addClass("last");
         });
     </script>
 }
@@ -193,7 +194,7 @@
         <span>@ViewBag.Message</span>
     </div>
 }
-<div class="row" style="margin: 12px 0;">
+<div class="row pager-row">
     <div class="col-sm-3 col-md-3" style="padding: 0;">
         @if (!Model.IsLocked)
         {
@@ -255,7 +256,7 @@
 
 <div id="ThreadReplyResult"></div>
 
-<div class="row" style="margin: 0;">
+<div class="row pager-row">
     <div class="col-sm-3 col-md-3" style="padding: 0;">
         @if (!Model.IsLocked)
         {
