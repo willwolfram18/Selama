@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Selama.Areas.Account.ViewModels.Home;
+using Selama.Controllers;
 using Selama.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Account.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : _BaseAuthorizeController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -49,11 +50,6 @@ namespace Selama.Areas.Account.Controllers
             {
                 _userManager = value;
             }
-        }
-
-        public string Manage()
-        {
-            return "Hello world!";
         }
 
         //

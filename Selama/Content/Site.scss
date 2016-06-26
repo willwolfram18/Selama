@@ -39,9 +39,16 @@ textarea {
 }
 
 /* #region Bootstrap navbar style overrides */
-@media (min-width: 768px) and (max-width: 991px) {
+$minScreenWidth: 768px;
+$maxScreenWidth: 991px;
+
+@media (min-width: $minScreenWidth) and (max-width: $maxScreenWidth) {
+    .container {
+        width: auto;
+    }
+
     .navbar {
-        .contaier {
+        .container {
             max-width: none;
 
             > .navbar-header,
@@ -61,6 +68,10 @@ textarea {
         float: none !important;
     }
 
+    .navbar-right {
+        margin-right: 0;
+    }
+
     .navbar-toggle {
         display: block;
     }
@@ -71,6 +82,12 @@ textarea {
 
         &.collapse {
             display: none !important;
+        }
+
+        &.in {
+            height: auto;
+            overflow-x: visible;
+            overflow-y: auto;
         }
     }
 
@@ -120,6 +137,17 @@ textarea {
         &:focus {
             color: #ffffff;
             background-color: transparent;
+        }
+    }
+}
+
+@media screen and (min-width: $minScreenWidth) and (max-width: $maxScreenWidth) {
+    .jumbotron {
+        padding: 30px 15px!important;
+        border-radius: 6px;
+
+        h1 {
+            font-size: 36px;
         }
     }
 }
