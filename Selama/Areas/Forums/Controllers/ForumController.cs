@@ -35,15 +35,25 @@ namespace Selama.Areas.Forums.Controllers
             return View(forums);
         }
 
-        public ActionResult Threads(int id = 0)
+        public ActionResult Threads(int id = 0, int page = 1)
         {
             Forum forum = _db.Forums.Find(id);
             if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index", new { redirectFrom = "Threads" });
             }
+            if (page <= 0)
+            {
+                return RedirectToAction("Threads", new { id = id, page = 1 });
+            }
+            page--;
+            ForumViewModel model = new ForumViewModel(forum, _pageSize, page);
+            if (page > model.NumPages)
+            {
+                return RedirectToAction("Threads", new { id = id, page = model.NumPages });
+            }
 
-            return View(new ForumViewModel(forum));
+            return View(model);
         }
 
         public ActionResult Thread(int id = 0, int page = 1, string msg = null)
@@ -101,11 +111,12 @@ namespace Selama.Areas.Forums.Controllers
             thread.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
-                _db.Threads.Add(new Thread(thread, User.Identity.GetUserId(), id));
+                Thread dbThread = new Thread(thread, User.Identity.GetUserId(), id);
+                _db.Threads.Add(dbThread);
                 SaveChangeError result;
                 if (TrySaveChanges(_db, out result))
                 {
-                    return RedirectToAction("Thread", new { id = id });
+                    return RedirectToAction("Thread", new { id = dbThread.ID });
                 }
             }
 

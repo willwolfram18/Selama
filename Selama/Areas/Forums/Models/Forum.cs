@@ -42,9 +42,10 @@ namespace Selama.Areas.Forums.Models
             {
                 if (Threads == null)
                 {
-                    return null;
+                    return new List<Thread>();
                 }
-                return Threads.Where(t => t.IsPinned && t.IsActive).ToList();
+                // Replace with LastPostProperty
+                return Threads.Where(t => t.IsPinned && t.IsActive).OrderByDescending(t => t.PostDate).ToList();
             }
         }
     }

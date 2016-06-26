@@ -391,6 +391,7 @@
     <Content Include="Areas\Account\Views\Manage\ManageLogins.cshtml" />
     <Content Include="Areas\Account\Views\Manage\SetPassword.cshtml" />
     <Content Include="Areas\Account\Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Areas\Forums\Views\Shared\_ThreadsPager.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

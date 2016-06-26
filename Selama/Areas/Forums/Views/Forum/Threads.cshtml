@@ -31,7 +31,7 @@
                     trigger: "manual",
                 });
             });
-            
+
         });
     </script>
 }
@@ -51,6 +51,9 @@
     <div class="col-sm-3 col-md-3">
         @Html.ActionLink("Add thread", "CreateThread", "Forum", new { area = "Forums", id = Model.ID }, new { @class = "btn btn-default" })
     </div>
+    <div class="col-sm-9 col-md-9">
+        @Html.Partial("_ThreadsPager", Model)
+    </div>
 </div>
 
 <table class="table table-striped table-hover">
@@ -62,29 +65,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (ThreadOverviewViewModel thread in Model.PinnedThreads)
-        {
-            <tr>
-                <td class="thread-title" title="[Pinned] @thread.Title" data-content="@thread.Preview">
-                    @Html.ActionLink("[Pinned] " + thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
-                    @if (thread.IsLocked)
-                    {
-                        <span class="fa fa-lock"></span>
-                    }
-                </td>
-                <td style="text-align: center;">
-                    @thread.NumReplies
-                </td>
-                <td>
-                    @thread.LastPost.Author
-                </td>
-            </tr>
-        }
         @foreach (ThreadOverviewViewModel thread in Model.Threads)
         {
+            string title = thread.Title;
+            if (thread.IsPinned)
+            {
+                title = "[Pinned] " + title;
+            }
             <tr>
-                <td class="thread-title" title="@thread.Title" data-content="@thread.Preview">
-                    @Html.ActionLink(thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
+                <td class="thread-title" title="@title" data-content="@thread.Preview">
+                    @Html.ActionLink(title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
                     @if (thread.IsLocked)
                     {
                         <span class="fa fa-lock"></span>
@@ -100,9 +90,13 @@
         }
         <tr></tr>
     </tbody>
-</table>
+    </table>
 
-<div id="ThreadPreviewTooltip" class="popover" style="position: absolute;" data-toggle="popover"
-     data-placement="right" data-animation="false" title="Sample text"
-     data-content="Here is some sample text for the paragraph!" data-trigger="manual">
-</div>
+    <div class="row pager-row">
+        <div class="col-sm-3 col-md-3">
+            @Html.ActionLink("Add thread", "CreateThread", "Forum", new { area = "Forums", id = Model.ID }, new { @class = "btn btn-default" })
+        </div>
+        <div class="col-sm-9 col-md-9">
+            @Html.Partial("_ThreadsPager", Model)
+        </div>
+    </div>

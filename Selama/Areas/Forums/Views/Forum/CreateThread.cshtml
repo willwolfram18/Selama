@@ -21,6 +21,8 @@
         <h4>Add a thread</h4>
         <hr />
         
+        @Html.HiddenFor(model => model.ForumID)
+
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         @Html.EditorForModel()
 

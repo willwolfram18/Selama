@@ -32,20 +32,21 @@ namespace Selama.Areas.Forums.ViewModels
             IsLocked = thread.IsLocked;
 
             #region Set pagination variables
+            var activeReplies = thread.Replies.Where(t => t.IsActive);
             int pageSizeOffset = (pageNum == 0 ? 1 : 0);
             PageSize = pageSize;
             _pageNum = pageNum;
             // Add 1 for the thread content itself
-            NumPages = (int)Math.Ceiling((thread.Replies.Count + 1.0) / (PageSize + pageSizeOffset));
-            if (StartingIndex >= thread.Replies.Count)
+            NumPages = (int)Math.Ceiling((activeReplies.Count() + 1.0) / (PageSize + pageSizeOffset));
+            if (StartingIndex >= activeReplies.Count())
             {
-                _pageNum = NumPages;
+                _pageNum = NumPages - 1;
             }
             #endregion
 
             #region Get the replies
             Replies = new List<ThreadReplyViewModel>();
-            var dbReplies = thread.Replies.Where(r => r.IsActive)
+            var dbReplies = activeReplies
                 .OrderBy(r => r.PostDate)
                 .ThenBy(r => r.ReplyIndex)
                 .Skip(StartingIndex)
@@ -116,6 +117,7 @@ namespace Selama.Areas.Forums.ViewModels
                     return 0;
                 }
 
+                // Subtract 1 to compensate for thread content counting as 1
                 return (_pageNum * PageSize) - 1;
             }
         }

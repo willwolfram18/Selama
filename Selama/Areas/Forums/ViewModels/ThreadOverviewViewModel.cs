@@ -17,6 +17,7 @@ namespace Selama.Areas.Forums.ViewModels
             Title = thread.Title;
             NumReplies = thread.Replies.Where(r => r.IsActive).Count();
             IsLocked = thread.IsLocked;
+            IsPinned = thread.IsPinned;
 
             Preview = Util.Markdown.Transform(thread.Content);
             Preview = Regex.Replace(Preview, "<.*?>", "");
@@ -50,6 +51,8 @@ namespace Selama.Areas.Forums.ViewModels
         public int NumReplies { get; set; }
 
         public bool IsLocked { get; set; }
+
+        public bool IsPinned { get; set; }
 
         public string Preview { get; set; }
 
