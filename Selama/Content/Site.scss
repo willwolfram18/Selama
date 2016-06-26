@@ -23,6 +23,10 @@ textarea {
     max-width: 280px;
 }
 
+.checkbox input[type='checkbox'] {
+    margin-left: 0;
+}
+
 .form-horizontal .control-label {
     padding-top: 0;
 }
@@ -206,8 +210,22 @@ $maxScreenWidth: 991px;
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: $maxScreenWidth - 1px) {
     .modal-lg {
         width: 900px;
+    }
+}
+
+
+.alert.alert-icontext {
+    display: table;
+
+    > * {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .fa {
+        width: 35px;
     }
 }

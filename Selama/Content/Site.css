@@ -19,6 +19,9 @@ select,
 textarea {
   max-width: 280px; }
 
+.checkbox input[type='checkbox'] {
+  margin-left: 0; }
+
 .form-horizontal .control-label {
   padding-top: 0; }
 
@@ -129,7 +132,15 @@ textarea {
   .pager .pager-btn > a {
     border-radius: 4px; }
 
-@media (min-width: 992px) {
+@media (min-width: 990px) {
   .modal-lg {
     width: 900px; } }
+
+.alert.alert-icontext {
+  display: table; }
+  .alert.alert-icontext > * {
+    display: table-cell;
+    vertical-align: middle; }
+  .alert.alert-icontext .fa {
+    width: 35px; }
 

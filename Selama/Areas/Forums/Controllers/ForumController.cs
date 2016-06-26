@@ -18,22 +18,29 @@ namespace Selama.Areas.Forums.Controllers
         private const int _pageSize = 20;
 
         // GET: Forums/Forum
-        public ActionResult Index()
+        public ActionResult Index(string redirectFrom = null)
         {
             List<ForumSectionViewModel> forums = Util.ConvertLists<ForumSection, ForumSectionViewModel>(
                 _db.ForumSections.Where(f => f.IsActive).OrderBy(f => f.DisplayOrder),
                 section => new ForumSectionViewModel(section)
             );
-
+            if (redirectFrom == "Threads")
+            {
+                ViewBag.ErrorMsg = "That forum does not exist";
+            }
+            else if (redirectFrom == "Thread")
+            {
+                ViewBag.ErrorMsg = "That thread does not exist";
+            }
             return View(forums);
         }
 
         public ActionResult Threads(int id = 0)
         {
             Forum forum = _db.Forums.Find(id);
-            if (forum == null)
+            if (forum == null || !forum.IsActive)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { redirectFrom = "Threads" });
             }
 
             return View(new ForumViewModel(forum));
@@ -42,9 +49,9 @@ namespace Selama.Areas.Forums.Controllers
         public ActionResult Thread(int id = 0, int page = 1)
         {
             Thread thread = _db.Threads.Find(id);
-            if (thread == null)
+            if (thread == null || !thread.IsActive)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { redirectFrom = "Thread" });
             }
 
             // Subtract 1 on the first page to compensate for thread showing
@@ -263,6 +270,32 @@ namespace Selama.Areas.Forums.Controllers
             return HttpUnprocessable();
         }
         #endregion
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteThread(int id = 0)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null || !thread.IsActive)
+            {
+                return HttpNotFound();
+            }
+            if (thread.IsLocked)
+            {
+                return HttpUnprocessable("Thread is locked");
+            }
+
+            thread.IsActive = false;
+
+            return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteReply(int id = 0)
+        {
+            return null;
+        }
 
         protected override void Dispose(bool disposing)
         {
