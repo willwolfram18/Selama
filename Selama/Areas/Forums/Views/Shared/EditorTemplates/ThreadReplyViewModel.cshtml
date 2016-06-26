@@ -1,7 +1,5 @@
 ﻿@model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
 
-<div id="ThreadReplyResult"></div>
-
 <div id="ThreadReplyEditor" class="row">
     @using (Ajax.BeginForm("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID },
                 new AjaxOptions

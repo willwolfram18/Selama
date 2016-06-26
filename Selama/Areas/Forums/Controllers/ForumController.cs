@@ -139,11 +139,10 @@ namespace Selama.Areas.Forums.Controllers
                 _db.ThreadReplies.Add(dbReply);
                 if (TrySaveChanges(_db))
                 {
-                    _db = new ApplicationDbContext();
-                    dbReply = _db.ThreadReplies.Find(dbReply.ID);
+                    dbReply.Author = _db.Users.Find(User.Identity.GetUserId());
                     Response.StatusCode = 200;
 
-                    return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply, thread.Replies.Count));
+                    return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply, thread.Replies.Where(r => r.IsActive).Count() - 1));
                 }
             }
 

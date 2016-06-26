@@ -186,7 +186,7 @@
     { <i class="fa fa-lock"></i>}
 </h2>
 
-@if (!string.IsNullOrWhiteSpace(ViewBag.Message.ToString()))
+@if (!string.IsNullOrWhiteSpace(ViewBag.Message))
 {
     <div class="alert alert-warning alert-icontext">
         <span class="fa fa-2x fa-exclamation-circle"></span>
@@ -216,27 +216,24 @@
                     <div class="col-xs-6 col-sm-6 col-md-6">
                         @Html.DisplayFor(model => model.PostDate)
                     </div>
-                    @if (User.Identity.GetUserId() == Model.AuthorID)
-                    {
-                        <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
-                            <a class="anchor" name="1" href="#1">#1</a>
-                            @if (!Model.IsLocked)
-                            {
-                                <ul class="edit-options-list">
-                                    <li>
-                                        <a href="#" class="thread-edit">
-                                            Edit
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="thread-delete">
-                                            Delete
-                                        </a>
-                                    </li>
-                                </ul>
-                            }
-                        </div>
-                    }
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
+                        <a class="anchor" name="1" href="#1">#1</a>
+                        @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
+                        {
+                            <ul class="edit-options-list">
+                                <li>
+                                    <a href="#" class="thread-edit">
+                                        Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="thread-delete">
+                                        Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="panel-body">
@@ -255,6 +252,8 @@
 {
     @Html.DisplayFor(model => reply)
 }
+
+<div id="ThreadReplyResult"></div>
 
 <div class="row" style="margin: 0;">
     <div class="col-sm-3 col-md-3" style="padding: 0;">
