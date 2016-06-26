@@ -273,7 +273,7 @@ namespace Selama.Areas.Forums.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteThread(int id = 0)
+        public ActionResult DeleteThread(int id = 0, int page = 1)
         {
             Thread thread = _db.Threads.Find(id);
             if (thread == null || !thread.IsActive)
@@ -285,16 +285,40 @@ namespace Selama.Areas.Forums.Controllers
                 return HttpUnprocessable("Thread is locked");
             }
 
+            // Mark thread "deleted"
             thread.IsActive = false;
-
-            return null;
+            _db.Entry(thread).State = System.Data.Entity.EntityState.Modified;
+            // Mark all replies for thread as "deleted"
+            foreach (ThreadReply reply in thread.Replies)
+            {
+                reply.IsActive = false;
+                _db.Entry(reply).State = System.Data.Entity.EntityState.Modified;
+            }
+            if (TrySaveChanges(_db))
+            {
+                return RedirectToAction("Threads", new { id = thread.ForumID });
+            }
+            return RedirectToAction("Thread", new { id = id, page = page });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteReply(int id = 0)
+        public ActionResult DeleteReply(int id = 0, int threadId = 0, int page = 1)
         {
-            return null;
+            ThreadReply reply = _db.ThreadReplies.Find(id);
+            if (reply == null || reply.ThreadID != threadId || !reply.Thread.IsActive)
+            {
+                return HttpNotFound();
+            }
+            if (reply.Thread.IsLocked)
+            {
+                return HttpUnprocessable("Thread is locked");
+            }
+
+            reply.IsActive = false;
+            _db.Entry(reply).State = System.Data.Entity.EntityState.Modified;
+            TrySaveChanges(_db);
+            return RedirectToAction("Thread", new { id = threadId, page = page });
         }
 
         protected override void Dispose(bool disposing)

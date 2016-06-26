@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarkdownDeep;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,5 +19,12 @@ namespace Selama.Classes.Utility
 
             return dest;
         }
+
+        public static Markdown Markdown = new Markdown
+        {
+            SafeMode = true,
+            ExtraMode = true,
+            MarkdownInHtml = true,
+        };
     }
 }

@@ -132,13 +132,37 @@
             var m = new MarkdownDeepEditor.Editor($editor[0], $(e.currentTarget).find("div.mdd_preview")[0]);
         }
 
+        function onThreadDeleteClick(e)
+        {
+            $("#ThreadDeleteModal").modal("show");
+        }
+        function onReplyDeleteClick(e)
+        {
+            $("#ReplyDeleteModal").find("input#id")
+                .val(
+                    $(e.target).closest(".row.thread-reply").attr("data-thread-reply")
+                ).trigger("change");
+            $("#ReplyDeleteModal").modal("show");
+        }
+
+        function onDeletFormSubmitClick()
+        {
+            Selama.SpinShield.raiseShield();
+        }
+
         $(document).ready(function ()
         {
             $(".btn.btn-post-reply").click(onPostReplyClick);
             $("#ThreadReplyEditor").hide();
-            $(".row.thread[data-thread]").on("click", ".edit-options-list .thread-edit", onThreadEditLinkClick);
-            $(".row.thread-reply[data-thread-reply]").on("click", ".edit-options-list .thread-reply-edit", onReplyEditLinkClick);
+
+            // Edit option link clicks
+            $(".row.thread[data-thread]").on("click", ".edit-options-list .thread-edit", onThreadEditLinkClick)
+            .on("click", ".edit-options-list .thread-delete", onThreadDeleteClick);
+            $(".row.thread-reply[data-thread-reply]").on("click", ".edit-options-list .thread-reply-edit", onReplyEditLinkClick)
+            .on("click", ".edit-options-list .thread-reply-delete", onReplyDeleteClick);;
+
             $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", onEditorModalShown);
+            $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(onDeletFormSubmitClick)
         });
     </script>
 }
@@ -156,12 +180,10 @@
 </ul>
 
 <h2>
-    @if (Model.IsLocked)
-    {<text>[Locked] </text>
-    }
     @if (Model.IsPinned)
     { <text>[Pinned] </text>;
-    }@Model.Title
+    }@Model.Title @if (Model.IsLocked)
+    { <i class="fa fa-lock"></i>}
 </h2>
 <div class="row" style="margin: 12px 0;">
     <div class="col-sm-3 col-md-3" style="padding: 0;">
@@ -175,9 +197,6 @@
     <div class="col-sm-9 col-md-9" style="padding: 0;">
         @Html.Partial("_ThreadPager", Model)
     </div>
-</div>
-<div class="row">
-    
 </div>
 
 @if (Model.ViewPageNum == 1)
@@ -201,7 +220,11 @@
                                             Edit
                                         </a>
                                     </li>
-                                    <li>Delete</li>
+                                    <li>
+                                        <a href="#" class="thread-delete">
+                                            Delete
+                                        </a>
+                                    </li>
                                 </ul>
                             }
                         </div>
@@ -220,7 +243,7 @@
     </div>
 }
 
-@foreach(var reply in Model.Replies)
+@foreach (var reply in Model.Replies)
 {
     @Html.DisplayFor(model => reply)
 }
@@ -244,7 +267,7 @@
     @Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })
 }
 
-<div id="ThreadEditModal" class="modal fade" role="dialog"  data-backdrop="static" data-keyboard="false">
+<div id="ThreadEditModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -309,6 +332,66 @@
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Close
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="ThreadDeleteModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    Confirm delete
+                </h4>
+            </div>
+            @using (Html.BeginForm("DeleteThread", "Forum", new { area = "Forums", id = Model.ID, page = Model.ViewPageNum }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    Are you sure you want to delete this thread?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        OK
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="ReplyDeleteModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    Confirm delete
+                </h4>
+            </div>
+            @using (Html.BeginForm("DeleteReply", "Forum", new { area = "Forums", threadId = Model.ID, page = Model.ViewPageNum }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" id="id" name="id" />
+
+                <div class="modal-body">
+                    Are you sure you want to delete this reply?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        OK
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancel
                     </button>
                 </div>
             }

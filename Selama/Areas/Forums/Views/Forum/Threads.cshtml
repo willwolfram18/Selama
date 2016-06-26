@@ -47,7 +47,7 @@
     <h5>@Model.SubTitle</h5>
 }
 
-@Html.ActionLink("Add thread", "CreateThread", "Forum", new { area = "Forums", id = Model.ID }, null)
+@Html.ActionLink("Add thread", "CreateThread", "Forum", new { area = "Forums", id = Model.ID }, new { @class = "btn btn-default" })
 
 <table class="table table-striped table-hover">
     <thead>
@@ -61,7 +61,7 @@
         @foreach (ThreadOverviewViewModel thread in Model.PinnedThreads)
         {
             <tr>
-                <td class="thread-title" data-content="@thread.Preview">
+                <td class="thread-title" title="[Pinned] @thread.Title" data-content="@thread.Preview">
                     @Html.ActionLink("[Pinned] " + thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
                     @if (thread.IsLocked)
                     {
@@ -79,7 +79,7 @@
         @foreach (ThreadOverviewViewModel thread in Model.Threads)
         {
             <tr>
-                <td class="thread-title" data-content="@thread.Preview">
+                <td class="thread-title" title="@thread.Title" data-content="@thread.Preview">
                     @Html.ActionLink(thread.Title, "Thread", "Forum", new { area = "Forums", id = thread.ID }, null)
                     @if (thread.IsLocked)
                     {

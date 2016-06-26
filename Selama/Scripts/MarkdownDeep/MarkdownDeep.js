@@ -3,6 +3,7 @@ Selama.MarkdownEditor = Selama.MarkdownEditor || {};
 Selama.MarkdownEditor.Options = Selama.MarkdownEditor.Options || {
     resizebar: false,
     SafeMode: true,
+    MarkdownInHtml: true,
     help_location: Selama.MarkdownEditor.HelpLocation
 }
 

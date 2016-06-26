@@ -1,5 +1,6 @@
 ﻿using MarkdownDeep;
 using Selama.Areas.Forums.Models;
+using Selama.Classes.Utility;
 using Selama.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,7 @@ namespace Selama.Areas.Forums.ViewModels
 
             Content = thread.Content;
 
-            Markdown markdown = new Markdown()
-            {
-                SafeMode = true,
-            };
-            HtmlContent = new HtmlString(markdown.Transform(Content));
+            HtmlContent = new HtmlString(Util.Markdown.Transform(Content));
 
             IsPinned = thread.IsPinned;
             PostDate = thread.PostDate;
@@ -34,6 +31,7 @@ namespace Selama.Areas.Forums.ViewModels
             Author = thread.Author.UserName;
             IsLocked = thread.IsLocked;
 
+            #region Set pagination variables
             int pageSizeOffset = (pageNum == 0 ? 1 : 0);
             PageSize = pageSize;
             _pageNum = pageNum;
@@ -43,9 +41,12 @@ namespace Selama.Areas.Forums.ViewModels
             {
                 _pageNum = NumPages;
             }
+            #endregion
 
+            #region Get the replies
             Replies = new List<ThreadReplyViewModel>();
-            var dbReplies = thread.Replies.OrderBy(r => r.PostDate)
+            var dbReplies = thread.Replies.Where(r => r.IsActive)
+                .OrderBy(r => r.PostDate)
                 .Skip(StartingIndex)
                 .Take(PageSize)
                 .ToList();
@@ -58,6 +59,7 @@ namespace Selama.Areas.Forums.ViewModels
                     Replies.Add(new ThreadReplyViewModel(reply, StartingIndex + i));
                 }
             }
+            #endregion
         }
 
         #region Forum/Thread properties

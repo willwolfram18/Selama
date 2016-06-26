@@ -9,31 +9,28 @@ namespace Selama.Areas.Forums.ViewModels
 {
     public class ForumOverviewViewModel
     {
-        public ForumOverviewViewModel(Forum f)
+        public ForumOverviewViewModel(Forum forum)
         {
-            ID = f.ID;
-            Title = f.Title;
-            SubTitle = f.SubTitle;
-            NumThreads = f.Threads.Count();
+            ID = forum.ID;
+            Title = forum.Title;
+            SubTitle = forum.SubTitle;
+            NumThreads = forum.Threads.Count();
 
             Thread lastPost = null;
-            foreach (Thread thread in f.Threads)
+            DateTime? lastPostDate = null;
+            foreach (Thread thread in forum.Threads.Where(t => t.IsActive))
             {
+                DateTime threadPostDate = thread.PostDate;
                 if (thread.Replies.Count > 0)
                 {
-                    if (lastPost == null)
-                    {
-                        lastPost = thread;
-                    }
-                    else
-                    {
-                        DateTime currentLastPost = lastPost.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault().PostDate;
-                        DateTime threadPost = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault().PostDate;
-                        if (currentLastPost < threadPost)
-                        {
-                            lastPost = thread;
-                        }
-                    }
+                    // if a thread has a reply, it has to follow its creation therefore guaranteed more new
+                    threadPostDate = thread.Replies.Where(t => t.IsActive).OrderByDescending(r => r.PostDate).FirstOrDefault().PostDate;
+                }
+
+                if (lastPost == null || lastPostDate.Value < threadPostDate)
+                {
+                    lastPost = thread;
+                    lastPostDate = threadPostDate;
                 }
             }
             if (lastPost != null)

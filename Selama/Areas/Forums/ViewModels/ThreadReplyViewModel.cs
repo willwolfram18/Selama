@@ -1,5 +1,6 @@
 ﻿using MarkdownDeep;
 using Selama.Areas.Forums.Models;
+using Selama.Classes.Utility;
 using Selama.ViewModels;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -16,11 +17,8 @@ namespace Selama.Areas.Forums.ViewModels
             ID = reply.ID;
             ThreadID = reply.ThreadID;
             Content = reply.Content;
-            Markdown markdownTransform = new Markdown()
-            {
-                SafeMode = true
-            };
-            HtmlContent = new HtmlString(markdownTransform.Transform(Content));
+            
+            HtmlContent = new HtmlString(Util.Markdown.Transform(Content));
             PostDate = reply.PostDate;
             AuthorID = reply.AuthorID;
             Author = reply.Author.UserName;

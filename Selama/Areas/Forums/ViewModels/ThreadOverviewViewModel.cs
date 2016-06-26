@@ -1,7 +1,9 @@
 ﻿using MarkdownDeep;
 using Selama.Areas.Forums.Models;
+using Selama.Classes.Utility;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Selama.Areas.Forums.ViewModels
 {
@@ -13,14 +15,11 @@ namespace Selama.Areas.Forums.ViewModels
         {
             ID = thread.ID;
             Title = thread.Title;
-            NumReplies = thread.Replies.Count;
+            NumReplies = thread.Replies.Where(r => r.IsActive).Count();
             IsLocked = thread.IsLocked;
 
-            Markdown md = new Markdown
-            {
-                SafeMode = true,
-            };
-            Preview = md.Transform(thread.Content);
+            Preview = Util.Markdown.Transform(thread.Content);
+            Preview = Regex.Replace(Preview, "<.*?>", "");
             Preview = Preview.Substring(0, (Preview.Length < _previewLen ? Preview.Length : _previewLen));
             if (Preview.Length == _previewLen)
             {
@@ -29,7 +28,6 @@ namespace Selama.Areas.Forums.ViewModels
             
             if (thread.Replies.Count > 0)
             {
-
                 LastPost = new LastThreadPostViewModel
                 {
                     Author = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault().Author.UserName
