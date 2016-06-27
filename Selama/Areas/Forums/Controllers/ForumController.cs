@@ -64,12 +64,22 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Index", new { redirectFrom = "Thread" });
             }
 
-            // Subtract 1 on the first page to compensate for thread showing
+            bool goToLastPage = page == -1;
             int pageSize = _pageSize;
+            // if it's a non-positive page, redirect to 1st page (except if -1)
             if (page <= 0)
             {
-                return RedirectToAction("Thread", new { id = id, page = 1 });
+                if (page == -1)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    return RedirectToAction("Thread", new { id = id, page = 1 });
+                }
             }
+
+            // Subtract 1 on the first page to compensate for thread showing
             if (page == 1)
             {
                 pageSize = _pageSize - 1;
@@ -78,9 +88,9 @@ namespace Selama.Areas.Forums.Controllers
 
             // Generate view model and redirect to last page if beyond
             ThreadViewModel viewModel = new ThreadViewModel(thread, pageSize, page);
-            if (viewModel.ViewPageNum != page + 1)
+            if (viewModel.ViewPageNum != page + 1 || goToLastPage)
             {
-                return RedirectToAction("Thread", new { id = id, page = viewModel.ViewPageNum });
+                return RedirectToAction("Thread", new { id = id, page = viewModel.NumPages });
             }
             ViewBag.Message = msg;
             return View(viewModel);
@@ -338,6 +348,17 @@ namespace Selama.Areas.Forums.Controllers
             _db.Entry(reply).State = System.Data.Entity.EntityState.Modified;
             TrySaveChanges(_db);
             return RedirectToAction("Thread", new { id = threadId, page = page });
+        }
+
+        public ActionResult GetThreadQuote(int id = 0)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null || !thread.IsActive)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+
+            return PartialView("DisplayTemplates/ThreadReplyQuoteViewModel", new ThreadReplyQuoteViewModel(thread));
         }
 
         public ActionResult GetReplyQuote(int id = 0, int page = 1)

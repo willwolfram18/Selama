@@ -11,8 +11,7 @@
         function onPostReplyClick()
         {
             $("#ThreadReplyEditor").show("blind")
-                .find(".mdd_editor").val("").focus();
-            $("#ThreadReplyEditor .mdd_preview").text("");
+                .find(".mdd_editor").focus();
         }
 
         function onAjaxRequestBegin()
@@ -152,19 +151,46 @@
 
         function onQuoteBtnClick(e)
         {
-            var threadReplyId = $(e.target).closest(".thread-reply[data-thread-reply]").attr("data-thread-reply");
+            // Set both urls, we don't know which one we'll need
+            var replyQuoteUrl = '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })';
+            var threadQuoteUrl = '@Url.Action("GetThreadQuote", new { area = "Forums" })';
+
+            var $threadPost = $(e.target).closest(".row.thread-post");
+            var ajaxId = 0;
+            var ajaxUrl = "";
+
+            if ($threadPost.is(".thread"))
+            {
+                ajaxId = $threadPost.attr("data-thread");
+                ajaxUrl = threadQuoteUrl;
+            }
+            else if ($threadPost.is(".thread-reply"))
+            {
+                ajaxId = $threadPost.attr("data-thread-reply")
+                ajaxUrl = replyQuoteUrl;
+            }
+
             $.ajax({
-                url: '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })',
-                data: { id: threadReplyId },
+                url: ajaxUrl,
+                data: { id: ajaxId },
                 success: onQuoteBtnClick_Success,
             });
         }
         function onQuoteBtnClick_Success(response)
-        {
+        {            
             var $editor = $("#ThreadReplyEditor textarea.mdd_editor");
-            $editor.val(response);
+            var currentVal = $editor.val().trim();
+            onPostReplyClick(); // show the editor
+            if (currentVal === "")
+            {
+                $editor.val(response).trigger("change");
+            }
+            else
+            {
+                $editor.val(currentVal + "\n\n" + response).trigger("change");
+            }
             // Triggers transfromation of the content
-            var m = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview"));
+            var m = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview")[0]);
         }
 
         $(document).ready(function ()
@@ -173,10 +199,14 @@
             $("#ThreadReplyEditor").hide();
 
             // Edit option link clicks
-            $(".row.thread[data-thread]").on("click", ".post-options-list .thread-edit", onThreadEditLinkClick)
-            .on("click", ".post-options-list .thread-delete", onThreadDeleteClick);
-            $(".row.thread-reply[data-thread-reply]").on("click", ".post-options-list .thread-reply-edit", onReplyEditLinkClick)
-            .on("click", ".post-options-list .thread-reply-delete", onReplyDeleteClick);;
+            $(".row.thread[data-thread] .post-options-list")
+                .on("click", ".thread-post-edit", onThreadEditLinkClick)
+                .on("click", ".thread-post-delete", onThreadDeleteClick);
+            $(".row.thread-reply[data-thread-reply] .post-options-list")
+                .on("click", ".thread-post-edit", onReplyEditLinkClick)
+                .on("click", ".thread-post-delete", onReplyDeleteClick);
+            $(".row.thread-post .post-options-list").on("click", ".thread-post-quote", onQuoteBtnClick);
+
 
             $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", onEditorModalShown);
             $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(onDeletFormSubmitClick)
@@ -256,16 +286,17 @@
     @Html.Partial("EditorTemplates/ThreadReplyViewModel", new ThreadReplyViewModel { ThreadID = Model.ID })
 }
 
-<div id="ThreadEditModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">
-                    Edit Thread
-                </h4>
-            </div>
-            @using (Ajax.BeginForm("EditThread", "Forum", new { area = "Forums", id = Model.ID }, new AjaxOptions
+<div id="ModalContainer">
+    <div id="ThreadEditModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">
+                        Edit Thread
+                    </h4>
+                </div>
+                @using (Ajax.BeginForm("EditThread", "Forum", new { area = "Forums", id = Model.ID }, new AjaxOptions
             {
                 OnBegin = "onAjaxRequestBegin",
                 OnComplete = "onAjaxRequestComplete",
@@ -273,34 +304,34 @@
                 OnFailure = "onThreadUpdateRequestFailure"
             }))
             {
-                @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                <div class="modal-body">
-                    The editor goes here
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        Update
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Close
-                    </button>
-                </div>
+                    <div class="modal-body">
+                        The editor goes here
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
             }
+            </div>
         </div>
     </div>
-</div>
 
-<div id="ThreadReplyEditModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">
-                    Edit reply
-                </h4>
-            </div>
-            @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
+    <div id="ThreadReplyEditModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">
+                        Edit reply
+                    </h4>
+                </div>
+                @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
             {
                 OnBegin = "onAjaxRequestBegin",
                 OnComplete = "onAjaxRequestComplete",
@@ -308,82 +339,83 @@
                 OnSuccess = "onReplyUpdateRequestSuccess"
             }))
             {
-                @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-                <div class="modal-body">
-                    The content goes here
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        Update
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Close
-                    </button>
-                </div>
+                    <div class="modal-body">
+                        The content goes here
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
             }
+            </div>
         </div>
     </div>
-</div>
 
-<div id="ThreadDeleteModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">
-                    Confirm delete
-                </h4>
-            </div>
-            @using (Html.BeginForm("DeleteThread", "Forum", new { area = "Forums", id = Model.ID, page = Model.ViewPageNum }, FormMethod.Post))
+    <div id="ThreadDeleteModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">
+                        Confirm delete
+                    </h4>
+                </div>
+                @using (Html.BeginForm("DeleteThread", "Forum", new { area = "Forums", id = Model.ID, page = Model.ViewPageNum }, FormMethod.Post))
             {
-                @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                <div class="modal-body">
-                    Are you sure you want to delete this thread?
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        OK
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Cancel
-                    </button>
-                </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this thread?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            OK
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
             }
+            </div>
         </div>
     </div>
-</div>
 
-<div id="ReplyDeleteModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">
-                    Confirm delete
-                </h4>
-            </div>
-            @using (Html.BeginForm("DeleteReply", "Forum", new { area = "Forums", threadId = Model.ID, page = Model.ViewPageNum }, FormMethod.Post))
+    <div id="ReplyDeleteModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">
+                        Confirm delete
+                    </h4>
+                </div>
+                @using (Html.BeginForm("DeleteReply", "Forum", new { area = "Forums", threadId = Model.ID, page = Model.ViewPageNum }, FormMethod.Post))
             {
-                @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                <input type="hidden" id="id" name="id" />
+                    <input type="hidden" id="id" name="id" />
 
-                <div class="modal-body">
-                    Are you sure you want to delete this reply?
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        OK
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Cancel
-                    </button>
-                </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this reply?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            OK
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
             }
+            </div>
         </div>
     </div>
 </div>

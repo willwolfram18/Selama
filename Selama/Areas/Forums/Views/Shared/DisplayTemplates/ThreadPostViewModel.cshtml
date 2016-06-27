@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity;
 @model Selama.Areas.Forums.ViewModels.ThreadPostViewModel
 
-@{ 
+@{
     string attrVal = null;
     switch (Model.PostType)
     {
@@ -15,7 +15,7 @@
             break;
     }
 }
-<div class="row @attrVal" @("data-" + attrVal)="@Model.ID">
+<div class="row thread-post @attrVal" @("data-" + attrVal)="@Model.ID">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
@@ -23,36 +23,38 @@
                     @Html.DisplayFor(model => model.PostDate)
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
-                    <a class="anchor" name="@Model." href="#@Model.PostIndex">#@Model.PostIndex</a>
+                    <a class="anchor" name="@Model.PostIndex" href="#@Model.PostIndex">
+                        #@Model.PostIndex
+                    </a>
                 </div>
             </div>
         </div>
         <div class="panel-body">
-            <div class="col-xs-12 col-sm-12 col-md-2 thread-reply-author">
+            <div class="col-xs-12 col-sm-12 col-md-2 @(attrVal + "-author")">
                 @Model.Author
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-10 thread-reply-content">
+            <div class="col-xs-12 col-sm-12 col-md-10 @(attrVal + "-content")">
                 @Model.HtmlContent
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <ul class="post-options-list">
                     <li>
-                        <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-quote">
+                        <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-post-quote">
                             <i class="fa fa-comment"></i>Quote
                         </a>
                     </li>
                     @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
                     {
                         <li>
-                            <a class="btn btn-default thread-reply-edit" href="#">
+                            <a class="btn btn-default thread-post-edit" href="#">
                                 Edit
                             </a>
                         </li>
-                            <li>
-                                <a class="btn btn-default thread-reply-delete" href="#">
-                                    Delete
-                                </a>
-                            </li>
+                        <li>
+                            <a class="btn btn-default thread-post-delete" href="#">
+                                Delete
+                            </a>
+                        </li>
                     }
                 </ul>
             </div>

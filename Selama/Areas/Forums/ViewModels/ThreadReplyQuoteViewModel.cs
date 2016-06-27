@@ -10,6 +10,14 @@ namespace Selama.Areas.Forums.ViewModels
     public class ThreadReplyQuoteViewModel
     {
         public ThreadReplyQuoteViewModel() { }
+        public ThreadReplyQuoteViewModel(Thread thread)
+        {
+            Author = thread.Author.UserName;
+            PostDate = thread.PostDate;
+            ReplyIndex = 1;
+            PageNum = 1;
+            Content = thread.Content;
+        }
         public ThreadReplyQuoteViewModel(ThreadReply reply, int page)
         {
             Author = reply.Author.UserName;
