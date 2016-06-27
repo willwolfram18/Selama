@@ -29,16 +29,19 @@ namespace Selama.Areas.Forums.ViewModels
             
             if (thread.Replies.Count > 0)
             {
+                ThreadReply lastPost = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault();
                 LastPost = new LastThreadPostViewModel
                 {
-                    Author = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault().Author.UserName
+                    Author = lastPost.Author.UserName,
+                    PostDate = lastPost.PostDate
                 };
             }
             else
             {
                 LastPost = new LastThreadPostViewModel
                 {
-                    Author = thread.Author.UserName
+                    Author = thread.Author.UserName,
+                    PostDate = thread.PostDate,
                 };
             }
         }

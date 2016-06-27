@@ -29,12 +29,12 @@ namespace Selama.Areas.Forums.ViewModels
 
             #region Get threads
             Threads = Util.ConvertLists<Thread, ThreadOverviewViewModel>(
-                activeThreads.OrderByDescending(t => t.IsPinned)
-                    .ThenByDescending(t => t.PostDate)
+                activeThreads
                     .Skip(StartingIndex)
                     .Take(_pageSize),
                 t => new ThreadOverviewViewModel(t)
-            );
+            ).OrderByDescending(t => t.IsPinned)
+            .ThenByDescending(t => t.LastPost.PostDate);
             #endregion
         }
 
