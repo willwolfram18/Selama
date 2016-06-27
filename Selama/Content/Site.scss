@@ -253,3 +253,21 @@ $maxScreenWidth: 991px;
         width: 35px;
     }
 }
+
+blockquote {
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+
+    .quote-head {
+        p,
+        div {
+            display: inline-block;
+        }
+
+        .quote-post-date {
+            font-size: 12px;
+            float: right;
+        }
+    } 
+}

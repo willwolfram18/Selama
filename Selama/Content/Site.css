@@ -158,3 +158,14 @@ textarea {
   .alert.alert-icontext .fa {
     width: 35px; }
 
+blockquote {
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 3px; }
+  blockquote .quote-head p,
+  blockquote .quote-head div {
+    display: inline-block; }
+  blockquote .quote-head .quote-post-date {
+    font-size: 12px;
+    float: right; }
+
