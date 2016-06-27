@@ -26,6 +26,7 @@ textarea {
   padding-top: 0; }
 
 .post-options-list {
+  float: right;
   margin-top: 8px;
   margin-bottom: 0px; }
   .post-options-list li {

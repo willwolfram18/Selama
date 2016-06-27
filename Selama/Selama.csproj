@@ -232,6 +232,7 @@
     <Compile Include="Areas\Forums\ViewModels\ThreadEditViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadOverviewViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ForumViewModel.cs" />
+    <Compile Include="Areas\Forums\ViewModels\ThreadPostViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadReplyEditViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadReplyQuoteViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadReplyViewModel.cs" />
@@ -394,6 +395,7 @@
     <Content Include="Areas\Account\Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\_ThreadsPager.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadReplyQuoteViewModel.cshtml" />
+    <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadPostViewModel.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

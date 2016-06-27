@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNet.Identity;
+@model Selama.Areas.Forums.ViewModels.ThreadPostViewModel
+
+@{ 
+    string attrVal = null;
+    switch (Model.PostType)
+    {
+        case Selama.Areas.Forums.ViewModels.PostType.Thread:
+            attrVal = "thread";
+            break;
+        case Selama.Areas.Forums.ViewModels.PostType.ThreadReply:
+            attrVal = "thread-reply";
+            break;
+        default:
+            break;
+    }
+}
+<div class="row @attrVal" @("data-" + attrVal)="@Model.ID">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    @Html.DisplayFor(model => model.PostDate)
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
+                    <a class="anchor" name="@Model." href="#@Model.PostIndex">#@Model.PostIndex</a>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-12 col-sm-12 col-md-2 thread-reply-author">
+                @Model.Author
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-10 thread-reply-content">
+                @Model.HtmlContent
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <ul class="post-options-list">
+                    <li>
+                        <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-quote">
+                            <i class="fa fa-comment"></i>Quote
+                        </a>
+                    </li>
+                    @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
+                    {
+                        <li>
+                            <a class="btn btn-default thread-reply-edit" href="#">
+                                Edit
+                            </a>
+                        </li>
+                            <li>
+                                <a class="btn btn-default thread-reply-delete" href="#">
+                                    Delete
+                                </a>
+                            </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

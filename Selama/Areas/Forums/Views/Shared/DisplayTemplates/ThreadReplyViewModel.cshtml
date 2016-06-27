@@ -1,47 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity;
+@using Selama.Areas.Forums.ViewModels;
 @model Selama.Areas.Forums.ViewModels.ThreadReplyViewModel
 
-<div class="row thread-reply" data-thread-reply="@Model.ID">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    @Html.DisplayFor(model => model.PostDate)
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
-                    <a class="anchor" name="@Model.ReplyIndex" href="#@Model.ReplyIndex">#@Model.ReplyIndex</a>
-                    <ul class="post-options-list">
-                        <li>
-                            <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-quote">
-                                <i class="fa fa-comment"></i>Quote
-                            </a>
-                        </li>
-                        @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsThreadLocked)
-                        {
-                            <li>
-                                <a class="btn btn-default thread-reply-edit" href="#">
-                                    Edit
-                                </a>
-                            </li>
-                            <li>
-                                <a class="btn btn-default thread-reply-delete" href="#">
-                                    Delete
-                                </a>
-                            </li>
-                        }
-
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel-body">
-            <div class="col-xs-12 col-sm-12 col-md-2 thread-reply-author">
-                @Model.Author
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-10 thread-reply-content">
-                @Model.HtmlContent
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("DisplayTemplates/ThreadPostViewModel", new ThreadPostViewModel(Model))

@@ -227,48 +227,7 @@
 
 @if (Model.ViewPageNum == 1)
 {
-    <div class="row thread" data-thread="@Model.ID">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        @Html.DisplayFor(model => model.PostDate)
-                    </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
-                        <a class="anchor" name="1" href="#1">#1</a>
-                        <ul class="post-options-list">
-                            <li>
-                                <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-quote">
-                                    <i class="fa fa-comment"></i>Quote
-                                </a>
-                            </li>
-                            @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
-                            {
-                                <li>
-                                    <a href="#" class="btn btn-default thread-edit">
-                                        Edit
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="btn btn-default thread-delete">
-                                        Delete
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="col-xs-12 col-sm-12 col-md-2 thread-author">
-                    @Model.Author
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-10 thread-content">
-                    @Model.HtmlContent
-                </div>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("DisplayTemplates/ThreadPostViewModel", new ThreadPostViewModel(Model))
 }
 
 @foreach (var reply in Model.Replies)
