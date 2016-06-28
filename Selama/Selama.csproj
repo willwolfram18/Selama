@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44322</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -241,6 +241,7 @@
     <Compile Include="Classes\Utility\Util.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\_BaseAuthorizeController.cs" />
+    <Compile Include="Controllers\__BaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -466,6 +467,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Account\Models\" />
     <Folder Include="Areas\Account\Views\Shared\" />
+    <Folder Include="Views\_Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

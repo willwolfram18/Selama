@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Selama.Models;
+using System.Configuration;
 
 namespace Selama
 {
@@ -58,11 +59,11 @@ namespace Selama
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = ConfigurationManager.AppSettings["GoogleOAuthClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["GoogleOAuthClientSecret"]
+            });
         }
     }
 }
