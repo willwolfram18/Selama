@@ -1,11 +1,12 @@
-﻿using System;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using Owin.Security.Providers.BattleNet;
 using Selama.Models;
+using System;
 using System.Configuration;
 
 namespace Selama
@@ -63,6 +64,13 @@ namespace Selama
             {
                 ClientId = ConfigurationManager.AppSettings["GoogleOAuthClientId"],
                 ClientSecret = ConfigurationManager.AppSettings["GoogleOAuthClientSecret"]
+            });
+
+            app.UseBattleNetAuthentication(new BattleNetAuthenticationOptions
+            {
+                ClientId = ConfigurationManager.AppSettings["BattleNetOAuthClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["BattleNetOAuthClientSecret"],
+                Region = Region.Us,
             });
         }
     }
