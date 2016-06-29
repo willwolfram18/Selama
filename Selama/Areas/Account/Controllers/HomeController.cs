@@ -76,7 +76,7 @@ namespace Selama.Areas.Account.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id))
             {
-                ViewBag.ErrorMessage = "You must have confirmed your email to log in.";
+                ViewBag.ErrorMessage = "You must confirm your email to log in.";
                 return View("Error");
             }
 
