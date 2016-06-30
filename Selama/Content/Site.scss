@@ -34,7 +34,7 @@ textarea {
 .post-options-list {
     float: right;
     margin-top: 8px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 
     li {
         display: inline-block;
@@ -51,18 +51,18 @@ textarea {
 }
 
 .btn-battlenet {
-    $bnet-color: #008cbf;
+    $bnet-color: #00b5f0;
     $border-color: rgba(255,255,255, 0.3);
-    background-color: #292929;
+    background-color: #1d313e;
     color: #e9e9e9;
     border-color: $border-color;
 
-    >:first-child {
+    > :first-child {
         color: $bnet-color;
         border-color: $border-color;
     }
     &:hover {
-        background-color: #111;
+        background-color: rgb(17,27,23);
         color: #f2f2f2;
     }
 }
