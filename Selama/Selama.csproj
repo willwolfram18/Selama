@@ -305,13 +305,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bootstrap\bootstrap-social.css" />
     <Content Include="Content\Bootstrap\bootstrap-theme.css" />
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\FontAwesome\font-awesome.css" />
     <Content Include="Content\FontAwesome\font-awesome.min.css" />
-    <Content Include="Content\Images\bnet.png" />
     <Content Include="Content\jquery.spin.css" />
     <Content Include="Content\MarkdownDeep\MarkdownDeep.css" />
     <Content Include="Content\MarkdownDeep\MarkdownDeep.min.css">
