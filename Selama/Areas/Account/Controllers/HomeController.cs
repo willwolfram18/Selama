@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json;
 using Selama.Areas.Account.ViewModels.Home;
 using Selama.Controllers;
 using Selama.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +20,7 @@ namespace Selama.Areas.Account.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private string _recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}";
 
         public HomeController()
         {
@@ -156,7 +160,7 @@ namespace Selama.Areas.Account.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && VerifyRecaptcha())
             {
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -442,6 +446,21 @@ namespace Selama.Areas.Account.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+
+        private bool VerifyRecaptcha()
+        {
+            string response = Request["g-recaptcha-response"];
+            string recaptchaSecret = ConfigurationManager.AppSettings["GoogleReCaptchaSecret"];
+
+            string reply;
+            using (var client = new WebClient())
+            {
+                reply = client.DownloadString(string.Format(_recaptchaUrl, recaptchaSecret, response));
+            }
+
+            var recaptchaResponse = JsonConvert.DeserializeObject<dynamic>(reply);
+            return recaptchaResponse.Success;
+        }
 
         private IAuthenticationManager AuthenticationManager
         {

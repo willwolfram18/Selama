@@ -24,5 +24,7 @@ namespace Selama.Areas.Account.ViewModels.Home
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
+
+        
     }
 }
