@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Owin.Security.Providers.BattleNet;
@@ -56,9 +57,11 @@ namespace Selama
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            //app.UseFacebookAuthentication(new FacebookAuthenticationOptions
+            //{
+            //    AppId = "",
+            //    AppSecret = ""
+            //});
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
@@ -71,6 +74,7 @@ namespace Selama
                 ClientId = ConfigurationManager.AppSettings["BattleNetOAuthClientId"],
                 ClientSecret = ConfigurationManager.AppSettings["BattleNetOAuthClientSecret"],
                 Region = Region.Us,
+                Caption = "Battle.net"
             });
         }
     }
