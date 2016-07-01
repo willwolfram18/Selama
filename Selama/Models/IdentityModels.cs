@@ -7,12 +7,16 @@ using Selama.Areas.Forums.Models;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Selama.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        [Required]
+        public bool IsActive { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -47,10 +51,6 @@ namespace Selama.Models
                 .HasMany(u => u.ThreadReplies)
                 .WithRequired(t => t.Author)
                 .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Forum>()
-            //    .HasMany<Thread>(f => f.Threads)
-            //    .WithRequired(t => t.Forum);
         }
 
         public static ApplicationDbContext Create()

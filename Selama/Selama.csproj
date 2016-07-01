@@ -298,6 +298,10 @@
     <Compile Include="Migrations\201606261918229_ThreadReplyIndexColumn.Designer.cs">
       <DependentUpon>201606261918229_ThreadReplyIndexColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607010318232_UserActiveBit.cs" />
+    <Compile Include="Migrations\201607010318232_UserActiveBit.Designer.cs">
+      <DependentUpon>201607010318232_UserActiveBit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
@@ -514,6 +518,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606261918229_ThreadReplyIndexColumn.resx">
       <DependentUpon>201606261918229_ThreadReplyIndexColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607010318232_UserActiveBit.resx">
+      <DependentUpon>201607010318232_UserActiveBit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

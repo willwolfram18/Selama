@@ -72,9 +72,9 @@ namespace Selama.Areas.Account.Controllers
             {
                 return View(model);
             }
-
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id))
+            
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id) || !user.IsActive)
             {
                 ViewBag.ErrorMessage = "You must confirm your email to log in.";
                 return View("Error");
@@ -158,7 +158,7 @@ namespace Selama.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -386,6 +386,7 @@ namespace Selama.Areas.Account.Controllers
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, "GuildMember");
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

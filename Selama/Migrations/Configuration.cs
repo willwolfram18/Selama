@@ -59,14 +59,20 @@ namespace Selama.Migrations
             //    context.ThreadReplies.AddOrUpdate(r);
             //});
 
-            context.Threads.ToList().ForEach(t =>
+            //context.Threads.ToList().ForEach(t =>
+            //{
+            //    int index = 1;
+            //    foreach (ThreadReply reply in t.Replies.OrderBy(r => r.PostDate))
+            //    {
+            //        reply.ReplyIndex = index++;
+            //        context.ThreadReplies.AddOrUpdate(reply);
+            //    }
+            //});
+
+            context.Users.ToList().ForEach(u =>
             {
-                int index = 1;
-                foreach (ThreadReply reply in t.Replies.OrderBy(r => r.PostDate))
-                {
-                    reply.ReplyIndex = index++;
-                    context.ThreadReplies.AddOrUpdate(reply);
-                }
+                u.IsActive = false;
+                context.Users.AddOrUpdate(u);
             });
         }
     }

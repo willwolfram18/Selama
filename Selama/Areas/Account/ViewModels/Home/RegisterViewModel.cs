@@ -5,6 +5,11 @@ namespace Selama.Areas.Account.ViewModels.Home
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Username")]
+        [StringLength(25, ErrorMessage = "A {0} must be between {1} and {2} characters in length", MinimumLength = 6)]
+        public string Username { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
