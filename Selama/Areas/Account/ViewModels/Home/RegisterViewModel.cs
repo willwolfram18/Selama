@@ -6,7 +6,7 @@ namespace Selama.Areas.Account.ViewModels.Home
     {
         [Required]
         [Display(Name = "Username")]
-        [StringLength(25, ErrorMessage = "A {0} must be between {1} and {2} characters in length", MinimumLength = 6)]
+        [StringLength(25, ErrorMessage = "A {0} must be between {1} and {2} characters in length", MinimumLength = 3)]
         public string Username { get; set; }
 
         [Required]
