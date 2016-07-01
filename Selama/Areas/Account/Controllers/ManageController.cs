@@ -55,14 +55,41 @@ namespace Selama.Areas.Account.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+            switch (message)
+            {
+                case ManageMessageId.AddPhoneSuccess:
+                    ViewBag.Success = true;
+                    ViewBag.StatusMessage = "Your phone number was added.";
+                    break;
+                case ManageMessageId.ChangePasswordSuccess:
+                    ViewBag.Success = true;
+                    ViewBag.StatusMessage = "Your password has been changed.";
+                    break;
+                case ManageMessageId.Error:
+                    ViewBag.Success = false;
+                    ViewBag.StatusMessage = "An error has occurred.";
+                    break;
+                case ManageMessageId.RemoveLoginSuccess:
+                    ViewBag.Success = true;
+                    ViewBag.StatusMessage = "You external login was removed";
+                    break;
+                case ManageMessageId.RemovePhoneSuccess:
+                    ViewBag.Success = true;
+                    ViewBag.StatusMessage = "Your phone number was removed.";
+                    break;
+                case ManageMessageId.SetPasswordSuccess:
+                    ViewBag.Success = true;
+                    ViewBag.StatusMessage = "Your password has been set.";
+                    break;
+                case ManageMessageId.SetTwoFactorSuccess:
+                    ViewBag.Success = true;
+                    ViewBag.StatusMessage = "Your two-factor authentication provider has been set.";
+                    break;
+                default:
+                    ViewBag.Success = false;
+                    ViewBag.StatusMessage = "";
+                    break;
+            }
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel

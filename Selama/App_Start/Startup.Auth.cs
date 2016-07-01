@@ -57,11 +57,11 @@ namespace Selama
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(new FacebookAuthenticationOptions
-            //{
-            //    AppId = "",
-            //    AppSecret = ""
-            //});
+            app.UseFacebookAuthentication(new FacebookAuthenticationOptions
+            {
+                AppId = ConfigurationManager.AppSettings["FacebookOAuthAppId"],
+                AppSecret = ConfigurationManager.AppSettings["FacebookOAuthAppSecret"]
+            });
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {

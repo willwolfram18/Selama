@@ -350,7 +350,14 @@ namespace Selama.Areas.Account.Controllers
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    if (loginInfo.Login.LoginProvider == "BattleNet")
+                    {
+                        ViewBag.LoginProvider = "Battle.net";
+                    }
+                    else
+                    {
+                        ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    }
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
