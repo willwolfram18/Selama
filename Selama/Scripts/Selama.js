@@ -29,7 +29,7 @@ Selama.SpinShield = Selama.SpinShield || {
         return this;
     },
 
-    lowerSheild: function Selama_SpinShield_lowerShield()
+    lowerShield: function Selama_SpinShield_lowerShield()
     {
         $("#SpinShield").addClass("hidden");
         return this;
@@ -112,7 +112,7 @@ Selama.Alert = Selama.Alert || {
 // #region Page load
 $(document).ready(function ()
 {
-    Selama.SpinShield.init().lowerSheild();
+    Selama.SpinShield.init().lowerShield();
     Selama.Alert.init();
 });
 // #endregion

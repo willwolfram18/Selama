@@ -28,5 +28,16 @@ namespace Selama.Controllers
 
             return View();
         }
+
+        public ActionResult Error(string errorMsg = null)
+        {
+            if (string.IsNullOrWhiteSpace(errorMsg))
+            {
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ErrorMessage = errorMsg;
+            return View("Error");
+        }
     }
 }

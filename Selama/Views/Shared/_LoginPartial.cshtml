@@ -6,6 +6,10 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
+            @if (User.IsInRole("Admin") || User.IsInRole("GuildOfficer"))
+            {
+                @Html.Partial("_AdminMenuItemPartial")
+            }
             <li>
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = "Account" }, htmlAttributes: new { title = "Manage" })
             </li>

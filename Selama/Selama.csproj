@@ -243,6 +243,7 @@
     <Compile Include="Areas\Forums\ViewModels\ThreadReplyQuoteViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadReplyViewModel.cs" />
     <Compile Include="Areas\Forums\ViewModels\ThreadViewModel.cs" />
+    <Compile Include="Classes\Attributes\AuthorizePrivilegeAttribute.cs" />
     <Compile Include="Classes\Enum\SaveChangeError.cs" />
     <Compile Include="Classes\Utility\Util.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -479,6 +480,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_MenuBarPartial.cshtml" />
+    <Content Include="Views\Shared\_AdminMenuItemPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

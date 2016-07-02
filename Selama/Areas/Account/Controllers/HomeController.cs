@@ -61,6 +61,10 @@ namespace Selama.Areas.Account.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToLocal(returnUrl);
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

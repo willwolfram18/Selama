@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Selama.Areas.Account.ViewModels.Manage;
+using Selama.Classes.Attributes;
 using Selama.Classes.Utility;
 using Selama.Controllers;
 using Selama.Models;
@@ -353,7 +354,7 @@ namespace Selama.Areas.Account.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
-        [Authorize(Roles = "Admin,GuildOfficer")]
+        [AuthorizePrivilege(Roles = "Admin,GuildOfficer")]
         public async Task<ActionResult> ApproveUsers()
         {
             List<ApproveUserViewModel> pendingUsers = Util.ConvertLists<ApplicationUser, ApproveUserViewModel>(
@@ -363,14 +364,14 @@ namespace Selama.Areas.Account.Controllers
             return View(pendingUsers);
         }
 
-        [Authorize(Roles = "Admin,GuildOfficer")]
+        [AuthorizePrivilege(Roles = "Admin,GuildOfficer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmUser(ApproveUserViewModel user)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                ApplicationUser dbUser = await db.Users.FirstOrDefaultAsync(u => u.Id == user.UserID);
+                ApplicationUser dbUser = await db.Users.FirstOrDefaultAsync(u => u.Id == user.UserID && u.WaitingReview);
                 if (dbUser == null || !dbUser.IsActive)
                 {
                     return HttpNotFound();
@@ -388,6 +389,33 @@ namespace Selama.Areas.Account.Controllers
                         var callbackUrl = Url.Action("ConfirmEmail", "Home", new { userId = dbUser.Id, code = code }, protocol: Request.Url.Scheme);
                         await UserManager.SendEmailAsync(dbUser.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                        return Json(user.UserID);
+                    }
+                }
+            }
+
+            return HttpUnprocessable();
+        }
+
+        [AuthorizePrivilege(Roles = "Admin,GuildOfficer")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DenyUser(ApproveUserViewModel user)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser dbUser = await db.Users.Where(u => u.Id == user.UserID && u.WaitingReview).FirstOrDefaultAsync();
+                if (dbUser == null || !dbUser.IsActive)
+                {
+                    return HttpNotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    db.Users.Remove(dbUser);
+
+                    if (await TrySaveChangesAsync(db))
+                    {
                         return Json(user.UserID);
                     }
                 }
