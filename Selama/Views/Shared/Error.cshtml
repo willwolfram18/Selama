@@ -7,7 +7,12 @@
 <h1 class="text-danger">Error.</h1>
 @if (ViewBag.ErrorMessage != null)
 {
-    <h2 class="text-danger">@ViewBag.ErrorMessage</h2>
+    <div class="alert alert-danger alert-icontext">
+        <span class="fa fa-2x fa-exclamation-circle"></span>
+        <span>
+            @ViewBag.ErrorMessage
+        </span>
+    </div>
 }
 else
 {

@@ -78,9 +78,9 @@ namespace Selama.Areas.Account.Controllers
             }
             
             var user = await UserManager.FindByEmailAsync(model.Email);
-            if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id) || !user.IsActive)
+            if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id) || !user.IsActive || user.WaitingReview)
             {
-                ViewBag.ErrorMessage = "You must confirm your email to log in.";
+                ViewBag.ErrorMessage = "Your account must be confirmed before you can log in.";
                 return View("Error");
             }
 
@@ -345,6 +345,13 @@ namespace Selama.Areas.Account.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    if (user == null || !user.IsActive || user.WaitingReview)
+                    {
+                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        ViewBag.ErrorMessage = "Your account must be confirmed before you can log in.";
+                        return View("Error");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -386,7 +393,7 @@ namespace Selama.Areas.Account.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, IsActive = true };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, IsActive = true, WaitingReview = true };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -394,8 +401,9 @@ namespace Selama.Areas.Account.Controllers
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //return RedirectToLocal(returnUrl);
+                        return RedirectToAction("RegistrationConfirmation");
                     }
                 }
                 AddErrors(result);
@@ -465,7 +473,7 @@ namespace Selama.Areas.Account.Controllers
             }
 
             var recaptchaResponse = JsonConvert.DeserializeObject<dynamic>(reply);
-            return recaptchaResponse.Success;
+            return recaptchaResponse.success;
         }
 
         private IAuthenticationManager AuthenticationManager
