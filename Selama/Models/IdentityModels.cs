@@ -17,6 +17,9 @@ namespace Selama.Models
         [Required]
         public bool IsActive { get; set; }
 
+        [Required]
+        public bool WaitingReview { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

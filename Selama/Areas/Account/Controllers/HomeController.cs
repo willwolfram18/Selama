@@ -162,7 +162,7 @@ namespace Selama.Areas.Account.Controllers
         {
             if (ModelState.IsValid && VerifyRecaptcha())
             {
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, IsActive = true, WaitingReview = true };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -171,11 +171,11 @@ namespace Selama.Areas.Account.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Home", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Home", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home", new { area = "" });
+                    return RedirectToAction("RegistrationConfirmation");
                 }
                 AddErrors(result);
             }
@@ -215,7 +215,7 @@ namespace Selama.Areas.Account.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)) || user.WaitingReview || !user.IsActive)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -260,8 +260,8 @@ namespace Selama.Areas.Account.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user == null || !user.IsActive || user.WaitingReview || !await UserManager.IsEmailConfirmedAsync(user.Id))
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Home", new { area = "Account" });
@@ -386,7 +386,7 @@ namespace Selama.Areas.Account.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, IsActive = true };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -403,6 +403,12 @@ namespace Selama.Areas.Account.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegistrationConfirmation()
+        {
+            return View();
         }
 
         //

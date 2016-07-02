@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201607010318232_UserActiveBit.Designer.cs">
       <DependentUpon>201607010318232_UserActiveBit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607020156008_RequireUserReview.cs" />
+    <Compile Include="Migrations\201607020156008_RequireUserReview.Designer.cs">
+      <DependentUpon>201607020156008_RequireUserReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
@@ -407,6 +411,7 @@
     <Content Include="Areas\Forums\Views\Shared\_ThreadsPager.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadReplyQuoteViewModel.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadPostViewModel.cshtml" />
+    <Content Include="Areas\Account\Views\Home\RegistrationConfirmation.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -521,6 +526,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607010318232_UserActiveBit.resx">
       <DependentUpon>201607010318232_UserActiveBit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020156008_RequireUserReview.resx">
+      <DependentUpon>201607020156008_RequireUserReview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

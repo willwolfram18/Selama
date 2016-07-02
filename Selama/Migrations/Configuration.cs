@@ -71,7 +71,8 @@ namespace Selama.Migrations
 
             context.Users.ToList().ForEach(u =>
             {
-                u.IsActive = false;
+                //u.IsActive = false;
+                u.WaitingReview = false;
                 context.Users.AddOrUpdate(u);
             });
         }
