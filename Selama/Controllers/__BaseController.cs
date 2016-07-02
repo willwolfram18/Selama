@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,6 +22,27 @@ namespace Selama.Controllers
             }
             catch (Exception e)
             {
+                return false;
+            }
+        }
+
+        protected async Task<bool> TrySaveChangesAsync(DbContext db)
+        {
+            try
+            {
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (ex is DbUpdateConcurrencyException)
+                {
+                    DbUpdateConcurrencyException concurrentError = ex as DbUpdateConcurrencyException;
+                    foreach (var entity in concurrentError.Entries)
+                    {
+                        await entity.ReloadAsync();
+                    }
+                }
                 return false;
             }
         }

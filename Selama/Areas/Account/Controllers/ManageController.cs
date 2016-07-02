@@ -2,9 +2,12 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Selama.Areas.Account.ViewModels.Manage;
+using Selama.Classes.Utility;
 using Selama.Controllers;
+using Selama.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -348,6 +351,49 @@ namespace Selama.Areas.Account.Controllers
             }
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+        }
+
+        [Authorize(Roles = "Admin,GuildOfficer")]
+        public async Task<ActionResult> ApproveUsers()
+        {
+            List<ApproveUserViewModel> pendingUsers = Util.ConvertLists<ApplicationUser, ApproveUserViewModel>(
+                await new ApplicationDbContext().Users.Where(u => u.WaitingReview && u.IsActive).ToListAsync(),
+                u => new ApproveUserViewModel(u)
+            );
+            return View(pendingUsers);
+        }
+
+        [Authorize(Roles = "Admin,GuildOfficer")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ConfirmUser(ApproveUserViewModel user)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser dbUser = await db.Users.FirstOrDefaultAsync(u => u.Id == user.UserID);
+                if (dbUser == null || !dbUser.IsActive)
+                {
+                    return HttpNotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    dbUser.WaitingReview = false;
+                    db.Entry(dbUser).State = EntityState.Modified;
+
+                    if (await TrySaveChangesAsync(db))
+                    {
+                        // Send email to allow user to confirm account
+                        string code = await UserManager.GenerateEmailConfirmationTokenAsync(dbUser.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Home", new { userId = dbUser.Id, code = code }, protocol: Request.Url.Scheme);
+                        await UserManager.SendEmailAsync(dbUser.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return Json(user.UserID);
+                    }
+                }
+            }
+
+            return HttpUnprocessable();
         }
 
         protected override void Dispose(bool disposing)

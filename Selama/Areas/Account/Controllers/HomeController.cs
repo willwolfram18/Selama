@@ -345,7 +345,7 @@ namespace Selama.Areas.Account.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    var user = await UserManager.FindAsync(loginInfo.Login);
                     if (user == null || !user.IsActive || user.WaitingReview)
                     {
                         AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
