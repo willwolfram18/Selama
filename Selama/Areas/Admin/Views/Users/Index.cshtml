@@ -1,4 +1,5 @@
-﻿@using Selama.Areas.Admin.ViewModels.Users;
+﻿@using Selama.ViewModels;
+@using Selama.Areas.Admin.ViewModels.Users;
 @model UserOverviewViewModel
 
 @{
@@ -25,7 +26,7 @@
 
 <div class="row pager-row">
     <div class="col-md-offset-2 col-md-10">
-        @Html.Partial("_UsersOverviewPager", Model)
+        @Html.Partial("_PagerPartial", new PagerViewModel(Model))
     </div>
 </div>
 <div class="row">
@@ -145,6 +146,6 @@
 </div>
 <div class="row pager-row">
     <div class="col-md-offset-2 col-md-10">
-        @Html.Partial("_UsersOverviewPager", Model)
+        @Html.Partial("_PagerPartial", new PagerViewModel(Model))
     </div>
 </div>

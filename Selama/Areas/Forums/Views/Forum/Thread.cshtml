@@ -1,5 +1,5 @@
-﻿@using Selama.Areas.Forums.ViewModels
-@using Microsoft.AspNet.Identity;
+﻿@using Selama.Areas.Forums.ViewModels;
+@using Selama.ViewModels;
 @model ThreadViewModel
 @{
     ViewBag.Title = Model.Title;
@@ -251,7 +251,7 @@
         }
     </div>
     <div class="col-sm-9 col-md-9" style="padding: 0;">
-        @Html.Partial("_ThreadPager", Model)
+        @Html.Partial("_PagerPartial", new PagerViewModel(Model))
     </div>
 </div>
 
@@ -277,7 +277,7 @@
         }
     </div>
     <div class="col-sm-9 col-md-9" style="padding: 0;">
-        @Html.Partial("_ThreadPager", Model)
+        @Html.Partial("_PagerPartial", new PagerViewModel(Model))
     </div>
 </div>
 
