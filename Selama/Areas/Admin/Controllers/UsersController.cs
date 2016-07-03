@@ -33,27 +33,102 @@ namespace Selama.Areas.Admin.Controllers
                 return RedirectToAction("Index", new { pageNum = model.NumPages });
             }
 
+            if (TempData.ContainsKey("Message") && TempData["Message"] != null && 
+                !string.IsNullOrWhiteSpace(TempData["Message"].ToString()))
+            {
+                ViewBag.Message = TempData["Message"].ToString();
+                TempData["Message"] = null;
+            }
+            if (TempData.ContainsKey("ErrorMessage") && TempData["ErrorMessage"] != null &&
+                !string.IsNullOrWhiteSpace(TempData["ErrorMessage"].ToString()))
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+                TempData["ErrorMessage"] = null;
+            }
+
             return View(model);
         }
 
-        public async Task<ActionResult> DisableUser()
+        public async Task<ActionResult> DisableUser(UserEditViewModel user, int page = 1)
         {
-            return View("Index");
+            ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
+            if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
+            {
+                dbUser.IsActive = false;
+                _db.Entry(dbUser).State = EntityState.Modified;
+                if (await TrySaveChangesAsync(_db))
+                {
+                    TempData["Message"] = string.Format("<strong>{0}</strong> has been disabled and can no longer log in.", dbUser.UserName);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = string.Format("An error occurred. Please re-try disabling <strong>{0}</strong>.", dbUser.UserName);
+                }
+            }
+
+            return RedirectToAction("Index", new { page = page });
         }
 
-        public async Task<ActionResult> EnableUser()
+        public async Task<ActionResult> EnableUser(UserEditViewModel user, int page = 1)
         {
-            return View("Index");
+            ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
+            if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
+            {
+                dbUser.IsActive = true;
+                _db.Entry(dbUser).State = EntityState.Modified;
+                if (await TrySaveChangesAsync(_db))
+                {
+                    TempData["Message"] = string.Format("<strong>{0}</strong> has been enabled and can now log in.", dbUser.UserName);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = string.Format("An error occurred. Please re-try enabling <strong>{0}</strong>.", dbUser.UserName);
+                }
+            }
+
+            return RedirectToAction("Index", new { page = page });
         }
 
-        public async Task<ActionResult> ConfirmUser()
+        public async Task<ActionResult> ConfirmUser(UserEditViewModel user, int page = 1)
         {
-            return View("Index");
+            ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
+            if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
+            {
+                dbUser.WaitingReview = false;
+                _db.Entry(dbUser).State = EntityState.Modified;
+                if (await TrySaveChangesAsync(_db))
+                {
+                    TempData["Message"] = string.Format("<strong>{0}</strong> has been approved. A confirmation email has been sent to <strong>{1}</strong>.", 
+                        dbUser.UserName, dbUser.Email);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = string.Format("An error occurred. Please re-try confirming <strong>{0}</strong>.", dbUser.UserName);
+                }
+            }
+
+            return RedirectToAction("Index", new { page = page });
         }
 
-        public async Task<ActionResult> DenyUser()
+        public async Task<ActionResult> DenyUser(UserEditViewModel user, int page = 1)
         {
-            return View("Index");
+            ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
+            if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
+            {
+                string userName = dbUser.UserName;
+                _db.Users.Remove(dbUser);
+                _db.Entry(dbUser).State = EntityState.Deleted;
+                if (await TrySaveChangesAsync(_db))
+                {
+                    TempData["Message"] = string.Format("<strong>{0}</strong> has been denied and deleted.", userName);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = string.Format("An error occurred. Please re-try denying <strong>{0}</strong>.", userName);
+                }
+            }
+
+            return RedirectToAction("Index", new { page = page });
         }
 
         protected override void Dispose(bool disposing)

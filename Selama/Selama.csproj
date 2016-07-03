@@ -227,6 +227,7 @@
     <Compile Include="Areas\Account\ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Users\UserEditViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Users\UserOverviewViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Users\UserViewModel.cs" />
     <Compile Include="Areas\Forums\Controllers\ForumController.cs" />

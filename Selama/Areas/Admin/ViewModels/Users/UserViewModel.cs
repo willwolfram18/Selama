@@ -13,7 +13,7 @@ namespace Selama.Areas.Admin.ViewModels.Users
         public UserViewModel(ApplicationUser user)
         {
             UserId = user.Id;
-            UserName = user.UserName;
+            Username = user.UserName;
             Email = user.Email;
             IsEmailConfirmed = user.EmailConfirmed;
             IsActive = user.IsActive;
@@ -23,7 +23,7 @@ namespace Selama.Areas.Admin.ViewModels.Users
 
         public string UserId { get; set; }
 
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         public string Email { get; set; }
 
