@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Selama.Areas.Admin.Controllers
 {
@@ -49,7 +50,7 @@ namespace Selama.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> DisableUser(UserEditViewModel user, int page = 1)
+        public async Task<ActionResult> DisableUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
             if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
@@ -69,7 +70,7 @@ namespace Selama.Areas.Admin.Controllers
             return RedirectToAction("Index", new { page = page });
         }
 
-        public async Task<ActionResult> EnableUser(UserEditViewModel user, int page = 1)
+        public async Task<ActionResult> EnableUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
             if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
@@ -89,7 +90,7 @@ namespace Selama.Areas.Admin.Controllers
             return RedirectToAction("Index", new { page = page });
         }
 
-        public async Task<ActionResult> ConfirmUser(UserEditViewModel user, int page = 1)
+        public async Task<ActionResult> ConfirmUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
             if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
@@ -110,7 +111,7 @@ namespace Selama.Areas.Admin.Controllers
             return RedirectToAction("Index", new { page = page });
         }
 
-        public async Task<ActionResult> DenyUser(UserEditViewModel user, int page = 1)
+        public async Task<ActionResult> DenyUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
             if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
@@ -129,6 +130,12 @@ namespace Selama.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Index", new { page = page });
+        }
+
+        public ActionResult Edit(string id)
+        {
+            
+            return View();
         }
 
         protected override void Dispose(bool disposing)

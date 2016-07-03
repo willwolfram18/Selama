@@ -21,7 +21,7 @@
         <span class="fa fa-2x fa-exclamation-circle"></span>
         <span>@(new HtmlString(ViewBag.ErrorMessage))</span>
     </div>
-         
+
 }
 
 <div class="row pager-row">
@@ -39,6 +39,9 @@
                 <th>
                     @Html.DisplayNameFor(model => new UserViewModel().Email)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => new UserViewModel().UserRole)
+                </th>
                 <th style="text-align: center;">
                     @Html.DisplayNameFor(model => new UserViewModel().IsEmailConfirmed)
                 </th>
@@ -46,9 +49,6 @@
                     @Html.DisplayNameFor(model => new UserViewModel().IsActive)
                 </th>
                 <th style="text-align: center;">
-                    @Html.DisplayNameFor(model => new UserViewModel().WaitingReview)
-                </th>
-                <th>
                     Enable/Disable User
                 </th>
                 <th>
@@ -65,6 +65,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => user.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.UserRole)
                     </td>
                     <td align="center">
                         @if (user.IsEmailConfirmed)
@@ -87,35 +90,32 @@
                         }
                     </td>
                     <td align="center">
-                        @if (user.WaitingReview)
+                        @if (!user.WaitingReview)
                         {
-                            <span class="fa fa-check text-success"></span>
-                        }
-                        else
-                        {
-                            <span class="fa fa-times text-danger"></span>
-                        }
-                    </td>
-                    <td align="center">
-                        @if (user.IsActive)
-                        {
-                            using (Html.BeginForm("DisableUser", "Users", new { page = Model.ViewPageNum }))
+                            if (user.IsActive)
                             {
-                                @Html.HiddenFor(modelItem => user.UserId)
-                                <button type="submit" class="btn btn-danger">
-                                    Disable
-                                </button>
+                                using (Html.BeginForm("DisableUser", "Users", new { page = Model.ViewPageNum }))
+                                {
+                                    @Html.HiddenFor(modelItem => user.UserId)
+                                    <button type="submit" class="btn btn-danger">
+                                        Disable
+                                    </button>
+                                }
+                            }
+                            else
+                            {
+                                using (Html.BeginForm("EnableUser", "Users", new { page = Model.ViewPageNum }))
+                                {
+                                    @Html.HiddenFor(modelItem => user.UserId)
+                                    <button type="submit" class="btn btn-success">
+                                        Enable
+                                    </button>
+                                }
                             }
                         }
                         else
                         {
-                            using (Html.BeginForm("EnableUser", "Users", new { page = Model.ViewPageNum }))
-                            {
-                                @Html.HiddenFor(modelItem => user.UserId)
-                                <button type="submit" class="btn btn-success">
-                                    Enable
-                                </button>
-                            }
+                            <text>N/A</text>
                         }
                     </td>
                     <td>
@@ -137,6 +137,12 @@
                                     Deny user
                                 </button>
                             }
+                        }
+                        else
+                        {
+                            <a href='@Url.Action("Edit", new { id = user.UserId })' class="btn btn-default btn-icontext">
+                                <span class="fa fa-edit"></span>Edit
+                            </a>
                         }
                     </td>
                 </tr>

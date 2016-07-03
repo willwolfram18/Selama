@@ -6,15 +6,9 @@ using System.Web;
 
 namespace Selama.Areas.Admin.ViewModels.Users
 {
-    public class UserEditViewModel
+    public class UserStatusUpdateViewModel
     {
         [Required]
         public string UserId { get; set; }
-
-        public string Username { get; set; }
-
-        public string Email { get; set; }
-
-        public string Role { get; set; }
     }
 }

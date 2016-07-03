@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace Selama.Areas.Admin.ViewModels.Users
 {
@@ -12,12 +13,19 @@ namespace Selama.Areas.Admin.ViewModels.Users
         public UserViewModel() { }
         public UserViewModel(ApplicationUser user)
         {
-            UserId = user.Id;
-            Username = user.UserName;
-            Email = user.Email;
-            IsEmailConfirmed = user.EmailConfirmed;
-            IsActive = user.IsActive;
-            WaitingReview = user.WaitingReview;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                UserId = user.Id;
+                Username = user.UserName;
+                Email = user.Email;
+                UserRole = string.Join(", ", db.Users
+                                .Where(u => u.Id == user.Id)
+                                .SelectMany(u => u.Roles)
+                                .Join(db.Roles, ur => ur.RoleId, r => r.Id, (ur, r) => r.Name));
+                IsEmailConfirmed = user.EmailConfirmed;
+                IsActive = user.IsActive;
+                WaitingReview = user.WaitingReview;
+            }
         }
 
 
@@ -29,6 +37,9 @@ namespace Selama.Areas.Admin.ViewModels.Users
 
         [Display(Name = "Email Confirmed?")]
         public bool IsEmailConfirmed { get; set; }
+
+        [Display(Name = "Premission Role")]
+        public string UserRole { get; set; }
 
         [Display(Name = "Enabled")]
         public bool IsActive { get; set; }
