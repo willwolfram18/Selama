@@ -58,6 +58,7 @@ textarea {
     > :first-child {
         color: $bnet-color;
     }
+
     &:hover {
         background-color: rgb(29,49,62);
         color: #f2f2f2;
@@ -254,6 +255,19 @@ $maxScreenWidth: 991px;
     }
 }
 
+.user-overview-row[data-user-active="False"] {
+    td {
+        text-decoration: line-through;
+        color: #777;
+
+        .text-danger {
+            color: #C49A99;
+        }
+        .text-success {
+            color: #B4CBB4;
+        }
+    }
+}
 
 .alert.alert-icontext {
     display: table;
@@ -283,5 +297,5 @@ blockquote {
             font-size: 12px;
             float: right;
         }
-    } 
+    }
 }

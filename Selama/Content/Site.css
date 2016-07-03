@@ -159,6 +159,14 @@ textarea {
   .modal-lg {
     width: 900px; } }
 
+.user-overview-row[data-user-active="False"] td {
+  text-decoration: line-through;
+  color: #777; }
+  .user-overview-row[data-user-active="False"] td .text-danger {
+    color: #C49A99; }
+  .user-overview-row[data-user-active="False"] td .text-success {
+    color: #B4CBB4; }
+
 .alert.alert-icontext {
   display: table; }
   .alert.alert-icontext > * {

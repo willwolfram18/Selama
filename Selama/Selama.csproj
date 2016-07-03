@@ -225,6 +225,10 @@
     <Compile Include="Areas\Account\ViewModels\Manage\ManageLoginsViewModel.cs" />
     <Compile Include="Areas\Account\ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="Areas\Account\ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Users\UserOverviewViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Users\UserViewModel.cs" />
     <Compile Include="Areas\Forums\Controllers\ForumController.cs" />
     <Compile Include="Areas\Forums\ForumsAreaRegistration.cs" />
     <Compile Include="Areas\Forums\Models\Forum.cs" />
@@ -415,6 +419,10 @@
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadPostViewModel.cshtml" />
     <Content Include="Areas\Account\Views\Home\RegistrationConfirmation.cshtml" />
     <Content Include="Areas\Account\Views\Manage\ApproveUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_UsersOverviewPager.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -434,6 +442,10 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jQuery\jquery-2.2.4-vsdoc.js" />
     <None Include="Scripts\jQuery\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jQuery\jquery.validate.js" />
@@ -486,6 +498,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Account\Models\" />
     <Folder Include="Areas\Account\Views\Shared\" />
+    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
