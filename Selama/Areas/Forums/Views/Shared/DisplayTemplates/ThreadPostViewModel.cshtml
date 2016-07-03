@@ -39,8 +39,9 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <ul class="post-options-list">
                     <li>
-                        <a href="#ThreadReplyEditorForm" class="btn btn-default btn-icontext thread-post-quote">
-                            <i class="fa fa-comment"></i>Quote
+                        <a href="#ThreadReplyEditorForm" class="btn btn-default thread-post-quote"
+                           data-toggle="tooltip" data-placement="bottom" title="Quote">
+                            <i class="fa fa-comment"></i>
                         </a>
                     </li>
                     @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
