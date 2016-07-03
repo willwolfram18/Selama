@@ -217,7 +217,6 @@
     <Compile Include="Areas\Account\ViewModels\Home\SendCodeViewModel.cs" />
     <Compile Include="Areas\Account\ViewModels\Home\VerifyCodeViewModel.cs" />
     <Compile Include="Areas\Account\ViewModels\Manage\AddPhoneNumberViewModel.cs" />
-    <Compile Include="Areas\Account\ViewModels\Manage\ApproveUserViewModel.cs" />
     <Compile Include="Areas\Account\ViewModels\Manage\ChangePasswordViewModel.cs" />
     <Compile Include="Areas\Account\ViewModels\Manage\ConfigureTwoFactorViewModel.cs" />
     <Compile Include="Areas\Account\ViewModels\Manage\FactorViewModel.cs" />
@@ -419,7 +418,6 @@
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadReplyQuoteViewModel.cshtml" />
     <Content Include="Areas\Forums\Views\Shared\DisplayTemplates\ThreadPostViewModel.cshtml" />
     <Content Include="Areas\Account\Views\Home\RegistrationConfirmation.cshtml" />
-    <Content Include="Areas\Account\Views\Manage\ApproveUsers.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
