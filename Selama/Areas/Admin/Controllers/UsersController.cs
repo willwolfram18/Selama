@@ -1,5 +1,7 @@
-﻿using Selama.Areas.Admin.ViewModels.Users;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Selama.Areas.Admin.ViewModels.Users;
 using Selama.Classes.Attributes;
+using Selama.Classes.Utility;
 using Selama.Controllers;
 using Selama.Models;
 using System;
@@ -13,7 +15,7 @@ using System.Web.Security;
 
 namespace Selama.Areas.Admin.Controllers
 {
-    [AuthorizePrivilege(Roles = "Admin,GuildOfficer")]
+    [AuthorizePrivilege(Roles = "Admin,Guild Officer")]
     public class UsersController : _BaseAuthorizeController
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
@@ -134,8 +136,60 @@ namespace Selama.Areas.Admin.Controllers
 
         public ActionResult Edit(string id)
         {
-            
-            return View();
+            ApplicationUser user = _db.Users.Find(id);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "A user with that ID does not exist";
+                return RedirectToAction("Index");
+            }
+            else if (user.WaitingReview)
+            {
+                TempData["ErrorMessage"] = "<strong>" + user.UserName + "</strong> must be approved before you can edit them.";
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.RoleOptions = Util.ConvertLists<IdentityRole, SelectListItem>(
+                _db.Roles,
+                r => new SelectListItem { Text = r.Name, Value = r.Id, Selected = (user.Roles.FirstOrDefault().RoleId == r.Id) }
+            );
+            return View(new UserEditViewModel(user));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(UserEditViewModel user)
+        {
+            ApplicationUser dbUser = _db.Users.Find(user.UserId);
+            if (dbUser == null)
+            {
+                TempData["ErrorMessage"] = "A user with that ID does not exist";
+                return RedirectToAction("Index");
+            }
+            else if (dbUser.WaitingReview)
+            {
+                TempData["ErrorMessage"] = "<strong>" + dbUser.UserName + "</strong> must be approved before you can edit them.";
+                return RedirectToAction("Index");
+            }
+
+            user.ValidateModel(ModelState);
+            if (ModelState.IsValid)
+            {
+                dbUser.UpdateFromViewModel(user);
+                if (await TrySaveChangesAsync(_db))
+                {
+                    TempData["Message"] = "<strong>" + dbUser.UserName + "</strong> has been updated.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    CompareProperties<bool>("IsActive", dbUser.IsActive, user.IsActive, (v1, v2) => v1 == v2);
+                    // TODO: Compare role names for concurrency error
+                    // Remove Version to force update on View
+                    ModelState.Remove("Version");
+                    user.Version = Convert.ToString(dbUser.Version);
+                }
+            }
+            return null;
         }
 
         protected override void Dispose(bool disposing)

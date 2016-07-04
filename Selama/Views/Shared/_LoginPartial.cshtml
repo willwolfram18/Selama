@@ -6,7 +6,7 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            @if (User.IsInRole("Admin") || User.IsInRole("GuildOfficer"))
+            @if (User.IsInRole("Admin") || User.IsInRole("Guild Officer"))
             {
                 @Html.Partial("_AdminMenuItemPartial")
             }

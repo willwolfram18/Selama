@@ -23,7 +23,7 @@
     </div>
 </div>
 
-@if (User.IsInRole("Admin") || User.IsInRole("ForumMod"))
+@if (User.IsInRole("Admin") || User.IsInRole("Forum Mod"))
 {
     <div class="form-group">
         @Html.LabelFor(model => model.IsPinned, new { @class = "control-label col-md-2" })

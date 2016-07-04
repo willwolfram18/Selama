@@ -170,7 +170,7 @@ namespace Selama.Areas.Account.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "GuildMember");
+                    UserManager.AddToRole(user.Id, "Guild Member");
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -401,7 +401,7 @@ namespace Selama.Areas.Account.Controllers
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "GuildMember");
+                    UserManager.AddToRole(user.Id, "Guild Member");
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

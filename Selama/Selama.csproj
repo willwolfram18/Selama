@@ -313,6 +313,10 @@
     <Compile Include="Migrations\201607020156008_RequireUserReview.Designer.cs">
       <DependentUpon>201607020156008_RequireUserReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607042106516_AppUserVersion.cs" />
+    <Compile Include="Migrations\201607042106516_AppUserVersion.Designer.cs">
+      <DependentUpon>201607042106516_AppUserVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\PagerViewModel.cs" />
@@ -547,6 +551,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607020156008_RequireUserReview.resx">
       <DependentUpon>201607020156008_RequireUserReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607042106516_AppUserVersion.resx">
+      <DependentUpon>201607042106516_AppUserVersion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

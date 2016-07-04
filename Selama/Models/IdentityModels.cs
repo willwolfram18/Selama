@@ -8,6 +8,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Selama.Areas.Admin.ViewModels.Users;
+using System.Linq;
+using System.Web;
 
 namespace Selama.Models
 {
@@ -19,6 +22,10 @@ namespace Selama.Models
 
         [Required]
         public bool WaitingReview { get; set; }
+
+        [Required]
+        [Timestamp]
+        public byte[] Version { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -32,6 +39,21 @@ namespace Selama.Models
         public virtual ICollection<Thread> Threads { get; set; }
         public virtual ICollection<ThreadReply> ThreadReplies { get; set; }
         #endregion
+
+        public void UpdateFromViewModel(UserEditViewModel user)
+        {
+            IsActive = user.IsActive;
+            if (user.RoleId != Roles.FirstOrDefault().RoleId)
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    var currentRole = db.Roles.Find(Roles.FirstOrDefault().RoleId);
+                    var newRole = db.Roles.Find(user.RoleId);
+                    Roles.Remove(new IdentityUserRole { RoleId = currentRole.Id });
+                    Roles.Add(new IdentityUserRole { RoleId = newRole.Id });
+                }
+            }
+        }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

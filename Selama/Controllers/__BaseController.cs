@@ -37,6 +37,7 @@ namespace Selama.Controllers
             {
                 if (ex is DbUpdateConcurrencyException)
                 {
+                    ModelState.AddModelError("", "The data was updated before your changes could be saved.");
                     DbUpdateConcurrencyException concurrentError = ex as DbUpdateConcurrencyException;
                     foreach (var entity in concurrentError.Entries)
                     {
@@ -71,6 +72,18 @@ namespace Selama.Controllers
                     result = SaveChangeError.Unknown;
                 }
                 return false;
+            }
+        }
+
+        protected void CompareProperties<TIn>(string propertyName, TIn dbValue, TIn modelValue, Func<TIn, TIn, bool> areEqualComp)
+        {
+            CompareProperties<TIn>(propertyName, dbValue, modelValue, "{0}", areEqualComp);
+        }
+        protected void CompareProperties<TIn>(string propertyName, TIn dbValue, TIn modelValue, string format, Func<TIn, TIn, bool> areEqualComp)
+        {
+            if (!areEqualComp(dbValue, modelValue))
+            {
+                ModelState.AddModelError(propertyName, string.Format("Current Value: " + format, dbValue));
             }
         }
 
