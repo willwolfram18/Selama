@@ -40,20 +40,22 @@
                 <ul class="post-options-list">
                     <li>
                         <a href="#ThreadReplyEditorForm" class="btn btn-default thread-post-quote"
-                           data-toggle="tooltip" data-placement="bottom" title="Quote">
+                           data-toggle="tooltip" data-placement="top" title="Quote">
                             <i class="fa fa-comment"></i>
                         </a>
                     </li>
                     @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
                     {
                         <li>
-                            <a class="btn btn-default thread-post-edit" href="#">
-                                Edit
+                            <a class="btn btn-default thread-post-edit" href="#"
+                               data-toggle="tooltip" data-placement="top" title="Edit">
+                                <i class="fa fa-pencil"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="btn btn-default thread-post-delete" href="#">
-                                Delete
+                            <a class="btn btn-default thread-post-delete" href="#"
+                               data-toggle="tooltip" data-placement="top" title="Delete">
+                                <i class="fa fa-trash-o"></i>
                             </a>
                         </li>
                     }
