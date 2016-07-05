@@ -52,6 +52,8 @@ namespace Selama.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
@@ -72,6 +74,8 @@ namespace Selama.Areas.Admin.Controllers
             return RedirectToAction("Index", new { page = page });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
@@ -92,6 +96,8 @@ namespace Selama.Areas.Admin.Controllers
             return RedirectToAction("Index", new { page = page });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
@@ -113,6 +119,8 @@ namespace Selama.Areas.Admin.Controllers
             return RedirectToAction("Index", new { page = page });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DenyUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
@@ -172,9 +180,12 @@ namespace Selama.Areas.Admin.Controllers
             }
 
             user.ValidateModel(ModelState);
+            user.Email = dbUser.Email;
+            user.Username = dbUser.UserName;
             if (ModelState.IsValid)
             {
-                dbUser.UpdateFromViewModel(user);
+                await dbUser.UpdateFromViewModel(user);
+                _db.Entry(dbUser).State = EntityState.Modified;
                 if (await TrySaveChangesAsync(_db))
                 {
                     TempData["Message"] = "<strong>" + dbUser.UserName + "</strong> has been updated.";
@@ -183,13 +194,20 @@ namespace Selama.Areas.Admin.Controllers
                 else
                 {
                     CompareProperties<bool>("IsActive", dbUser.IsActive, user.IsActive, (v1, v2) => v1 == v2);
-                    // TODO: Compare role names for concurrency error
+                    var currentRole = _db.Roles.Find(dbUser.Roles.FirstOrDefault().RoleId);
+                    var selectedRole = _db.Roles.Find(user.RoleId);
+                    CompareProperties<string>("RoleId", currentRole.Name, selectedRole.Name, (v1, v2) => v1 == v2);
                     // Remove Version to force update on View
                     ModelState.Remove("Version");
-                    user.Version = Convert.ToString(dbUser.Version);
+                    user.Version = Convert.ToBase64String(dbUser.Version);
                 }
             }
-            return null;
+
+            ViewBag.RoleOptions = Util.ConvertLists<IdentityRole, SelectListItem>(
+                _db.Roles,
+                r => new SelectListItem { Text = r.Name, Value = r.Id, Selected = (user.RoleId == r.Id) }
+            );
+            return View(user);
         }
 
         protected override void Dispose(bool disposing)

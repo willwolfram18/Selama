@@ -11,6 +11,8 @@ using System.ComponentModel.DataAnnotations;
 using Selama.Areas.Admin.ViewModels.Users;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 
 namespace Selama.Models
 {
@@ -40,17 +42,21 @@ namespace Selama.Models
         public virtual ICollection<ThreadReply> ThreadReplies { get; set; }
         #endregion
 
-        public void UpdateFromViewModel(UserEditViewModel user)
+        public async Task UpdateFromViewModel(UserEditViewModel user)
         {
+            Convert.FromBase64String(user.Version).CopyTo(Version, 0);
             IsActive = user.IsActive;
             if (user.RoleId != Roles.FirstOrDefault().RoleId)
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
+                using (var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>())
                 {
-                    var currentRole = db.Roles.Find(Roles.FirstOrDefault().RoleId);
-                    var newRole = db.Roles.Find(user.RoleId);
-                    Roles.Remove(new IdentityUserRole { RoleId = currentRole.Id });
-                    Roles.Add(new IdentityUserRole { RoleId = newRole.Id });
+                    using (var db = new ApplicationDbContext())
+                    {
+                        var currentRole = db.Roles.Find(Roles.FirstOrDefault().RoleId);
+                        var newRole = db.Roles.Find(user.RoleId);
+                        await userManager.RemoveFromRoleAsync(Id, currentRole.Name);
+                        await userManager.AddToRoleAsync(Id, newRole.Name);
+                    }
                 }
             }
         }

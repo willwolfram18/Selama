@@ -40,6 +40,7 @@ namespace Selama.Areas.Admin.ViewModels.Users
         public bool IsActive { get; set; }
 
         [Required]
+        [HiddenInput(DisplayValue = false)]
         public string Version { get; set; }
 
         public override void ValidateModel(ModelStateDictionary ModelState)
