@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Selama.Areas.Admin.ViewModels.Users;
 using Selama.Classes.Attributes;
 using Selama.Classes.Utility;
@@ -101,12 +102,20 @@ namespace Selama.Areas.Admin.Controllers
         public async Task<ActionResult> ConfirmUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
-            if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
+            if (ModelState.IsValid && dbUser != null && dbUser.WaitingReview)
             {
                 dbUser.WaitingReview = false;
                 _db.Entry(dbUser).State = EntityState.Modified;
                 if (await TrySaveChangesAsync(_db))
                 {
+                    // Send an email with this link
+                    using (var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>())
+                    {
+                        string code = await userManager.GenerateEmailConfirmationTokenAsync(user.UserId);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Home", new { area = "Account", userId = user.UserId, code = code }, protocol: Request.Url.Scheme);
+                        await userManager.SendEmailAsync(user.UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    }
+
                     TempData["Message"] = string.Format("<strong>{0}</strong> has been approved. A confirmation email has been sent to <strong>{1}</strong>.", 
                         dbUser.UserName, dbUser.Email);
                 }
@@ -124,7 +133,7 @@ namespace Selama.Areas.Admin.Controllers
         public async Task<ActionResult> DenyUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
-            if (ModelState.IsValid && dbUser != null && !dbUser.WaitingReview)
+            if (ModelState.IsValid && dbUser != null && dbUser.WaitingReview)
             {
                 string userName = dbUser.UserName;
                 _db.Users.Remove(dbUser);

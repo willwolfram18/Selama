@@ -89,9 +89,21 @@
       <HintPath>..\packages\Owin.Security.Providers.BattleNet.2.6.0\lib\net45\Owin.Security.Providers.BattleNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SendGrid, Version=7.0.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.7.0.4\lib\SendGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.CSharp.HTTP.Client, Version=2.0.4.0, Culture=neutral, PublicKeyToken=79219bf4e5ecaaca, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.CSharp.HTTP.Client.2.0.4\lib\SendGrid.CSharp.HTTP.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -316,6 +328,10 @@
     <Compile Include="Migrations\201607042106516_AppUserVersion.cs" />
     <Compile Include="Migrations\201607042106516_AppUserVersion.Designer.cs">
       <DependentUpon>201607042106516_AppUserVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607060320325_RemoveRequiredFromIdentityVersion.cs" />
+    <Compile Include="Migrations\201607060320325_RemoveRequiredFromIdentityVersion.Designer.cs">
+      <DependentUpon>201607060320325_RemoveRequiredFromIdentityVersion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -554,6 +570,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607042106516_AppUserVersion.resx">
       <DependentUpon>201607042106516_AppUserVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607060320325_RemoveRequiredFromIdentityVersion.resx">
+      <DependentUpon>201607060320325_RemoveRequiredFromIdentityVersion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

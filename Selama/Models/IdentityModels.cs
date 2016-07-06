@@ -25,7 +25,6 @@ namespace Selama.Models
         [Required]
         public bool WaitingReview { get; set; }
 
-        [Required]
         [Timestamp]
         public byte[] Version { get; set; }
 

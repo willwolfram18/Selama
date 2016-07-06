@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Selama.Models;
-using System.Net.Mail;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System;
 using System.Configuration;
 using System.Net;
+using System.Net.Mail;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Selama
 {
@@ -21,24 +19,15 @@ namespace Selama
     {
         public async Task SendAsync(IdentityMessage message)
         {
-            string gmailSmtpHost = ConfigurationManager.AppSettings["GmailSmtpHost"];
-            int gmailSmtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["GmailSmtpPort"]);
-            string sender = ConfigurationManager.AppSettings["GmailUsername"];
-            string password = ConfigurationManager.AppSettings["GmailPassword"];
-            using (SmtpClient smtp = new SmtpClient(gmailSmtpHost, gmailSmtpPort)
-            {
-                EnableSsl = true,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(sender, password)
-            })
-            {
-                MailMessage email = new MailMessage(new MailAddress(sender, "DoNotReply"), new MailAddress(message.Destination));
-                email.Subject = message.Subject;
-                email.Body = message.Body;
-                email.IsBodyHtml = true;
+            string sendGridApiKey = ConfigurationManager.AppSettings["EmailSmtpApiKey"];
+            var sendGridApi = new SendGridAPIClient(sendGridApiKey);
 
-                await smtp.SendMailAsync(email);
-            }
+            var sender = new Email(ConfigurationManager.AppSettings["EmailSmtpFromAddress"]);
+            var recipient = new Email(message.Destination);
+            Content content = new Content("text/html", message.Body);
+            Mail mail = new Mail(sender, message.Subject, recipient, content);
+
+            var response = sendGridApi.client.mail.send.post(requestBody: mail.Get());
         }
     }
 
