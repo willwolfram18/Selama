@@ -299,3 +299,10 @@ blockquote {
         }
     }
 }
+
+.mdd_preview,
+.thread-content {
+    img {
+        max-width: 100%;
+    }
+}

@@ -186,3 +186,7 @@ blockquote {
     font-size: 12px;
     float: right; }
 
+.mdd_preview img,
+.thread-content img {
+  max-width: 100%; }
+
