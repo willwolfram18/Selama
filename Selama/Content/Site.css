@@ -190,3 +190,8 @@ blockquote {
 .thread-content img {
   max-width: 100%; }
 
+a.anchor {
+  padding-top: 70px; }
+  a.anchor:focus {
+    outline: none; }
+

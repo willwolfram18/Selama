@@ -32,7 +32,7 @@
                     trigger: "manual",
                 });
             });
-
+            $("[data-toggle='tooltip']").tooltip();
         });
     </script>
 }
@@ -86,7 +86,9 @@
                 </td>
                 <td>
                     @thread.LastPost.Author<br />
-                    @thread.LastPost.DisplayDate
+                    <span data-toggle="tooltip" data-placement="bottom" title="@Html.DisplayFor(model => thread.LastPost.PostDate)">
+                        @thread.LastPost.DisplayDate
+                    </span>
                 </td>
             </tr>
         }

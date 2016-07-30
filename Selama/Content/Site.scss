@@ -306,3 +306,11 @@ blockquote {
         max-width: 100%;
     }
 }
+
+a.anchor {
+    padding-top: 70px;
+
+    &:focus {
+        outline: none;
+    }
+}

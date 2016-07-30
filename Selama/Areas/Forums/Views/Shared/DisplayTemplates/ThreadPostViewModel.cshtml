@@ -20,7 +20,9 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                    @Html.DisplayFor(model => model.PostDate)
+                    <span data-toggle="tooltip" data-placement="bottom" title="@Html.DisplayFor(model => model.PostDate)">
+                        @Html.DisplayFor(model => model.DisplayDate)
+                    </span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: right;">
                     <a class="anchor" name="@Model.PostIndex" href="#@Model.PostIndex">
@@ -38,14 +40,14 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <ul class="post-options-list">
-                    <li>
-                        <a href="#ThreadReplyEditorForm" class="btn btn-default thread-post-quote"
-                           data-toggle="tooltip" data-placement="top" title="Quote">
-                            <i class="fa fa-comment"></i>
-                        </a>
-                    </li>
                     @if (User.Identity.GetUserId() == Model.AuthorID && !Model.IsLocked)
                     {
+                        <li>
+                            <a href="#ThreadReplyEditorForm" class="btn btn-default thread-post-quote"
+                               data-toggle="tooltip" data-placement="top" title="Quote">
+                                <i class="fa fa-comment"></i>
+                            </a>
+                        </li>
                         <li>
                             <a class="btn btn-default thread-post-edit" href="#"
                                data-toggle="tooltip" data-placement="top" title="Edit">

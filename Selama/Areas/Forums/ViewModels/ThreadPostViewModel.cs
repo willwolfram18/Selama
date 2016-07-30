@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Selama.Classes.Utility;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -24,7 +26,7 @@ namespace Selama.Areas.Forums.ViewModels
             IsLocked = thread.IsLocked;
             PostIndex = 1;
         }
-        
+
         public ThreadPostViewModel(ThreadReplyViewModel reply)
         {
             ID = reply.ID;
@@ -41,7 +43,17 @@ namespace Selama.Areas.Forums.ViewModels
 
         public PostType PostType { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime PostDate { get; set; }
+
+        public string DisplayDate
+        {
+            get
+            {
+                return Util.RelativeDate(PostDate);
+            }
+        }
 
         public string AuthorID { get; set; }
 
