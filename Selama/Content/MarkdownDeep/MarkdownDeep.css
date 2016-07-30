@@ -34,5 +34,6 @@ div.mdd_modal {
   z-index: 9999999; }
   div.mdd_modal div.mdd_modal_frame {
     margin-top: 111px;
+    width: 100%;
     /* Normal margin is 60px, navbar is 51px tall*/ }
 
