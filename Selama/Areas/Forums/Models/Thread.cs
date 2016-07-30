@@ -40,7 +40,7 @@ namespace Selama.Areas.Forums.Models
 
         [Required]
         [AllowHtml]
-        [MinLength(50, ErrorMessage = "A thread's content must contain at least {0} characters")]
+        [MinLength(25, ErrorMessage = "A thread's content must contain at least {0} characters")]
         public string Content { get; set; }
 
         [Required]

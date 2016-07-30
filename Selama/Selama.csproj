@@ -333,6 +333,10 @@
     <Compile Include="Migrations\201607060320325_RemoveRequiredFromIdentityVersion.Designer.cs">
       <DependentUpon>201607060320325_RemoveRequiredFromIdentityVersion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607300057491_StringLengthRequirements.cs" />
+    <Compile Include="Migrations\201607300057491_StringLengthRequirements.Designer.cs">
+      <DependentUpon>201607300057491_StringLengthRequirements.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\PagerViewModel.cs" />
@@ -573,6 +577,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607060320325_RemoveRequiredFromIdentityVersion.resx">
       <DependentUpon>201607060320325_RemoveRequiredFromIdentityVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607300057491_StringLengthRequirements.resx">
+      <DependentUpon>201607300057491_StringLengthRequirements.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

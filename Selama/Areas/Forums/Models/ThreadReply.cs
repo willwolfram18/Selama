@@ -32,7 +32,7 @@ namespace Selama.Areas.Forums.Models
 
         [Required]
         [AllowHtml]
-        [MinLength(50, ErrorMessage = "A reply to a thread must contain at least {0} characters")]
+        [MinLength(1, ErrorMessage = "A reply to a thread must contain at least {0} characters")]
         public string Content { get; set; }
 
         [Required]
