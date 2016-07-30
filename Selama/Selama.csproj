@@ -262,6 +262,8 @@
     <Compile Include="Areas\Forums\ViewModels\ThreadViewModel.cs" />
     <Compile Include="Classes\Attributes\AuthorizePrivilegeAttribute.cs" />
     <Compile Include="Classes\Enum\SaveChangeError.cs" />
+    <Compile Include="Classes\Utility\Constants\ForumsConstants.cs" />
+    <Compile Include="Classes\Utility\ModelBinders\TrimStringsModelBinder.cs" />
     <Compile Include="Classes\Utility\Util.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\_BaseAuthorizeController.cs" />

@@ -1,4 +1,5 @@
 ﻿using Selama.Areas.Forums.Models;
+using Selama.Classes.Utility.Constants;
 using Selama.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Selama.Areas.Forums.ViewModels
         [Required]
         [AllowHtml]
         [Display(Name = "Reply Content")]
-        [MinLength(50, ErrorMessage = "A reply to a thread must contain at least {1} characters")]
+        [MinLength(ForumsConstants.ThreadReplyContentMinLen, ErrorMessage = ForumsConstants.ThreadReplyContentLenErrorMsg)]
         public string Content { get; set; }
 
         [Required]

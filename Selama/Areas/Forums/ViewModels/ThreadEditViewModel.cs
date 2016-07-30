@@ -1,4 +1,5 @@
 ﻿using Selama.Areas.Forums.Models;
+using Selama.Classes.Utility.Constants;
 using Selama.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Selama.Areas.Forums.ViewModels
 
         [Required]
         [AllowHtml]
-        [MinLength(50, ErrorMessage = "A thread's content must contain at least {0} characters")]
+        [MinLength(ForumsConstants.ThreadContentMinLen, ErrorMessage = ForumsConstants.ThreadContentLenErrorMsg)]
         public string Content { get; set; }
 
         [Display(Name = "Is pinned?")]

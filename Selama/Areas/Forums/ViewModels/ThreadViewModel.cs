@@ -1,6 +1,7 @@
 ﻿using MarkdownDeep;
 using Selama.Areas.Forums.Models;
 using Selama.Classes.Utility;
+using Selama.Classes.Utility.Constants;
 using Selama.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -68,12 +69,12 @@ namespace Selama.Areas.Forums.ViewModels
         public string ForumName { get; set; }
 
         [Required]
-        [StringLength(60, MinimumLength = 4)]
+        [StringLength(ForumsConstants.ThreadTitleMaxLen, MinimumLength = ForumsConstants.ThreadTitleMinLen, ErrorMessage = ForumsConstants.ThreadTitleLenErrorMsg)]
         public string Title { get; set; }
 
         [Required]
         [AllowHtml]
-        [MinLength(10)]
+        [MinLength(ForumsConstants.ThreadContentMinLen, ErrorMessage = ForumsConstants.ThreadContentLenErrorMsg)]
         public string Content { get; set; }
 
         public HtmlString HtmlContent { get; set; }

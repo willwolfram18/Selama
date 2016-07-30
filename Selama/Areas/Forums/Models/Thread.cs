@@ -1,4 +1,5 @@
 ﻿using Selama.Areas.Forums.ViewModels;
+using Selama.Classes.Utility.Constants;
 using Selama.Models;
 using System;
 using System.Collections.Generic;
@@ -35,12 +36,12 @@ namespace Selama.Areas.Forums.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(60, ErrorMessage = "The title's length must be between {0} and {1} characters", MinimumLength = 4)]
+        [StringLength(ForumsConstants.ThreadTitleMaxLen, ErrorMessage = ForumsConstants.ThreadTitleLenErrorMsg, MinimumLength = ForumsConstants.ThreadTitleMinLen)]
         public string Title { get; set; }
 
         [Required]
         [AllowHtml]
-        [MinLength(25, ErrorMessage = "A thread's content must contain at least {0} characters")]
+        [MinLength(ForumsConstants.ThreadContentMinLen, ErrorMessage = ForumsConstants.ThreadContentLenErrorMsg)]
         public string Content { get; set; }
 
         [Required]
