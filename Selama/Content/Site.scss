@@ -263,6 +263,7 @@ $maxScreenWidth: 991px;
         .text-danger {
             color: #C49A99;
         }
+
         .text-success {
             color: #B4CBB4;
         }
@@ -312,5 +313,23 @@ a.anchor {
 
     &:focus {
         outline: none;
+    }
+}
+
+.table.table-fixed-col.active {
+    position: absolute;
+    display: inline-block;
+    width: auto;
+
+    tr {
+        td, th {
+            background-color: white;
+        }
+
+        &:nth-of-type(odd) {
+            td {
+                background-color: #f9f9f9;
+            }
+        }
     }
 }
