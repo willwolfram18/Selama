@@ -5,7 +5,7 @@
     @Html.HiddenFor(model => model.ID)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-1" })
         <div class="col-xs-12 col-sm-12 col-md-12" style="display: table;">
             <div class="mdd_editor_wrap">
                 @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
@@ -16,8 +16,8 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.IsPinned, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.IsPinned, new { @class = "control-label col-md-1" })
+        <div class="col-md-11">
             @Html.EditorFor(model => model.IsPinned, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IsPinned, "", new { @class = "text-danger" })
         </div>

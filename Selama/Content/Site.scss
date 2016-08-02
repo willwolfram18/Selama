@@ -69,13 +69,22 @@ textarea {
 $minScreenWidth: 768px;
 $maxScreenWidth: 991px;
 
+@media (min-width: $minScreenWidth) {
+    .container-fluid {
+        .navbar-right {
+            margin-right: 0;
+        }
+    }
+}
+
 @media (min-width: $minScreenWidth) and (max-width: $maxScreenWidth) {
     .navbar .container {
         width: auto;
     }
 
     .navbar {
-        .container {
+        .container,
+        .container-fluid {
             max-width: none;
 
             > .navbar-header,
@@ -168,6 +177,8 @@ $maxScreenWidth: 991px;
             background-image: none;
         }
     }
+
+    
 }
 
 @media screen and (min-width: $minScreenWidth) and (max-width: $maxScreenWidth) {
@@ -178,6 +189,13 @@ $maxScreenWidth: 991px;
         h1 {
             font-size: 36px;
         }
+    }
+}
+
+.container-fluid {
+    .row {
+        margin-right: 0;
+        margin-left: 0;
     }
 }
 /* #endregion */

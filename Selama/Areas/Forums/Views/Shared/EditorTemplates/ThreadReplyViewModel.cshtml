@@ -22,8 +22,8 @@
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Content, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.Content, new { @class = "col-md-1 control-label" })
+                <div class="col-md-11">
                     @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                     <div style="display: table; width: 100%;">
                         @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
@@ -32,7 +32,7 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-2">
+                <div class="col-md-offset-1 col-md-2">
                     <input type="submit" value="Post" class="btn btn-default" />
                     <div id="ReplyCancelBtn" class="btn btn-default">
                         Cancel
