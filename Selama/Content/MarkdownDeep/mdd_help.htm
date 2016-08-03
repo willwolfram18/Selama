@@ -1,9 +1,27 @@
 <h2>Markdown Formatting</h2>
 <p><a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a> turns plain text formatting into fancy HTML formatting.</p>
 <h3>Phrase Emphasis</h3>
-<pre><code>*italic*   **bold**
-_italic_   __bold__
-</code></pre>
+<pre>
+<code>*italic*   **bold**
+_italic_   __bold__</code>
+</pre>
+<h3>Phrase Emphasis across multiple lines</h3>
+<pre>
+<code>&lt;em&gt;
+I am an italicized paragraph.
+
+I am also an italicized paragraph.
+
+**I am bold and italicized.**
+&lt;/em&gt;</code>
+<code>&lt;strong&gt;
+I am a bold paragraph.
+
+I am also a bold paragraph.
+
+*I am bold and italicized.*
+&lt;/strong&gt;</code>
+</pre>
 
 <h3>Links</h3>
 <p>Inline:</p>
@@ -13,7 +31,6 @@ _italic_   __bold__
 <p>Reference-style labels (titles are optional):</p>
 <pre><code>An [example][id]. Then, anywhere
 else in the doc, define the link:
-
   [id]: http://example.com/  &quot;Title&quot;
 </code></pre>
 
@@ -24,7 +41,6 @@ else in the doc, define the link:
 
 <p>Reference-style:</p>
 <pre><code>![alt text][id]
-
 [id]: /url/to/img.jpg &quot;Title&quot;
 </code></pre>
 
@@ -32,16 +48,13 @@ else in the doc, define the link:
 <p>Setext-style:</p>
 <pre><code>Header 1
 ========
-
 Header 2
 --------
 </code></pre>
 
 <p>atx-style (closing #'s are optional):</p>
 <pre><code># Header 1 #
-
 ## Header 2 ##
-
 ###### Header 6
 </code></pre>
 
@@ -53,9 +66,7 @@ Header 2
 
 <p>Unordered, with paragraphs:</p>
 <pre><code>*   A list item.
-
     With multiple paragraphs.
-
 *   Bar
 </code></pre>
 
@@ -73,9 +84,7 @@ Header 2
 <h3>Blockquotes</h3>
 <pre><code>&gt; Email-style angle brackets
 &gt; are used for blockquotes.
-
 &gt; &gt; And, they can be nested.
-
 &gt; #### Headers in blockquotes
 &gt; 
 &gt; * You can quote a list.
@@ -85,7 +94,6 @@ Header 2
 <h3>Code Spans</h3>
 <pre><code>`&lt;code&gt;` spans are delimited
 by backticks.
-
 You can include literal backticks
 like `` `this` ``.
 </code></pre>
@@ -93,7 +101,6 @@ like `` `this` ``.
 <h3>Preformatted Code Blocks</h3>
 <p>Indent every line of a code block by at least 4 spaces or 1 tab.</p>
 <pre><code>This is a normal paragraph.
-
     This is a preformatted
     code block.
 </code></pre>
@@ -101,9 +108,7 @@ like `` `this` ``.
 <h3>Horizontal Rules</h3>
 <p>Three or more dashes or asterisks:</p>
 <pre><code>---
-
 * * *
-
 - - - - 
 </code></pre>
 
@@ -147,19 +152,16 @@ Bananas  |Yellow</code></pre>
 <h3>Definition Lists</h3>
 <pre><code>Term 1
 : Definition 1
-
 Term 2
 : Definition 2</code></pre>
 
 <h3>Footnotes</h3>
 <pre><code>Body text with a footnote [^1]
-
 [^1]: Footnote text here
 </code></pre>
 
 <h3>Abbreviations</h3>
 <pre><code>MDD &lt;- will have title
-
 *[MDD]: MarkdownDeep
 </code></pre>
 <p>&nbsp;</p>
