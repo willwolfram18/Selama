@@ -43,7 +43,6 @@ namespace Selama.Models
 
         public async Task UpdateFromViewModel(UserEditViewModel user)
         {
-            Convert.FromBase64String(user.Version).CopyTo(Version, 0);
             IsActive = user.IsActive;
             if (user.RoleId != Roles.FirstOrDefault().RoleId)
             {
@@ -55,9 +54,14 @@ namespace Selama.Models
                         var newRole = db.Roles.Find(user.RoleId);
                         await userManager.RemoveFromRoleAsync(Id, currentRole.Name);
                         await userManager.AddToRoleAsync(Id, newRole.Name);
+
+                        // Need to perform an update of the user's version after role adjustment
+                        var updatedUser = db.Users.Find(Id);
+                        user.Version = Convert.ToBase64String(updatedUser.Version);
                     }
                 }
             }
+            Convert.FromBase64String(user.Version).CopyTo(Version, 0);
         }
     }
 
