@@ -8,6 +8,7 @@ using Selama.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Controllers
@@ -109,7 +110,7 @@ namespace Selama.Areas.Forums.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateThread(ThreadViewModel thread, int id = 0)
+        public async Task<ActionResult> CreateThread(ThreadViewModel thread, int id = 0)
         {
             Forum forum = _db.Forums.Where(f => f.IsActive && f.ID == id).FirstOrDefault();
             if (forum == null)
@@ -123,8 +124,14 @@ namespace Selama.Areas.Forums.Controllers
             {
                 Thread dbThread = new Thread(thread, User.Identity.GetUserId(), id);
                 _db.Threads.Add(dbThread);
-                SaveChangeError result;
-                if (TrySaveChanges(_db, out result))
+
+                // Only admins and forum mods can pin and lock threads
+                if (!Models.Thread.CanModifiy(User))
+                {
+                    dbThread.IsLocked = dbThread.IsPinned = false;
+                }
+
+                if (await TrySaveChangesAsync(_db))
                 {
                     return RedirectToAction("Thread", new { id = dbThread.ID });
                 }
@@ -227,7 +234,12 @@ namespace Selama.Areas.Forums.Controllers
             }
             if (ModelState.IsValid)
             {
+                if (!Models.Thread.CanModifiy(User))
+                {
+                    thread.IsPinned = dbThread.IsPinned;
+                }
                 dbThread.UpdateFromViewModel(thread);
+
                 if (TrySaveChanges(_db))
                 {
                     _db.Entry(dbThread).Reload();
@@ -349,6 +361,82 @@ namespace Selama.Areas.Forums.Controllers
             TrySaveChanges(_db);
             return RedirectToAction("Thread", new { id = threadId, page = page });
         }
+
+        #region Lock thread
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> LockThread(int id = 0, int page = 1)
+        {
+            return await SetThreadLock(id, page, true, "locking");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UnlockThread(int id = 0, int page = 1)
+        {
+            return await SetThreadLock(id, page, false, "unlocking");
+        }
+
+        private async Task<ActionResult> SetThreadLock(int id, int page, bool locking, string lockWord)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null || !thread.IsActive)
+            {
+                return RedirectToAction("Index");
+            }
+
+            string message = null;
+            if (Models.Thread.CanModifiy(User))
+            {
+                thread.IsLocked = locking;
+                _db.Entry(thread).State = System.Data.Entity.EntityState.Modified;
+                if (!await TrySaveChangesAsync(_db))
+                {
+                    message = "There was an error " + lockWord + " the thread. Please try again.";
+                }
+            }
+
+            return RedirectToAction("Thread", new { id = id, page = page, msg = message });
+        }
+        #endregion
+
+        #region Pin thread
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> PinThread(int id = 0, int page = 1)
+        {
+            return await SetThreadPin(id, page, true, "pinning");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UnpinThread(int id = 0, int page = 1)
+        {
+            return await SetThreadPin(id, page, false, "unpinning");
+        }
+
+        private async Task<ActionResult> SetThreadPin(int id, int page, bool pinning, string pinningWord)
+        {
+            Thread thread = _db.Threads.Find(id);
+            if (thread == null || !thread.IsActive)
+            {
+                return RedirectToAction("Index");
+            }
+
+            string message = null;
+            if (Models.Thread.CanModifiy(User))
+            {
+                thread.IsPinned = pinning;
+                _db.Entry(thread).State = System.Data.Entity.EntityState.Modified;
+                if (!await TrySaveChangesAsync(_db))
+                {
+                    message = "There was an error " + pinningWord + " the thread. Please try again.";
+                }
+            }
+
+            return RedirectToAction("Thread", new { id = id, page = page, msg = message });
+        }
+        #endregion
 
         public ActionResult GetThreadQuote(int id = 0)
         {

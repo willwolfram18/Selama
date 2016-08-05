@@ -89,6 +89,7 @@ namespace Selama.Areas.Forums.ViewModels
         public string AuthorID { get; set; }
         public string Author { get; set; }
 
+        [Display(Name = "Is locked?")]
         public bool IsLocked { get; set; }
 
         public List<ThreadReplyViewModel> Replies { get; set; }

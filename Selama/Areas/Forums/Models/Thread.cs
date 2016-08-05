@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Principal;
 using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Models
@@ -21,7 +22,7 @@ namespace Selama.Areas.Forums.Models
             ForumID = forumId;
             IsActive = true;
             IsPinned = model.IsPinned;
-            IsLocked = false;
+            IsLocked = model.IsLocked;
         }
 
         public void UpdateFromViewModel(ThreadEditViewModel viewModel)
@@ -77,5 +78,10 @@ namespace Selama.Areas.Forums.Models
         public virtual ApplicationUser Author { get; set; }
         public virtual ICollection<ThreadReply> Replies { get; set; }
         #endregion
+
+        public static bool CanModifiy(IPrincipal User)
+        {
+            return User.IsInRole("Admin") || User.IsInRole("Forum Mod");
+        }
     }
 }

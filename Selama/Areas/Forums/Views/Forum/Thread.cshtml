@@ -1,4 +1,5 @@
-﻿@using Selama.Areas.Forums.ViewModels;
+﻿@using Selama.Areas.Forums.Models;
+@using Selama.Areas.Forums.ViewModels;
 @using Selama.ViewModels;
 @model ThreadViewModel
 @{
@@ -240,6 +241,47 @@
     <div class="alert alert-warning alert-icontext">
         <span class="fa fa-2x fa-exclamation-circle"></span>
         <span>@ViewBag.Message</span>
+    </div>
+}
+
+@if (Thread.CanModifiy(User))
+{
+    string action;
+    <div class="row">
+        <div class="col-sm-3 col-md-3" style="padding: 0;">
+            @if (Model.IsLocked)
+            {
+                action = "Unlock";
+            }
+            else
+            {
+                action = "Lock";
+            }
+            @using (Html.BeginForm(action + "Thread", "Forum", new { id = Model.ID, page = Model.ViewPageNum }, FormMethod.Post, new { style = "display: inline-block;" }))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-default btn-icontext">
+                    <span class="fa fa-@(action.ToLower())"></span>
+                    <span>@action</span>
+                </button>
+            }
+            @if (Model.IsPinned)
+            {
+                action = "Unpin";
+            }
+            else
+            {
+                action = "Pin";
+            }
+            @using (Html.BeginForm(action + "Thread", "Forum", new { id = Model.ID, page = Model.ViewPageNum }, FormMethod.Post, new { style = "display: inline-block;" }))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-default btn-icontext">
+                    <span class="fa fa-thumb-tack"></span>
+                    <span>@action</span>
+                </button>
+            }
+        </div>
     </div>
 }
 <div class="row pager-row">
