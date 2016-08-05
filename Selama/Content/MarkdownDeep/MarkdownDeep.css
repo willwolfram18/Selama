@@ -1,61 +1,44 @@
 ﻿textarea.mdd_editor {
   max-width: none;
   height: 100%;
-  overflow: auto;
-}
+  overflow: auto; }
+
+.markdown-wrap {
+  display: table;
+  width: 100%; }
 
 div.mdd_editor_wrap {
   display: table;
   width: 100%;
   min-height: 250px;
-  margin-top: 12px;
-}
-
-div.mdd_editor_wrap div.mdd_preview,
-div.mdd_editor_wrap
-textarea.mdd_editor {
-  display: inline-block;
-  float: left;
-  width: 100%;
-  margin-top: 12px;
-}
-
-div.mdd_editor_wrap
-div.mdd_preview {
-  min-height: 1px;
-}
-
-@media (min-width: 768px) {
+  margin-top: 12px; }
   div.mdd_editor_wrap div.mdd_preview,
-  div.mdd_editor_wrap
-textarea.mdd_editor {
-    width: 49%;
-    margin-top: 0;
-  }
-  div.mdd_editor_wrap div.mdd_preview {
-    margin-left: 1%;
-  }
   div.mdd_editor_wrap textarea.mdd_editor {
-    margin-right: 1%;
-  }
-}
+    display: inline-block;
+    float: left;
+    width: 100%;
+    margin-top: 12px; }
+  div.mdd_editor_wrap div.mdd_preview {
+    min-height: 1px; }
+  @media (min-width: 768px) {
+    div.mdd_editor_wrap div.mdd_preview,
+    div.mdd_editor_wrap textarea.mdd_editor {
+      width: 49%;
+      margin-top: 0; }
+    div.mdd_editor_wrap div.mdd_preview {
+      margin-left: 1%; }
+    div.mdd_editor_wrap textarea.mdd_editor {
+      margin-right: 1%; } }
 
 @media (min-width: 768px) {
   div.mdd_toolbar_wrap {
-    width: 50%;
-  }
-}
+    width: 50%; } }
 
 div.mdd_modal {
   padding: 0 15px;
-  z-index: 9999999;
-}
+  z-index: 9999999; }
+  div.mdd_modal div.mdd_modal_frame {
+    margin-top: 111px;
+    width: 100%;
+    /* Normal margin is 60px, navbar is 51px tall*/ }
 
-div.mdd_modal
-div.mdd_modal_frame {
-  margin-top: 111px;
-  width: 100%;
-  /* Normal margin is 60px, navbar is 51px tall*/
-}
-
-/*# sourceMappingURL=MarkdownDeep.css.map */

@@ -25,7 +25,7 @@
                 @Html.LabelFor(model => model.Content, new { @class = "col-md-1 control-label" })
                 <div class="col-md-11">
                     @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-                    <div style="display: table; width: 100%;">
+                    <div class="markdown-wrap">
                         @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
                     </div>
                 </div>

@@ -127,9 +127,10 @@
         function onEditorModalShown(e)
         {
             /// <param name="e" type="jQuery.Event" />
-            var $editor = $(e.currentTarget).find("textarea.mdd_editor").focus();
-            $editor.MarkdownDeep(Selama.MarkdownEditor.Options);
-            var m = new MarkdownDeepEditor.Editor($editor[0], $(e.currentTarget).find("div.mdd_preview")[0]);
+            var $target = $(e.currentTarget);
+            var $editor = $target.find("textarea.mdd_editor").focus();
+            $("textarea.mdd_editor").MarkdownDeep(Selama.MarkdownEditor.Options);
+            var m = new MarkdownDeepEditor.Editor($editor[0], $target.find("div.mdd_preview")[0]);
         }
 
         function onThreadDeleteClick(e)
@@ -216,6 +217,8 @@
         });
     </script>
 }
+
+@Styles.Render("~/Content/MarkdownDeep/css")
 
 <ul class="breadcrumb">
     <li>

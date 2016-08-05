@@ -4,14 +4,18 @@
 
 @Html.EditorFor(model => model.ThreadID, new { htmlAttributes = new { @class = "form-control" } })
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-12" })
-    <div class="col-md-12">
-        <div class="mdd_editor_wrap">
-            @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
-            <div class="mdd_preview"></div>
+<div class="container-fluid">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-12" })
+        <div class="col-md-12">
+            <div class="markdown-wrap">
+                <div class="mdd_editor_wrap">
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
+                    <div class="mdd_preview"></div>
+                </div>
+            </div>
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
         </div>
-        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
     </div>
 </div>
 
