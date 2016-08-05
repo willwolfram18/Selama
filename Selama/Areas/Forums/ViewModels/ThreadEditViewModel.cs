@@ -17,7 +17,6 @@ namespace Selama.Areas.Forums.ViewModels
         {
             ID = thread.ID;
             Content = thread.Content;
-            IsPinned = thread.IsPinned;
             Version = Convert.ToBase64String(thread.Version);
         }
 
@@ -28,9 +27,6 @@ namespace Selama.Areas.Forums.ViewModels
         [AllowHtml]
         [MinLength(ForumsConstants.ThreadContentMinLen, ErrorMessage = ForumsConstants.ThreadContentLenErrorMsg)]
         public string Content { get; set; }
-
-        [Display(Name = "Is pinned?")]
-        public bool IsPinned { get; set; }
 
         [Required]
         [HiddenInput(DisplayValue = false)]

@@ -234,10 +234,6 @@ namespace Selama.Areas.Forums.Controllers
             }
             if (ModelState.IsValid)
             {
-                if (!Models.Thread.CanModifiy(User))
-                {
-                    thread.IsPinned = dbThread.IsPinned;
-                }
                 dbThread.UpdateFromViewModel(thread);
 
                 if (TrySaveChanges(_db))

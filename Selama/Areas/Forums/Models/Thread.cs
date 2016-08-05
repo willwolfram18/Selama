@@ -28,7 +28,6 @@ namespace Selama.Areas.Forums.Models
         public void UpdateFromViewModel(ThreadEditViewModel viewModel)
         {
             Content = viewModel.Content;
-            IsPinned = viewModel.IsPinned;
             Convert.FromBase64String(viewModel.Version).CopyTo(Version, 0);
         }
 
