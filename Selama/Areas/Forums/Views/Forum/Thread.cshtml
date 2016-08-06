@@ -10,196 +10,28 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/Selama/Forums")
     <script type="text/javascript">
-        function onPostReplyClick()
-        {
-            $("#ThreadReplyEditor").show("blind")
-                .find(".mdd_editor").focus();
-        }
-
-        function onAjaxRequestBegin()
-        {
-            Selama.SpinShield.raiseShield();
-        }
-        function onAjaxRequestComplete()
-        {
-            Selama.SpinShield.lowerShield();
-        }
-
-        function onReplyEditLinkClick(e)
-        {
-            var replyId = $(e.target).closest(".row[data-thread-reply]").attr("data-thread-reply");
-
-            onAjaxRequestBegin();
-            $.ajax({
-                url: '@Url.Action("EditReply", "Forum", new { area = "Forums" })',
-                data: { id: replyId },
-                type: 'GET',
-                complete: onAjaxRequestComplete,
-                success: onReplyEditLinkClick_Success,
-                error: onReplyEditLinkClick_Error,
-            });
-        }
-        function onReplyEditLinkClick_Success(response)
-        {
-            $("#ThreadReplyEditModal").modal("show").find(".modal-body").html(response);
-        }
-        function onReplyEditLinkClick_Error(response)
-        {
-            if (response.statusText === "Invalid ID")
-            {
-                Selama.Alert.raiseAlert("An invalid thread reply ID was provided", "Invalid ID");
-            }
-            else if (response.statusText === "Thread is locked")
-            {
-                Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
-            }
-            else
-            {
-                Selama.Alert.raiseAlert("An error occurred");
-            }
-        }
-
-        function onThreadEditLinkClick(e)
-        {
-            onAjaxRequestBegin();
-            $.ajax({
-                url: '@Url.Action("EditThread", "Forum", new { area = "Forums", id = Model.ID})',
-                type: 'GET',
-                complete: onAjaxRequestComplete,
-                success: onThreadEditLinkClick_Success,
-                error: onThreadEditLinkClick_Error,
-            });
-        }
-        function onThreadEditLinkClick_Success(response)
-        {
-            $("#ThreadEditModal").modal("show").find(".modal-body").html(response);
-        }
-        function onThreadEditLinkClick_Error(response)
-        {
-            if (response.statusText === "Invalid ID")
-            {
-                Selama.Alert.raiseAlert("An invalid thread ID was provided", "Invalid ID");
-            }
-            else if (response.statusText === "Thread is locked")
-            {
-                Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
-            }
-            else
-            {
-                Selama.Alert.raiseAlert("An error occurred");
-            }
-        }
-
-        function onReplyUpdateRequestSuccess(response)
-        {
-            $(".thread-reply[data-thread-reply='" + response.id + "']")
-                .find(".thread-reply-content").html(response.content);
-            $("#ThreadReplyEditModal").modal("hide");
-        }
-        function onReplyUpdateRequestFailure(response)
-        {
-            if (response.statusText === "Thread is locked")
-            {
-                Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
-            }
-            else
-            {
-                Selama.Alert.raiseAlert("An error occured while updating");
-            }
-        }
-
-        function onThreadUpdateRequestSuccess(response)
-        {
-            $(".row.thread[data-thread]").find(".thread-content").html(response);
-            $("#ThreadEditModal").modal("hide");
-        }
-        function onThreadUpdateRequestFailure(response)
-        {
-            if (response.statusText === "Thread is locked")
-            {
-                Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
-            }
-            else
-            {
-                Selama.Alert.raiseAlert("An error occurred while updating");
-            }
-        }
-
-        function onThreadDeleteClick(e)
-        {
-            $("#ThreadDeleteModal").modal("show");
-        }
-        function onReplyDeleteClick(e)
-        {
-            $("#ReplyDeleteModal").find("input#id")
-                .val(
-                    $(e.target).closest(".row.thread-reply").attr("data-thread-reply")
-                ).trigger("change");
-            $("#ReplyDeleteModal").modal("show");
-        }
-
-        function onDeletFormSubmitClick()
-        {
-            Selama.SpinShield.raiseShield();
-        }
-
-        function onQuoteBtnClick(e)
-        {
-            // Set both urls, we don't know which one we'll need
-            var replyQuoteUrl = '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })';
-            var threadQuoteUrl = '@Url.Action("GetThreadQuote", new { area = "Forums" })';
-
-            var $threadPost = $(e.target).closest(".row.thread-post");
-            var ajaxId = 0;
-            var ajaxUrl = "";
-
-            if ($threadPost.is(".thread"))
-            {
-                ajaxId = $threadPost.attr("data-thread");
-                ajaxUrl = threadQuoteUrl;
-            }
-            else if ($threadPost.is(".thread-reply"))
-            {
-                ajaxId = $threadPost.attr("data-thread-reply")
-                ajaxUrl = replyQuoteUrl;
-            }
-
-            $.ajax({
-                url: ajaxUrl,
-                data: { id: ajaxId },
-                success: onQuoteBtnClick_Success,
-            });
-        }
-        function onQuoteBtnClick_Success(response)
-        {            
-            var $editor = $("#ThreadReplyEditor textarea.mdd_editor");
-            var currentVal = $editor.val().trim();
-            onPostReplyClick(); // show the editor
-            if (currentVal === "")
-            {
-                $editor.val(response).trigger("change");
-            }
-            else
-            {
-                $editor.val(currentVal + "\n\n" + response).trigger("change");
-            }
-            // Triggers transfromation of the content
-            var m = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview")[0]);
-        }
-
         $(document).ready(function ()
         {
-            $(".btn.btn-post-reply").click(onPostReplyClick);
-            $("#ThreadReplyEditor").hide();
-            $("[data-toggle='tooltip']").tooltip();
+            // Bind jQuery events
+            $(".btn.btn-post-reply").on("click", "", Selama.Forums.Thread.onPostReplyClick);
 
             // Edit option link clicks
             $(".row.thread[data-thread] .post-options-list")
-                .on("click", ".thread-post-edit", onThreadEditLinkClick)
-                .on("click", ".thread-post-delete", onThreadDeleteClick);
+                .on(
+                    "click",
+                    ".thread-post-edit",
+                    { url: '@Url.Action("EditThread", "Forum", new { area = "Forums", id = Model.ID})' },
+                    Selama.Forums.Thread.onThreadEditLinkClick
+                )
+                .on("click", ".thread-post-delete", Selama.Forums.Thread.onThreadDeleteClick);
             $(".row.thread-reply[data-thread-reply] .post-options-list")
-                .on("click", ".thread-post-edit", onReplyEditLinkClick)
-                .on("click", ".thread-post-delete", onReplyDeleteClick);
+                .on(
+                    "click",
+                    ".thread-post-edit",
+                    { url: '@Url.Action("EditReply", "Forum", new { area = "Forums" })' },
+                    Selama.Forums.Thread.onReplyEditLinkClick
+                )
+                .on("click", ".thread-post-delete", Selama.Forums.Thread.onReplyDeleteClick);
             $(".row.thread-post .post-options-list").on(
                 "click",
                 ".thread-post-quote",
@@ -212,8 +44,11 @@
 
 
             $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", Selama.Forums.Thread.onEditorModalShown);
-            $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(onDeletFormSubmitClick)
+            $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(Selama.Forums.Thread.onDeleteFormSubmitClick);
+
             $(".row.thread-reply:last").addClass("last");
+            $("#ThreadReplyEditor").hide();
+            $("[data-toggle='tooltip']").tooltip();
         });
     </script>
 }
@@ -344,10 +179,10 @@
                 </div>
                 @using (Ajax.BeginForm("EditThread", "Forum", new { area = "Forums", id = Model.ID }, new AjaxOptions
             {
-                OnBegin = "onAjaxRequestBegin",
-                OnComplete = "onAjaxRequestComplete",
-                OnSuccess = "onThreadUpdateRequestSuccess",
-                OnFailure = "onThreadUpdateRequestFailure"
+                OnBegin = "Selama.Forums.onAjaxRequestBegin",
+                OnComplete = "Selama.Forums.onAjaxRequestComplete",
+                OnSuccess = "Selama.Forums.Thread.onThreadUpdateRequestSuccess",
+                OnFailure = "Selama.Forums.Thread.onThreadUpdateRequestFailure"
             }))
             {
                     @Html.AntiForgeryToken()
@@ -379,10 +214,10 @@
                 </div>
                 @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
             {
-                OnBegin = "onAjaxRequestBegin",
-                OnComplete = "onAjaxRequestComplete",
-                OnFailure = "onReplyUpdateRequestFailure",
-                OnSuccess = "onReplyUpdateRequestSuccess"
+                OnBegin = "Selama.Forums.onAjaxRequestBegin",
+                OnComplete = "Selama.Forums.onAjaxRequestComplete",
+                OnFailure = "Selama.Forums.Thread.onReplyUpdateRequestFailure",
+                OnSuccess = "Selama.Forums.Thread.onReplyUpdateRequestSuccess"
             }))
             {
                     @Html.AntiForgeryToken()
