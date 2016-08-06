@@ -8,6 +8,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/Selama/Forums")
     <script type="text/javascript">
         function onPostReplyClick()
         {
@@ -124,15 +125,6 @@
             }
         }
 
-        function onEditorModalShown(e)
-        {
-            /// <param name="e" type="jQuery.Event" />
-            var $target = $(e.currentTarget);
-            var $editor = $target.find("textarea.mdd_editor").focus();
-            $("textarea.mdd_editor").MarkdownDeep(Selama.MarkdownEditor.Options);
-            var m = new MarkdownDeepEditor.Editor($editor[0], $target.find("div.mdd_preview")[0]);
-        }
-
         function onThreadDeleteClick(e)
         {
             $("#ThreadDeleteModal").modal("show");
@@ -208,10 +200,18 @@
             $(".row.thread-reply[data-thread-reply] .post-options-list")
                 .on("click", ".thread-post-edit", onReplyEditLinkClick)
                 .on("click", ".thread-post-delete", onReplyDeleteClick);
-            $(".row.thread-post .post-options-list").on("click", ".thread-post-quote", onQuoteBtnClick);
+            $(".row.thread-post .post-options-list").on(
+                "click",
+                ".thread-post-quote",
+                {
+                    replyUrl: '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })',
+                    threadUrl: '@Url.Action("GetThreadQuote", new { area = "Forums" })',
+                },
+                Selama.Forums.onQuoteBtnClick
+            );
 
 
-            $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", onEditorModalShown);
+            $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", Selama.Forums.onEditorModalShown);
             $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(onDeletFormSubmitClick)
             $(".row.thread-reply:last").addClass("last");
         });

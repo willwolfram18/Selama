@@ -31,6 +31,10 @@ namespace Selama
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/Bootstrap/bootstrap.js",
                       "~/Scripts/Bootstrap/respond.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Selama/Forums").Include(
+                "~/Areas/Forums/Scripts/Forums.js"
+            ));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap/bootstrap.css",
