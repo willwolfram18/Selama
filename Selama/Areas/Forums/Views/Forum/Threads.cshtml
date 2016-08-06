@@ -7,31 +7,22 @@
 }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/Selama/Forums")
     <script type="text/javascript">
-        function onThreadTitleMouseMove(e)
-        {
-            $(e.target).popover("show");
-            var height = $(".popover .popover-title").outerHeight() + $(".popover .popover-content").outerHeight();
-            $(".popover").css({ top: e.pageY - 14, left: e.pageX + 6 }).find(".arrow").css("top", "14px");
-        }
-        function onThreadTitleMouseLeave(e)
-        {
-            $(e.target).popover("hide");
-        }
-
         $(document).ready(function ()
         {
-            $("td.thread-title").on("mousemove", "", onThreadTitleMouseMove).on("mouseleave", "", onThreadTitleMouseLeave)
-            .each(function ()
-            {
-                $(this).popover({
-                    animation: false,
-                    container: "body",
-                    html: true,
-                    placement: "right",
-                    trigger: "manual",
+            $("td.thread-title").on("mousemove", "", Selama.Forums.Threads.onThreadTitleMouseMove)
+                .on("mouseleave", "", Selama.Forums.Threads.onThreadTitleMouseLeave)
+                .each(function ()
+                {
+                    $(this).popover({
+                        animation: false,
+                        container: "body",
+                        html: true,
+                        placement: "right",
+                        trigger: "manual",
+                    });
                 });
-            });
             $("[data-toggle='tooltip']").tooltip();
         });
     </script>
