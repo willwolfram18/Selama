@@ -1,6 +1,8 @@
 ﻿var Selama = Selama || {};
 
-Selama.Forums = Selama.Forums || {
+Selama.Forums = Selama.Forums || {};
+
+Selama.Forums.Thread = Selama.Forums.Thread || {
     onEditorModalShown: function Sealam_Forums_OnEditorModalShow(e)
     {
         /// <param name="e" type="jQuery.Event" />

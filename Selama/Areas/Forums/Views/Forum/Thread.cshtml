@@ -207,11 +207,11 @@
                     replyUrl: '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })',
                     threadUrl: '@Url.Action("GetThreadQuote", new { area = "Forums" })',
                 },
-                Selama.Forums.onQuoteBtnClick
+                Selama.Forums.Thread.onQuoteBtnClick
             );
 
 
-            $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", Selama.Forums.onEditorModalShown);
+            $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", Selama.Forums.Thread.onEditorModalShown);
             $("#ThreadDeleteModal form, #ReplyDeleteModal form").submit(onDeletFormSubmitClick)
             $(".row.thread-reply:last").addClass("last");
         });
