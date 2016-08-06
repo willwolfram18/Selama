@@ -6,27 +6,7 @@
     ViewBag.Title = "User Overview";
 }
 
-@section Scripts {
-    <script type="text/javascript">
-        function generateFixedTable()
-        {
-            $(".table.table-fixed-col.active").remove();
-            var $table = $(".table.table-fixed-col");
-            var $fixedTable = $table.clone().insertBefore($(".table")).addClass("active");
-            $fixedTable.find("th:not(:first-child),td:not(:first-child)").remove();
-            $fixedTable.find("tr").each(function (i, elem)
-            {
-                $(this).height($table.find("tr:eq(" + i + ")").height());
-            });
-        };
 
-        $(document).ready(function ()
-        {
-            generateFixedTable();
-            $(window).resize(generateFixedTable);
-        });
-    </script>
-}
 
 <h2>User Overview</h2>
 
@@ -150,8 +130,7 @@
                                     @Html.AntiForgeryToken()
                                     @Html.HiddenFor(modelItem => user.UserId)
                                     <button type="submit" class="btn btn-primary btn-icontext btn-confirm">
-                                        <span class="fa fa-check"></span>
-                                        Confirm user
+                                        <span class="fa fa-check"></span> Confirm user
                                     </button>
                                 }
                                 using (Html.BeginForm("DenyUser", "Users", new { page = Model.ViewPageNum }))
@@ -159,16 +138,26 @@
                                     @Html.AntiForgeryToken()
                                     @Html.HiddenFor(modelItem => user.UserId)
                                     <button type="submit" class="btn btn-default btn-icontext btn-deny">
-                                        <span class="fa fa-times"></span>
-                                        Deny user
+                                        <span class="fa fa-times"></span> Deny user
                                     </button>
                                 }
                             }
                             else
                             {
                                 <a href='@Url.Action("Edit", new { id = user.UserId })' class="btn btn-default btn-icontext">
-                                    <span class="fa fa-edit"></span>Edit
+                                    <span class="fa fa-edit"></span> Edit
                                 </a>
+                                if (!user.IsEmailConfirmed)
+                                {
+                                    using (Html.BeginForm("ResendEmail", "Users", new { page = Model.ViewPageNum }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(modelItem => user.UserId)
+                                        <button type="submit" class="btn btn-default btn-icontext btn-confirm">
+                                            <span class="fa fa-check"></span> Resend confirmation email
+                                        </button>
+                                    }
+                                }
                             }
                         </td>
                     </tr>

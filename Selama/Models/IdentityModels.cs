@@ -44,6 +44,7 @@ namespace Selama.Models
         public async Task UpdateFromViewModel(UserEditViewModel user)
         {
             IsActive = user.IsActive;
+            Email = user.Email;
             if (user.RoleId != Roles.FirstOrDefault().RoleId)
             {
                 using (var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>())

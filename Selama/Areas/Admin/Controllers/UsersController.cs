@@ -130,6 +130,28 @@ namespace Selama.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResendEmail(UserStatusUpdateViewModel user, int page = 1)
+        {
+            ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
+            if (ModelState.IsValid && dbUser != null && dbUser.IsActive && !dbUser.EmailConfirmed)
+            {
+                // Send an email with this link
+                using (var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>())
+                {
+                    string code = await userManager.GenerateEmailConfirmationTokenAsync(user.UserId);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Home", new { area = "Account", userId = user.UserId, code = code }, protocol: Request.Url.Scheme);
+                    await userManager.SendEmailAsync(user.UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                }
+
+                TempData["Message"] = string.Format("A new confirmation email has been sent to <strong>{0}</strong>.",
+                    dbUser.Email);
+            }
+
+            return RedirectToAction("Index", new { page = page });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DenyUser(UserStatusUpdateViewModel user, int page = 1)
         {
             ApplicationUser dbUser = await _db.Users.Where(u => u.Id == user.UserId).FirstOrDefaultAsync();
@@ -151,6 +173,7 @@ namespace Selama.Areas.Admin.Controllers
             return RedirectToAction("Index", new { page = page });
         }
 
+        #region Edit
         public ActionResult Edit(string id)
         {
             ApplicationUser user = _db.Users.Find(id);
@@ -189,7 +212,7 @@ namespace Selama.Areas.Admin.Controllers
             }
 
             user.ValidateModel(ModelState);
-            user.Email = dbUser.Email;
+            user.EmailConfirmed = dbUser.EmailConfirmed;
             user.Username = dbUser.UserName;
             if (ModelState.IsValid)
             {
@@ -218,6 +241,7 @@ namespace Selama.Areas.Admin.Controllers
             );
             return View(user);
         }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

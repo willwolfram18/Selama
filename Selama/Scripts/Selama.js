@@ -1,9 +1,20 @@
 ﻿var Selama = Selama || {};
-Selama.createElem = Selama.createElem || function __Selama_CreateElem(tagName, cssClassStr, id)
+Selama.createElem = Selama.createElem || function Selama_CreateElem(tagName, cssClassStr, id)
 {
     /// <returns type="jQuery" />
     return $(document.createElement(tagName)).addClass(cssClassStr).attr("id", id);
-}
+};
+Selama.generateFixedTable = function Selama_GenerateFixedTable()
+{
+    $(".table.table-fixed-col.active").remove();
+    var $table = $(".table.table-fixed-col");
+    var $fixedTable = $table.clone().insertBefore($(".table")).addClass("active");
+    $fixedTable.find("th:not(:first-child),td:not(:first-child)").remove();
+    $fixedTable.find("tr").each(function (i, elem)
+    {
+        $(this).height($table.find("tr:eq(" + i + ")").height());
+    });
+};
 
 // #region SpinShield
 Selama.SpinShield = Selama.SpinShield || {
@@ -29,7 +40,7 @@ Selama.SpinShield = Selama.SpinShield || {
         return this;
     },
 
-    lowerShield: function Selama_SpinShield_lowerShield()
+    lowerShield: function Selama_SpinShield_LowerShield()
     {
         $("#SpinShield").addClass("hidden");
         return this;
@@ -114,5 +125,8 @@ $(document).ready(function ()
 {
     Selama.SpinShield.init().lowerShield();
     Selama.Alert.init();
+
+    Selama.generateFixedTable();
+    $(window).on("resize", "", Selama.generateFixedTable);
 });
 // #endregion

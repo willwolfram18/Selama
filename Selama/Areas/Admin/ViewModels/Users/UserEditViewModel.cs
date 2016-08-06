@@ -20,6 +20,7 @@ namespace Selama.Areas.Admin.ViewModels.Users
             Email = user.Email;
             RoleId = user.Roles.FirstOrDefault().RoleId;
             IsActive = user.IsActive;
+            EmailConfirmed = user.EmailConfirmed;
             Version = Convert.ToBase64String(user.Version);
         }
 
@@ -29,11 +30,15 @@ namespace Selama.Areas.Admin.ViewModels.Users
 
         public string Username { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [Display(Name = "Permission Role")]
         public string RoleId { get; set; }
+
+        public bool EmailConfirmed { get; set; }
 
         [Required]
         [Display(Name = "Enabled?")]
@@ -51,6 +56,12 @@ namespace Selama.Areas.Admin.ViewModels.Users
                 if (role == null)
                 {
                     ModelState.AddModelError("RoleId", "Invalid role selected");
+                }
+
+                var usersWithEmail = db.Users.Where(u => u.Email == Email && u.Id != UserId);
+                if (usersWithEmail.Count() > 0)
+                {
+                    ModelState.AddModelError("Email", string.Format("Email '{0}' is already in use by another user", Email));
                 }
             }
             return;
