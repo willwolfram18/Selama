@@ -181,7 +181,7 @@ namespace Selama.Areas.Account.Controllers
                     };
                     //Thread t = new Thread(new ThreadStart(newUserEvent.NotifyAdmin));
                     //t.Start();
-                    newUserEvent.NotifyAdmin();
+                    //newUserEvent.NotifyAdmin();
 
                     return RedirectToAction("RegistrationConfirmation");
                 }
