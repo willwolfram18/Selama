@@ -244,6 +244,9 @@
     <Compile Include="Areas\Admin\ViewModels\Users\UserViewModel.cs" />
     <Compile Include="Areas\Forums\Controllers\ForumController.cs" />
     <Compile Include="Areas\Forums\ForumsAreaRegistration.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\ForumRepository.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\ThreadRepository.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\UnitOfWork.cs" />
     <Compile Include="Areas\Forums\Models\Forum.cs" />
     <Compile Include="Areas\Forums\Models\ForumSection.cs" />
     <Compile Include="Areas\Forums\Models\Thread.cs" />
@@ -341,6 +344,7 @@
       <DependentUpon>201607300057491_StringLengthRequirements.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DAL\IEntityRepository.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\PagerViewModel.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
@@ -496,7 +500,9 @@
     <Content Include="Scripts\Bootstrap\respond.min.js" />
     <Content Include="Scripts\Selama.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
