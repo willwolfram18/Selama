@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 using Selama.Areas.Account.ViewModels.Home;
+using Selama.Classes.Events;
 using Selama.Controllers;
 using Selama.Models;
 using System;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -80,7 +82,7 @@ namespace Selama.Areas.Account.Controllers
             {
                 return View(model);
             }
-            
+
             var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id) || !user.IsActive || user.WaitingReview)
             {
@@ -171,6 +173,15 @@ namespace Selama.Areas.Account.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "Guild Member");
+                    var newUserEvent = new NewUserRegistrationEvent
+                    {
+                        UserOverviewUrl = Url.Action("Index", "Users", new { area = "Admin" }),
+                        NewUserEmail = user.Email,
+                        NewUserName = user.UserName,
+                    };
+                    //Thread t = new Thread(new ThreadStart(newUserEvent.NotifyAdmin));
+                    //t.Start();
+                    newUserEvent.NotifyAdmin();
 
                     return RedirectToAction("RegistrationConfirmation");
                 }
