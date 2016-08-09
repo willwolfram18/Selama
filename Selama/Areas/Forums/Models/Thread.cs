@@ -78,7 +78,7 @@ namespace Selama.Areas.Forums.Models
         public virtual ICollection<ThreadReply> Replies { get; set; }
         #endregion
 
-        public static bool CanModifiy(IPrincipal User)
+        public static bool CanPinOrLockThreads(IPrincipal User)
         {
             return User.IsInRole("Admin") || User.IsInRole("Forum Mod");
         }

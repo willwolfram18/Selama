@@ -16,7 +16,7 @@ namespace Selama.Areas.Forums.Controllers
     public class ForumController : _BaseAuthorizeController
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
-        private const int _pageSize = 20;
+        private const int PAGE_SIZE = 20;
 
         // GET: Forums/Forum
         public ActionResult Index(string redirectFrom = null)
@@ -25,14 +25,8 @@ namespace Selama.Areas.Forums.Controllers
                 _db.ForumSections.Where(f => f.IsActive).OrderBy(f => f.DisplayOrder),
                 section => new ForumSectionViewModel(section)
             );
-            if (redirectFrom == "Threads")
-            {
-                ViewBag.ErrorMsg = "That forum does not exist";
-            }
-            else if (redirectFrom == "Thread")
-            {
-                ViewBag.ErrorMsg = "That thread does not exist";
-            }
+            ViewBag.ErrorMsg = SelectErrorMessageFromRedirect(redirectFrom);
+
             return View(forums);
         }
 
@@ -45,12 +39,16 @@ namespace Selama.Areas.Forums.Controllers
             }
             if (page <= 0)
             {
+                // Perform redirect to put URL page within [1,NumPages]
                 return RedirectToAction("Threads", new { id = id, page = 1 });
             }
+
+            // we want a zero-indexed page number on the server, but a one-indexed page client-side
             page--;
-            ForumViewModel model = new ForumViewModel(forum, _pageSize, page);
+            ForumViewModel model = new ForumViewModel(forum, PAGE_SIZE, page);
             if (page > model.NumPages)
             {
+                // Perform redirect to put URL page within [1,NumPages]
                 return RedirectToAction("Threads", new { id = id, page = model.NumPages });
             }
 
@@ -66,7 +64,7 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             bool goToLastPage = page == -1;
-            int pageSize = _pageSize;
+            int pageSize = PAGE_SIZE;
             // if it's a non-positive page, redirect to 1st page (except if -1)
             if (page <= 0)
             {
@@ -83,7 +81,7 @@ namespace Selama.Areas.Forums.Controllers
             // Subtract 1 on the first page to compensate for thread showing
             if (page == 1)
             {
-                pageSize = _pageSize - 1;
+                pageSize = PAGE_SIZE - 1;
             }
             page--;
 
@@ -126,7 +124,7 @@ namespace Selama.Areas.Forums.Controllers
                 _db.Threads.Add(dbThread);
 
                 // Only admins and forum mods can pin and lock threads
-                if (!Models.Thread.CanModifiy(User))
+                if (!Models.Thread.CanPinOrLockThreads(User))
                 {
                     dbThread.IsLocked = dbThread.IsPinned = false;
                 }
@@ -239,7 +237,7 @@ namespace Selama.Areas.Forums.Controllers
                 if (TrySaveChanges(_db))
                 {
                     _db.Entry(dbThread).Reload();
-                    return Json(new ThreadViewModel(dbThread, _pageSize, 0).HtmlContent.ToString());
+                    return Json(new ThreadViewModel(dbThread, PAGE_SIZE, 0).HtmlContent.ToString());
                 }
             }
 
@@ -382,7 +380,7 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             string message = null;
-            if (Models.Thread.CanModifiy(User))
+            if (Models.Thread.CanPinOrLockThreads(User))
             {
                 thread.IsLocked = locking;
                 _db.Entry(thread).State = System.Data.Entity.EntityState.Modified;
@@ -420,7 +418,7 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             string message = null;
-            if (Models.Thread.CanModifiy(User))
+            if (Models.Thread.CanPinOrLockThreads(User))
             {
                 thread.IsPinned = pinning;
                 _db.Entry(thread).State = System.Data.Entity.EntityState.Modified;
@@ -454,6 +452,22 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             return PartialView("DisplayTemplates/ThreadReplyQuoteViewModel", new ThreadReplyQuoteViewModel(reply, page));
+        }
+
+        private string SelectErrorMessageFromRedirect(string redirectedFrom)
+        {
+            switch (redirectedFrom)
+            {
+                case "":
+                case null:
+                    return null;
+                case "Threads":
+                    return "That forum does not exist";
+                case "Thread":
+                    return "That thread does not exist";
+                default:
+                    throw new NotImplementedException(string.Format("No case implemented for redirect from: \"{0}\"", redirectedFrom));
+            }
         }
 
         protected override void Dispose(bool disposing)

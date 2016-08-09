@@ -10,22 +10,17 @@ namespace Selama.Areas.Forums.ViewModels
 {
     public class ForumViewModel
     {
-        public ForumViewModel(Forum forum, int pageSize, int pageNum)
+        public ForumViewModel(Forum forum, int pageSize, int currentPage)
         {
             ID = forum.ID;
             Title = forum.Title;
             SubTitle = forum.SubTitle;
 
-            #region Set paging properties
             var activeThreads = forum.Threads.Where(t => t.IsActive);
-            _pageNum = pageNum;
+
             _pageSize = pageSize;
-            NumPages = (int)Math.Ceiling((1.0 * activeThreads.Count()) / _pageSize);
-            if (StartingIndex >= activeThreads.Count())
-            {
-                _pageNum = NumPages - 1;
-            }
-            #endregion
+            _currentPage = currentPage;
+            SetNumPagesAndCurrentPage(forum, activeThreads.Count());
 
             #region Get threads
             Threads = Util.ConvertLists<Thread, ThreadOverviewViewModel>(
@@ -36,6 +31,15 @@ namespace Selama.Areas.Forums.ViewModels
             ).OrderByDescending(t => t.IsPinned)
             .ThenByDescending(t => t.LastPost.PostDate);
             #endregion
+        }
+
+        private void SetNumPagesAndCurrentPage(Forum forum, int numActiveThreads)
+        {
+            NumPages = (int)Math.Ceiling((1.0 * numActiveThreads) / _pageSize);
+            if (StartingIndex >= numActiveThreads)
+            {
+                _currentPage = NumPages - 1;
+            }
         }
 
         public int ID { get; set; }
@@ -50,18 +54,18 @@ namespace Selama.Areas.Forums.ViewModels
         #region Pagination properties
         private int _pageSize { get; set; }
 
-        private int _pageNum { get; set; }
+        private int _currentPage { get; set; }
 
         private int StartingIndex
         {
             get
             {
-                if (_pageNum == 0)
+                if (_currentPage == 0)
                 {
                     return 0;
                 }
 
-                return (_pageSize * _pageNum);
+                return (_pageSize * _currentPage);
             }
         }
 
@@ -69,7 +73,7 @@ namespace Selama.Areas.Forums.ViewModels
         {
             get
             {
-                return _pageNum + 1;
+                return _currentPage + 1;
             }
         }
 

@@ -23,7 +23,7 @@
     </div>
 </div>
 
-@if (Thread.CanModifiy(User))
+@if (Thread.CanPinOrLockThreads(User))
 {
     <div class="form-group">
         @Html.LabelFor(model => model.IsPinned, new { @class = "control-label col-md-1" })
