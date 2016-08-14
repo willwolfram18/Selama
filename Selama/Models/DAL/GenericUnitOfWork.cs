@@ -13,6 +13,15 @@ namespace Selama.Models.DAL
     {
         protected TContext _context;
 
+        public void Reload(object entity)
+        {
+            _context.Entry(entity).Reload();
+        }
+        public async Task ReloadAsync(object entity)
+        {
+            await _context.Entry(entity).ReloadAsync();
+        }
+
         protected void SaveChanges()
         {
             TrySaveChanges();

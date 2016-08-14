@@ -27,7 +27,7 @@ namespace Selama.Models.DAL
 
         public IQueryable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedEnumerable<TEntity>> orderBy = null
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null
         )
         {
             IQueryable<TEntity> query = _dbSet;
@@ -39,7 +39,7 @@ namespace Selama.Models.DAL
 
             if (orderBy != null)
             {
-                query = orderBy(query).AsEnumerable();
+                query = orderBy(query).AsQueryable();
             }
 
             return query;
