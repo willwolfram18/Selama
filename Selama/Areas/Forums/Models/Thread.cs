@@ -1,4 +1,5 @@
-﻿using Selama.Areas.Forums.ViewModels;
+﻿using Selama.Areas.Forums.Models.DAL;
+using Selama.Areas.Forums.ViewModels;
 using Selama.Classes.Utility.Constants;
 using Selama.Models;
 using System;
@@ -29,6 +30,17 @@ namespace Selama.Areas.Forums.Models
         {
             Content = viewModel.Content;
             Convert.FromBase64String(viewModel.Version).CopyTo(Version, 0);
+        }
+
+        public void DeleteThread(ForumsUnitOfWork db)
+        {
+            IsActive = false;
+            foreach (ThreadReply reply in Replies)
+            {
+                reply.IsActive = false;
+                db.ThreadReplyRepository.Update(reply);
+            }
+            db.ThreadRepository.Update(this);
         }
 
         #region Database columns

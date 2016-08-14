@@ -14,7 +14,7 @@ namespace Selama.Areas.Forums.Models
         public ThreadReply(ThreadReplyViewModel model, string authorId, int threadId, int replyIndex)
         {
             Content = model.Content;
-            PostDate = model.PostDate;
+            PostDate = DateTime.Now;
             ThreadID = threadId;
             AuthorID = authorId;
             ReplyIndex = replyIndex;

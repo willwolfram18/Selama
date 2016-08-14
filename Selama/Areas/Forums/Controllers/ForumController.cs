@@ -158,7 +158,7 @@ namespace Selama.Areas.Forums.Controllers
             {
                 ModelState.AddModelError("ThreadID", "Invalid thread selected");
             }
-            reply.PostDate = DateTime.Now;
+
             reply.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
@@ -281,6 +281,7 @@ namespace Selama.Areas.Forums.Controllers
             {
                 ModelState.AddModelError("ThreadID", "Invalid Thread ID");
             }
+            // Only the author can edit
             if (dbReply.AuthorID != User.Identity.GetUserId())
             {
                 ModelState.AddModelError("", "You are not the author of this post, and therfore cannot edit it");
@@ -295,6 +296,7 @@ namespace Selama.Areas.Forums.Controllers
                 }
             }
 
+            // If we reach here there was an error
             return HttpUnprocessable();
         }
         #endregion
@@ -308,24 +310,19 @@ namespace Selama.Areas.Forums.Controllers
             {
                 return RedirectToAction("Index", new { redirectFrom = "Thread" });
             }
+            // Cannot delete a thread that is locked
             if (thread.IsLocked)
             {
                 return RedirectToAction("Thread", new { id = thread.ID, page = page, msg = "This thread is locked from editing and cannot be deleted" });
             }
+            // Cannot delete a thread that isn't yours
             if (thread.AuthorID != User.Identity.GetUserId())
             {
                 return RedirectToAction("Thread", new { id = thread.ID, page = page, msg = "You are not the author of this thread and cannot delete it" });
             }
 
             // Mark thread "deleted"
-            thread.IsActive = false;
-            _db.ThreadRepository.Update(thread);
-            // Mark all replies for thread as "deleted"
-            foreach (ThreadReply reply in thread.Replies)
-            {
-                reply.IsActive = false;
-                _db.ThreadReplyRepository.Update(reply);
-            }
+            thread.DeleteThread(_db);
             if (await _db.TrySaveChangesAsync())
             {
                 return RedirectToAction("Threads", new { id = thread.ForumID });
@@ -342,10 +339,12 @@ namespace Selama.Areas.Forums.Controllers
             {
                 return HttpNotFound();
             }
+            // Cannot delete a reply of a within a locked thread
             if (reply.Thread.IsLocked)
             {
                 return RedirectToAction("Thread", new { id = threadId, page = page, msg = "The thread is locked for editing and therefore the reply cannot be deleted" });
             }
+            // Cannot delete a thread you do not own
             if (reply.AuthorID != User.Identity.GetUserId())
             {
                 return RedirectToAction("Thread", new { id = threadId, page = page, msg = "You are not the author of this reply and cannot delete it" });
