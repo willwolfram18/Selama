@@ -1,4 +1,5 @@
-﻿using Selama.Models;
+﻿using Selama.Areas.Forums.Models.DAL.Repositories;
+using Selama.Models;
 using Selama.Models.DAL;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,18 @@ namespace Selama.Areas.Forums.Models.DAL
 {
     public class ForumsUnitOfWork : GenericUnitOfWork<ApplicationDbContext>
     {
-        private ForumRepository _forumRepo;
-        private ThreadRepository _threadRepo;
+        public ForumRepository ForumRepository { get; private set; }
+        public ForumSectionRepository ForumSectionRepository { get; private set; }
+        public ThreadRepository ThreadRepository { get; private set; }
+        public ThreadReplyRepository ThreadReplyRepository {get; private set; }
 
         public ForumsUnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            _forumRepo = new ForumRepository(_context);
-            _threadRepo = new ThreadRepository(_context);
+            ForumRepository = new ForumRepository(_context);
+            ForumSectionRepository = new ForumSectionRepository(_context);
+            ThreadRepository = new ThreadRepository(_context);
+            ThreadReplyRepository = new ThreadReplyRepository(_context);
         }
     }
 }

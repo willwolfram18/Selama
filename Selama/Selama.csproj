@@ -244,8 +244,10 @@
     <Compile Include="Areas\Admin\ViewModels\Users\UserViewModel.cs" />
     <Compile Include="Areas\Forums\Controllers\ForumController.cs" />
     <Compile Include="Areas\Forums\ForumsAreaRegistration.cs" />
-    <Compile Include="Areas\Forums\Models\DAL\ForumRepository.cs" />
-    <Compile Include="Areas\Forums\Models\DAL\ThreadRepository.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\Repositories\ForumRepository.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\Repositories\ForumSectionRepository.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\Repositories\ThreadReplyRepository.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\Repositories\ThreadRepository.cs" />
     <Compile Include="Areas\Forums\Models\DAL\ForumsUnitOfWork.cs" />
     <Compile Include="Areas\Forums\Models\Forum.cs" />
     <Compile Include="Areas\Forums\Models\ForumSection.cs" />

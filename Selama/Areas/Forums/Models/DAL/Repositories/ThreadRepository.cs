@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Selama.Areas.Forums.Models.DAL
+namespace Selama.Areas.Forums.Models.DAL.Repositories
 {
     public class ThreadRepository : GenericEntityRepository<ApplicationDbContext, Thread>, IDisposable
     {
