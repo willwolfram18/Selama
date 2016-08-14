@@ -33,19 +33,18 @@ namespace Selama.Controllers
                 await db.SaveChangesAsync();
                 return true;
             }
+            catch (DbUpdateConcurrencyException concurrencyException)
+            {
+                ModelState.AddModelError("", "The data was updated before your changes could be saved.");
+                foreach (var entity in concurrencyException.Entries)
+                {
+                    await entity.ReloadAsync();
+                }
+            }
             catch (Exception ex)
             {
-                if (ex is DbUpdateConcurrencyException)
-                {
-                    ModelState.AddModelError("", "The data was updated before your changes could be saved.");
-                    DbUpdateConcurrencyException concurrentError = ex as DbUpdateConcurrencyException;
-                    foreach (var entity in concurrentError.Entries)
-                    {
-                        await entity.ReloadAsync();
-                    }
-                }
-                return false;
             }
+            return false;
         }
 
         protected bool TrySaveChanges(DbContext db, out SaveChangeError result)

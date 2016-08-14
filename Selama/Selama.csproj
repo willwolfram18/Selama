@@ -246,7 +246,7 @@
     <Compile Include="Areas\Forums\ForumsAreaRegistration.cs" />
     <Compile Include="Areas\Forums\Models\DAL\ForumRepository.cs" />
     <Compile Include="Areas\Forums\Models\DAL\ThreadRepository.cs" />
-    <Compile Include="Areas\Forums\Models\DAL\UnitOfWork.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\ForumsUnitOfWork.cs" />
     <Compile Include="Areas\Forums\Models\Forum.cs" />
     <Compile Include="Areas\Forums\Models\ForumSection.cs" />
     <Compile Include="Areas\Forums\Models\Thread.cs" />
@@ -344,7 +344,8 @@
       <DependentUpon>201607300057491_StringLengthRequirements.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\DAL\IEntityRepository.cs" />
+    <Compile Include="Models\DAL\GenericEntityRepository.cs" />
+    <Compile Include="Models\DAL\GenericUnitOfWork.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\PagerViewModel.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />

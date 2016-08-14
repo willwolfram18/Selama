@@ -7,8 +7,10 @@ using System.Web;
 
 namespace Selama.Classes.Utility
 {
-    public class Util
+    public static class Util
     {
+        public const string WOW_CHARACTER_THUMBNAIL_URL = "https://render-api-us.worldofwarcraft.com/static-render/us/";
+
         public static List<TResult> ConvertLists<TIn, TResult>(IEnumerable<TIn> src, Func<TIn, TResult> ctor)
         {
             List<TResult> dest = new List<TResult>();
