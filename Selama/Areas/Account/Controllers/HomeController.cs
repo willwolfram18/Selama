@@ -24,6 +24,7 @@ namespace Selama.Areas.Account.Controllers
         private ApplicationUserManager _userManager;
         private string _recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}";
 
+        #region Constructors
         public HomeController()
         {
         }
@@ -33,6 +34,7 @@ namespace Selama.Areas.Account.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
+        #endregion
 
         public ApplicationSignInManager SignInManager
         {

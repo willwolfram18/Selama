@@ -19,7 +19,7 @@ namespace Selama.Areas.Forums.Controllers
         private ForumsUnitOfWork _db = new ForumsUnitOfWork();
         private const int PAGE_SIZE = 20;
 
-        // GET: Forums/Forum
+        // GET: Forums
         public ActionResult Index(string redirectFrom = null)
         {
             List<ForumSectionViewModel> forums = Util.ConvertLists<ForumSection, ForumSectionViewModel>(
@@ -31,6 +31,7 @@ namespace Selama.Areas.Forums.Controllers
             return View(forums);
         }
 
+        // GET: Forums/Threads/3
         public async Task<ActionResult> Threads(int id = 0, int page = 1)
         {
             Forum forum = await _db.ForumRepository.FindByIdAsync(id);
@@ -56,6 +57,7 @@ namespace Selama.Areas.Forums.Controllers
             return View(model);
         }
 
+        // GET: Forums/Thread/2
         public async Task<ActionResult> Thread(int id = 0, int page = 1, string msg = null)
         {
             Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
@@ -97,6 +99,7 @@ namespace Selama.Areas.Forums.Controllers
         }
 
         #region Create thread
+        // GET: /Forums/CreateThread/3
         public async Task<ActionResult> CreateThread(int id = 0)
         {
             Forum forum = await _db.ForumRepository.FindByIdAsync(id);
@@ -107,6 +110,7 @@ namespace Selama.Areas.Forums.Controllers
             return View(new ThreadViewModel { ForumID = id });
         }
 
+        // POST: /Forums/CreateThread/3
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateThread(ThreadViewModel thread, int id = 0)
@@ -140,6 +144,7 @@ namespace Selama.Areas.Forums.Controllers
         }
         #endregion
 
+        // POST: Forums/PostReply/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> PostReply(ThreadReplyViewModel reply, int id = 0)
@@ -197,6 +202,7 @@ namespace Selama.Areas.Forums.Controllers
         }
 
         #region Thread editing
+        // GET: Forums/EditThread/2
         public async Task<ActionResult> EditThread(int id = 0)
         {
             Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
@@ -212,6 +218,7 @@ namespace Selama.Areas.Forums.Controllers
             return PartialView("EditorTemplates/ThreadEditViewModel", new ThreadEditViewModel(thread));
         }
 
+        // POST: Forums/EditThread/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditThread(ThreadEditViewModel thread)
@@ -247,6 +254,7 @@ namespace Selama.Areas.Forums.Controllers
         #endregion
 
         #region Reply editing
+        // GET: Forums/EditReply/2
         public async Task<ActionResult> EditReply(int id = 0)
         {
             ThreadReply reply = await _db.ThreadReplyRepository.FindByIdAsync(id);
@@ -262,6 +270,7 @@ namespace Selama.Areas.Forums.Controllers
             return PartialView("EditorTemplates/ThreadReplyEditViewModel", new ThreadReplyEditViewModel(reply));
         }
 
+        // POST: Forums/EditReply/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditReply(ThreadReplyEditViewModel reply)
@@ -301,6 +310,7 @@ namespace Selama.Areas.Forums.Controllers
         }
         #endregion
 
+        // POST: Forums/DeleteThread/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteThread(int id = 0, int page = 1)
@@ -330,6 +340,7 @@ namespace Selama.Areas.Forums.Controllers
             return RedirectToAction("Thread", new { id = id, page = page });
         }
 
+        // POST: Forums/DeleteReply/4?threadId=2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteReply(int id = 0, int threadId = 0, int page = 1)
@@ -357,6 +368,7 @@ namespace Selama.Areas.Forums.Controllers
         }
 
         #region Lock thread
+        // POST: Forums/LockThread/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> LockThread(int id = 0, int page = 1)
@@ -364,6 +376,7 @@ namespace Selama.Areas.Forums.Controllers
             return await SetThreadLock(id, page, true, "locking");
         }
 
+        // POST: Forums/UnlockThread/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UnlockThread(int id = 0, int page = 1)
@@ -395,6 +408,7 @@ namespace Selama.Areas.Forums.Controllers
         #endregion
 
         #region Pin thread
+        // POST: Forums/PinThread/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> PinThread(int id = 0, int page = 1)
@@ -402,6 +416,7 @@ namespace Selama.Areas.Forums.Controllers
             return await SetThreadPin(id, page, true, "pinning");
         }
 
+        // POST: Forums/UnpinThread/2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UnpinThread(int id = 0, int page = 1)
@@ -432,6 +447,7 @@ namespace Selama.Areas.Forums.Controllers
         }
         #endregion
 
+        // GET: Forums/GetThreadQuote/2
         public async Task<ActionResult> GetThreadQuote(int id = 0)
         {
             Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
@@ -443,6 +459,7 @@ namespace Selama.Areas.Forums.Controllers
             return PartialView("DisplayTemplates/ThreadReplyQuoteViewModel", new ThreadReplyQuoteViewModel(thread));
         }
 
+        // GET: Forums/GetReplyQuote/4
         public async Task<ActionResult> GetReplyQuote(int id = 0, int page = 1)
         {
             ThreadReply reply = await _db.ThreadReplyRepository.FindByIdAsync(id);
