@@ -350,6 +350,11 @@ namespace Selama.Areas.Account.Controllers
             {
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
+            //// how to get access token for battlenet
+            //if (claim.Type == "urn:battlenet:accesstoken")
+            //{
+            //    Session["BattleNetAccessToken"] = claim.Value;
+            //}
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
