@@ -23,21 +23,21 @@ namespace Selama.Tests.Areas.Forum.Controllers
         }
 
         [TestMethod]
-        public void ThreadsNoId()
+        public async Task ThreadsNoId()
         {
             ForumController controller = new ForumController();
 
-            RedirectToRouteResult result = controller.Threads() as RedirectToRouteResult;
+            RedirectToRouteResult result = await controller.Threads() as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
 
         [TestMethod]
-        public void ThreadsValidId()
+        public async Task ThreadsValidId()
         {
             ForumController controller = new ForumController();
 
-            ViewResult result = controller.Threads(1) as ViewResult;
+            ViewResult result = await controller.Threads(1) as ViewResult;
 
             Assert.IsNotNull(result);
         }

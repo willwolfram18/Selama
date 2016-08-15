@@ -1,6 +1,6 @@
 ﻿using MarkdownDeep;
 using Selama.Areas.Forums.Models;
-using Selama.Classes.Utility;
+using Selama.Common.Utility;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;

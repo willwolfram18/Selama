@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Selama.Areas.Admin.ViewModels.Users;
-using Selama.Classes.Attributes;
-using Selama.Classes.Utility;
+using Selama.Common.Attributes;
+using Selama.Common.Utility;
 using Selama.Controllers;
 using Selama.Models;
 using System;

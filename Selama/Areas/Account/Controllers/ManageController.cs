@@ -2,8 +2,8 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Selama.Areas.Account.ViewModels.Manage;
-using Selama.Classes.Attributes;
-using Selama.Classes.Utility;
+using Selama.Common.Attributes;
+using Selama.Common.Utility;
 using Selama.Controllers;
 using Selama.Models;
 using System;

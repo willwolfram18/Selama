@@ -1,5 +1,5 @@
 ﻿using Selama.Areas.Forums.Models;
-using Selama.Classes.Utility;
+using Selama.Common.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

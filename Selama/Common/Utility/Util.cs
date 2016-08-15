@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Selama.Classes.Utility
+namespace Selama.Common.Utility
 {
     public static class Util
     {

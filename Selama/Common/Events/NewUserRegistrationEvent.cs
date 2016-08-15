@@ -11,7 +11,7 @@ using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace Selama.Classes.Events
+namespace Selama.Common.Events
 {
     public class NewUserRegistrationEvent
     {

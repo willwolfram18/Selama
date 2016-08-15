@@ -1,4 +1,4 @@
-﻿using Selama.Classes.Enum;
+﻿using Selama.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

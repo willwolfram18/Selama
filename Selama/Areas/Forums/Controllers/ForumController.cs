@@ -2,8 +2,8 @@
 using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.Models.DAL;
 using Selama.Areas.Forums.ViewModels;
-using Selama.Classes.Enum;
-using Selama.Classes.Utility;
+using Selama.Common.Enum;
+using Selama.Common.Utility;
 using Selama.Controllers;
 using Selama.Models;
 using System;

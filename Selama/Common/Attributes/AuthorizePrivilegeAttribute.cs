@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Selama.Classes.Attributes
+namespace Selama.Common.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class AuthorizePrivilegeAttribute : System.Web.Mvc.AuthorizeAttribute

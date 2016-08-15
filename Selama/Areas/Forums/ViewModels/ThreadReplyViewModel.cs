@@ -1,7 +1,7 @@
 ﻿using MarkdownDeep;
 using Selama.Areas.Forums.Models;
-using Selama.Classes.Utility;
-using Selama.Classes.Utility.Constants;
+using Selama.Common.Utility;
+using Selama.Common.Utility.Constants;
 using Selama.ViewModels;
 using System;
 using System.ComponentModel.DataAnnotations;

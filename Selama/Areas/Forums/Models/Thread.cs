@@ -1,6 +1,6 @@
 ﻿using Selama.Areas.Forums.Models.DAL;
 using Selama.Areas.Forums.ViewModels;
-using Selama.Classes.Utility.Constants;
+using Selama.Common.Utility.Constants;
 using Selama.Models;
 using System;
 using System.Collections.Generic;

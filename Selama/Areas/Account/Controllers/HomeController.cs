@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 using Selama.Areas.Account.ViewModels.Home;
-using Selama.Classes.Events;
+using Selama.Common.Events;
 using Selama.Controllers;
 using Selama.Models;
 using System;

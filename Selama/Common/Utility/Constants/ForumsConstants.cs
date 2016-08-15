@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Selama.Classes.Utility.Constants
+namespace Selama.Common.Utility.Constants
 {
     public static class ForumsConstants
     {

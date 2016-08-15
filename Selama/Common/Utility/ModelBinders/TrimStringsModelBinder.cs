@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Selama.Classes.Utility.ModelBinders
+namespace Selama.Common.Utility.ModelBinders
 {
     public class TrimStringsModelBinder : DefaultModelBinder
     {

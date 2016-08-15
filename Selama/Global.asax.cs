@@ -1,4 +1,4 @@
-﻿using Selama.Classes.Utility.ModelBinders;
+﻿using Selama.Common.Utility.ModelBinders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
