@@ -600,6 +600,12 @@
       <DependentUpon>201607300057491_StringLengthRequirements.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BattleNetApi\BattleNetApi.csproj">
+      <Project>{730BCDA4-7F89-4EE0-82BB-72A32C94326A}</Project>
+      <Name>BattleNetApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

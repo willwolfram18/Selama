@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selama", "Selama\Selama.csproj", "{DFACA6D0-9AAF-428C-80CE-E009D252DD3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selama.Tests", "Selama.Tests\Selama.Tests.csproj", "{4DD030D2-3BF9-4D3B-AF78-908782E4C208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleNetApi", "BattleNetApi\BattleNetApi.csproj", "{730BCDA4-7F89-4EE0-82BB-72A32C94326A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4DD030D2-3BF9-4D3B-AF78-908782E4C208}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DD030D2-3BF9-4D3B-AF78-908782E4C208}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DD030D2-3BF9-4D3B-AF78-908782E4C208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{730BCDA4-7F89-4EE0-82BB-72A32C94326A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{730BCDA4-7F89-4EE0-82BB-72A32C94326A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{730BCDA4-7F89-4EE0-82BB-72A32C94326A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{730BCDA4-7F89-4EE0-82BB-72A32C94326A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

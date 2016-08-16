@@ -119,12 +119,13 @@ $maxScreenWidth: 991px;
 
         &.collapse {
             display: none !important;
-        }
 
-        &.in {
-            height: auto;
-            overflow-x: visible;
-            overflow-y: auto;
+            &.in {
+                display: block !important;
+                height: auto !important;
+                overflow-x: visible !important;
+                overflow-y: auto !important;
+            }
         }
     }
 
@@ -177,8 +178,6 @@ $maxScreenWidth: 991px;
             background-image: none;
         }
     }
-
-    
 }
 
 @media screen and (min-width: $minScreenWidth) and (max-width: $maxScreenWidth) {
