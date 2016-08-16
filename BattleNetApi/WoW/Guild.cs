@@ -1,4 +1,5 @@
 ﻿using BattleNetApi.WoW.Enums;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,17 @@ namespace BattleNetApi.WoW
 {
     public class Guild
     {
-        public string Name { get; set; }
+        internal Guild(JObject jsonGuild)
+        {
+            
+        }
 
-        public string Realm { get; set; }
+        public string Name { get; private set; }
 
-        public int Level { get; set; }
+        public string Realm { get; private set; }
 
-        public Alliance Alliance { get; set; }
+        public int Level { get; private set; }
+
+        public Alliance Alliance { get; private set; }
     }
 }

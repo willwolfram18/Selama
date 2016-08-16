@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Newtonsoft.Json.Linq;
 
 namespace BattleNetApi.Api
 {
@@ -16,6 +17,7 @@ namespace BattleNetApi.Api
         private string _apiClientKey { get; set; }
         private Region _region { get; set; }
         private Locale _locale { get; set; }
+        private WowEndPoints _endPoints;
 
         protected string RegionString
         {
@@ -38,28 +40,41 @@ namespace BattleNetApi.Api
             _apiClientKey = apiClientKey;
             _region = region;
             _locale = locale;
+            _endPoints = new WowEndPoints(_region);
         }
 
         public async Task<IEnumerable<Character>> WowProfileAsync(string accessToken)
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                UriBuilder builder = new UriBuilder(WowEndPoints.OAuthProfileUri(RegionString));
-                var query = HttpUtility.ParseQueryString(builder.Query);
-                query["access_token"] = accessToken;
-                builder.Query = query.ToString();
+                SetJsonAcceptHeader(httpClient);
 
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await httpClient.GetAsync(builder.ToString());
-                if (response.IsSuccessStatusCode)
+                var response = await httpClient.GetAsync(_endPoints.OAuthProfileUri(accessToken).ToString());
+                if (!response.IsSuccessStatusCode)
                 {
-                    
-                    // TODO: parse response into Json object
-                    // response.Content.ReadAsStringAsync()
+                    return null;
                 }
+
+                string jsonStr = await response.Content.ReadAsStringAsync();
+                JObject profile = JObject.Parse(jsonStr);
+                return ParseWowCharacterProfile(profile["characters"].AsJEnumerable());
             }
-            return null;
+        }
+
+        private void SetJsonAcceptHeader(HttpClient httpClient)
+        {
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        private List<Character> ParseWowCharacterProfile(IJEnumerable<JToken> wowCharactersJson)
+        {
+            List<Character> characters = new List<Character>();
+            foreach (JObject characterJson in wowCharactersJson)
+            {
+                characters.Add(new Character(characterJson));
+            }
+            return characters;
         }
     }
 }
