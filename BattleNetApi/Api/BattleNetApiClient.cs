@@ -40,7 +40,7 @@ namespace BattleNetApi.Api
             _apiClientKey = apiClientKey;
             _region = region;
             _locale = locale;
-            _endPoints = new WowEndPoints(_region);
+            _endPoints = new WowEndPoints(_region, _locale);
         }
 
         public async Task<IEnumerable<Character>> WowProfileAsync(string accessToken)
@@ -55,9 +55,26 @@ namespace BattleNetApi.Api
                     return null;
                 }
 
-                string jsonStr = await response.Content.ReadAsStringAsync();
-                JObject profile = JObject.Parse(jsonStr);
+                JObject profile = await ParseJsonResponse(response);
                 return ParseWowCharacterProfile(profile["characters"].AsJEnumerable());
+            }
+        }
+
+        public async Task<Character> CharacterProfileAsync(string realm, string characterName)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                SetJsonAcceptHeader(httpClient);
+
+                var response = await httpClient.GetAsync(_endPoints.CharacterProfile(characterName, realm, _apiClientKey).ToString());
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                JObject characterJson = await ParseJsonResponse(response);
+                // TODO: Return parsed JSON object
+                return null;
             }
         }
 
@@ -65,6 +82,12 @@ namespace BattleNetApi.Api
         {
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        private async Task<JObject> ParseJsonResponse(HttpResponseMessage response)
+        {
+            string jsonStr = await response.Content.ReadAsStringAsync();
+            return JObject.Parse(jsonStr);
         }
 
         private List<Character> ParseWowCharacterProfile(IJEnumerable<JToken> wowCharactersJson)

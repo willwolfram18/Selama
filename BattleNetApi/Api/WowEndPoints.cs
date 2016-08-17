@@ -1,6 +1,7 @@
 ﻿using BattleNetApi.Api.Enums;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace BattleNetApi.Api
     {
         private const string _baseApiUri = "https://{0}.api.battle.net/{1}";
         private Region _region;
+        private Locale _locale;
 
         private string RegionString
         {
@@ -20,20 +22,49 @@ namespace BattleNetApi.Api
                 return _region.ToString().ToLower();
             }
         }
-
-        internal WowEndPoints(Region region)
+        private string LocaleString
         {
-            _region = region;
+            get
+            {
+                return _locale.ToString();
+            }
         }
 
-        public UriBuilder OAuthProfileUri(string accessToken)
+        internal WowEndPoints(Region region, Locale locale)
         {
-            string profileUri = string.Format(_baseApiUri, RegionString, "wow/user/characters");
-            UriBuilder builder = new UriBuilder(profileUri);
-            var query = HttpUtility.ParseQueryString(builder.Query);
+            _region = region;
+            _locale = locale;
+        }
+
+        internal UriBuilder OAuthProfileUri(string accessToken)
+        {
+            string oAuthProfileUri = string.Format(_baseApiUri, RegionString, "wow/user/characters");
+            UriBuilder uriBuilder = new UriBuilder(oAuthProfileUri);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             query["access_token"] = accessToken;
-            builder.Query = query.ToString();
-            return builder;
+            uriBuilder.Query = query.ToString();
+            return uriBuilder;
+        }
+
+        internal UriBuilder CharacterProfile(string characterName, string realmName, string apiKey, params string[] fields)
+        {
+            string characterProfileEndPoint = string.Format("/wow/character/{0}/{1}", realmName, characterName);
+            string profileUri = string.Format(_baseApiUri, RegionString, characterProfileEndPoint);
+
+            UriBuilder uriBuilder = new UriBuilder(profileUri);
+            var query = BaseQuery();
+            query["fields"] = string.Join(",", fields);
+            query["apikey"] = apiKey;
+            uriBuilder.Query = query.ToString();
+
+            return uriBuilder;
+        }
+
+        private NameValueCollection BaseQuery()
+        {
+            var query = HttpUtility.ParseQueryString("");
+            query["locale"] = LocaleString;
+            return query;
         }
     }
 }
