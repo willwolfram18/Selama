@@ -21,6 +21,6 @@ namespace BattleNetApi.WoW
 
         public int Level { get; private set; }
 
-        public Alliance Alliance { get; private set; }
+        public Faction Alliance { get; private set; }
     }
 }

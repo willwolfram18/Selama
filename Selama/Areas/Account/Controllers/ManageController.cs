@@ -353,18 +353,18 @@ namespace Selama.Areas.Account.Controllers
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
             // how to get access token for battlenet
-            //foreach (var claim in loginInfo.ExternalIdentity.Claims)
-            //{
-            //    if (claim.Type == "urn:battlenet:accesstoken")
-            //    {
-            //        BattleNetApiClient battleNetClient = new BattleNetApiClient(
-            //            ConfigurationManager.AppSettings["BattleNetOAuthClientSecret"],
-            //            ConfigurationManager.AppSettings["BattleNetOAuthClientId"]
-            //        );
-            //        var characters = await battleNetClient.WowProfileAsync(claim.Value);
-            //    }
-            //}
-            
+            foreach (var claim in loginInfo.ExternalIdentity.Claims)
+            {
+                if (claim.Type == "urn:battlenet:accesstoken")
+                {
+                    BattleNetApiClient battleNetClient = new BattleNetApiClient(
+                        ConfigurationManager.AppSettings["BattleNetOAuthClientSecret"],
+                        ConfigurationManager.AppSettings["BattleNetOAuthClientId"]
+                    );
+                    var characters = await battleNetClient.WowProfileAsync(claim.Value);
+                }
+            }
+
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }

@@ -1,4 +1,5 @@
-﻿using BattleNetApi.WoW.Enums;
+﻿using BattleNetApi.Common.ExtensionMethods;
+using BattleNetApi.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace BattleNetApi.WoW
 
         public string RealmName { get; private set; }
 
-        public Alliance Alliance { get; private set; }
+        public Faction Faction { get; private set; }
 
         public string Thumbnail { get; private set; }
 
@@ -49,9 +50,9 @@ namespace BattleNetApi.WoW
 
         private void ParseEnums(JObject jsonCharacter)
         {
-            Class = ParseCharacterEnum<Class>(jsonCharacter, "class");
-            Race = ParseCharacterEnum<Race>(jsonCharacter, "race");
-            Gender = ParseCharacterEnum<Gender>(jsonCharacter, "gender");
+            Class.ParseEnum<Class>(jsonCharacter["class"].Value<string>());
+            Race.ParseEnum<Race>(jsonCharacter["race"].Value<string>());
+            Gender.ParseEnum<Gender>(jsonCharacter["gender"].Value<string>());
         }
 
         private void ParseComplexTypes(JObject jsonCharacter)
@@ -65,13 +66,5 @@ namespace BattleNetApi.WoW
                 Guild = new Guild(jsonCharacter["guild"] as JObject);
             }
         }
-        private TEnum ParseCharacterEnum<TEnum>(JObject jsonCharacter, string key)
-            where TEnum : struct
-        {
-            TEnum tempEnum;
-            Enum.TryParse<TEnum>(jsonCharacter[key].Value<string>(), out tempEnum);
-            return tempEnum;
-        }
-
     }
 }
