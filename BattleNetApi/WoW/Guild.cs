@@ -1,4 +1,5 @@
-﻿using BattleNetApi.WoW.Enums;
+﻿using BattleNetApi.Common;
+using BattleNetApi.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,23 @@ namespace BattleNetApi.WoW
 {
     public class Guild
     {
-        internal Guild(JObject jsonGuild)
+        internal static Guild BuildOAuthCharacterGuild(JObject characterProfile)
+        {
+            return new Guild(
+                characterProfile["guild"].Value<string>(),
+                characterProfile["guildRealm"].Value<string>(),
+                Util.SelectFactionFromRace(Util.ParseEnum<Race>(characterProfile, "race"))
+            );
+        }
+
+        private Guild(string name, string realm, Faction faction)
+        {
+            Name = name;
+            Realm = realm;
+            Faction = faction;
+        }
+
+        private Guild(JObject jsonGuild)
         {
             
         }
@@ -21,6 +38,6 @@ namespace BattleNetApi.WoW
 
         public int Level { get; private set; }
 
-        public Faction Alliance { get; private set; }
+        public Faction Faction { get; private set; }
     }
 }

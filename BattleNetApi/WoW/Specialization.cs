@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using BattleNetApi.WoW.Enums;
 using BattleNetApi.Common.ExtensionMethods;
+using BattleNetApi.Common;
 
 namespace BattleNetApi.WoW
 {
@@ -13,15 +14,15 @@ namespace BattleNetApi.WoW
     {
         public static Specialization BuildCharacterSpecialization(JObject specializationJson, Class classForSpec)
         {
-            return new Specialization(specializationJson, classForSpec);
+            return new Specialization(specializationJson, classForSpec) { Selected = true };
         }
 
-        internal Specialization(JObject specializationJson, Class classForSpec)
+        private Specialization(JObject specializationJson, Class classForSpec)
         {
             ClassSpecBelongsTo = classForSpec;
             Name = specializationJson["name"].Value<string>();
             Selected = specializationJson.ContainsKey("selected");
-            Role.ParseEnum<Role>(specializationJson["role"].Value<string>());
+            Role = Util.ParseEnum<Role>(specializationJson, "role");
             SortOrder = specializationJson["order"].Value<int>();
             Description = specializationJson["description"].Value<string>();
         }

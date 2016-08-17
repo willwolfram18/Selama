@@ -1,4 +1,5 @@
-﻿using BattleNetApi.Common.ExtensionMethods;
+﻿using BattleNetApi.Common;
+using BattleNetApi.Common.ExtensionMethods;
 using BattleNetApi.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
@@ -11,7 +12,11 @@ namespace BattleNetApi.WoW
 {
     public class Character
     {
-        internal Character(JObject jsonCharacter)
+        internal static Character BuildOAuthProfileCharacter(JObject jsonCharacter)
+        {
+            return new Character(jsonCharacter);
+        }
+        private Character(JObject jsonCharacter)
         {
             ParseSimpleTypes(jsonCharacter);
 
@@ -34,11 +39,13 @@ namespace BattleNetApi.WoW
 
         public Guild Guild { get; private set; }
 
-        public string RealmName { get; private set; }
-
         public Faction Faction { get; private set; }
 
         public string Thumbnail { get; private set; }
+
+        public Specialization Specialization { get; private set; }
+
+        public int AchievementPoints { get; private set; }
 
         private void ParseSimpleTypes(JObject jsonCharacter)
         {
@@ -46,24 +53,29 @@ namespace BattleNetApi.WoW
             Realm = jsonCharacter["realm"].Value<string>();
             Thumbnail = jsonCharacter["thumbnail"].Value<string>();
             Level = jsonCharacter["level"].Value<int>();
+            AchievementPoints = jsonCharacter["achievementPoints"].Value<int>();
         }
 
         private void ParseEnums(JObject jsonCharacter)
         {
-            Class.ParseEnum<Class>(jsonCharacter["class"].Value<string>());
-            Race.ParseEnum<Race>(jsonCharacter["race"].Value<string>());
-            Gender.ParseEnum<Gender>(jsonCharacter["gender"].Value<string>());
+            Class = Util.ParseEnum<Class>(jsonCharacter, "class");
+            Race = Util.ParseEnum<Race>(jsonCharacter, "race");
+            Gender = Util.ParseEnum<Gender>(jsonCharacter, "gender");
+            Faction = Util.SelectFactionFromRace(Race);
         }
 
         private void ParseComplexTypes(JObject jsonCharacter)
         {
-            if (jsonCharacter["guild"] == null)
+            Guild = null;
+            if (jsonCharacter.ContainsKey("guild"))
             {
-                Guild = null;
+                Guild = Guild.BuildOAuthCharacterGuild(jsonCharacter);
             }
-            else
+
+            Specialization = null;
+            if (jsonCharacter.ContainsKey("spec"))
             {
-                Guild = new Guild(jsonCharacter["guild"] as JObject);
+                Specialization = Specialization.BuildCharacterSpecialization(jsonCharacter["spec"].Value<JObject>(), Class);
             }
         }
     }

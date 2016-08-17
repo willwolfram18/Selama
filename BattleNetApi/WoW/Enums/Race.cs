@@ -9,7 +9,7 @@ namespace BattleNetApi.WoW.Enums
     public enum Race
     {
         Human = 1,
-        Ord = 2,
+        Orc = 2,
         Dwarf = 3,
         NightElf = 4,
         Undead = 5,

@@ -72,7 +72,7 @@ namespace BattleNetApi.Api
             List<Character> characters = new List<Character>();
             foreach (JObject characterJson in wowCharactersJson)
             {
-                characters.Add(new Character(characterJson));
+                characters.Add(Character.BuildOAuthProfileCharacter(characterJson));
             }
             return characters;
         }
