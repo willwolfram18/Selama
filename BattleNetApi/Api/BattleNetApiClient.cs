@@ -34,6 +34,8 @@ namespace BattleNetApi.Api
             }
         }
 
+        public OAuthApi OAuthApi { get; private set; }
+
         public BattleNetApiClient(string apiSecretKey, string apiClientKey, Region region = Region.US, Locale locale = Locale.en_US)
         {
             _apiSecretKey = apiSecretKey;
@@ -41,63 +43,27 @@ namespace BattleNetApi.Api
             _region = region;
             _locale = locale;
             _endPoints = new WowEndPoints(_region, _locale);
+            OAuthApi = new OAuthApi(region, locale);
+
         }
 
-        public async Task<IEnumerable<Character>> WowProfileAsync(string accessToken)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                SetJsonAcceptHeader(httpClient);
+        //public async Task<Character> CharacterProfileAsync(string realm, string characterName)
+        //{
+        //    using (HttpClient httpClient = new HttpClient())
+        //    {
+        //        SetJsonAcceptHeader(httpClient);
 
-                var response = await httpClient.GetAsync(_endPoints.OAuthProfileUri(accessToken).ToString());
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
+        //        var response = await httpClient.GetAsync(_endPoints.CharacterProfile(characterName, realm, _apiClientKey).ToString());
+        //        if (!response.IsSuccessStatusCode)
+        //        {
+        //            return null;
+        //        }
 
-                JObject profile = await ParseJsonResponse(response);
-                return ParseWowCharacterProfile(profile["characters"].AsJEnumerable());
-            }
-        }
-
-        public async Task<Character> CharacterProfileAsync(string realm, string characterName)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                SetJsonAcceptHeader(httpClient);
-
-                var response = await httpClient.GetAsync(_endPoints.CharacterProfile(characterName, realm, _apiClientKey).ToString());
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-
-                JObject characterJson = await ParseJsonResponse(response);
-                // TODO: Return parsed JSON object
-                return null;
-            }
-        }
-
-        private void SetJsonAcceptHeader(HttpClient httpClient)
-        {
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        private async Task<JObject> ParseJsonResponse(HttpResponseMessage response)
-        {
-            string jsonStr = await response.Content.ReadAsStringAsync();
-            return JObject.Parse(jsonStr);
-        }
-
-        private List<Character> ParseWowCharacterProfile(IJEnumerable<JToken> wowCharactersJson)
-        {
-            List<Character> characters = new List<Character>();
-            foreach (JObject characterJson in wowCharactersJson)
-            {
-                characters.Add(Character.BuildOAuthProfileCharacter(characterJson));
-            }
-            return characters;
-        }
+        //        JObject characterJson = await ParseJsonResponse(response);
+        //        // TODO: Return parsed JSON object
+        //        return null;
+        //    }
+        //}
+        
     }
 }

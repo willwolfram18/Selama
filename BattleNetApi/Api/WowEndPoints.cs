@@ -36,16 +36,6 @@ namespace BattleNetApi.Api
             _locale = locale;
         }
 
-        internal UriBuilder OAuthProfileUri(string accessToken)
-        {
-            string oAuthProfileUri = string.Format(_baseApiUri, RegionString, "wow/user/characters");
-            UriBuilder uriBuilder = new UriBuilder(oAuthProfileUri);
-            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["access_token"] = accessToken;
-            uriBuilder.Query = query.ToString();
-            return uriBuilder;
-        }
-
         internal UriBuilder CharacterProfile(string characterName, string realmName, string apiKey, params string[] fields)
         {
             string characterProfileEndPoint = string.Format("/wow/character/{0}/{1}", realmName, characterName);

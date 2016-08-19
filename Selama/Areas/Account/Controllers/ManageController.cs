@@ -361,7 +361,7 @@ namespace Selama.Areas.Account.Controllers
                         ConfigurationManager.AppSettings["BattleNetOAuthClientSecret"],
                         ConfigurationManager.AppSettings["BattleNetOAuthClientId"]
                     );
-                    var characters = await battleNetClient.WowProfileAsync(claim.Value);
+                    var characters = await battleNetClient.OAuthApi.WowProfileAsync(claim.Value);
                 }
             }
 
