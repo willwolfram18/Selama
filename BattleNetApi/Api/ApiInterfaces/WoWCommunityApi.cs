@@ -1,5 +1,5 @@
 ﻿using BattleNetApi.Api.Enums;
-using BattleNetApi.WoW;
+using BattleNetApi.Objects.WoW;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -54,7 +54,6 @@ namespace BattleNetApi.Api.ApiInterfaces
             UriBuilder uriBuilder = new UriBuilder(profileUri);
             var query = BuildCommonQuery();
             query["fields"] = string.Join(",", fields);
-            query["apikey"] = _apiClientKey;
             uriBuilder.Query = query.ToString();
 
             return uriBuilder;
@@ -64,6 +63,7 @@ namespace BattleNetApi.Api.ApiInterfaces
         {
             var query = HttpUtility.ParseQueryString("");
             query["locale"] = LocaleString;
+            query["apikey"] = _apiClientKey;
             return query;
         }
         #endregion

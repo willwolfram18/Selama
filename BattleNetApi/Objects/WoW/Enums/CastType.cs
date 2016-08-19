@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleNetApi.WoW.Enums
+namespace BattleNetApi.Objects.WoW.Enums
 {
-    public enum Gender
+    public enum SpellCastingType
     {
-        Male = 0,
-        Female = 1,
+        Passive = 0,
+        Instant = 1,
+        Cast = 2,
     }
 }

@@ -52,20 +52,21 @@
     <Compile Include="Api\Enums\Region.cs" />
     <Compile Include="Api\ApiInterfaces\OAuthApi.cs" />
     <Compile Include="Common\Util.cs" />
-    <Compile Include="WoW\Enums\CastType.cs" />
+    <Compile Include="Objects\WoW\Enums\CastType.cs" />
     <Compile Include="Common\ExtensionMethods\JObjectExtensionMethods.cs" />
-    <Compile Include="WoW\Enums\Role.cs" />
-    <Compile Include="WoW\Specialization.cs" />
-    <Compile Include="WoW\Spell.cs" />
-    <Compile Include="WoW\Talent.cs" />
-    <Compile Include="WoW\TalentGridCoordinates.cs" />
-    <Compile Include="WoW\Character.cs" />
+    <Compile Include="Objects\WoW\Enums\Role.cs" />
+    <Compile Include="Objects\WoW\RaceDataResource.cs" />
+    <Compile Include="Objects\WoW\Specialization.cs" />
+    <Compile Include="Objects\WoW\Spell.cs" />
+    <Compile Include="Objects\WoW\Talent.cs" />
+    <Compile Include="Objects\WoW\TalentGridCoordinates.cs" />
+    <Compile Include="Objects\WoW\Character.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WoW\Enums\Faction.cs" />
-    <Compile Include="WoW\Enums\Gender.cs" />
-    <Compile Include="WoW\Enums\Race.cs" />
-    <Compile Include="WoW\Enums\Class.cs" />
-    <Compile Include="WoW\Guild.cs" />
+    <Compile Include="Objects\WoW\Enums\Faction.cs" />
+    <Compile Include="Objects\WoW\Enums\Gender.cs" />
+    <Compile Include="Objects\WoW\Enums\Race.cs" />
+    <Compile Include="Objects\WoW\Enums\Class.cs" />
+    <Compile Include="Objects\WoW\Guild.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using BattleNetApi.WoW.Enums;
+using BattleNetApi.Objects.WoW.Enums;
 using BattleNetApi.Common.ExtensionMethods;
 using BattleNetApi.Common;
 
-namespace BattleNetApi.WoW
+namespace BattleNetApi.Objects.WoW
 {
     public class Specialization
     {

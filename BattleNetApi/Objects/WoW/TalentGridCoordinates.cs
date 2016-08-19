@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleNetApi.WoW
+namespace BattleNetApi.Objects.WoW
 {
     public class TalentGridCoordinates
     {

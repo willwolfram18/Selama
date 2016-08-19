@@ -1,5 +1,5 @@
 ﻿using BattleNetApi.Common.ExtensionMethods;
-using BattleNetApi.WoW.Enums;
+using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

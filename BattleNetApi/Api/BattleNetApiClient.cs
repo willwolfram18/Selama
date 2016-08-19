@@ -1,5 +1,5 @@
 ﻿using BattleNetApi.Api.Enums;
-using BattleNetApi.WoW;
+using BattleNetApi.Objects.WoW;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,8 +53,5 @@ namespace BattleNetApi.Api
             OAuthApi = new OAuthApi(_region, _locale);
             WowCommunityApi = new WoWCommunityApi(_apiSecretKey, _apiClientKey, _region, _locale);
         }
-
-        
-        
     }
 }

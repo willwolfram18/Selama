@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleNetApi.WoW.Enums
+namespace BattleNetApi.Objects.WoW.Enums
 {
     public enum Role
     {

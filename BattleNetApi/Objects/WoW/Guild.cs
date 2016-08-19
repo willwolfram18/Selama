@@ -1,5 +1,5 @@
 ﻿using BattleNetApi.Common;
-using BattleNetApi.WoW.Enums;
+using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleNetApi.WoW
+namespace BattleNetApi.Objects.WoW
 {
     public class Guild
     {
