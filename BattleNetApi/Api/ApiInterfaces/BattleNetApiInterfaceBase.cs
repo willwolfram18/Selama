@@ -11,7 +11,7 @@ namespace BattleNetApi.Api.ApiInterfaces
 {
     public class BattleNetApiInterfaceBase
     {
-        protected const string _baseUriMissingRegionAndEndpoint = "https://{0}.api.battle.net/{1}";
+        private const string _baseUriMissingRegionAndEndpoint = "https://{0}.api.battle.net/";
         protected Region _region { get; set; }
         protected Locale _locale { get; set; }
 
@@ -27,6 +27,14 @@ namespace BattleNetApi.Api.ApiInterfaces
             get
             {
                 return _locale.ToString();
+            }
+        }
+
+        protected string BaseApiUriFormat
+        {
+            get
+            {
+                return string.Format(_baseUriMissingRegionAndEndpoint, RegionString) + "{0}";
             }
         }
 

@@ -16,7 +16,7 @@ namespace BattleNetApi.Objects.WoW
             return new Guild(
                 characterProfile["guild"].Value<string>(),
                 characterProfile["guildRealm"].Value<string>(),
-                Util.SelectFactionFromRace(Util.ParseEnum<Race>(characterProfile, "race"))
+                Util.SelectFactionFromRace(Util.ParseEnum<Enums.Race>(characterProfile, "race"))
             );
         }
 

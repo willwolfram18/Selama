@@ -39,7 +39,7 @@ namespace BattleNetApi.Api.ApiInterfaces
         #region Private/internal interface
         private UriBuilder WowOAuthProfileUri(string accessToken)
         {
-            string oAuthProfileUri = string.Format(_baseUriMissingRegionAndEndpoint, RegionString, "wow/user/characters");
+            string oAuthProfileUri = string.Format(BaseApiUriFormat, "wow/user/characters");
             UriBuilder uriBuilder = new UriBuilder(oAuthProfileUri);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             query["access_token"] = accessToken;

@@ -26,13 +26,11 @@ namespace BattleNetApi.Api.ApiInterfaces
         #endregion
 
         #region Public interface
-        public async Task<Character> CharacterProfileAsync(string realm, string characterName)
+        public async Task<Character> GetCharacterProfileAsync(string realm, string characterName, params string[] fields)
         {
-            using (HttpClient httpClient = new HttpClient())
+            using (HttpClient httpClient = BuildHttpClient())
             {
-                SetJsonAcceptHeader(httpClient);
-
-                var response = await httpClient.GetAsync(CharacterProfileUri(characterName, realm, _apiClientKey).ToString());
+                var response = await httpClient.GetAsync(CharacterProfileUri(characterName, realm, fields).ToString());
                 if (!response.IsSuccessStatusCode)
                 {
                     return null;
@@ -43,20 +41,54 @@ namespace BattleNetApi.Api.ApiInterfaces
                 return null;
             }
         }
+
+        public async Task<IEnumerable<RaceDataResource>> GetCharacterRaces()
+        {
+            using (HttpClient httpClient = BuildHttpClient())
+            {
+                var response = await httpClient.GetAsync(DataResourceUri("character/races").ToString());
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                JObject racesJson = await ParseJsonResponse(response);
+                // TODO: Return parsed JSON object
+                return null;
+            }
+        }
         #endregion
 
         #region Private/Internal functions
-        internal UriBuilder CharacterProfileUri(string characterName, string realmName, params string[] fields)
+        private HttpClient BuildHttpClient()
+        {
+            HttpClient httpClient = new HttpClient();
+            SetJsonAcceptHeader(httpClient);
+            return httpClient;
+        }
+
+        private UriBuilder CharacterProfileUri(string characterName, string realmName, params string[] fields)
         {
             string characterProfileEndPoint = string.Format("/wow/character/{0}/{1}", realmName, characterName);
-            string profileUri = string.Format(_baseUriMissingRegionAndEndpoint, RegionString, characterProfileEndPoint);
+            string profileUri = string.Format(BaseApiUriFormat, RegionString, characterProfileEndPoint);
 
-            UriBuilder uriBuilder = new UriBuilder(profileUri);
+            UriBuilder characterProfileUriBuilder = new UriBuilder(profileUri);
             var query = BuildCommonQuery();
             query["fields"] = string.Join(",", fields);
-            uriBuilder.Query = query.ToString();
+            characterProfileUriBuilder.Query = query.ToString();
 
-            return uriBuilder;
+            return characterProfileUriBuilder;
+        }
+
+        private UriBuilder DataResourceUri(string resourceEndPoint)
+        {
+            string dataResourceUri = string.Format(BaseApiUriFormat, "data/" + resourceEndPoint);
+
+            UriBuilder dataResourceUriBuilder = new UriBuilder(dataResourceUri);
+            var query = BuildCommonQuery();
+            dataResourceUriBuilder.Query = query.ToString();
+
+            return dataResourceUriBuilder;
         }
 
         private NameValueCollection BuildCommonQuery()

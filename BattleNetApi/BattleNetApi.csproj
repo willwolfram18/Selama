@@ -55,7 +55,7 @@
     <Compile Include="Objects\WoW\Enums\CastType.cs" />
     <Compile Include="Common\ExtensionMethods\JObjectExtensionMethods.cs" />
     <Compile Include="Objects\WoW\Enums\Role.cs" />
-    <Compile Include="Objects\WoW\RaceDataResource.cs" />
+    <Compile Include="Objects\WoW\DataResources\RaceDataResource.cs" />
     <Compile Include="Objects\WoW\Specialization.cs" />
     <Compile Include="Objects\WoW\Spell.cs" />
     <Compile Include="Objects\WoW\Talent.cs" />
