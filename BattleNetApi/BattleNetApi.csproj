@@ -46,11 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiInterfaces\BattleNetApiInterfaceBase.cs" />
+    <Compile Include="Api\ApiInterfaces\WoWCommunityApi.cs" />
     <Compile Include="Api\BattleNetApiClient.cs" />
     <Compile Include="Api\Enums\Locale.cs" />
     <Compile Include="Api\Enums\Region.cs" />
     <Compile Include="Api\ApiInterfaces\OAuthApi.cs" />
-    <Compile Include="Api\WowEndPoints.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="WoW\Enums\CastType.cs" />
     <Compile Include="Common\ExtensionMethods\JObjectExtensionMethods.cs" />

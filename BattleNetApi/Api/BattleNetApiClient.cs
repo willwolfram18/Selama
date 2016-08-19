@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json.Linq;
+using BattleNetApi.Api.ApiInterfaces;
 
 namespace BattleNetApi.Api
 {
@@ -17,7 +18,6 @@ namespace BattleNetApi.Api
         private string _apiClientKey { get; set; }
         private Region _region { get; set; }
         private Locale _locale { get; set; }
-        private WowEndPoints _endPoints;
 
         protected string RegionString
         {
@@ -36,34 +36,25 @@ namespace BattleNetApi.Api
 
         public OAuthApi OAuthApi { get; private set; }
 
+        public WoWCommunityApi WowCommunityApi { get; private set; }
+
         public BattleNetApiClient(string apiSecretKey, string apiClientKey, Region region = Region.US, Locale locale = Locale.en_US)
         {
             _apiSecretKey = apiSecretKey;
             _apiClientKey = apiClientKey;
             _region = region;
             _locale = locale;
-            _endPoints = new WowEndPoints(_region, _locale);
-            OAuthApi = new OAuthApi(region, locale);
 
+            InitializeApiInterfaces();
         }
 
-        //public async Task<Character> CharacterProfileAsync(string realm, string characterName)
-        //{
-        //    using (HttpClient httpClient = new HttpClient())
-        //    {
-        //        SetJsonAcceptHeader(httpClient);
+        private void InitializeApiInterfaces()
+        {
+            OAuthApi = new OAuthApi(_region, _locale);
+            WowCommunityApi = new WoWCommunityApi(_apiSecretKey, _apiClientKey, _region, _locale);
+        }
 
-        //        var response = await httpClient.GetAsync(_endPoints.CharacterProfile(characterName, realm, _apiClientKey).ToString());
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            return null;
-        //        }
-
-        //        JObject characterJson = await ParseJsonResponse(response);
-        //        // TODO: Return parsed JSON object
-        //        return null;
-        //    }
-        //}
+        
         
     }
 }

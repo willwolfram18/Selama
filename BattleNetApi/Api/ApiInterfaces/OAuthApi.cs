@@ -9,12 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace BattleNetApi.Api
+namespace BattleNetApi.Api.ApiInterfaces
 {
     public class OAuthApi : BattleNetApiInterfaceBase
     {
-        public OAuthApi(Region region, Locale locale) : base(region, locale) { }
+        #region Constructors
+        internal OAuthApi(Region region, Locale locale) : base(region, locale) { }
+        #endregion
 
+        #region Public interface
         public async Task<IEnumerable<Character>> WowProfileAsync(string accessToken)
         {
             using (HttpClient httpClient = new HttpClient())
@@ -31,10 +34,12 @@ namespace BattleNetApi.Api
                 return ParseWowCharacterProfile(profile["characters"].AsJEnumerable());
             }
         }
+        #endregion
 
+        #region Private/internal interface
         private UriBuilder WowOAuthProfileUri(string accessToken)
         {
-            string oAuthProfileUri = string.Format(_baseApiUri, RegionString, "wow/user/characters");
+            string oAuthProfileUri = string.Format(_baseUriMissingRegionAndEndpoint, RegionString, "wow/user/characters");
             UriBuilder uriBuilder = new UriBuilder(oAuthProfileUri);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             query["access_token"] = accessToken;
@@ -51,5 +56,6 @@ namespace BattleNetApi.Api
             }
             return characters;
         }
+        #endregion
     }
 }

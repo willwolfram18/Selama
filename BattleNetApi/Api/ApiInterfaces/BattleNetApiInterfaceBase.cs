@@ -7,13 +7,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleNetApi.Api
+namespace BattleNetApi.Api.ApiInterfaces
 {
     public class BattleNetApiInterfaceBase
     {
-        protected const string _baseApiUri = "https://{0}.api.battle.net/{1}";
-        protected Region _region;
-        protected Locale _locale;
+        protected const string _baseUriMissingRegionAndEndpoint = "https://{0}.api.battle.net/{1}";
+        protected Region _region { get; set; }
+        protected Locale _locale { get; set; }
 
         protected string RegionString
         {
@@ -30,7 +30,7 @@ namespace BattleNetApi.Api
             }
         }
 
-        public BattleNetApiInterfaceBase(Region region, Locale locale)
+        internal BattleNetApiInterfaceBase(Region region, Locale locale)
         {
             _region = region;
             _locale = locale;
