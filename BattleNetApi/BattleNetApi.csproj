@@ -52,6 +52,8 @@
     <Compile Include="Api\Enums\Region.cs" />
     <Compile Include="Api\ApiInterfaces\OAuthApi.cs" />
     <Compile Include="Common\Util.cs" />
+    <Compile Include="Objects\WoW\Achievement.cs" />
+    <Compile Include="Objects\WoW\Criterion.cs" />
     <Compile Include="Objects\WoW\Enums\CastType.cs" />
     <Compile Include="Common\ExtensionMethods\JObjectExtensionMethods.cs" />
     <Compile Include="Objects\WoW\Enums\Role.cs" />

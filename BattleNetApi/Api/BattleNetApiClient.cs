@@ -51,7 +51,7 @@ namespace BattleNetApi.Api
         private void InitializeApiInterfaces()
         {
             OAuthApi = new OAuthApi(_region, _locale);
-            WowCommunityApi = new WoWCommunityApi(_apiSecretKey, _apiClientKey, _region, _locale);
+            WowCommunityApi = new WoWCommunityApi(_apiClientKey, _region, _locale);
         }
     }
 }

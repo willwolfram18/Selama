@@ -14,13 +14,19 @@ namespace BattleNetApi.Api.ApiInterfaces
 {
     public class WoWCommunityApi : BattleNetApiInterfaceBase
     {
-        private string _apiSecretKey { get; set; }
         private string _apiClientKey { get; set; }
 
-        #region Constructors
-        internal WoWCommunityApi(string apiSecretKey, string apiClientKey, Region region, Locale locale) : base(region, locale)
+        private string ApiUriMissingEndpoint
         {
-            _apiSecretKey = apiSecretKey;
+            get
+            {
+                return string.Format(BaseApiUriFormat, "wow/{0}");
+            }
+        }
+
+        #region Constructors
+        internal WoWCommunityApi(string apiClientKey, Region region, Locale locale) : base(region, locale)
+        {
             _apiClientKey = apiClientKey;
         }
         #endregion
@@ -69,8 +75,8 @@ namespace BattleNetApi.Api.ApiInterfaces
 
         private UriBuilder CharacterProfileUri(string characterName, string realmName, params string[] fields)
         {
-            string characterProfileEndPoint = string.Format("/wow/character/{0}/{1}", realmName, characterName);
-            string profileUri = string.Format(BaseApiUriFormat, RegionString, characterProfileEndPoint);
+            string characterProfileEndPoint = string.Format("character/{0}/{1}", realmName, characterName);
+            string profileUri = string.Format(ApiUriMissingEndpoint, characterProfileEndPoint);
 
             UriBuilder characterProfileUriBuilder = new UriBuilder(profileUri);
             var query = BuildCommonQuery();
@@ -82,7 +88,7 @@ namespace BattleNetApi.Api.ApiInterfaces
 
         private UriBuilder DataResourceUri(string resourceEndPoint)
         {
-            string dataResourceUri = string.Format(BaseApiUriFormat, "data/" + resourceEndPoint);
+            string dataResourceUri = string.Format(ApiUriMissingEndpoint, "data/" + resourceEndPoint);
 
             UriBuilder dataResourceUriBuilder = new UriBuilder(dataResourceUri);
             var query = BuildCommonQuery();
