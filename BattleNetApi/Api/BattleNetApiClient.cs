@@ -1,14 +1,5 @@
-﻿using BattleNetApi.Api.Enums;
-using BattleNetApi.Objects.WoW;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using Newtonsoft.Json.Linq;
-using BattleNetApi.Api.ApiInterfaces;
+﻿using BattleNetApi.Api.ApiInterfaces;
+using BattleNetApi.Api.Enums;
 
 namespace BattleNetApi.Api
 {

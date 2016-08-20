@@ -32,6 +32,22 @@ namespace BattleNetApi.Api.ApiInterfaces
         #endregion
 
         #region Public interface
+        public async Task<Achievement> GetAchievement(int id)
+        {
+            using (HttpClient httpClient = BuildHttpClient())
+            {
+                var response = await httpClient.GetAsync(AchievementUri(id).ToString());
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                JObject achievementJson = await ParseJsonResponse(response);
+                // TODO: Parse to Achievement object
+                return null;
+            }
+        }
+
         public async Task<Character> GetCharacterProfileAsync(string realm, string characterName, params string[] fields)
         {
             using (HttpClient httpClient = BuildHttpClient())
@@ -73,6 +89,13 @@ namespace BattleNetApi.Api.ApiInterfaces
             return httpClient;
         }
 
+        private UriBuilder AchievementUri(int id)
+        {
+            UriBuilder achievementUriBuilder = BuildUriWithEndpoint("achievement/" + id.ToString());
+            achievementUriBuilder.Query = BuildCommonQuery().ToString();
+            return achievementUriBuilder;
+        }
+
         private UriBuilder CharacterProfileUri(string characterName, string realmName, params string[] fields)
         {
             string characterProfileEndPoint = string.Format("character/{0}/{1}", realmName, characterName);
@@ -103,6 +126,10 @@ namespace BattleNetApi.Api.ApiInterfaces
             query["locale"] = LocaleString;
             query["apikey"] = _apiClientKey;
             return query;
+        }
+        private UriBuilder BuildUriWithEndpoint(string endpoint)
+        {
+            return new UriBuilder(string.Format(ApiUriMissingEndpoint, endpoint));
         }
         #endregion
     }
