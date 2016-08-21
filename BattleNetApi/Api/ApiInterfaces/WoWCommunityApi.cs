@@ -74,8 +74,7 @@ namespace BattleNetApi.Api.ApiInterfaces
                 }
 
                 JObject racesJson = await ParseJsonResponse(response);
-                // TODO: Return parsed JSON object
-                return null;
+                return RaceDataResource.BuildRacesList(racesJson);
             }
         }
         #endregion
