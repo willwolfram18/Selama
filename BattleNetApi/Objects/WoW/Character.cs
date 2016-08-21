@@ -16,6 +16,14 @@ namespace BattleNetApi.Objects.WoW
         {
             return new Character(jsonCharacter);
         }
+
+        internal static Character BuildCharacterProfileEndpoint(JObject jsonCharacter)
+        {
+            // TODO: Account for issues like Achievements field
+            return new Character(jsonCharacter);
+        }
+
+        #region Constructors
         private Character(JObject jsonCharacter)
         {
             ParseSimpleTypes(jsonCharacter);
@@ -24,7 +32,9 @@ namespace BattleNetApi.Objects.WoW
 
             ParseComplexTypes(jsonCharacter);
         }
+        #endregion
 
+        #region Properties
         public string Name { get; private set; }
 
         public string Realm { get; private set; }
@@ -47,6 +57,10 @@ namespace BattleNetApi.Objects.WoW
 
         public int AchievementPoints { get; private set; }
 
+        public List<Title> Titles { get; private set; }
+        #endregion
+
+        #region Private interface
         private void ParseSimpleTypes(JObject jsonCharacter)
         {
             Name = jsonCharacter["name"].Value<string>();
@@ -77,6 +91,10 @@ namespace BattleNetApi.Objects.WoW
             {
                 Specialization = Specialization.BuildCharacterSpecialization(jsonCharacter["spec"].Value<JObject>(), Class);
             }
+
+
+            Titles = Title.BuildListOfTitles(jsonCharacter);
         }
+        #endregion
     }
 }

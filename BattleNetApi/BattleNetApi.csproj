@@ -63,6 +63,7 @@
     <Compile Include="Objects\WoW\Talent.cs" />
     <Compile Include="Objects\WoW\TalentGridCoordinates.cs" />
     <Compile Include="Objects\WoW\Character.cs" />
+    <Compile Include="Objects\WoW\Title.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objects\WoW\Enums\Faction.cs" />
     <Compile Include="Objects\WoW\Enums\Gender.cs" />

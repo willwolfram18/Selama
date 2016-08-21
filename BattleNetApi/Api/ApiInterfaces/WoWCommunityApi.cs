@@ -32,7 +32,7 @@ namespace BattleNetApi.Api.ApiInterfaces
         #endregion
 
         #region Public interface
-        public async Task<Achievement> GetAchievement(int id)
+        public async Task<Achievement> GetAchievementAsync(int id)
         {
             using (HttpClient httpClient = BuildHttpClient())
             {
@@ -58,12 +58,11 @@ namespace BattleNetApi.Api.ApiInterfaces
                 }
 
                 JObject characterJson = await ParseJsonResponse(response);
-                // TODO: Return parsed JSON object
-                return null;
+                return Character.BuildCharacterProfileEndpoint(characterJson);
             }
         }
 
-        public async Task<IEnumerable<RaceDataResource>> GetCharacterRaces()
+        public async Task<IEnumerable<RaceDataResource>> GetCharacterRacesAsync()
         {
             using (HttpClient httpClient = BuildHttpClient())
             {
