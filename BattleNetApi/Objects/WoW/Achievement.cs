@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using BattleNetApi.Common.ExtensionMethods;
 
 namespace BattleNetApi.Objects.WoW
 {
@@ -52,6 +53,8 @@ namespace BattleNetApi.Objects.WoW
         public bool AccountWide { get; private set; }
 
         public Faction Faction { get; private set; }
+
+        public DateTime? CompletedTimestamp { get; internal set; }
         #endregion
 
         #region Private interface
@@ -63,6 +66,7 @@ namespace BattleNetApi.Objects.WoW
             Description = achievementJson["description"].Value<string>();
             Icon = achievementJson["icon"].Value<string>();
             AccountWide = achievementJson["accountWide"].Value<bool>();
+            CompletedTimestamp = null;
         }
 
         private void ParseCriteria(JToken criteriaJson)
