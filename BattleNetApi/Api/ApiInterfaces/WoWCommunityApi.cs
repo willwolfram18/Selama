@@ -43,8 +43,7 @@ namespace BattleNetApi.Api.ApiInterfaces
                 }
 
                 JObject achievementJson = await ParseJsonResponse(response);
-                // TODO: Parse to Achievement object
-                return null;
+                return Achievement.BuildFullAchievement(achievementJson);
             }
         }
 
@@ -98,10 +97,7 @@ namespace BattleNetApi.Api.ApiInterfaces
 
         private UriBuilder CharacterProfileUri(string characterName, string realmName, params string[] fields)
         {
-            string characterProfileEndPoint = string.Format("character/{0}/{1}", realmName, characterName);
-            string profileUri = string.Format(ApiUriMissingEndpoint, characterProfileEndPoint);
-
-            UriBuilder characterProfileUriBuilder = new UriBuilder(profileUri);
+            UriBuilder characterProfileUriBuilder = BuildUriWithEndpoint(string.Format("character/{0}/{1}", realmName, characterName));
             var query = BuildCommonQuery();
             query["fields"] = string.Join(",", fields);
             characterProfileUriBuilder.Query = query.ToString();
@@ -111,9 +107,7 @@ namespace BattleNetApi.Api.ApiInterfaces
 
         private UriBuilder DataResourceUri(string resourceEndPoint)
         {
-            string dataResourceUri = string.Format(ApiUriMissingEndpoint, "data/" + resourceEndPoint);
-
-            UriBuilder dataResourceUriBuilder = new UriBuilder(dataResourceUri);
+            UriBuilder dataResourceUriBuilder = BuildUriWithEndpoint("data/" + resourceEndPoint);
             var query = BuildCommonQuery();
             dataResourceUriBuilder.Query = query.ToString();
 

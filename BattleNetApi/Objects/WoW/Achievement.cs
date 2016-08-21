@@ -1,10 +1,40 @@
-﻿using BattleNetApi.Objects.WoW.Enums;
+﻿using BattleNetApi.Common;
+using BattleNetApi.Objects.WoW.Enums;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace BattleNetApi.Objects.WoW
 {
     public class Achievement
     {
+        public static Achievement BuildFullAchievement(JObject achievementJson)
+        {
+            return new Achievement(achievementJson);
+        }
+
+        public static Achievement BuildAchievementWithOnlyId(int id)
+        {
+            return new Achievement(id);
+        }
+
+        #region Constructors
+        private Achievement(int id)
+        {
+            Id = id;
+        }
+
+        private Achievement(JObject achievementJson)
+        {
+            ParsePrimitiveTypes(achievementJson);
+            Faction = Util.ParseEnum<Faction>(achievementJson, "factionId");
+            ParseCriteria(achievementJson["criteria"]);
+        }
+        #endregion
+
+        #region Public properties
         public int Id { get; private set; }
 
         public string Title { get; private set; }
@@ -22,5 +52,28 @@ namespace BattleNetApi.Objects.WoW
         public bool AccountWide { get; private set; }
 
         public Faction Faction { get; private set; }
+        #endregion
+
+        #region Private interface
+        private void ParsePrimitiveTypes(JObject achievementJson)
+        {
+            Id = achievementJson["id"].Value<int>();
+            Title = achievementJson["title"].Value<string>();
+            Points = achievementJson["points"].Value<int>();
+            Description = achievementJson["description"].Value<string>();
+            Icon = achievementJson["icon"].Value<string>();
+            AccountWide = achievementJson["accountWide"].Value<bool>();
+        }
+
+        private void ParseCriteria(JToken criteriaJson)
+        {
+            Criteria = new List<Criterion>();
+            foreach (JObject criterion in criteriaJson.AsJEnumerable())
+            {
+                Criteria.Add(new Criterion(criterion));
+            }
+            Criteria = Criteria.OrderBy(criterion => criterion.OrderIndex).ToList();
+        }
+        #endregion
     }
 }

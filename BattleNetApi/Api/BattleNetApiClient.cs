@@ -29,7 +29,7 @@ namespace BattleNetApi.Api
 
         public WoWCommunityApi WowCommunityApi { get; private set; }
 
-        public BattleNetApiClient(string apiSecretKey, string apiClientKey, Region region = Region.US, Locale locale = Locale.en_US)
+        public BattleNetApiClient(string apiClientKey, string apiSecretKey, Region region = Region.US, Locale locale = Locale.en_US)
         {
             _apiSecretKey = apiSecretKey;
             _apiClientKey = apiClientKey;
