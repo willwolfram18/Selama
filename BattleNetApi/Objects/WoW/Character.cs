@@ -26,7 +26,7 @@ namespace BattleNetApi.Objects.WoW
         #region Constructors
         private Character(JObject jsonCharacter)
         {
-            ParseSimpleTypes(jsonCharacter);
+            ParsePrimitiveTypes(jsonCharacter);
 
             ParseEnums(jsonCharacter);
 
@@ -58,16 +58,27 @@ namespace BattleNetApi.Objects.WoW
         public int AchievementPoints { get; private set; }
 
         public List<Title> Titles { get; private set; }
+
+        public int TotalHonorableKills { get; private set; }
         #endregion
 
         #region Private interface
-        private void ParseSimpleTypes(JObject jsonCharacter)
+        private void ParsePrimitiveTypes(JObject jsonCharacter)
         {
             Name = jsonCharacter["name"].Value<string>();
             Realm = jsonCharacter["realm"].Value<string>();
             Thumbnail = jsonCharacter["thumbnail"].Value<string>();
             Level = jsonCharacter["level"].Value<int>();
             AchievementPoints = jsonCharacter["achievementPoints"].Value<int>();
+            ParsePossiblyMissingPrimitiveTypes(jsonCharacter);
+        }
+
+        private void ParsePossiblyMissingPrimitiveTypes(JObject jsonCharacter)
+        {
+            if (jsonCharacter.ContainsKey("totalHonorableKills"))
+            {
+                TotalHonorableKills = jsonCharacter["totalHonorableKills"].Value<int>();
+            }
         }
 
         private void ParseEnums(JObject jsonCharacter)
