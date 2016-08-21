@@ -26,12 +26,14 @@ namespace BattleNetApi.Objects.WoW
         internal Title(JToken titleJson)
         {
             Id = titleJson["id"].Value<int>();
-            Name = titleJson["name"].Value<string>();
-            Name = Name.Replace("%s", "{0}");
+            Name = titleJson["name"].Value<string>().Replace("%s", "{0}");
+            Selected = titleJson.ContainsKey("selected");
         }
 
         public int Id { get; private set; }
 
         public string Name { get; private set; }
+
+        public bool Selected { get; private set; }
     }
 }
