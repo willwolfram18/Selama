@@ -59,6 +59,8 @@ namespace BattleNetApi.Objects.WoW
 
         public List<Title> Titles { get; private set; }
 
+        public Stats Stats { get; private set; }
+
         public int TotalHonorableKills { get; private set; }
         #endregion
 
@@ -103,8 +105,13 @@ namespace BattleNetApi.Objects.WoW
                 Specialization = Specialization.BuildCharacterSpecialization(jsonCharacter["spec"].Value<JObject>(), Class);
             }
 
-
             Titles = Title.BuildListOfTitles(jsonCharacter);
+
+            Stats = null;
+            if (jsonCharacter.ContainsKey("stats"))
+            {
+                Stats = new Stats(jsonCharacter["stats"].Value<JObject>());
+            }
         }
         #endregion
     }
