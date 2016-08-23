@@ -24,7 +24,7 @@ namespace BattleNetApi.Objects.WoW
         }
 
         #region Constructors
-        private Character(JObject jsonCharacter)
+        protected Character(JObject jsonCharacter)
         {
             ParsePrimitiveTypes(jsonCharacter);
 
@@ -47,7 +47,7 @@ namespace BattleNetApi.Objects.WoW
 
         public int Level { get; private set; }
 
-        public Guild Guild { get; private set; }
+        public Guild Guild { get; protected set; }
 
         public Faction Faction { get; private set; }
 

@@ -59,6 +59,7 @@
     <Compile Include="Objects\WoW\Enums\PowerType.cs" />
     <Compile Include="Objects\WoW\Enums\Role.cs" />
     <Compile Include="Objects\WoW\DataResources\RaceDataResource.cs" />
+    <Compile Include="Objects\WoW\GuildMember.cs" />
     <Compile Include="Objects\WoW\Specialization.cs" />
     <Compile Include="Objects\WoW\Spell.cs" />
     <Compile Include="Objects\WoW\Stats.cs" />

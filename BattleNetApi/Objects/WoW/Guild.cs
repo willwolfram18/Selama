@@ -1,4 +1,5 @@
 ﻿using BattleNetApi.Common;
+using BattleNetApi.Common.ExtensionMethods;
 using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
@@ -39,6 +40,8 @@ namespace BattleNetApi.Objects.WoW
             Level = jsonGuild["level"].Value<int>();
             Faction = Util.ParseEnum<Faction>(jsonGuild, "side");
             AchievementPoints = jsonGuild["achievementPoints"].Value<int>();
+
+            ParseCharacters(jsonGuild);
         }
 
         #region Properties
@@ -51,6 +54,24 @@ namespace BattleNetApi.Objects.WoW
         public Faction Faction { get; private set; }
 
         public int AchievementPoints { get; private set; }
+
+        public List<Character> Members { get; private set; }
         #endregion
+
+        private void ParseCharacters(JObject jsonGuild)
+        {
+            if (jsonGuild.ContainsKey("members"))
+            {
+                Members = new List<Character>();
+                foreach (JToken member in jsonGuild["members"].AsJEnumerable())
+                {
+                    Members.Add(GuildMember.BuildGuildMemberFromJson(
+                        member["character"].Value<JObject>(), 
+                        member["rank"].Value<int>(),
+                        this
+                    ));
+                }
+            }
+        }
     }
 }
