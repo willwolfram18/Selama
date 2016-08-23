@@ -20,6 +20,11 @@ namespace BattleNetApi.Objects.WoW
             );
         }
 
+        internal static Guild BuildGuildProfileFromJson(JObject guildProfile)
+        {
+            return new Guild(guildProfile);
+        }
+
         private Guild(string name, string realm, Faction faction)
         {
             Name = name;
@@ -29,9 +34,14 @@ namespace BattleNetApi.Objects.WoW
 
         private Guild(JObject jsonGuild)
         {
-            
+            Name = jsonGuild["name"].Value<string>();
+            Realm = jsonGuild["realm"].Value<string>();
+            Level = jsonGuild["level"].Value<int>();
+            Faction = Util.ParseEnum<Faction>(jsonGuild, "side");
+            AchievementPoints = jsonGuild["achievementPoints"].Value<int>();
         }
 
+        #region Properties
         public string Name { get; private set; }
 
         public string Realm { get; private set; }
@@ -39,5 +49,8 @@ namespace BattleNetApi.Objects.WoW
         public int Level { get; private set; }
 
         public Faction Faction { get; private set; }
+
+        public int AchievementPoints { get; private set; }
+        #endregion
     }
 }

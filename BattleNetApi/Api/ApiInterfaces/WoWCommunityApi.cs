@@ -51,7 +51,7 @@ namespace BattleNetApi.Api.ApiInterfaces
         {
             using (HttpClient httpClient = BuildHttpClient())
             {
-                var response = await httpClient.GetAsync(CharacterProfileUri(characterName, realm, fields).ToString());
+                var response = await httpClient.GetAsync(CharacterProfileUri(realm, characterName, fields).ToString());
                 if (!response.IsSuccessStatusCode)
                 {
                     return null;
@@ -59,6 +59,21 @@ namespace BattleNetApi.Api.ApiInterfaces
 
                 JObject characterJson = await ParseJsonResponse(response);
                 return Character.BuildCharacterProfileEndpoint(characterJson);
+            }
+        }
+
+        public async Task<Guild> GetGuildProfileAsync(string realm, string guildName, params string[] fields)
+        {
+            using (HttpClient httpClient = BuildHttpClient())
+            {
+                var response = await httpClient.GetAsync(GuildProfileUri(realm, guildName, fields).ToString());
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                JObject guildJson = await ParseJsonResponse(response);
+                return Guild.BuildGuildProfileFromJson(guildJson);
             }
         }
 
@@ -93,14 +108,30 @@ namespace BattleNetApi.Api.ApiInterfaces
             return achievementUriBuilder;
         }
 
-        private UriBuilder CharacterProfileUri(string characterName, string realmName, params string[] fields)
+        private UriBuilder CharacterProfileUri(string realmName, string characterName, params string[] fields)
         {
             UriBuilder characterProfileUriBuilder = BuildUriWithEndpoint(string.Format("character/{0}/{1}", realmName, characterName));
             var query = BuildCommonQuery();
-            query["fields"] = string.Join(",", fields);
+            if (fields.Length > 0)
+            {
+                query["fields"] = string.Join(",", fields);
+            }
             characterProfileUriBuilder.Query = query.ToString();
 
             return characterProfileUriBuilder;
+        }
+
+        private UriBuilder GuildProfileUri(string realm, string guildName, params string[] fields)
+        {
+            UriBuilder guildProfileUriBuilder = BuildUriWithEndpoint(string.Format("guild/{0}/{1}", realm, guildName));
+            var query = BuildCommonQuery();
+            if (fields.Length > 0)
+            {
+                query["fields"] = string.Join(",", fields);
+            }
+            guildProfileUriBuilder.Query = query.ToString();
+
+            return guildProfileUriBuilder;
         }
 
         private UriBuilder DataResourceUri(string resourceEndPoint)
