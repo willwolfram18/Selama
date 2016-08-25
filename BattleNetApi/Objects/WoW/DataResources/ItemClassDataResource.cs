@@ -14,14 +14,19 @@ namespace BattleNetApi.Objects.WoW.DataResources
         public List<ItemSubClassDataResource> SubClasses { get; private set; }
         #endregion
 
-        public static List<ItemClassDataResource> BuildItemClassListFromJson(JObject itemClassesJson)
+        internal static List<ItemClassDataResource> BuildItemClassListFromJson(JObject itemClassesJson)
         {
             List<ItemClassDataResource> itemClasses = new List<ItemClassDataResource>();
             foreach (var itemClass in itemClassesJson["classes"].AsJEnumerable())
             {
-                itemClasses.Add(new ItemClassDataResource(itemClass.Value<JObject>()));
+                itemClasses.Add(BuildItemClassFromJson(itemClass.Value<JObject>()));
             }
             return itemClasses;
+        }
+
+        internal static ItemClassDataResource BuildItemClassFromJson(JObject itemClassJson)
+        {
+            return new ItemClassDataResource(itemClassJson);
         }
 
         private ItemClassDataResource(JObject itemClassJson)
