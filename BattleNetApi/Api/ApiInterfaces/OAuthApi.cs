@@ -30,7 +30,7 @@ namespace BattleNetApi.Api.ApiInterfaces
                     return null;
                 }
 
-                JObject profile = await ParseJsonResponse(response);
+                JObject profile = await ParseJsonResponseAsync(response);
                 return ParseWowCharacterProfile(profile["characters"].AsJEnumerable());
             }
         }

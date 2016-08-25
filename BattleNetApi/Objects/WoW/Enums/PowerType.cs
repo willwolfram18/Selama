@@ -10,6 +10,8 @@ namespace BattleNetApi.Objects.WoW.Enums
     {
         Mana,
         Fury,
-        Energy
+        Energy,
+        Rage,
+        Focus
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BattleNetApi.Api.Enums;
 using BattleNetApi.Objects.WoW;
+using BattleNetApi.Objects.WoW.DataResources;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace BattleNetApi.Api.ApiInterfaces
                     return null;
                 }
 
-                JObject achievementJson = await ParseJsonResponse(response);
+                JObject achievementJson = await ParseJsonResponseAsync(response);
                 return Achievement.BuildFullAchievement(achievementJson);
             }
         }
@@ -57,7 +58,7 @@ namespace BattleNetApi.Api.ApiInterfaces
                     return null;
                 }
 
-                JObject characterJson = await ParseJsonResponse(response);
+                JObject characterJson = await ParseJsonResponseAsync(response);
                 return Character.BuildCharacterProfileEndpoint(characterJson);
             }
         }
@@ -72,7 +73,7 @@ namespace BattleNetApi.Api.ApiInterfaces
                     return null;
                 }
 
-                JObject guildJson = await ParseJsonResponse(response);
+                JObject guildJson = await ParseJsonResponseAsync(response);
                 return Guild.BuildGuildProfileFromJson(guildJson);
             }
         }
@@ -87,8 +88,23 @@ namespace BattleNetApi.Api.ApiInterfaces
                     return null;
                 }
 
-                JObject racesJson = await ParseJsonResponse(response);
+                JObject racesJson = await ParseJsonResponseAsync(response);
                 return RaceDataResource.BuildRacesList(racesJson);
+            }
+        }
+
+        public async Task<IEnumerable<ItemClassDataResource>> GetItemClassesAsync()
+        {
+            using (HttpClient httpClient = BuildHttpClient())
+            {
+                var response = await httpClient.GetAsync(DataResourceUri("item/classes").ToString());
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                JObject itemClassesJson = await ParseJsonResponseAsync(response);
+                return ItemClassDataResource.BuildItemClassListFromJson(itemClassesJson);
             }
         }
         #endregion

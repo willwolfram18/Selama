@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
-namespace BattleNetApi.Objects.WoW
+namespace BattleNetApi.Objects.WoW.DataResources
 {
     public class RaceDataResource
     {

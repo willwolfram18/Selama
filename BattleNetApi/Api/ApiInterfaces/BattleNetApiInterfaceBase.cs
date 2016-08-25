@@ -50,7 +50,7 @@ namespace BattleNetApi.Api.ApiInterfaces
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        protected async Task<JObject> ParseJsonResponse(HttpResponseMessage response)
+        protected async Task<JObject> ParseJsonResponseAsync(HttpResponseMessage response)
         {
             string jsonStr = await response.Content.ReadAsStringAsync();
             return JObject.Parse(jsonStr);

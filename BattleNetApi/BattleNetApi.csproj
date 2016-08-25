@@ -56,6 +56,8 @@
     <Compile Include="Objects\WoW\Criterion.cs" />
     <Compile Include="Objects\WoW\Enums\CastType.cs" />
     <Compile Include="Common\ExtensionMethods\JObjectExtensionMethods.cs" />
+    <Compile Include="Objects\WoW\DataResources\ItemClassDataResource.cs" />
+    <Compile Include="Objects\WoW\DataResources\ItemSubClassDataResource.cs" />
     <Compile Include="Objects\WoW\Enums\PowerType.cs" />
     <Compile Include="Objects\WoW\Enums\Role.cs" />
     <Compile Include="Objects\WoW\DataResources\RaceDataResource.cs" />
