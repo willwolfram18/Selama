@@ -51,5 +51,6 @@ namespace BattleNetApi.Objects.WoW
         public int MaxDurability { get; private set; }
 
         // TODO: Include remaining fields
+        
     }
 }
