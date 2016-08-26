@@ -358,7 +358,6 @@ namespace Selama.Areas.Account.Controllers
                 if (claim.Type == "urn:battlenet:accesstoken")
                 {
                     BattleNetApiClient battleNetClient = new BattleNetApiClient(
-                        ConfigurationManager.AppSettings["BattleNetOAuthClientSecret"],
                         ConfigurationManager.AppSettings["BattleNetOAuthClientId"]
                     );
                     var characters = await battleNetClient.OAuthApi.WowProfileAsync(claim.Value);
