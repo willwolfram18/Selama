@@ -31,7 +31,7 @@ namespace Selama.Common.Utility
 
         public static string RelativeDate(DateTime dateToFormat)
         {
-            DateTime now = DateTime.Now.Date;
+            DateTime now = DateTime.Now;
             TimeSpan timeDiff = new TimeSpan(now.Ticks - dateToFormat.Ticks);
             double timeDeltaInSeconds = Math.Abs(timeDiff.TotalSeconds);
 
@@ -41,18 +41,14 @@ namespace Selama.Common.Utility
             }
 
             // Recalc time diff using Date without hh:mm:ss
-            timeDiff = new TimeSpan(now.Date.Ticks - dateToFormat.Ticks);
+            timeDiff = new TimeSpan(now.Date.Ticks - dateToFormat.Date.Ticks);
             timeDeltaInSeconds = Math.Abs(timeDiff.TotalSeconds);
             return FormatRelativeDateForYesterdayAndBeyond(timeDeltaInSeconds, dateToFormat);
         }
 
         private static string FormatRelativeDateForToday(double timeDeltaInSeconds)
         {
-            if (timeDeltaInSeconds == 0)
-            {
-                return "Just now";
-            }
-            else if (timeDeltaInSeconds < SEC_IN_MIN)
+            if (timeDeltaInSeconds < SEC_IN_MIN)
             {
                 return "Less than a minute ago";
             }
@@ -82,7 +78,7 @@ namespace Selama.Common.Utility
             }
             else if (timeDeltaInSeconds < SEC_IN_WEEK)
             {
-                return string.Format("{0} days ago", timeDeltaInSeconds / SEC_IN_DAY);
+                return string.Format("{0} days ago", (int)timeDeltaInSeconds / SEC_IN_DAY);
             }
             else if (timeDeltaInSeconds < SEC_IN_MONTH)
             {
