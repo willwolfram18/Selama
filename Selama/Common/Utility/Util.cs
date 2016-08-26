@@ -9,7 +9,9 @@ namespace Selama.Common.Utility
 {
     public static class Util
     {
-        public const string WOW_CHARACTER_THUMBNAIL_URL = "https://render-api-us.worldofwarcraft.com/static-render/us/";
+        public const string WOW_CHARACTER_THUMBNAIL_URL = "https://render-api-us.worldofwarcraft.com/static-render/us/{0}-avatar.jpg";
+        public const string WOW_CHARCTER_MODEL_URL = "https://render-api-us.worldofwarcraft.com/static-render/us/{0}-profilemain.jpg";
+
         const int SEC_IN_MIN = 60;
         const int SEC_IN_HR = SEC_IN_MIN * 60; // 60 sec per min * 60 min per hr
         const int SEC_IN_DAY = SEC_IN_HR * 24;
