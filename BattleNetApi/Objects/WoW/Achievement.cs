@@ -11,12 +11,12 @@ namespace BattleNetApi.Objects.WoW
 {
     public class Achievement
     {
-        public static Achievement BuildFullAchievement(JObject achievementJson)
+        internal static Achievement BuildFullAchievement(JObject achievementJson)
         {
             return new Achievement(achievementJson);
         }
 
-        public static Achievement BuildAchievementWithOnlyId(int id)
+        internal static Achievement BuildAchievementWithOnlyId(int id)
         {
             return new Achievement(id);
         }

@@ -11,6 +11,9 @@ namespace BattleNetApi.Common
 {
     internal static class Util
     {
+        internal const double COPPER_IN_SILVER = 100.0;
+        internal const double SILVER_IN_GOLD = 100.0;
+
         internal static TEnum ParseEnum<TEnum>(JObject jsonObject, string enumKey)
             where TEnum : struct
         {

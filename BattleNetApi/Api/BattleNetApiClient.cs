@@ -5,7 +5,6 @@ namespace BattleNetApi.Api
 {
     public class BattleNetApiClient
     {
-        private string _apiSecretKey { get; set; }
         private string _apiClientKey { get; set; }
         private Region _region { get; set; }
         private Locale _locale { get; set; }
@@ -29,9 +28,8 @@ namespace BattleNetApi.Api
 
         public WoWCommunityApi WowCommunityApi { get; private set; }
 
-        public BattleNetApiClient(string apiClientKey, string apiSecretKey, Region region = Region.US, Locale locale = Locale.en_US)
+        public BattleNetApiClient(string apiClientKey, Region region = Region.US, Locale locale = Locale.en_US)
         {
-            _apiSecretKey = apiSecretKey;
             _apiClientKey = apiClientKey;
             _region = region;
             _locale = locale;

@@ -9,6 +9,9 @@ namespace BattleNetApi.Objects.WoW
 {
     public class Spell
     {
+        // TODO: Add factory
+
+        #region Properties
         public int Id { get; private set; }
 
         public string Name { get; private set; }
@@ -26,5 +29,6 @@ namespace BattleNetApi.Objects.WoW
         public string CoolDown { get; private set; }
 
         public string PowerCost { get; private set; }
+        #endregion
     }
 }

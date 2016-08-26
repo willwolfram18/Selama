@@ -12,6 +12,21 @@ namespace BattleNetApi.Objects.WoW
 {
     public class Guild
     {
+        #region Properties
+        public string Name { get; private set; }
+
+        public string Realm { get; private set; }
+
+        public int Level { get; private set; }
+
+        public Faction Faction { get; private set; }
+
+        public int AchievementPoints { get; private set; }
+
+        public List<Character> Members { get; private set; }
+        #endregion
+
+        #region Static factory functions
         internal static Guild BuildOAuthCharacterGuild(JObject characterProfile)
         {
             return new Guild(
@@ -25,7 +40,9 @@ namespace BattleNetApi.Objects.WoW
         {
             return new Guild(guildProfile);
         }
+        #endregion
 
+        #region Private constructors
         private Guild(string name, string realm, Faction faction)
         {
             Name = name;
@@ -43,21 +60,9 @@ namespace BattleNetApi.Objects.WoW
 
             ParseCharacters(jsonGuild);
         }
-
-        #region Properties
-        public string Name { get; private set; }
-
-        public string Realm { get; private set; }
-
-        public int Level { get; private set; }
-
-        public Faction Faction { get; private set; }
-
-        public int AchievementPoints { get; private set; }
-
-        public List<Character> Members { get; private set; }
         #endregion
 
+        #region Private methods
         private void ParseCharacters(JObject jsonGuild)
         {
             if (jsonGuild.ContainsKey("members"))
@@ -73,5 +78,6 @@ namespace BattleNetApi.Objects.WoW
                 }
             }
         }
+        #endregion
     }
 }
