@@ -78,20 +78,6 @@ namespace BattleNetApi.Api.ApiInterfaces
             }
         }
 
-        public async Task<Item> GetItemAsync(int id)
-        {
-            using (HttpClient httpClient = BuildHttpClient())
-            {
-                var response = await httpClient.GetAsync(ItemUri(id).ToString());
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-
-                return null;
-            }
-        }
-
         public async Task<IEnumerable<RaceDataResource>> GetCharacterRacesAsync()
         {
             using (HttpClient httpClient = BuildHttpClient())
