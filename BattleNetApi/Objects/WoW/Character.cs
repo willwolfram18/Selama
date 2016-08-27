@@ -61,6 +61,8 @@ namespace BattleNetApi.Objects.WoW
 
         public Stats Stats { get; private set; }
 
+        public CharacterEquipment Items { get; private set; }
+
         public int TotalHonorableKills { get; private set; }
         #endregion
 
@@ -93,13 +95,11 @@ namespace BattleNetApi.Objects.WoW
 
         private void ParseComplexTypes(JObject jsonCharacter)
         {
-            Guild = null;
             if (jsonCharacter.ContainsKey("guild"))
             {
                 Guild = Guild.BuildOAuthCharacterGuild(jsonCharacter);
             }
 
-            Specialization = null;
             if (jsonCharacter.ContainsKey("spec"))
             {
                 Specialization = Specialization.BuildCharacterSpecialization(jsonCharacter["spec"].Value<JObject>(), Class);
@@ -107,7 +107,6 @@ namespace BattleNetApi.Objects.WoW
 
             Titles = Title.BuildListOfTitles(jsonCharacter);
 
-            Stats = null;
             if (jsonCharacter.ContainsKey("stats"))
             {
                 Stats = new Stats(jsonCharacter["stats"].Value<JObject>());

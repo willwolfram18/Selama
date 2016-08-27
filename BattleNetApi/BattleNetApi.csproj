@@ -53,6 +53,7 @@
     <Compile Include="Api\ApiInterfaces\OAuthApi.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="Objects\WoW\Achievement.cs" />
+    <Compile Include="Objects\WoW\CharacterEquipment.cs" />
     <Compile Include="Objects\WoW\Criterion.cs" />
     <Compile Include="Objects\WoW\Enums\CastType.cs" />
     <Compile Include="Common\ExtensionMethods\JObjectExtensionMethods.cs" />

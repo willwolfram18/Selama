@@ -78,6 +78,20 @@ namespace BattleNetApi.Api.ApiInterfaces
             }
         }
 
+        public async Task<Item> GetItemAsync(int id)
+        {
+            using (HttpClient httpClient = BuildHttpClient())
+            {
+                var response = await httpClient.GetAsync(ItemUri(id).ToString());
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                return null;
+            }
+        }
+
         public async Task<IEnumerable<RaceDataResource>> GetCharacterRacesAsync()
         {
             using (HttpClient httpClient = BuildHttpClient())
@@ -122,6 +136,13 @@ namespace BattleNetApi.Api.ApiInterfaces
             UriBuilder achievementUriBuilder = BuildUriWithEndpoint("achievement/" + id.ToString());
             achievementUriBuilder.Query = BuildCommonQuery().ToString();
             return achievementUriBuilder;
+        }
+
+        private UriBuilder ItemUri(int id)
+        {
+            UriBuilder itemUriBuilder = BuildUriWithEndpoint("item/" + id.ToString());
+            itemUriBuilder.Query = BuildCommonQuery().ToString();
+            return itemUriBuilder;
         }
 
         private UriBuilder CharacterProfileUri(string realmName, string characterName, params string[] fields)
