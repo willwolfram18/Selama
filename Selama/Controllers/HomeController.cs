@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using BattleNetApi.Api;
+using BattleNetApi.Objects.WoW;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,8 +14,11 @@ namespace Selama.Controllers
     [AllowAnonymous]
     public class HomeController : _BaseAuthorizeController
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            BattleNetApiClient client = new BattleNetApiClient(ConfigurationManager.AppSettings["BattleNetOAuthClientId"]);
+
+            var a = await client.WowCommunityApi.GetItemClassesAsync();
             return View();
         }
 

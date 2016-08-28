@@ -1,4 +1,5 @@
 ﻿using Selama.Areas.Forums.Models;
+using Selama.Common.ExtensionMethods;
 using Selama.Common.Utility;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,7 @@ namespace Selama.Areas.Forums.ViewModels
             SetNumPagesAndCurrentPage(forum, activeThreads.Count());
 
             #region Get threads
-            Threads = Util.ConvertLists<Thread, ThreadOverviewViewModel>(
-                activeThreads
-                    .Skip(StartingIndex)
-                    .Take(_pageSize),
+            Threads = activeThreads.Skip(StartingIndex).Take(_pageSize).ToListOfDifferentType(
                 t => new ThreadOverviewViewModel(t)
             ).OrderByDescending(t => t.IsPinned)
             .ThenByDescending(t => t.LastPost.PostDate);

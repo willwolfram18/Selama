@@ -19,18 +19,6 @@ namespace Selama.Common.Utility
         const int SEC_IN_MONTH = SEC_IN_DAY * 30;
         const int SEC_IN_YEAR = SEC_IN_DAY * 365;
 
-        public static List<TResult> ConvertLists<TIn, TResult>(IEnumerable<TIn> src, Func<TIn, TResult> ctor)
-        {
-            List<TResult> dest = new List<TResult>();
-
-            foreach (TIn item in src)
-            {
-                dest.Add(ctor(item));
-            }
-
-            return dest;
-        }
-
         public static string RelativeDate(DateTime dateToFormat)
         {
             DateTime now = DateTime.Now;

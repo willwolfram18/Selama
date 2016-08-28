@@ -1,4 +1,5 @@
-﻿using Selama.Common.Utility;
+﻿using Selama.Common.ExtensionMethods;
+using Selama.Common.Utility;
 using Selama.Models;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,7 @@ namespace Selama.Areas.Admin.ViewModels.Users
             }
             #endregion
 
-            Users = Util.ConvertLists<ApplicationUser, UserViewModel>(
-                users.Skip(StartingIndex).Take(PageSize),
+            Users = users.Skip(StartingIndex).Take(pageSize).ToListOfDifferentType(
                 u => new UserViewModel(u)
             );
         }

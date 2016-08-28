@@ -3,6 +3,7 @@ using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.Models.DAL;
 using Selama.Areas.Forums.ViewModels;
 using Selama.Common.Enum;
+using Selama.Common.ExtensionMethods;
 using Selama.Common.Utility;
 using Selama.Controllers;
 using Selama.Models;
@@ -22,8 +23,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums
         public ActionResult Index(string redirectFrom = null)
         {
-            List<ForumSectionViewModel> forums = Util.ConvertLists<ForumSection, ForumSectionViewModel>(
-                _db.ForumSectionRepository.Get(f => f.IsActive, query => query.OrderBy(s => s.DisplayOrder)),
+            List<ForumSectionViewModel> forums = _db.ForumSectionRepository.Get(f => f.IsActive).ToListOfDifferentType(
                 section => new ForumSectionViewModel(section)
             );
             ViewBag.ErrorMsg = SelectErrorMessageFromRedirect(redirectFrom);

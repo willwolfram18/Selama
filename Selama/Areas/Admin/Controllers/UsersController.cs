@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Selama.Areas.Admin.ViewModels.Users;
 using Selama.Common.Attributes;
+using Selama.Common.ExtensionMethods;
 using Selama.Common.Utility;
 using Selama.Controllers;
 using Selama.Models;
@@ -188,10 +189,10 @@ namespace Selama.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleOptions = Util.ConvertLists<IdentityRole, SelectListItem>(
-                _db.Roles,
+            _db.Roles.ToListOfDifferentType(
                 r => new SelectListItem { Text = r.Name, Value = r.Id, Selected = (user.Roles.FirstOrDefault().RoleId == r.Id) }
             );
+            
             return View(new UserEditViewModel(user));
         }
 
@@ -235,8 +236,7 @@ namespace Selama.Areas.Admin.Controllers
                 }
             }
 
-            ViewBag.RoleOptions = Util.ConvertLists<IdentityRole, SelectListItem>(
-                _db.Roles,
+            ViewBag.RoleOptions = _db.Roles.ToListOfDifferentType(
                 r => new SelectListItem { Text = r.Name, Value = r.Id, Selected = (user.RoleId == r.Id) }
             );
             return View(user);
