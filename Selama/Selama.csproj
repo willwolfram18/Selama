@@ -268,6 +268,7 @@
     <Compile Include="Common\Attributes\AuthorizePrivilegeAttribute.cs" />
     <Compile Include="Common\Enum\SaveChangeError.cs" />
     <Compile Include="Common\Events\NewUserRegistrationEvent.cs" />
+    <Compile Include="Common\ExtensionMethods\DateTimeExtensionMethods.cs" />
     <Compile Include="Common\ExtensionMethods\IEnumerableExtensionMethods.cs" />
     <Compile Include="Common\Utility\Constants\ForumsConstants.cs" />
     <Compile Include="Common\Utility\ModelBinders\TrimStringsModelBinder.cs" />

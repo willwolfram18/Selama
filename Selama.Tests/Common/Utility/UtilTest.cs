@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Selama.Common.ExtensionMethods;
 using Selama.Common.Utility;
 using System;
 using System.Collections.Generic;
@@ -26,25 +27,26 @@ namespace Selama.Tests.Common.Utility
             {
                 Assert.AreEqual<string>(
                     "Less than a minute ago",
-                    Util.RelativeDate(DateTime.Now.AddSeconds(i)));
+                    DateTime.Now.AddSeconds(i).ToRelativeDateTimeString()
+                );
             }
 
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddSeconds(-61)) == "1 minute ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddMinutes(-3)) == "3 minutes ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddMinutes(-58)) == "58 minutes ago");
+            Assert.IsTrue(DateTime.Now.AddSeconds(-61).ToRelativeDateTimeString() == "1 minute ago");
+            Assert.IsTrue(DateTime.Now.AddMinutes(-3).ToRelativeDateTimeString() == "3 minutes ago");
+            Assert.IsTrue(DateTime.Now.AddMinutes(-58).ToRelativeDateTimeString() == "58 minutes ago");
 
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddMinutes(-60)) == "1 hour ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddMinutes(-61)) == "1 hour ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddMinutes(-118)) == "1 hour ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddMinutes(-120)) == "2 hours ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddMinutes(-122)) == "2 hours ago");
+            Assert.IsTrue(DateTime.Now.AddMinutes(-60).ToRelativeDateTimeString() == "1 hour ago");
+            Assert.IsTrue(DateTime.Now.AddMinutes(-61).ToRelativeDateTimeString() == "1 hour ago");
+            Assert.IsTrue(DateTime.Now.AddMinutes(-118).ToRelativeDateTimeString() == "1 hour ago");
+            Assert.IsTrue(DateTime.Now.AddMinutes(-120).ToRelativeDateTimeString() == "2 hours ago");
+            Assert.IsTrue(DateTime.Now.AddMinutes(-122).ToRelativeDateTimeString() == "2 hours ago");
 
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddHours(-23)) == "23 hours ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddHours(-23).AddMinutes(-58)) == "23 hours ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddHours(-24)).StartsWith("Yesterday at "));
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddHours(-48).AddMinutes(3)) == "2 days ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddHours(-48)) == "2 days ago");
-            Assert.IsTrue(Util.RelativeDate(DateTime.Now.AddHours(-53)) == "2 days ago");
+            Assert.IsTrue(DateTime.Now.AddHours(-23).ToRelativeDateTimeString() == "23 hours ago");
+            Assert.IsTrue(DateTime.Now.AddHours(-23).AddMinutes(-58).ToRelativeDateTimeString() == "23 hours ago");
+            Assert.IsTrue(DateTime.Now.AddHours(-24).ToRelativeDateTimeString().StartsWith("Yesterday at "));
+            Assert.IsTrue(DateTime.Now.AddHours(-48).AddMinutes(3).ToRelativeDateTimeString() == "2 days ago");
+            Assert.IsTrue(DateTime.Now.AddHours(-48).ToRelativeDateTimeString() == "2 days ago");
+            Assert.IsTrue(DateTime.Now.AddHours(-53).ToRelativeDateTimeString() == "2 days ago");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Selama.Common.Utility;
+﻿using Selama.Common.ExtensionMethods;
+using Selama.Common.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,7 @@ namespace Selama.Areas.Forums.ViewModels
         {
             get
             {
-                return Util.RelativeDate(PostDate);
+                return PostDate.ToRelativeDateTimeString();
             }
         }
     }
