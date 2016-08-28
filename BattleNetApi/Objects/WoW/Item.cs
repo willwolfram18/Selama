@@ -1,5 +1,7 @@
 ﻿using BattleNetApi.Common;
+using BattleNetApi.Common.ExtensionMethods;
 using BattleNetApi.Objects.WoW.DataResources;
+using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,8 @@ namespace BattleNetApi.Objects.WoW
         public string Name { get; private set; }
 
         public string Description { get; private set; }
+
+        public ItemQuality Quality { get; private set; }
 
         public int DisenchantingSkillRank { get; private set; }
 
@@ -53,6 +57,8 @@ namespace BattleNetApi.Objects.WoW
         public int MaxDurability { get; private set; }
 
         // TODO: Include remaining fields
+
+        public ItemTooltipParams TooltipParams { get; private set; }
         #endregion
 
         internal static Item ParseItemJson(JObject itemJson)
@@ -66,22 +72,57 @@ namespace BattleNetApi.Objects.WoW
             Name = itemJson["name"].Value<string>();
             Icon = itemJson["icon"].Value<string>();
             ItemLevel = itemJson["itemLevel"].Value<int>();
-
-            
+            Quality = Util.ParseEnum<ItemQuality>(itemJson, "quality");
+            ParseOptionalFields(itemJson);
         }
 
         private void ParseOptionalFields(JObject itemJson)
         {
-            DisenchantingSkillRank = itemJson["disenchantingSkillRank"].Value<int>();
-            Description = itemJson["description"].Value<string>();
-            Stackable = itemJson["stackable"].Value<int>();
-            ItemBind = itemJson["itemBind"].Value<int>();
-            BuyPriceCopper = itemJson["buyPrice"].Value<double>();
-            ContainerSlots = itemJson["containerSlots"].Value<int>();
-            InventoryType = itemJson["inventoryType"].Value<int>();
-            Equippable = itemJson["equippable"].Value<bool>();
-            MaxCount = itemJson["maxCount"].Value<int>();
-            MaxDurability = itemJson["maxDurability"].Value<int>();
+            if (itemJson.ContainsKey("disenchantingSkillRank"))
+            {
+                DisenchantingSkillRank = itemJson["disenchantingSkillRank"].Value<int>();
+            }
+            if (itemJson.ContainsKey("description"))
+            {
+                Description = itemJson["description"].Value<string>();
+            }
+            if (itemJson.ContainsKey("stackable"))
+            {
+                Stackable = itemJson["stackable"].Value<int>();
+            }
+            if (itemJson.ContainsKey("itemBind"))
+            {
+                ItemBind = itemJson["itemBind"].Value<int>();
+            }
+            if (itemJson.ContainsKey("buyPrice"))
+            {
+                BuyPriceCopper = itemJson["buyPrice"].Value<double>();
+            }
+            if (itemJson.ContainsKey("containerSlots"))
+            {
+                ContainerSlots = itemJson["containerSlots"].Value<int>();
+            }
+            if (itemJson.ContainsKey("inventoryType"))
+            {
+                InventoryType = itemJson["inventoryType"].Value<int>();
+            }
+            if (itemJson.ContainsKey("equippable"))
+            {
+                Equippable = itemJson["equippable"].Value<bool>();
+            }
+            if (itemJson.ContainsKey("maxCount"))
+            {
+                MaxCount = itemJson["maxCount"].Value<int>();
+            }
+            if (itemJson.ContainsKey("maxDurability"))
+            {
+                MaxDurability = itemJson["maxDurability"].Value<int>();
+            }
+
+            if (itemJson.ContainsKey("tooltipParams"))
+            {
+                TooltipParams = new ItemTooltipParams(itemJson["tooltipParams"].Value<JObject>());
+            }
         }
     }
 }
