@@ -18,6 +18,8 @@ namespace BattleNetApi.Objects.WoW
         public int? EnchantmentId { get; private set; }
 
         public ItemUpgradeInfo Upgrade { get; private set; }
+
+        public List<int> ItemSetIds { get; private set; }
         #endregion
 
         internal ItemTooltipParams(JObject itemTooltipJson)
@@ -31,14 +33,15 @@ namespace BattleNetApi.Objects.WoW
                 EnchantmentId = itemTooltipJson["enchant"].Value<int>();
             }
 
-            GetItemGems(itemTooltipJson);
+            GetItemGemIds(itemTooltipJson);
+            GetItemSetIds(itemTooltipJson);
             if (itemTooltipJson.ContainsKey("upgrade"))
             {
                 Upgrade = new ItemUpgradeInfo(itemTooltipJson["upgrade"].Value<JObject>());
             }
         }
 
-        private void GetItemGems(JObject itemTooltipJson)
+        private void GetItemGemIds(JObject itemTooltipJson)
         {
             // remove the "gem" portion of the key "gem#" to allow ordering by the gem position number
             var gemKeys = itemTooltipJson.Keys().Where(k => k.StartsWith("gem"))
@@ -48,6 +51,18 @@ namespace BattleNetApi.Objects.WoW
             foreach (var gemId in gemKeys)
             {
                 GemIds.Add(itemTooltipJson[gemId].Value<int>());
+            }
+        }
+
+        private void GetItemSetIds(JObject itemTooltipJson)
+        {
+            ItemSetIds = new List<int>();
+            if (itemTooltipJson.ContainsKey("set"))
+            {
+                foreach (var itemSetIdToken in itemTooltipJson.AsJEnumerable())
+                {
+                    ItemSetIds.Add(itemSetIdToken.Value<int>());
+                }
             }
         }
     }

@@ -29,6 +29,16 @@ namespace BattleNetApi.Objects.WoW.DataResources
             return new ItemClassDataResource(itemClassJson);
         }
 
+        internal static ItemClassDataResource BuildItemClassWithOnlyId(int id)
+        {
+            return new ItemClassDataResource(id);
+        }
+
+        private ItemClassDataResource(int id)
+        {
+            Id = id;
+        }
+
         private ItemClassDataResource(JObject itemClassJson)
         {
             Id = itemClassJson["class"].Value<int>();
@@ -39,7 +49,7 @@ namespace BattleNetApi.Objects.WoW.DataResources
             {
                 foreach (var subclass in itemClassJson["subclasses"].AsJEnumerable())
                 {
-                    SubClasses.Add(new ItemSubClassDataResource(subclass.Value<JObject>()));
+                    SubClasses.Add(ItemSubClassDataResource.BuildItemSubClass(subclass.Value<JObject>()));
                 }
             }
         }
