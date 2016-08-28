@@ -12,28 +12,6 @@ namespace BattleNetApi.Objects.WoW
 {
     public class Character
     {
-        internal static Character BuildOAuthProfileCharacter(JObject jsonCharacter)
-        {
-            return new Character(jsonCharacter);
-        }
-
-        internal static Character BuildCharacterProfileEndpoint(JObject jsonCharacter)
-        {
-            // TODO: Account for issues like Achievements field
-            return new Character(jsonCharacter);
-        }
-
-        #region Constructors
-        protected Character(JObject jsonCharacter)
-        {
-            ParsePrimitiveTypes(jsonCharacter);
-
-            ParseEnums(jsonCharacter);
-
-            ParseComplexTypes(jsonCharacter);
-        }
-        #endregion
-
         #region Properties
         public string Name { get; private set; }
 
@@ -66,6 +44,28 @@ namespace BattleNetApi.Objects.WoW
         public int TotalHonorableKills { get; private set; }
         #endregion
 
+        internal static Character BuildOAuthProfileCharacter(JObject jsonCharacter)
+        {
+            return new Character(jsonCharacter);
+        }
+
+        internal static Character BuildCharacterProfileEndpoint(JObject jsonCharacter)
+        {
+            // TODO: Account for issues like Achievements field
+            return new Character(jsonCharacter);
+        }
+
+        #region Constructors
+        protected Character(JObject jsonCharacter)
+        {
+            ParsePrimitiveTypes(jsonCharacter);
+
+            ParseEnums(jsonCharacter);
+
+            ParseComplexTypes(jsonCharacter);
+        }
+        #endregion
+
         #region Private interface
         private void ParsePrimitiveTypes(JObject jsonCharacter)
         {
@@ -74,10 +74,10 @@ namespace BattleNetApi.Objects.WoW
             Thumbnail = jsonCharacter["thumbnail"].Value<string>();
             Level = jsonCharacter["level"].Value<int>();
             AchievementPoints = jsonCharacter["achievementPoints"].Value<int>();
-            ParsePossiblyMissingPrimitiveTypes(jsonCharacter);
+            ParseOptionalPrimitiveTypes(jsonCharacter);
         }
 
-        private void ParsePossiblyMissingPrimitiveTypes(JObject jsonCharacter)
+        private void ParseOptionalPrimitiveTypes(JObject jsonCharacter)
         {
             if (jsonCharacter.ContainsKey("totalHonorableKills"))
             {
@@ -110,6 +110,11 @@ namespace BattleNetApi.Objects.WoW
             if (jsonCharacter.ContainsKey("stats"))
             {
                 Stats = new Stats(jsonCharacter["stats"].Value<JObject>());
+            }
+
+            if (jsonCharacter.ContainsKey("items"))
+            {
+                Items = CharacterEquipment.BuildCharacterEquipment(jsonCharacter["items"].Value<JObject>());
             }
         }
         #endregion

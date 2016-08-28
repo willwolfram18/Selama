@@ -59,7 +59,7 @@ namespace BattleNetApi.Objects.WoW
             ItemSetIds = new List<int>();
             if (itemTooltipJson.ContainsKey("set"))
             {
-                foreach (var itemSetIdToken in itemTooltipJson.AsJEnumerable())
+                foreach (var itemSetIdToken in itemTooltipJson["set"].AsJEnumerable())
                 {
                     ItemSetIds.Add(itemSetIdToken.Value<int>());
                 }
