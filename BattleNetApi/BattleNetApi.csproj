@@ -65,6 +65,7 @@
     <Compile Include="Objects\WoW\DataResources\RaceDataResource.cs" />
     <Compile Include="Objects\WoW\GuildEmblem.cs" />
     <Compile Include="Objects\WoW\GuildMember.cs" />
+    <Compile Include="Objects\WoW\GuildNews.cs" />
     <Compile Include="Objects\WoW\Item.cs" />
     <Compile Include="Objects\WoW\ItemSpell.cs" />
     <Compile Include="Objects\WoW\ItemTooltipParams.cs" />
