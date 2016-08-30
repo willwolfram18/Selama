@@ -2,11 +2,7 @@
 using BattleNetApi.Common.ExtensionMethods;
 using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleNetApi.Objects.WoW
 {
@@ -22,6 +18,8 @@ namespace BattleNetApi.Objects.WoW
         public Faction Faction { get; private set; }
 
         public int AchievementPoints { get; private set; }
+
+        public GuildEmblem Emblem { get; private set; }
 
         public List<Character> Members { get; private set; }
         #endregion
@@ -50,25 +48,26 @@ namespace BattleNetApi.Objects.WoW
             Faction = faction;
         }
 
-        private Guild(JObject jsonGuild)
+        private Guild(JObject guildJson)
         {
-            Name = jsonGuild["name"].Value<string>();
-            Realm = jsonGuild["realm"].Value<string>();
-            Level = jsonGuild["level"].Value<int>();
-            Faction = Util.ParseEnum<Faction>(jsonGuild, "side");
-            AchievementPoints = jsonGuild["achievementPoints"].Value<int>();
+            Name = guildJson["name"].Value<string>();
+            Realm = guildJson["realm"].Value<string>();
+            Level = guildJson["level"].Value<int>();
+            Faction = Util.ParseEnum<Faction>(guildJson, "side");
+            AchievementPoints = guildJson["achievementPoints"].Value<int>();
+            Emblem = new GuildEmblem(guildJson["emblem"].Value<JObject>());
 
-            ParseCharacters(jsonGuild);
+            ParseCharacters(guildJson);
         }
         #endregion
 
         #region Private methods
-        private void ParseCharacters(JObject jsonGuild)
+        private void ParseCharacters(JObject guildJson)
         {
-            if (jsonGuild.ContainsKey("members"))
+            if (guildJson.ContainsKey("members"))
             {
                 Members = new List<Character>();
-                foreach (JToken member in jsonGuild["members"].AsJEnumerable())
+                foreach (JToken member in guildJson["members"].AsJEnumerable())
                 {
                     Members.Add(GuildMember.BuildGuildMemberFromJson(
                         member["character"].Value<JObject>(), 
