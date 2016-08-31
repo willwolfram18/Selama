@@ -14,7 +14,7 @@ namespace BattleNetApi.Api.ApiInterfaces
     public class OAuthApi : BattleNetApiInterfaceBase
     {
         #region Constructors
-        internal OAuthApi(Region region, Locale locale) : base(region, locale) { }
+        public OAuthApi(Region region, Locale locale) : base(region, locale) { }
         #endregion
 
         #region Public interface

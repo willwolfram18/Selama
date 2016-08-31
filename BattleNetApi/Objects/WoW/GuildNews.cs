@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleNetApi.Objects.WoW
 {
     public class GuildNews
     {
+        #region Properties
         public string Type { get; private set; }
 
         public string CharacterName { get; private set; }
@@ -20,6 +20,42 @@ namespace BattleNetApi.Objects.WoW
 
         public List<int> BonusLists { get; private set; }
 
-        public Achievement Achievement { get; private set; }
+        #endregion
+
+        internal static GuildNews BuildGuildNews(JObject guildNewsJson)
+        {
+            string context = guildNewsJson["type"].Value<string>();
+            switch (context)
+            {
+                case "itemLoot":
+                case "itemPurchase":
+                case "itemCraft":
+                    return GuildNewsPlayerItem.BuildPlayerItemNews(guildNewsJson);
+                case "playerAchievement":
+                    return GuildNewsPlayerAchievement.BuildPlayerAchievement(guildNewsJson);
+                default:
+                    return new GuildNews(guildNewsJson);
+            }
+        }
+
+        protected GuildNews(JObject guildNewsJson)
+        {
+            Type = guildNewsJson["type"].Value<string>();
+            Context = guildNewsJson["context"].Value<string>();
+            Timestamp = new DateTime(guildNewsJson["timestamp"].Value<int>());
+            // TODO: Watch for character not being present in json
+            CharacterName = guildNewsJson["character"].Value<string>();
+
+            ParseBonusLists(guildNewsJson["bonusLists"]);
+        }
+
+        private void ParseBonusLists(JToken bonusListJson)
+        {
+            BonusLists = new List<int>();
+            foreach (var bonus in bonusListJson.AsEnumerable())
+            {
+                BonusLists.Add(bonus.Value<int>());
+            }
+        }
     }
 }

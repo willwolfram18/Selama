@@ -26,7 +26,7 @@ namespace BattleNetApi.Api.ApiInterfaces
         }
 
         #region Constructors
-        internal WoWCommunityApi(string apiClientKey, Region region, Locale locale) : base(region, locale)
+        public WoWCommunityApi(string apiClientKey, Region region, Locale locale) : base(region, locale)
         {
             _apiClientKey = apiClientKey;
         }
