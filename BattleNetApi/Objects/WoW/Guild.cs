@@ -22,6 +22,8 @@ namespace BattleNetApi.Objects.WoW
         public GuildEmblem Emblem { get; private set; }
 
         public List<Character> Members { get; private set; }
+
+        public List<GuildNews> News { get; private set; }
         #endregion
 
         #region Static factory functions
@@ -58,6 +60,7 @@ namespace BattleNetApi.Objects.WoW
             Emblem = new GuildEmblem(guildJson["emblem"].Value<JObject>());
 
             ParseCharacters(guildJson);
+            ParseNews(guildJson);
         }
         #endregion
 
@@ -74,6 +77,18 @@ namespace BattleNetApi.Objects.WoW
                         member["rank"].Value<int>(),
                         this
                     ));
+                }
+            }
+        }
+
+        private void ParseNews(JObject guildJson)
+        {
+            if (guildJson.ContainsKey("news"))
+            {
+                News = new List<GuildNews>();
+                foreach (var newsJson in guildJson["news"].AsJEnumerable())
+                {
+                    News.Add(GuildNews.ParseGuildNews(newsJson.Value<JObject>()));
                 }
             }
         }

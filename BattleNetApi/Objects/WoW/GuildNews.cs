@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using BattleNetApi.Common;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace BattleNetApi.Objects.WoW
 
         #endregion
 
-        internal static GuildNews BuildGuildNews(JObject guildNewsJson)
+        internal static GuildNews ParseGuildNews(JObject guildNewsJson)
         {
             string context = guildNewsJson["type"].Value<string>();
             switch (context)
@@ -42,7 +43,7 @@ namespace BattleNetApi.Objects.WoW
         {
             Type = guildNewsJson["type"].Value<string>();
             Context = guildNewsJson["context"].Value<string>();
-            Timestamp = new DateTime(guildNewsJson["timestamp"].Value<int>());
+            Timestamp = Util.BuildUnixTimestamp(guildNewsJson["timestamp"].Value<long>());
             // TODO: Watch for character not being present in json
             CharacterName = guildNewsJson["character"].Value<string>();
 

@@ -48,5 +48,10 @@ namespace BattleNetApi.Common
                     return Faction.NULL;
             }
         }
+
+        internal static DateTime BuildUnixTimestamp(long timestamp)
+        {
+            return new DateTime(1970, 1, 1).AddMilliseconds(milliseconds);
+        }
     }
 }
