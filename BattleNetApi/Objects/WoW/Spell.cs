@@ -1,4 +1,7 @@
-﻿using BattleNetApi.Objects.WoW.Enums;
+﻿using BattleNetApi.Common;
+using BattleNetApi.Common.ExtensionMethods;
+using BattleNetApi.Objects.WoW.Enums;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +12,6 @@ namespace BattleNetApi.Objects.WoW
 {
     public class Spell
     {
-        // TODO: Add factory
-
         #region Properties
         public int Id { get; private set; }
 
@@ -22,13 +23,43 @@ namespace BattleNetApi.Objects.WoW
 
         public string Range { get; private set; }
 
-        public SpellCastingType CastingType { get; private set; }
-
         public string CastTime { get; private set; }
 
         public string CoolDown { get; private set; }
 
         public string PowerCost { get; private set; }
         #endregion
+
+        internal static Spell ParseSpellJson(JObject spellJson)
+        {
+            return new Spell(spellJson);
+        }
+
+        private Spell(JObject spellJson)
+        {
+            Id = spellJson["id"].Value<int>();
+            Name = spellJson["name"].Value<string>();
+            Icon = spellJson["icon"].Value<string>();
+            Description = spellJson["description"].Value<string>();
+            CastTime = spellJson["castTime"].Value<string>();
+
+            ParseOptionalProperties(spellJson);
+        }
+
+        private void ParseOptionalProperties(JObject spellJson)
+        {
+            if (spellJson.ContainsKey("range"))
+            {
+                Range = spellJson["range"].Value<string>();
+            }
+            if (spellJson.ContainsKey("powerCost"))
+            {
+                PowerCost = spellJson["powerCost"].Value<string>();
+            }
+            if (spellJson.ContainsKey("cooldown"))
+            {
+                CoolDown = spellJson["cooldown"].Value<string>();
+            }
+        }
     }
 }
