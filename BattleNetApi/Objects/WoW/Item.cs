@@ -15,13 +15,9 @@ namespace BattleNetApi.Objects.WoW
         #region Properties
         public int Id { get; private set; }
 
-        public string Name { get; private set; }
-
         public string Description { get; private set; }
 
-        public ItemQuality Quality { get; private set; }
-
-        public int DisenchantingSkillRank { get; private set; }
+        public string Name { get; private set; }
 
         public string Icon { get; private set; }
 
@@ -30,14 +26,11 @@ namespace BattleNetApi.Objects.WoW
         public int ItemBind { get; private set; }
 
         // TODO: Include BounsStats property
+        public List<BonusStat> BonusStats { get; private set; }
 
         public List<ItemSpell> ItemSpells { get; private set; }
 
-        public double BuyPriceCopper { get; private set; }
-
-        public double BuyPriceSilver { get { return BuyPriceCopper / Util.COPPER_IN_SILVER; }  }
-
-        public double BuyPriceGold { get { return BuyPriceSilver / Util.SILVER_IN_GOLD; } }
+        public GoldValue BuyPrice { get; private set; }
 
         public ItemClassDataResource ItemClass { get; private set; }
 
@@ -55,13 +48,53 @@ namespace BattleNetApi.Objects.WoW
 
         public int MaxDurability { get; private set; }
 
-        // TODO: Include remaining fields
+        public int MinFactionId { get; private set; }
 
-        public ItemTooltipParams TooltipParams { get; private set; }
+        public int MinRepuration { get; private set; }
+
+        public ItemQuality Quality { get; private set; }
+
+        public GoldValue SellPrice { get; private set; }
+
+        public int RequiredSkill { get; private set; }
+
+        public int RequiredLevel { get; private set; }
+
+        public int RequiredSkillRank { get; private set; }
+
+        public ItemSource ItemSource { get; private set; }
+
+        public int BaseArmor { get; private set; }
+
+        public bool HasSockets { get; private set; }
+
+        public bool IsAuctionable { get; private set; }
 
         public int Armor { get; private set; }
 
+        public int DisplayInfoId { get; private set; }
+
+        public string NameDescription { get; private set; }
+
+        public string NameDescriptionColor { get; private set; }
+
+        public bool Upgradable { get; private set; }
+
+        public bool HeroicTooltip { get; private set; }
+
         public string Context { get; private set; }
+
+        // TODO: Define BonusLists object
+
+        public List<string> AvailableContext { get; private set; }
+
+        // TODO: Bonus Summary
+
+        public ItemTooltipParams TooltipParams { get; private set; }
+
+        public int DisenchantingSkillRank { get; private set; }
+
+        public int ArtifactId { get; private set; }
         #endregion
 
         internal static Item ParseItemJson(JObject itemJson)
@@ -78,13 +111,48 @@ namespace BattleNetApi.Objects.WoW
 
         private void ParseConsistentFields(JObject itemJson)
         {
-            Id = itemJson["id"].Value<int>();
-            Name = itemJson["name"].Value<string>();
-            Icon = itemJson["icon"].Value<string>();
-            ItemLevel = itemJson["itemLevel"].Value<int>();
+            AssignConsistentPrimitiveType(i => i.Id, itemJson, "id");
+            AssignConsistentPrimitiveType(i => i.Name, itemJson, "name");
+            AssignConsistentPrimitiveType(i => i.Icon, itemJson, "icon");
+            AssignConsistentPrimitiveType(i => i.ItemLevel, itemJson, "itemLevel");
+            AssignConsistentPrimitiveType(i => i.Armor, itemJson, "armor");
+            AssignConsistentPrimitiveType(i => i.Context, itemJson, "context");
+            AssignConsistentPrimitiveType(i => i.ArtifactId, itemJson, "artifactId");
             Quality = Util.ParseEnum<ItemQuality>(itemJson, "quality");
-            Armor = itemJson["armor"].Value<int>();
-            Context = itemJson["context"].Value<string>();
+
+            ParseConsistentComplexFields(itemJson);
+        }
+
+        private void AssignConsistentPrimitiveType<TProperty>(Expression<Func<Item, TProperty>> propertyExpression, JObject itemJson, string jsonKey)
+        {
+            var memberExpression = (MemberExpression)propertyExpression.Body;
+            var propertyInfo = (PropertyInfo)memberExpression.Member;
+            propertyInfo.SetValue(this, itemJson[jsonKey].Value<TProperty>());
+        }
+
+        private void ParseConsistentComplexFields(JObject itemJson)
+        {
+            BuyPrice = GoldValue.BuildGoldValue(itemJson["buyPrice"].Value<int>());
+            ParseBonusStats(itemJson);
+            ParseItemSpells(itemJson);
+        }
+
+        private void ParseBonusStats(JObject itemJson)
+        {
+            BonusStats = new List<BonusStat>();
+            foreach (var bonusStatJson in itemJson["bonusStats"].AsJEnumerable())
+            {
+                BonusStats.Add(BonusStat.ParseBonusStat(bonusStatJson.Value<JObject>()));
+            }
+        }
+
+        private void ParseItemSpells(JObject itemJson)
+        {
+            ItemSpells = new List<ItemSpell>();
+            foreach (var itemSpellJson in itemJson["itemSpells"].AsJEnumerable())
+            {
+                ItemSpells.Add(ItemSpell.ParseItemSpellJson(itemSpellJson.Value<JObject>()));
+            }
         }
 
         private void ParseOptionalFields(JObject itemJson)
@@ -93,12 +161,26 @@ namespace BattleNetApi.Objects.WoW
             AssignOptionalPrimitiveField(i => i.Description, itemJson, "description");
             AssignOptionalPrimitiveField(i => i.Stackable, itemJson, "stackable");
             AssignOptionalPrimitiveField(i => i.ItemBind, itemJson, "itemBind");
-            AssignOptionalPrimitiveField(i => i.BuyPriceCopper, itemJson, "buyPrice");
             AssignOptionalPrimitiveField(i => i.ContainerSlots, itemJson, "containerSlots");
             AssignOptionalPrimitiveField(i => i.InventoryType, itemJson, "inventoryType");
             AssignOptionalPrimitiveField(i => i.Equippable, itemJson, "equippable");
             AssignOptionalPrimitiveField(i => i.MaxCount, itemJson, "maxCount");
             AssignOptionalPrimitiveField(i => i.MaxDurability, itemJson, "maxDurability");
+            AssignOptionalPrimitiveField(i => i.MinFactionId, itemJson, "minFactionId");
+            AssignOptionalPrimitiveField(i => i.MinRepuration, itemJson, "minRepuration");
+            AssignOptionalPrimitiveField(i => i.SellPrice, itemJson, "sellPrice");
+            AssignOptionalPrimitiveField(i => i.RequiredSkill, itemJson, "requiredSkill");
+            AssignOptionalPrimitiveField(i => i.RequiredLevel, itemJson, "requiredLevel");
+            AssignOptionalPrimitiveField(i => i.RequiredSkillRank, itemJson, "requiredSkillRank");
+            AssignOptionalPrimitiveField(i => i.BaseArmor, itemJson, "baseArmor");
+            AssignOptionalPrimitiveField(i => i.HasSockets, itemJson, "hasSockets");
+            AssignOptionalPrimitiveField(i => i.IsAuctionable, itemJson, "isAuctionable");
+            AssignOptionalPrimitiveField(i => i.Armor, itemJson, "armor");
+            AssignOptionalPrimitiveField(i => i.DisplayInfoId, itemJson, "displayInfoId");
+            AssignOptionalPrimitiveField(i => i.NameDescription, itemJson, "nameDescription");
+            AssignOptionalPrimitiveField(i => i.NameDescriptionColor, itemJson, "nameDescriptionColor");
+            AssignOptionalPrimitiveField(i => i.Upgradable, itemJson, "upgradable");
+            AssignOptionalPrimitiveField(i => i.HeroicTooltip, itemJson, "heroicTooltip");
 
             ParseOptionalComplextTypes(itemJson);
         }
@@ -127,6 +209,10 @@ namespace BattleNetApi.Objects.WoW
             if (itemJson.ContainsKey("itemSubClass"))
             {
                 ItemSubClass = ItemSubClassDataResource.BuildItemSubClassWithOnlyId(itemJson["itemSubClass"].Value<int>());
+            }
+            if (itemJson.ContainsKey("itemSource"))
+            {
+                ItemSource = WoW.ItemSource.ParseItemSource(itemJson["itemSource"].Value<JObject>());
             }
         }
     }
