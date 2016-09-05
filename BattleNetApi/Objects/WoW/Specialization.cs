@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using BattleNetApi.Objects.WoW.Enums;
+﻿using BattleNetApi.Common;
 using BattleNetApi.Common.ExtensionMethods;
-using BattleNetApi.Common;
+using BattleNetApi.Objects.WoW.Enums;
+using Newtonsoft.Json.Linq;
 
 namespace BattleNetApi.Objects.WoW
 {

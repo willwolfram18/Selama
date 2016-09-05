@@ -1,11 +1,9 @@
 ﻿using BattleNetApi.Common;
 using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using BattleNetApi.Common.ExtensionMethods;
 
 namespace BattleNetApi.Objects.WoW
 {
