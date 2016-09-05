@@ -14,25 +14,20 @@ namespace Selama.Controllers
     [AllowAnonymous]
     public class HomeController : _BaseAuthorizeController
     {
-        public async Task<ActionResult> Index()
+        public ViewResult Index()
         {
             BattleNetApiClient client = new BattleNetApiClient(ConfigurationManager.AppSettings["BattleNetOAuthClientId"]);
 
-            var a = await client.WowCommunityApi.GetItemClassesAsync();
             return View();
         }
 
-        public ActionResult About()
+        public ViewResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Join()
+        public ViewResult Join()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 

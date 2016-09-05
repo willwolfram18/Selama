@@ -13,41 +13,64 @@ namespace Selama.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void IndexIsNotNull()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index();
 
             // Assert
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void About()
+        public void AboutIsNotNull()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
+            ViewResult result = controller.About();
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void Contact()
+        public void JoinResultIsNotNull()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Join() as ViewResult;
+            ViewResult result = controller.Join();
 
             // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ErrorResultIsNotNull()
+        {
+
+            HomeController controller = new HomeController();
+
+            string errorMessage = "My error message";
+            ViewResult result = controller.Error("My error message") as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(errorMessage, result.ViewBag.ErrorMessage);
+        }
+
+        [TestMethod]
+        public void ErrorResultIsRedirect()
+        {
+            HomeController controller = new HomeController();
+
+            ActionResult result = controller.Error() as RedirectToRouteResult;
+
             Assert.IsNotNull(result);
         }
     }
