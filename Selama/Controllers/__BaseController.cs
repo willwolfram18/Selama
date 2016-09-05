@@ -13,66 +13,7 @@ namespace Selama.Controllers
     [RequireHttps]
     public class __BaseController : Controller
     {
-        protected bool TrySaveChanges(DbContext db)
-        {
-            try
-            {
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
-
-        protected async Task<bool> TrySaveChangesAsync(DbContext db)
-        {
-            try
-            {
-                await db.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateConcurrencyException concurrencyException)
-            {
-                ModelState.AddModelError("", "The data was updated before your changes could be saved.");
-                foreach (var entity in concurrencyException.Entries)
-                {
-                    await entity.ReloadAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-            return false;
-        }
-
-        protected bool TrySaveChanges(DbContext db, out SaveChangeError result)
-        {
-            try
-            {
-                db.SaveChanges();
-                result = SaveChangeError.None;
-                return true;
-            }
-            catch (Exception e)
-            {
-                if (e is DbUpdateConcurrencyException)
-                {
-                    result = SaveChangeError.ConcurrencyError;
-                    DbUpdateConcurrencyException concurrentError = e as DbUpdateConcurrencyException;
-                    foreach (var entity in concurrentError.Entries)
-                    {
-                        entity.Reload();
-                    }
-                }
-                else
-                {
-                    result = SaveChangeError.Unknown;
-                }
-                return false;
-            }
-        }
+        public const int HTTP_UNPROCESSABLE_ENTITY = 422;
 
         protected void CompareProperties<TIn>(string propertyName, TIn dbValue, TIn modelValue, Func<TIn, TIn, bool> areEqualComp)
         {
@@ -86,13 +27,13 @@ namespace Selama.Controllers
             }
         }
 
-        protected ActionResult HttpUnprocessable()
+        protected HttpStatusCodeResult HttpUnprocessable()
         {
-            return new HttpStatusCodeResult(422);
+            return new HttpStatusCodeResult(HTTP_UNPROCESSABLE_ENTITY);
         }
-        protected ActionResult HttpUnprocessable(string description)
+        protected HttpStatusCodeResult HttpUnprocessable(string description)
         {
-            return new HttpStatusCodeResult(422, description);
+            return new HttpStatusCodeResult(HTTP_UNPROCESSABLE_ENTITY, description);
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Selama.Common.ExtensionMethods
 {
     public static class DateTimeExtensionMethods
     {
         const int SEC_IN_MIN = 60;
-        const int SEC_IN_HR = SEC_IN_MIN * 60; // 60 sec per min * 60 min per hr
+        const int SEC_IN_HR = SEC_IN_MIN * 60;
         const int SEC_IN_DAY = SEC_IN_HR * 24;
         const int SEC_IN_WEEK = SEC_IN_DAY * 7;
         const int SEC_IN_MONTH = SEC_IN_DAY * 30;
@@ -46,6 +43,7 @@ namespace Selama.Common.ExtensionMethods
                 return FormatTimeAgoString("hour", "hours", (int)timeDeltaInSeconds / SEC_IN_HR);
             }
         }
+
         private static string FormatTimeAgoString(string singularFormOfTime, string pluralFormOfTime, int count)
         {
             string formatString = "{0} {1} ago";
@@ -55,6 +53,7 @@ namespace Selama.Common.ExtensionMethods
             }
             return string.Format(formatString, count, pluralFormOfTime);
         }
+
         private static string FormatRelativeDateForYesterdayAndBeyond(double timeDeltaInSeconds, DateTime dateToFormat)
         {
             if (timeDeltaInSeconds == SEC_IN_DAY)

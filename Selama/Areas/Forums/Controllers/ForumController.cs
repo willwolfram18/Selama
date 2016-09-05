@@ -2,14 +2,10 @@
 using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.Models.DAL;
 using Selama.Areas.Forums.ViewModels;
-using Selama.Common.Enum;
 using Selama.Common.ExtensionMethods;
-using Selama.Common.Utility;
 using Selama.Controllers;
-using Selama.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
