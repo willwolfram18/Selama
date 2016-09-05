@@ -53,7 +53,11 @@
     <Compile Include="Api\ApiInterfaces\OAuthApi.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="Objects\WoW\Achievement.cs" />
+    <Compile Include="Objects\WoW\BonusChance.cs" />
+    <Compile Include="Objects\WoW\BonusChanceSocket.cs" />
+    <Compile Include="Objects\WoW\BonusChanceStat.cs" />
     <Compile Include="Objects\WoW\BonusStat.cs" />
+    <Compile Include="Objects\WoW\BonusSummary.cs" />
     <Compile Include="Objects\WoW\CharacterEquipment.cs" />
     <Compile Include="Objects\WoW\Criterion.cs" />
     <Compile Include="Objects\WoW\Enums\CastType.cs" />

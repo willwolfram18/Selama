@@ -22,7 +22,12 @@ namespace BattleNetApi.Objects.WoW
         public List<int> ItemSetIds { get; private set; }
         #endregion
 
-        internal ItemTooltipParams(JObject itemTooltipJson)
+        internal static ItemTooltipParams ParseItemTooltipParamsJson(JObject itemTooltipJson)
+        {
+            return new ItemTooltipParams(itemTooltipJson);
+        }
+
+        private ItemTooltipParams(JObject itemTooltipJson)
         {
             if (itemTooltipJson.ContainsKey("transmogItem"))
             {

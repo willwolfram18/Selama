@@ -84,11 +84,11 @@ namespace BattleNetApi.Objects.WoW
 
         public string Context { get; private set; }
 
-        // TODO: Define BonusLists object
+        public List<int> BonusLists { get; private set; }
 
-        public List<string> AvailableContext { get; private set; }
+        public List<string> AvailableContexts { get; private set; }
 
-        // TODO: Bonus Summary
+        public BonusSummary BonusSummary { get; private set; }
 
         public ItemTooltipParams TooltipParams { get; private set; }
 
@@ -168,7 +168,6 @@ namespace BattleNetApi.Objects.WoW
             AssignOptionalPrimitiveField(i => i.MaxDurability, itemJson, "maxDurability");
             AssignOptionalPrimitiveField(i => i.MinFactionId, itemJson, "minFactionId");
             AssignOptionalPrimitiveField(i => i.MinRepuration, itemJson, "minRepuration");
-            AssignOptionalPrimitiveField(i => i.SellPrice, itemJson, "sellPrice");
             AssignOptionalPrimitiveField(i => i.RequiredSkill, itemJson, "requiredSkill");
             AssignOptionalPrimitiveField(i => i.RequiredLevel, itemJson, "requiredLevel");
             AssignOptionalPrimitiveField(i => i.RequiredSkillRank, itemJson, "requiredSkillRank");
@@ -200,7 +199,7 @@ namespace BattleNetApi.Objects.WoW
         {
             if (itemJson.ContainsKey("tooltipParams"))
             {
-                TooltipParams = new ItemTooltipParams(itemJson["tooltipParams"].Value<JObject>());
+                TooltipParams = ItemTooltipParams.ParseItemTooltipParamsJson(itemJson["tooltipParams"].Value<JObject>());
             }
             if (itemJson.ContainsKey("itemClass"))
             {
@@ -212,7 +211,31 @@ namespace BattleNetApi.Objects.WoW
             }
             if (itemJson.ContainsKey("itemSource"))
             {
-                ItemSource = WoW.ItemSource.ParseItemSource(itemJson["itemSource"].Value<JObject>());
+                ItemSource = ItemSource.ParseItemSource(itemJson["itemSource"].Value<JObject>());
+            }
+            if (itemJson.ContainsKey("bonusLists"))
+            {
+                BonusLists = new List<int>();
+                foreach (var bonusListId in itemJson["bonusLists"].AsJEnumerable())
+                {
+                    BonusLists.Add(bonusListId.Value<int>());
+                }
+            }
+            if (itemJson.ContainsKey("availableContexts"))
+            {
+                AvailableContexts = new List<string>();
+                foreach (var context in itemJson["availableContexts"].AsJEnumerable())
+                {
+                    AvailableContexts.Add(context.Value<string>());
+                }
+            }
+            if (itemJson.ContainsKey("bonusSummary"))
+            {
+                BonusSummary = BonusSummary.ParseBonusSummary(itemJson["bonusSummary"].Value<JObject>());
+            }
+            if (itemJson.ContainsKey("sellPrice"))
+            {
+                SellPrice = GoldValue.BuildGoldValue(itemJson["sellPrice"].Value<int>());
             }
         }
     }
