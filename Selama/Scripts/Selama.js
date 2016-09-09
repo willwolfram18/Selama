@@ -4,6 +4,7 @@ Selama.createElem = Selama.createElem || function Selama_CreateElem(tagName, css
     /// <returns type="jQuery" />
     return $(document.createElement(tagName)).addClass(cssClassStr).attr("id", id);
 };
+
 Selama.generateFixedTable = function Selama_GenerateFixedTable()
 {
     $(".table.table-fixed-col.active").remove();
@@ -16,34 +17,63 @@ Selama.generateFixedTable = function Selama_GenerateFixedTable()
     });
 };
 
+Selama.$$bind = function Selama_$$Bind(func, context)
+{
+    /// <param name='func' type='Function' />
+    /// <param name='context' type='Object' />
+    return func.bind(context);
+};
+
 // #region SpinShield
 Selama.SpinShield = Selama.SpinShield || {
-    init: function Selama_SpinShield_Init()
+    raiseShield: function Selama_SpinShield_RaiseSheild($target)
     {
-        var $shield = $("#SpinShield");
-        if ($shield.length === 0)
+        /// <param name="$target" type="jQuery" />
+        if (!this._isValidTarget($target))
         {
-            $("body").append(
-                Selama.createElem("div", "spin-wrapper hidden", "SpinShield").append(
-                    Selama.createElem("div", "spin-wrapper-inner").append(
-                        Selama.createElem("div", "spin spin-gleam").spin("show")
-                    )
-                )
-            );
+            $target = $("body");
         }
+        this._createNewShieldInTarget($target);
         return this;
     },
 
-    raiseShield: function Selama_SpinShield_RaiseSheild()
+    _isValidTarget: function Selama_SpinShield_IsValidTarget($target)
     {
-        $("#SpinShield.hidden").removeClass("hidden");
+        /// <returns type="Boolean" />
+        return $target !== undefined && $target instanceof $("") &&
+            $target.length !== 0
+    },
+
+    _createNewShieldInTarget: function Selama_SpinShield_CreateNewShieldInTarget($target)
+    {
+        /// <param name="$target" type="jQuery" />
+        $target.append(
+            Selama.createElem("div", "spin-wrapper").append(
+                Selama.createElem("div", "spin-wrapper-inner").append(
+                    Selama.createElem("div", "fa fa-4x fa-circle-o-notch fa-spin")
+                )
+            )
+        );
+        return $target.find(".spin-wrapper");
+    },
+
+    lowerShield: function Selama_SpinShield_LowerShield($target)
+    {
+        if (!this._isValidTarget($target))
+        {
+            $target = $("body");
+        }
+        this._destoryShieldInTarget($target);
         return this;
     },
 
-    lowerShield: function Selama_SpinShield_LowerShield()
+    _destoryShieldInTarget: function Selama_SpinShield_DestroyShieldInTarget($target)
     {
-        $("#SpinShield").addClass("hidden");
-        return this;
+        var $shield = $target.find(".spin-wrapper");
+        if ($shield.length !== 0)
+        {
+            $shield.remove();
+        }
     },
 };
 // #endregion
@@ -123,7 +153,7 @@ Selama.Alert = Selama.Alert || {
 // #region Page load
 $(document).ready(function ()
 {
-    Selama.SpinShield.init().lowerShield();
+    Selama.SpinShield.raiseShield();
     Selama.Alert.init();
 
     Selama.generateFixedTable();
