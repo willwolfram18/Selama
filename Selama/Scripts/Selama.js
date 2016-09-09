@@ -26,12 +26,15 @@ Selama.$$bind = function Selama_$$Bind(func, context)
 
 // #region SpinShield
 Selama.SpinShield = Selama.SpinShield || {
+    _spinShieldSelector: "> .spin-wrapper",
+    _defaultTargetSelector: "body",
+
     raiseShield: function Selama_SpinShield_RaiseSheild($target)
     {
         /// <param name="$target" type="jQuery" />
         if (!this._isValidTarget($target))
         {
-            $target = $("body");
+            $target = $(this._defaultTargetSelector);
         }
         this._createNewShieldInTarget($target);
         return this;
@@ -39,29 +42,33 @@ Selama.SpinShield = Selama.SpinShield || {
 
     _isValidTarget: function Selama_SpinShield_IsValidTarget($target)
     {
+        /// <param name="$target" type="jQuery" />
         /// <returns type="Boolean" />
         return $target !== undefined && ($target instanceof jQuery) &&
-            $target.length !== 0
+            $target.length !== 0;
     },
 
     _createNewShieldInTarget: function Selama_SpinShield_CreateNewShieldInTarget($target)
     {
         /// <param name="$target" type="jQuery" />
-        $target.append(
-            Selama.createElem("div", "spin-wrapper").append(
-                Selama.createElem("div", "spin-wrapper-inner").append(
-                    Selama.createElem("div", "fa fa-4x fa-circle-o-notch fa-spin")
+        if ($target.find(this._spinShieldSelector).length === 0)
+        {
+            $target.append(
+                Selama.createElem("div", "spin-wrapper").append(
+                    Selama.createElem("div", "spin-wrapper-inner").append(
+                        Selama.createElem("div", "fa fa-4x fa-circle-o-notch fa-spin")
+                    )
                 )
-            )
-        );
-        return $target.find(".spin-wrapper");
+            );
+        }
+        return $target.find(this._spinShieldSelector);
     },
 
     lowerShield: function Selama_SpinShield_LowerShield($target)
     {
         if (!this._isValidTarget($target))
         {
-            $target = $("body");
+            $target = $(this._defaultTargetSelector);
         }
         this._destoryShieldInTarget($target);
         return this;
@@ -69,7 +76,8 @@ Selama.SpinShield = Selama.SpinShield || {
 
     _destoryShieldInTarget: function Selama_SpinShield_DestroyShieldInTarget($target)
     {
-        var $shield = $target.find(".spin-wrapper");
+        /// <param name="$target" type="jQuery" />
+        var $shield = $target.find(this._spinShieldSelector);
         if ($shield.length !== 0)
         {
             $shield.remove();
@@ -154,6 +162,7 @@ Selama.Alert = Selama.Alert || {
 // #region Page load
 $(document).ready(function ()
 {
+    Selama.SpinShield.raiseShield($(".jumbotron"));
     Selama.Alert.init();
 
     Selama.generateFixedTable();

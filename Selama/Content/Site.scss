@@ -1,4 +1,13 @@
-﻿body {
+﻿* {
+    position: relative;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -69,8 +78,14 @@ textarea {
 $minScreenWidth: 768px;
 $maxScreenWidth: 991px;
 
-@media (min-width: $minScreenWidth) {
-    .container-fluid {
+.container-fluid {
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    @media (min-width: $minScreenWidth) {
+
         .navbar-right {
             margin-right: 0;
         }
@@ -190,33 +205,27 @@ $maxScreenWidth: 991px;
         }
     }
 }
-
-.container-fluid {
-    .row {
-        margin-right: 0;
-        margin-left: 0;
-    }
-}
 /* #endregion */
 
 /* #region SpinShield */
 .spin-wrapper {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    display: table;
+    padding: 12px;
+    display: inline-block;
     z-index: 9999;
     height: 100%;
     width: 100%;
     background-color: rgba(35, 35, 35, 0.65);
 
     .spin-wrapper-inner {
-        display: table-cell;
-        vertical-align: middle;
+        top: 25%;
+        padding: 12px;
         text-align: center;
 
-        .spin {
-            background-color: transparent;
+        .fa {
+            color: #ccc;
         }
     }
 
