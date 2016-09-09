@@ -59,7 +59,8 @@ Selama.SpinShield = Selama.SpinShield || {
                         Selama.createElem("div", "fa fa-4x fa-circle-o-notch fa-spin")
                     )
                 )
-            );
+            )
+            .css("overflow", "hidden");
         }
         return $target.find(this._spinShieldSelector);
     },
@@ -81,6 +82,7 @@ Selama.SpinShield = Selama.SpinShield || {
         if ($shield.length !== 0)
         {
             $shield.remove();
+            $target.css("overflow", "inherit");
         }
     },
 };
@@ -162,7 +164,6 @@ Selama.Alert = Selama.Alert || {
 // #region Page load
 $(document).ready(function ()
 {
-    Selama.SpinShield.raiseShield($(".jumbotron"));
     Selama.Alert.init();
 
     Selama.generateFixedTable();
