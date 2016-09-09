@@ -40,7 +40,7 @@ Selama.SpinShield = Selama.SpinShield || {
     _isValidTarget: function Selama_SpinShield_IsValidTarget($target)
     {
         /// <returns type="Boolean" />
-        return $target !== undefined && $target instanceof $("") &&
+        return $target !== undefined && ($target instanceof jQuery) &&
             $target.length !== 0
     },
 
@@ -130,6 +130,7 @@ Selama.Alert = Selama.Alert || {
         
         return $modal;
     },
+
     raiseAlert: function Selama_Alert_RaiseAlert(text, title)
     {
         if (title === undefined)
@@ -153,7 +154,6 @@ Selama.Alert = Selama.Alert || {
 // #region Page load
 $(document).ready(function ()
 {
-    Selama.SpinShield.raiseShield();
     Selama.Alert.init();
 
     Selama.generateFixedTable();

@@ -6,8 +6,8 @@
         {
             HttpMethod = "POST",
             UpdateTargetId = "ThreadReplyResult",
-            OnBegin = "Selama.SpinShield.raiseShield",
-            OnComplete = "Selama.SpinShield.lowerShield",
+            OnBegin = "Selama.$$bind(Selama.SpinShield.raiseShield, Selama.SpinShield)()",
+            OnComplete = "Selama.$$bind(Selama.SpinShield.lowerShield, Selama.SpinShield)()",
             OnSuccess = "onPostClick_Success",
             OnFailure = "onPostClick_Error"
         },

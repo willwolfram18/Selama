@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Selama.Areas.Account.ViewModels.Home;
 using Selama.Common.Events;
 using Selama.Controllers;
@@ -478,17 +479,25 @@ namespace Selama.Areas.Account.Controllers
 
         private bool VerifyRecaptcha()
         {
+            string reply = GetRecaptchaResponseAsString();
+
+            var recaptchaResponse = JObject.Parse(reply);
+            bool wasSuccess = recaptchaResponse["success"].Value<bool>();
+            if (!wasSuccess)
+            {
+                ModelState.AddModelError("", "You must verify you are not a robot");
+            }
+            return wasSuccess;
+        }
+        private string GetRecaptchaResponseAsString()
+        {
             string response = Request["g-recaptcha-response"];
             string recaptchaSecret = ConfigurationManager.AppSettings["GoogleReCaptchaSecret"];
 
-            string reply;
             using (var client = new WebClient())
             {
-                reply = client.DownloadString(string.Format(_recaptchaUrl, recaptchaSecret, response));
+                return client.DownloadString(string.Format(_recaptchaUrl, recaptchaSecret, response));
             }
-
-            var recaptchaResponse = JsonConvert.DeserializeObject<dynamic>(reply);
-            return recaptchaResponse.success;
         }
 
         private IAuthenticationManager AuthenticationManager

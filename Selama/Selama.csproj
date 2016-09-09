@@ -483,6 +483,12 @@
     <Content Include="Content\Bootstrap\bootstrap.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-theme.css.map" />
+    <Content Include="Content\MarkdownDeep\MarkdownDeep.css.map">
+      <DependentUpon>MarkdownDeep.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css.map">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
     <None Include="Scripts\jQuery\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jQuery\jquery-3.1.0.js" />
