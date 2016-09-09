@@ -53,8 +53,8 @@
 
     function onPostClick_Success(response)
     {
-        var redirectLocation = '@Url.Action("Thread", new { area = "Forums", id = Model.ThreadID, page = -1 })';
-        window.location.href = redirectLocation + $(response).find("a.anchor").attr("href");
+        var redirectLocation = '@Url.Action("Thread", new { area = "Forums", id = Model.ThreadID, page = "-1" })';
+        window.location.href = redirectLocation + $(response).find(".anchor").attr("href");
     }
     function onPostClick_Error(response)
     {

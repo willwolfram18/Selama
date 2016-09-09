@@ -325,8 +325,10 @@ blockquote {
     }
 }
 
-a.anchor {
-    padding-top: 70px;
+.anchor {
+    position: absolute;
+    top: -70px;
+    cursor: none;
 
     &:focus {
         outline: none;
