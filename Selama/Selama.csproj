@@ -522,6 +522,8 @@
     <Content Include="Scripts\JavaScript\Bootstrap\respond.js" />
     <Content Include="Scripts\JavaScript\Bootstrap\respond.min.js" />
     <Content Include="Scripts\JavaScript\modernizr-2.8.3.js" />
+    <Content Include="Scripts\JavaScript\Selama.Core.js" />
+    <Content Include="Scripts\JavaScript\Selama.Core.SpinShield.js" />
     <Content Include="Scripts\JavaScript\Selama.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -546,6 +548,8 @@
     <Content Include="Views\Shared\_AdminMenuItemPartial.cshtml" />
     <Content Include="Views\Shared\_PagerPartial.cshtml" />
     <Content Include="Scripts\TypeScript\tsconfig.json" />
+    <Content Include="Scripts\JavaScript\Selama.Core.js.map" />
+    <Content Include="Scripts\JavaScript\Selama.Core.SpinShield.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

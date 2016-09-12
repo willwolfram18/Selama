@@ -32,64 +32,6 @@ var Selama;
         }
     })(Core = Selama.Core || (Selama.Core = {}));
 })(Selama = exports.Selama || (exports.Selama = {}));
-//// #region SpinShield
-//Selama.SpinShield = Selama.SpinShield || {
-//    _spinShieldSelector: "> .spin-wrapper",
-//    _defaultTargetSelector: "body",
-//    raiseShield: function Selama_SpinShield_RaiseSheild($target)
-//    {
-//        /// <param name="$target" type="jQuery" />
-//        if (!this._isValidTarget($target))
-//        {
-//            $target = $(this._defaultTargetSelector);
-//        }
-//        this._createNewShieldInTarget($target);
-//        return this;
-//    },
-//    _isValidTarget: function Selama_SpinShield_IsValidTarget($target)
-//    {
-//        /// <param name="$target" type="jQuery" />
-//        /// <returns type="Boolean" />
-//        return $target !== undefined && ($target instanceof jQuery) &&
-//            $target.length !== 0;
-//    },
-//    _createNewShieldInTarget: function Selama_SpinShield_CreateNewShieldInTarget($target)
-//    {
-//        /// <param name="$target" type="jQuery" />
-//        if ($target.find(this._spinShieldSelector).length === 0)
-//        {
-//            $target.append(
-//                Selama.createElem("div", "spin-wrapper").append(
-//                    Selama.createElem("div", "spin-wrapper-inner").append(
-//                        Selama.createElem("div", "fa fa-4x fa-circle-o-notch fa-spin")
-//                    )
-//                )
-//            )
-//                .css("overflow", "hidden");
-//        }
-//        return $target.find(this._spinShieldSelector);
-//    },
-//    lowerShield: function Selama_SpinShield_LowerShield($target)
-//    {
-//        if (!this._isValidTarget($target))
-//        {
-//            $target = $(this._defaultTargetSelector);
-//        }
-//        this._destoryShieldInTarget($target);
-//        return this;
-//    },
-//    _destoryShieldInTarget: function Selama_SpinShield_DestroyShieldInTarget($target)
-//    {
-//        /// <param name="$target" type="jQuery" />
-//        var $shield = $target.find(this._spinShieldSelector);
-//        if ($shield.length !== 0)
-//        {
-//            $shield.remove();
-//            $target.css("overflow", "inherit");
-//        }
-//    },
-//};
-//// #endregion
 //// #region Alert
 //Selama.Alert = Selama.Alert || {
 //    init: function Selama_Alert_Init()
