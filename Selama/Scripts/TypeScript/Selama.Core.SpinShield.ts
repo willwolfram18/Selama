@@ -1,75 +1,73 @@
-﻿/// <reference path="Selama.Core.ts" />
-export namespace Selama.Core.SpinShield
+﻿import * as Core from "Selama.Core";
+
+let _spinShieldSelector = "> .spin-wrapper";
+let _defaultTargetSelector = "body";
+
+export function raiseShield(target: JQuery | string)
 {
-    let _spinShieldSelector = "> .spin-wrapper";
-    let _defaultTargetSelector = "body";
-
-    export function raiseShield(target: JQuery | string)
+    let $target: JQuery;
+    if (typeof target === "string")
     {
-        let $target: JQuery;
-        if (typeof target === "string")
-        {
-            $target = $(target);
-        }
-        else
-        {
-            $target = <JQuery>target;
-        }
-        if (!_isValidTarget($target))
-        {
-            target = $(_defaultTargetSelector);
-        }
-        _createNewShieldInTarget($target);
-        return this;
+        $target = $(target);
     }
-
-    function _isValidTarget($target: JQuery): boolean
+    else
     {
-        return $target !== undefined && ($target instanceof jQuery) &&
-            $target.length !== 0;
+        $target = <JQuery>target;
     }
-
-    function _createNewShieldInTarget($target: JQuery)
+    if (!_isValidTarget($target))
     {
-        if ($target.find(this._spinShieldSelector).length === 0)
-        {
-            $target.append(
-                Selama.Core.createElem("div", "spin-wrapper").append(
-                    Selama.Core.createElem("div", "spin-wrapper-inner").append(
-                        Selama.Core.createElem("div", "fa fa-4x fa-circle-o-notch fa-spin")
-                    )
+        target = $(_defaultTargetSelector);
+    }
+    _createNewShieldInTarget($target);
+    return this;
+}
+
+function _isValidTarget($target: JQuery): boolean
+{
+    return $target !== undefined && ($target instanceof jQuery) &&
+        $target.length !== 0;
+}
+
+function _createNewShieldInTarget($target: JQuery)
+{
+    if ($target.find(this._spinShieldSelector).length === 0)
+    {
+        $target.append(
+            Core.createElem("div", "spin-wrapper").append(
+                Core.createElem("div", "spin-wrapper-inner").append(
+                    Core.createElem("div", "fa fa-4x fa-circle-o-notch fa-spin")
                 )
             )
-                .css("overflow", "hidden");
-        }
+        )
+        .css("overflow", "hidden");
     }
+}
 
-    export function lowerShield(target: JQuery | string)
+export function lowerShield(target: JQuery | string)
+{
+    let $target: JQuery;
+    if (typeof target === "string")
     {
-        let $target: JQuery;
-        if (typeof target === "string")
-        {
-            $target = $(target);
-        }
-        else
-        {
-            $target = <JQuery>target;
-        }
-        if (!_isValidTarget($target))
-        {
-            target = $(_defaultTargetSelector);
-        }
-        _destoryShieldInTarget($target);
+        $target = $(target);
     }
-
-    function _destoryShieldInTarget($target: JQuery)
+    else
     {
-        /// <param name="$target" type="jQuery" />
-        var $shield = $target.find(this._spinShieldSelector);
-        if ($shield.length !== 0)
-        {
-            $shield.remove();
-            $target.css("overflow", "inherit");
-        }
+        $target = <JQuery>target;
+    }
+    if (!_isValidTarget($target))
+    {
+        target = $(_defaultTargetSelector);
+    }
+    _destoryShieldInTarget($target);
+}
+
+function _destoryShieldInTarget($target: JQuery)
+{
+    /// <param name="$target" type="jQuery" />
+    var $shield = $target.find(this._spinShieldSelector);
+    if ($shield.length !== 0)
+    {
+        $shield.remove();
+        $target.css("overflow", "inherit");
     }
 }
