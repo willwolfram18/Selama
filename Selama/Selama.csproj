@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -419,10 +421,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\ai.0.22.9-build00167.js" />
-    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="Scripts\Bootstrap\bootstrap.js" />
-    <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\JavaScript\ai.0.22.9-build00167.js" />
+    <Content Include="Scripts\JavaScript\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\JavaScript\Bootstrap\bootstrap.js" />
+    <Content Include="Scripts\JavaScript\Bootstrap\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -490,37 +492,37 @@
       <DependentUpon>Site.css</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
-    <None Include="Scripts\jQuery\jquery-3.1.0.intellisense.js" />
-    <Content Include="Scripts\jQuery\jquery-3.1.0.js" />
-    <Content Include="Scripts\jQuery\jquery-3.1.0.min.js" />
-    <Content Include="Scripts\jQuery\jquery-3.1.0.slim.js" />
-    <Content Include="Scripts\jQuery\jquery-3.1.0.slim.min.js" />
-    <Content Include="Scripts\jQuery\jquery-3.1.0.slim.min.map" />
-    <Content Include="Scripts\jQuery\jquery-3.1.0.min.map" />
-    <Content Include="Scripts\jQuery\jquery-ui-1.12.0.js" />
-    <Content Include="Scripts\jQuery\jquery-ui-1.12.0.min.js" />
-    <None Include="Scripts\jQuery\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jQuery\jquery.validate.js" />
-    <Content Include="Scripts\jQuery\jquery.validate.min.js" />
-    <Content Include="Scripts\jQuery\jquery.spin.js" />
-    <Content Include="Scripts\jQuery\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jQuery\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jQuery\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jQuery\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\MarkdownDeep\MarkdownDeep License.txt" />
-    <Content Include="Scripts\MarkdownDeep\MarkdownDeep Quick Reference.txt" />
-    <Content Include="Scripts\MarkdownDeep\MarkdownDeep.js" />
-    <Content Include="Scripts\MarkdownDeep\MarkdownDeepLib.min.js" />
+    <None Include="Scripts\JavaScript\jQuery\jquery-3.1.0.intellisense.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.min.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.slim.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.slim.min.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.slim.min.map" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.min.map" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-ui-1.12.0.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery-ui-1.12.0.min.js" />
+    <None Include="Scripts\JavaScript\jQuery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.min.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery.spin.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep License.txt" />
+    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep Quick Reference.txt" />
+    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep.js" />
+    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeepLib.min.js" />
     <Content Include="Content\MarkdownDeep\mdd_ajax_loader.gif" />
     <Content Include="Content\MarkdownDeep\mdd_gripper.png" />
     <Content Include="Content\MarkdownDeep\mdd_help.htm" />
     <Content Include="Content\MarkdownDeep\mdd_modal_background.png" />
     <Content Include="Content\MarkdownDeep\mdd_styles.css" />
     <Content Include="Content\MarkdownDeep\mdd_toolbar.png" />
-    <Content Include="Scripts\Bootstrap\respond.js" />
-    <Content Include="Scripts\Bootstrap\respond.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\Selama.js" />
+    <Content Include="Scripts\JavaScript\Bootstrap\respond.js" />
+    <Content Include="Scripts\JavaScript\Bootstrap\respond.min.js" />
+    <Content Include="Scripts\JavaScript\modernizr-2.8.3.js" />
+    <Content Include="Scripts\JavaScript\Selama.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -543,6 +545,7 @@
     <Content Include="Views\Shared\_MenuBarPartial.cshtml" />
     <Content Include="Views\Shared\_AdminMenuItemPartial.cshtml" />
     <Content Include="Views\Shared\_PagerPartial.cshtml" />
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -614,11 +617,18 @@
       <Name>BattleNetApi</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

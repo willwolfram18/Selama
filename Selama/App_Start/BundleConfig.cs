@@ -9,30 +9,30 @@ namespace Selama
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jQuery/jquery-{version}.js",
-                        "~/Scripts/jQuery/jquery.unobtrusive-ajax.js",
-                        "~/Scripts/jQuery/jquery-ui-{version}.js",
-                        "~/Scripts/jQuery/jquery.spin.js",
-                        "~/Scripts/Selama.js"));
+                        "~/Scripts/JavaScript/jQuery/jquery-{version}.js",
+                        "~/Scripts/JavaScript/jQuery/jquery.unobtrusive-ajax.js",
+                        "~/Scripts/JavaScript/jQuery/jquery-ui-{version}.js",
+                        "~/Scripts/JavaScript/jQuery/jquery.spin.js",
+                        "~/Scripts/JavaScript/Selama.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jQuery/jquery.validate*"));
+                        "~/Scripts/JavaScript/jQuery/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/MarkdownDeep").Include(
-                "~/Scripts/MarkdownDeep/MarkdownDeepLib.min.js",
-                "~/Scripts/MarkdownDeep/MarkdownDeep.js"
+                "~/Scripts/JavaScript/MarkdownDeep/MarkdownDeepLib.min.js",
+                "~/Scripts/JavaScript/MarkdownDeep/MarkdownDeep.js"
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                        "~/Scripts/JavaScript/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/Bootstrap/bootstrap.js",
-                      "~/Scripts/Bootstrap/respond.js"));
+                      "~/Scripts/JavaScript/Bootstrap/bootstrap.js",
+                      "~/Scripts/JavaScript/Bootstrap/respond.js"));
             bundles.Add(new ScriptBundle("~/bundles/Selama/Forums").Include(
-                "~/Areas/Forums/Scripts/Forums.js"
+                "~/Areas/Forums/Scripts/JavaScript/Forums.js"
             ));
 
 
