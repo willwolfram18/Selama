@@ -1,46 +1,41 @@
-﻿import * as $ from "jquery";
-
-export namespace Selama.Core
-{
-    export function $$bind(func: Function, context: any): Function
-    {
-        return func.bind(context);
-    }
-
-    export function createElem(tagName: string, cssClassStr?: string, id?: string): JQuery
-    {
-        return $(document.createElement(tagName)).addClass(cssClassStr).attr("id", id);
-    }
-
-    export function generateFixedTables(): void
-    {
-        // Remove all fixed tables previously generated
-        $(".table.table-fixed-col.active").remove();
-        let $tablesToTransform = $(".table.table-fixed.col");
-        $tablesToTransform.each(copyTableToFixedTable);
-    }
-    function copyTableToFixedTable(index: number, elem: Element)
-    {
-        let $this = $(elem);
-        let $fixedTable = $this.clone().addClass("active").insertBefore($this);
-        $fixedTable.find("th:not(:first-child),td:not(:first-child)").remove();
-
-        // copy the row heights of the original table to the new table
-        $fixedTable.find("tr").each(function mirrorOriginalTableRowHeights(copyRowIndex, copyRow)
-        {
-            let $copyRow = $(copyRow);
-            let $originalRow = $this.find("tr:eq(" + copyRowIndex.toString() + ")");
-            $copyRow.height($originalRow.height());
-        });
-    }
-}
-
-
+"use strict";
+var $ = require("jquery");
+var Selama;
+(function (Selama) {
+    var Core;
+    (function (Core) {
+        function $$bind(func, context) {
+            return func.bind(context);
+        }
+        Core.$$bind = $$bind;
+        function createElem(tagName, cssClassStr, id) {
+            return $(document.createElement(tagName)).addClass(cssClassStr).attr("id", id);
+        }
+        Core.createElem = createElem;
+        function generateFixedTables() {
+            // Remove all fixed tables previously generated
+            $(".table.table-fixed-col.active").remove();
+            var $tablesToTransform = $(".table.table-fixed.col");
+            $tablesToTransform.each(copyTableToFixedTable);
+        }
+        Core.generateFixedTables = generateFixedTables;
+        function copyTableToFixedTable(index, elem) {
+            var $this = $(elem);
+            var $fixedTable = $this.clone().addClass("active").insertBefore($this);
+            $fixedTable.find("th:not(:first-child),td:not(:first-child)").remove();
+            // copy the row heights of the original table to the new table
+            $fixedTable.find("tr").each(function mirrorOriginalTableRowHeights(copyRowIndex, copyRow) {
+                var $copyRow = $(copyRow);
+                var $originalRow = $this.find("tr:eq(" + copyRowIndex.toString() + ")");
+                $copyRow.height($originalRow.height());
+            });
+        }
+    })(Core = Selama.Core || (Selama.Core = {}));
+})(Selama = exports.Selama || (exports.Selama = {}));
 //// #region SpinShield
 //Selama.SpinShield = Selama.SpinShield || {
 //    _spinShieldSelector: "> .spin-wrapper",
 //    _defaultTargetSelector: "body",
-
 //    raiseShield: function Selama_SpinShield_RaiseSheild($target)
 //    {
 //        /// <param name="$target" type="jQuery" />
@@ -51,7 +46,6 @@ export namespace Selama.Core
 //        this._createNewShieldInTarget($target);
 //        return this;
 //    },
-
 //    _isValidTarget: function Selama_SpinShield_IsValidTarget($target)
 //    {
 //        /// <param name="$target" type="jQuery" />
@@ -59,7 +53,6 @@ export namespace Selama.Core
 //        return $target !== undefined && ($target instanceof jQuery) &&
 //            $target.length !== 0;
 //    },
-
 //    _createNewShieldInTarget: function Selama_SpinShield_CreateNewShieldInTarget($target)
 //    {
 //        /// <param name="$target" type="jQuery" />
@@ -76,7 +69,6 @@ export namespace Selama.Core
 //        }
 //        return $target.find(this._spinShieldSelector);
 //    },
-
 //    lowerShield: function Selama_SpinShield_LowerShield($target)
 //    {
 //        if (!this._isValidTarget($target))
@@ -86,7 +78,6 @@ export namespace Selama.Core
 //        this._destoryShieldInTarget($target);
 //        return this;
 //    },
-
 //    _destoryShieldInTarget: function Selama_SpinShield_DestroyShieldInTarget($target)
 //    {
 //        /// <param name="$target" type="jQuery" />
@@ -99,7 +90,6 @@ export namespace Selama.Core
 //    },
 //};
 //// #endregion
-
 //// #region Alert
 //Selama.Alert = Selama.Alert || {
 //    init: function Selama_Alert_Init()
@@ -132,8 +122,6 @@ export namespace Selama.Core
 //                        .text("OK")
 //                    )
 //                );
-
-
 //            $("body").append(
 //                Selama.createElem("div", "modal fade", "AlertModal")
 //                    .attr("role", "dialog")
@@ -146,13 +134,10 @@ export namespace Selama.Core
 //                        )
 //                    )
 //            );
-
 //            $modal = $("#AlertModal");
 //        }
-
 //        return $modal;
 //    },
-
 //    raiseAlert: function Selama_Alert_RaiseAlert(text, title)
 //    {
 //        if (title === undefined)
@@ -164,7 +149,6 @@ export namespace Selama.Core
 //        {
 //            $modal = this.init();
 //        }
-
 //        $modal.find(".modal-body").text(text);
 //        $modal.find(".modal-title").text(title);
 //        $modal.modal("show");
@@ -172,13 +156,12 @@ export namespace Selama.Core
 //    },
 //};
 //// #endregion
-
 //// #region Page load
 //$(document).ready(function ()
 //{
 //    Selama.Alert.init();
-
 //    Selama.generateFixedTable();
 //    $(window).on("resize", "", Selama.generateFixedTable);
 //});
-//// #endregion
+//// #endregion 
+//# sourceMappingURL=Selama.Core.js.map

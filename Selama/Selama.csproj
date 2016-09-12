@@ -545,7 +545,7 @@
     <Content Include="Views\Shared\_MenuBarPartial.cshtml" />
     <Content Include="Views\Shared\_AdminMenuItemPartial.cshtml" />
     <Content Include="Views\Shared\_PagerPartial.cshtml" />
-    <Content Include="tsconfig.json" />
+    <Content Include="Scripts\TypeScript\tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -553,6 +553,7 @@
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Scripts\typings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -621,7 +622,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.SpinShield.ts" />
     <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.ts" />
+    <TypeScriptCompile Include="Scripts\TypeScript\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\TypeScript\typings\bootstrap\bootstrap.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
