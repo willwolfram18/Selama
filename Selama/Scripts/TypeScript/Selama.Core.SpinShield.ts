@@ -1,9 +1,10 @@
-﻿import * as Core from "Selama.Core";
+﻿/// <amd-module name="Selama.Core.SpinShield" />
+import * as Core from "./Selama.Core";
 
 let _spinShieldSelector = "> .spin-wrapper";
 let _defaultTargetSelector = "body";
 
-export function raiseShield(target: JQuery | string)
+export function raiseShield(target?: JQuery | string)
 {
     let $target: JQuery;
     if (typeof target === "string")
@@ -16,7 +17,7 @@ export function raiseShield(target: JQuery | string)
     }
     if (!_isValidTarget($target))
     {
-        target = $(_defaultTargetSelector);
+        $target = $(_defaultTargetSelector);
     }
     _createNewShieldInTarget($target);
     return this;
@@ -30,7 +31,7 @@ function _isValidTarget($target: JQuery): boolean
 
 function _createNewShieldInTarget($target: JQuery)
 {
-    if ($target.find(this._spinShieldSelector).length === 0)
+    if ($target.find(_spinShieldSelector).length === 0)
     {
         $target.append(
             Core.createElem("div", "spin-wrapper").append(
@@ -64,7 +65,7 @@ export function lowerShield(target: JQuery | string)
 function _destoryShieldInTarget($target: JQuery)
 {
     /// <param name="$target" type="jQuery" />
-    var $shield = $target.find(this._spinShieldSelector);
+    var $shield = $target.find(_spinShieldSelector);
     if ($shield.length !== 0)
     {
         $shield.remove();

@@ -1,22 +1,22 @@
-System.register(["jquery"], function(exports_1, context_1) {
+/// <amd-module name="Selama.Core" />
+//import * as $ from "jquery";
+define("Selama.Core", ["require", "exports"], function (require, exports) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var $;
     function $$bind(func, context) {
         return func.bind(context);
     }
-    exports_1("$$bind", $$bind);
+    exports.$$bind = $$bind;
     function createElem(tagName, cssClassStr, id) {
         return $(document.createElement(tagName)).addClass(cssClassStr).attr("id", id);
     }
-    exports_1("createElem", createElem);
+    exports.createElem = createElem;
     function generateFixedTables() {
         // Remove all fixed tables previously generated
         $(".table.table-fixed-col.active").remove();
         var $tablesToTransform = $(".table.table-fixed.col");
         $tablesToTransform.each(_copyTableToFixedTable);
     }
-    exports_1("generateFixedTables", generateFixedTables);
+    exports.generateFixedTables = generateFixedTables;
     function _copyTableToFixedTable(index, elem) {
         var $this = $(elem);
         var $fixedTable = $this.clone().addClass("active").insertBefore($this);
@@ -27,14 +27,6 @@ System.register(["jquery"], function(exports_1, context_1) {
             var $originalRow = $this.find("tr:eq(" + copyRowIndex.toString() + ")");
             $copyRow.height($originalRow.height());
         });
-    }
-    return {
-        setters:[
-            function ($_1) {
-                $ = $_1;
-            }],
-        execute: function() {
-        }
     }
 });
 //// #region Page load

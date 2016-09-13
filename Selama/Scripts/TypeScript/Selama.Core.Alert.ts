@@ -1,4 +1,5 @@
-﻿import * as Core from "Selama.Core";
+﻿/// <amd-module name="Selama.Core.Alert" />
+import * as Core from "./Selama.Core";
 
 let _defaultAlertTitle = "Alert";
 

@@ -1,8 +1,6 @@
-System.register(["Selama.Core"], function(exports_1, context_1) {
+define("Selama.Core.Alert", ["require", "exports", "./Selama.Core"], function (require, exports, Core) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var Core;
-    var _defaultAlertTitle;
+    var _defaultAlertTitle = "Alert";
     function raiseAlert(text, title) {
         if (title === undefined) {
             title = _defaultAlertTitle;
@@ -12,7 +10,7 @@ System.register(["Selama.Core"], function(exports_1, context_1) {
         $modal.find(".modal-title").text(title);
         $modal.modal("show");
     }
-    exports_1("raiseAlert", raiseAlert);
+    exports.raiseAlert = raiseAlert;
     function _initModalAndAttachToBody() {
         var $modal = _createModal();
         $("body").append($modal);
@@ -40,15 +38,6 @@ System.register(["Selama.Core"], function(exports_1, context_1) {
             .attr("type", "button")
             .attr("data-dismiss", "modal")
             .text("OK")));
-    }
-    return {
-        setters:[
-            function (Core_1) {
-                Core = Core_1;
-            }],
-        execute: function() {
-            _defaultAlertTitle = "Alert";
-        }
     }
 });
 //# sourceMappingURL=Selama.Core.Alert.js.map

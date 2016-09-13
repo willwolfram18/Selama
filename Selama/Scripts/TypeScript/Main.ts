@@ -1,8 +1,17 @@
-﻿import * as Core from "Selama.Core";
-import * as Alert from "Selama.Core.Alert";
-import * as SpinShield from "Selama.Core.SpinShield";
+﻿/// <amd-module name="Main" />
+import * as Core from "./Selama.Core";
+import * as Alert from "./Selama.Core.Alert";
+import * as SpinShield from "./Selama.Core.SpinShield";
 
-$(document).ready(function ()
+export function Run(Selama: Object)
 {
-    Core.generateFixedTables();
-});
+    Alert.raiseAlert("Testing");
+    SpinShield.raiseShield(".jumbotron");
+    SpinShield.raiseShield();
+    $(window).on("resize", "", Core.generateFixedTables);
+
+    $(".spin-wrapper").click(function ()
+    {
+        SpinShield.lowerShield($(this).parent());
+    });
+}

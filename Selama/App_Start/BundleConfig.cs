@@ -12,8 +12,7 @@ namespace Selama
                         "~/Scripts/JavaScript/jQuery/jquery-{version}.js",
                         "~/Scripts/JavaScript/jQuery/jquery.unobtrusive-ajax.js",
                         "~/Scripts/JavaScript/jQuery/jquery-ui-{version}.js",
-                        "~/Scripts/JavaScript/jQuery/jquery.spin.js",
-                        "~/Scripts/JavaScript/Selama.js"));
+                        "~/Scripts/JavaScript/jQuery/jquery.spin.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/JavaScript/jQuery/jquery.validate*"));
@@ -21,6 +20,16 @@ namespace Selama
             bundles.Add(new ScriptBundle("~/bundles/MarkdownDeep").Include(
                 "~/Scripts/JavaScript/MarkdownDeep/MarkdownDeepLib.min.js",
                 "~/Scripts/JavaScript/MarkdownDeep/MarkdownDeep.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/requirejs").Include(
+                "~/Scripts/JavaScript/require.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/Selama-Core").Include(
+                "~/Scripts/JavaScript/Selama.Core.js",
+                "~/Scripts/JavaScript/Selama.Core.Alert.js",
+                "~/Scripts/JavaScript/Selama.Core.SpinShield.js",
+                "~/Scripts/JavaScript/Main.js"
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

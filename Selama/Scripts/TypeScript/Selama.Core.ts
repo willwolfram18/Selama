@@ -1,4 +1,5 @@
-﻿import * as $ from "jquery";
+﻿/// <amd-module name="Selama.Core" />
+//import * as $ from "jquery";
 
 export function $$bind(func: Function, context: any): Function
 {

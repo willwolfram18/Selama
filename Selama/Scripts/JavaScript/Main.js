@@ -1,17 +1,14 @@
-System.register(["Selama.Core"], function(exports_1, context_1) {
+define("Main", ["require", "exports", "./Selama.Core", "Selama.Core.Alert", "Selama.Core.SpinShield"], function (require, exports, Core, Alert, SpinShield) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var Core;
-    return {
-        setters:[
-            function (Core_1) {
-                Core = Core_1;
-            }],
-        execute: function() {
-            $(document).ready(function () {
-                Core.generateFixedTables();
-            });
-        }
+    function Run(Selama) {
+        Alert.raiseAlert("Testing");
+        SpinShield.raiseShield(".jumbotron");
+        SpinShield.raiseShield();
+        $(window).on("resize", "", Core.generateFixedTables);
+        $(".spin-wrapper").click(function () {
+            SpinShield.lowerShield($(this).parent());
+        });
     }
+    exports.Run = Run;
 });
 //# sourceMappingURL=Main.js.map
