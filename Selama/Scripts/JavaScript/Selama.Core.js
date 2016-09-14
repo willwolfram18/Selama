@@ -1,5 +1,4 @@
 /// <amd-module name="Selama.Core" />
-//import * as $ from "jquery";
 define("Selama.Core", ["require", "exports"], function (require, exports) {
     "use strict";
     function $$bind(func, context) {
@@ -29,12 +28,4 @@ define("Selama.Core", ["require", "exports"], function (require, exports) {
         });
     }
 });
-//// #region Page load
-//$(document).ready(function ()
-//{
-//    Selama.Alert.init();
-//    Selama.generateFixedTable();
-//    $(window).on("resize", "", Selama.generateFixedTable);
-//});
-//// #endregion 
 //# sourceMappingURL=Selama.Core.js.map

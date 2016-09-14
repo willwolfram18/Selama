@@ -7,8 +7,7 @@
     "sourceMap": true,
     "target": "es5",
     "outDir": "../JavaScript",
-    "module": "amd",
-    "watch": true
+    "module": "amd"
   },
   "exclude": [
     "node_modules",

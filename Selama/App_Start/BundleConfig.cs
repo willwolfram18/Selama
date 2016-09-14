@@ -29,7 +29,7 @@ namespace Selama
                 "~/Scripts/JavaScript/Selama.Core.js",
                 "~/Scripts/JavaScript/Selama.Core.Alert.js",
                 "~/Scripts/JavaScript/Selama.Core.SpinShield.js",
-                "~/Scripts/JavaScript/Main.js"
+                "~/Scripts/JavaScript/Selama.Core.Main.js"
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

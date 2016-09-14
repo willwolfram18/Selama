@@ -1,4 +1,4 @@
-define("Selama.Core.Alert", ["require", "exports", "./Selama.Core"], function (require, exports, Core) {
+define("Selama.Core.Alert", ["require", "exports", "Selama.Core"], function (require, exports, Core) {
     "use strict";
     var _defaultAlertTitle = "Alert";
     function raiseAlert(text, title) {

@@ -1,4 +1,4 @@
-define("Selama.Core.SpinShield", ["require", "exports", "./Selama.Core"], function (require, exports, Core) {
+define("Selama.Core.SpinShield", ["require", "exports", "Selama.Core"], function (require, exports, Core) {
     "use strict";
     var _spinShieldSelector = "> .spin-wrapper";
     var _defaultTargetSelector = "body";

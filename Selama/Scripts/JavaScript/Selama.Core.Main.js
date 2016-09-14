@@ -1,4 +1,4 @@
-define("Main", ["require", "exports", "./Selama.Core", "Selama.Core.Alert", "Selama.Core.SpinShield"], function (require, exports, Core, Alert, SpinShield) {
+define("Selama.Core.Main", ["require", "exports", "Selama.Core", "Selama.Core.Alert", "Selama.Core.SpinShield"], function (require, exports, Core, Alert, SpinShield) {
     "use strict";
     function Run(Selama) {
         Alert.raiseAlert("Testing");
@@ -11,4 +11,4 @@ define("Main", ["require", "exports", "./Selama.Core", "Selama.Core.Alert", "Sel
     }
     exports.Run = Run;
 });
-//# sourceMappingURL=Main.js.map
+//# sourceMappingURL=Selama.Core.Main.js.map

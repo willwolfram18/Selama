@@ -511,7 +511,6 @@
     <Content Include="Scripts\JavaScript\jQuery\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\JavaScript\jQuery\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\JavaScript\jQuery\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\JavaScript\Main.js" />
     <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep License.txt" />
     <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep Quick Reference.txt" />
     <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep.js" />
@@ -527,6 +526,7 @@
     <Content Include="Scripts\JavaScript\modernizr-2.8.3.js" />
     <Content Include="Scripts\JavaScript\Selama.Core.Alert.js" />
     <Content Include="Scripts\JavaScript\Selama.Core.js" />
+    <Content Include="Scripts\JavaScript\Selama.Core.Main.js" />
     <Content Include="Scripts\JavaScript\Selama.Core.SpinShield.js" />
     <Content Include="Scripts\JavaScript\Selama.js" />
     <Content Include="Scripts\JavaScript\r.js" />
@@ -557,7 +557,7 @@
     <Content Include="Scripts\JavaScript\Selama.Core.js.map" />
     <Content Include="Scripts\JavaScript\Selama.Core.SpinShield.js.map" />
     <Content Include="Scripts\JavaScript\Selama.Core.Alert.js.map" />
-    <Content Include="Scripts\JavaScript\Main.js.map" />
+    <Content Include="Scripts\JavaScript\Selama.Core.Main.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -634,7 +634,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\TypeScript\Main.ts" />
+    <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.Main.ts" />
     <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.Alert.ts" />
     <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.SpinShield.ts" />
     <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.ts" />

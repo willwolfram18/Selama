@@ -30,11 +30,11 @@
         <text>
         requireJsOptions = {
             bundles: {
-                '@Scripts.Url("~/bundles/Selama").ToString()': [
+                '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
                     "Selama.Core",
                     "Selama.Core.Alert",
                     "Selama.Core.SpinShield",
-                    "Main"
+                    "Selama.Core.Main"
                 ]
             }
         };
@@ -42,7 +42,7 @@
         }
 
         requirejs.config(requireJsOptions);
-        require(["Main"], function (Main)
+        require(["Selama.Core.Main"], function (Main)
         {
             Main.Run();
         });

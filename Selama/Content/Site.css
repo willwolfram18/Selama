@@ -1,4 +1,11 @@
-﻿body {
+﻿* {
+  position: relative; }
+
+html,
+body {
+  height: 100%; }
+
+body {
   padding-top: 50px;
   padding-bottom: 20px; }
 
@@ -48,6 +55,10 @@ textarea {
     color: #f2f2f2; }
 
 /* #region Bootstrap navbar style overrides */
+.container-fluid .row {
+  margin-left: 0;
+  margin-right: 0; }
+
 @media (min-width: 768px) {
   .container-fluid .navbar-right {
     margin-right: 0; } }
@@ -120,27 +131,24 @@ textarea {
     .jumbotron h1 {
       font-size: 36px; } }
 
-.container-fluid .row {
-  margin-right: 0;
-  margin-left: 0; }
-
 /* #endregion */
 /* #region SpinShield */
 .spin-wrapper {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  display: table;
+  padding: 12px;
+  display: inline-block;
   z-index: 9999;
   height: 100%;
   width: 100%;
   background-color: rgba(35, 35, 35, 0.65); }
   .spin-wrapper .spin-wrapper-inner {
-    display: table-cell;
-    vertical-align: middle;
+    top: 25%;
+    padding: 12px;
     text-align: center; }
-    .spin-wrapper .spin-wrapper-inner .spin {
-      background-color: transparent; }
+    .spin-wrapper .spin-wrapper-inner .fa {
+      color: #ccc; }
   @media (min-width: 768px) {
     .spin-wrapper .spin {
       height: 178px;
@@ -202,9 +210,11 @@ blockquote {
 .thread-content img {
   max-width: 100%; }
 
-a.anchor {
-  padding-top: 70px; }
-  a.anchor:focus {
+.anchor {
+  position: absolute;
+  top: -70px;
+  cursor: none; }
+  .anchor:focus {
     outline: none; }
 
 .table.table-fixed-col.active {

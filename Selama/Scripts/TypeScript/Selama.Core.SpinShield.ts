@@ -1,5 +1,5 @@
 ﻿/// <amd-module name="Selama.Core.SpinShield" />
-import * as Core from "./Selama.Core";
+import Core = require("Selama.Core");
 
 let _spinShieldSelector = "> .spin-wrapper";
 let _defaultTargetSelector = "body";

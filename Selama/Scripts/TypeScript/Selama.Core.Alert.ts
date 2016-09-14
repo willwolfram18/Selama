@@ -1,5 +1,5 @@
 ﻿/// <amd-module name="Selama.Core.Alert" />
-import * as Core from "./Selama.Core";
+import Core = require("Selama.Core");
 
 let _defaultAlertTitle = "Alert";
 
