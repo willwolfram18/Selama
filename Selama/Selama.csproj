@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -423,10 +423,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\JavaScript\ai.0.22.9-build00167.js" />
-    <Content Include="Scripts\JavaScript\ai.0.22.9-build00167.min.js" />
-    <Content Include="Scripts\JavaScript\Bootstrap\bootstrap.js" />
-    <Content Include="Scripts\JavaScript\Bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\js\ai.0.22.9-build00167.js" />
+    <Content Include="Scripts\js\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\js\Bootstrap\bootstrap.js" />
+    <Content Include="Scripts\js\Bootstrap\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -494,43 +494,43 @@
       <DependentUpon>Site.css</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
-    <None Include="Scripts\JavaScript\jQuery\jquery-3.1.0.intellisense.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.min.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.slim.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.slim.min.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.slim.min.map" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-3.1.0.min.map" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-ui-1.12.0.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery-ui-1.12.0.min.js" />
-    <None Include="Scripts\JavaScript\jQuery\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.min.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery.spin.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\JavaScript\jQuery\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep License.txt" />
-    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep Quick Reference.txt" />
-    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeep.js" />
-    <Content Include="Scripts\JavaScript\MarkdownDeep\MarkdownDeepLib.min.js" />
+    <None Include="Scripts\js\jQuery\jquery-3.1.0.intellisense.js" />
+    <Content Include="Scripts\js\jQuery\jquery-3.1.0.js" />
+    <Content Include="Scripts\js\jQuery\jquery-3.1.0.min.js" />
+    <Content Include="Scripts\js\jQuery\jquery-3.1.0.slim.js" />
+    <Content Include="Scripts\js\jQuery\jquery-3.1.0.slim.min.js" />
+    <Content Include="Scripts\js\jQuery\jquery-3.1.0.slim.min.map" />
+    <Content Include="Scripts\js\jQuery\jquery-3.1.0.min.map" />
+    <Content Include="Scripts\js\jQuery\jquery-ui-1.12.0.js" />
+    <Content Include="Scripts\js\jQuery\jquery-ui-1.12.0.min.js" />
+    <None Include="Scripts\js\jQuery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\js\jQuery\jquery.validate.js" />
+    <Content Include="Scripts\js\jQuery\jquery.validate.min.js" />
+    <Content Include="Scripts\js\jQuery\jquery.spin.js" />
+    <Content Include="Scripts\js\jQuery\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\js\jQuery\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\js\jQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\js\jQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\MarkdownDeep\MarkdownDeep License.txt" />
+    <Content Include="Scripts\js\MarkdownDeep\MarkdownDeep Quick Reference.txt" />
+    <Content Include="Scripts\js\MarkdownDeep\MarkdownDeep.js" />
+    <Content Include="Scripts\js\MarkdownDeep\MarkdownDeepLib.min.js" />
     <Content Include="Content\MarkdownDeep\mdd_ajax_loader.gif" />
     <Content Include="Content\MarkdownDeep\mdd_gripper.png" />
     <Content Include="Content\MarkdownDeep\mdd_help.htm" />
     <Content Include="Content\MarkdownDeep\mdd_modal_background.png" />
     <Content Include="Content\MarkdownDeep\mdd_styles.css" />
     <Content Include="Content\MarkdownDeep\mdd_toolbar.png" />
-    <Content Include="Scripts\JavaScript\Bootstrap\respond.js" />
-    <Content Include="Scripts\JavaScript\Bootstrap\respond.min.js" />
-    <Content Include="Scripts\JavaScript\modernizr-2.8.3.js" />
-    <Content Include="Scripts\JavaScript\Selama.Core.Alert.js" />
-    <Content Include="Scripts\JavaScript\Selama.Core.js" />
-    <Content Include="Scripts\JavaScript\Selama.Core.Main.js" />
-    <Content Include="Scripts\JavaScript\Selama.Core.SpinShield.js" />
-    <Content Include="Scripts\JavaScript\Selama.js" />
-    <Content Include="Scripts\JavaScript\r.js" />
-    <Content Include="Scripts\JavaScript\require.js" />
+    <Content Include="Scripts\js\Bootstrap\respond.js" />
+    <Content Include="Scripts\js\Bootstrap\respond.min.js" />
+    <Content Include="Scripts\js\modernizr-2.8.3.js" />
+    <Content Include="Scripts\js\Selama.Core.Alert.js" />
+    <Content Include="Scripts\js\Selama.Core.js" />
+    <Content Include="Scripts\js\Selama.Core.Main.js" />
+    <Content Include="Scripts\js\Selama.Core.SpinShield.js" />
+    <Content Include="Scripts\js\Selama.js" />
+    <Content Include="Scripts\js\r.js" />
+    <Content Include="Scripts\js\require.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -553,11 +553,11 @@
     <Content Include="Views\Shared\_MenuBarPartial.cshtml" />
     <Content Include="Views\Shared\_AdminMenuItemPartial.cshtml" />
     <Content Include="Views\Shared\_PagerPartial.cshtml" />
-    <Content Include="Scripts\TypeScript\tsconfig.json" />
-    <Content Include="Scripts\JavaScript\Selama.Core.js.map" />
-    <Content Include="Scripts\JavaScript\Selama.Core.SpinShield.js.map" />
-    <Content Include="Scripts\JavaScript\Selama.Core.Alert.js.map" />
-    <Content Include="Scripts\JavaScript\Selama.Core.Main.js.map" />
+    <Content Include="Scripts\ts\tsconfig.json" />
+    <Content Include="Scripts\js\Selama.Core.js.map" />
+    <Content Include="Scripts\js\Selama.Core.SpinShield.js.map" />
+    <Content Include="Scripts\js\Selama.Core.Alert.js.map" />
+    <Content Include="Scripts\js\Selama.Core.Main.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -634,12 +634,12 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.Main.ts" />
-    <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.Alert.ts" />
-    <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.SpinShield.ts" />
-    <TypeScriptCompile Include="Scripts\TypeScript\Selama.Core.ts" />
-    <TypeScriptCompile Include="Scripts\TypeScript\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\TypeScript\typings\bootstrap\bootstrap.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Selama.Core.Main.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Selama.Core.Alert.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Selama.Core.SpinShield.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Selama.Core.ts" />
+    <TypeScriptCompile Include="Scripts\ts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts\typings\bootstrap\bootstrap.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -6,7 +6,7 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "outDir": "../JavaScript",
+    "outDir": "../js",
     "module": "amd"
   },
   "exclude": [
