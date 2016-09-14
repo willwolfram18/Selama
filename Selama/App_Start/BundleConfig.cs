@@ -9,39 +9,44 @@ namespace Selama
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/JavaScript/jQuery/jquery-{version}.js",
-                        "~/Scripts/JavaScript/jQuery/jquery.unobtrusive-ajax.js",
-                        "~/Scripts/JavaScript/jQuery/jquery-ui-{version}.js",
-                        "~/Scripts/JavaScript/jQuery/jquery.spin.js"));
+                RootJavaScriptFile("jQuery/jquery-{version}.js"),
+                RootJavaScriptFile("jQuery/jquery.unobtrusive-ajax.js"),
+                RootJavaScriptFile("jQuery/jquery-ui-{version}.js"),
+                RootJavaScriptFile("jQuery/jquery.spin.js")
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/JavaScript/jQuery/jquery.validate*"));
+                RootJavaScriptFile("jQuery/jquery.validate*")
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/MarkdownDeep").Include(
-                "~/Scripts/JavaScript/MarkdownDeep/MarkdownDeepLib.min.js",
-                "~/Scripts/JavaScript/MarkdownDeep/MarkdownDeep.js"
+                RootJavaScriptFile("MarkdownDeepLib.min.js"),
+                RootJavaScriptFile("MarkdownDeep/MarkdownDeep.js")
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/requirejs").Include(
-                "~/Scripts/JavaScript/require.js"
+                RootJavaScriptFile("require.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Core").Include(
-                "~/Scripts/JavaScript/Selama.Core.js",
-                "~/Scripts/JavaScript/Selama.Core.Alert.js",
-                "~/Scripts/JavaScript/Selama.Core.SpinShield.js",
-                "~/Scripts/JavaScript/Selama.Core.Main.js"
+                RootJavaScriptFile("Core/Selama.Core.js"),
+                RootJavaScriptFile("Core/Selama.Core.Alert.js"),
+                RootJavaScriptFile("Core/Selama.Core.SpinShield.js"),
+                RootJavaScriptFile("Core/Selama.Core.Main.js")
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/Selama-Forums").Include(
+                RootJavaScriptFile("Forums/Selama.Forums.js")
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/JavaScript/modernizr-*"));
+                        "~/Scripts/js/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/JavaScript/Bootstrap/bootstrap.js",
-                      "~/Scripts/JavaScript/Bootstrap/respond.js"));
+                      "~/Scripts/js/Bootstrap/bootstrap.js",
+                      "~/Scripts/js/Bootstrap/respond.js"));
             bundles.Add(new ScriptBundle("~/bundles/Selama/Forums").Include(
-                "~/Areas/Forums/Scripts/JavaScript/Forums.js"
+                "~/Areas/Forums/Scripts/js/Forums.js"
             ));
 
 
@@ -56,6 +61,16 @@ namespace Selama
                 "~/Content/MarkdownDeep/mdd_styles.css",
                 "~/Content/MarkdownDeep/MarkdownDeep.css"
             ));
+        }
+
+        private static string RootJavaScriptFile(string nameInScriptsFolder)
+        {
+            return string.Format("~/Scripts/js/{0}", nameInScriptsFolder);
+        }
+
+        private static string AreaJavaScriptFile(string areaName, string nameInScriptsFolder)
+        {
+            return string.Format("~/{0}/Scripts/js/{1}", areaName, nameInScriptsFolder);
         }
     }
 }

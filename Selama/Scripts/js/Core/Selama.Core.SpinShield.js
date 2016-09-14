@@ -1,4 +1,4 @@
-define("Selama.Core.SpinShield", ["require", "exports", "Selama.Core"], function (require, exports, Core) {
+define("Core/Selama.Core.SpinShield", ["require", "exports", "Core/Selama.Core"], function (require, exports, Core) {
     "use strict";
     var _spinShieldSelector = "> .spin-wrapper";
     var _defaultTargetSelector = "body";
@@ -36,7 +36,7 @@ define("Selama.Core.SpinShield", ["require", "exports", "Selama.Core"], function
             $target = target;
         }
         if (!_isValidTarget($target)) {
-            target = $(_defaultTargetSelector);
+            $target = $(_defaultTargetSelector);
         }
         _destoryShieldInTarget($target);
     }

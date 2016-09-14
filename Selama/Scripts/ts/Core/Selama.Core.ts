@@ -1,4 +1,5 @@
-﻿/// <amd-module name="Selama.Core" />
+﻿/// <amd-module name="Core/Selama.Core" />
+/// <reference path="../typings/jquery/jquery.d.ts" />
 
 export function $$bind(func: Function, context: any): Function
 {

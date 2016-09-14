@@ -5,6 +5,16 @@
     ViewBag.Title = "Forums";
 }
 
+@section Scripts {
+    <script type="text/javascript">
+        require(["Forums/Selama.Forums"], function (Forums)
+        {
+            Forums.onAjaxRequestBegin();
+            Forums.onAjaxRequestEnd();
+        });
+    </script>
+}
+
 <h2>Forums</h2>
 
 @if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMsg))

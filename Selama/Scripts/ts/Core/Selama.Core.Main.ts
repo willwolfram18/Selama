@@ -1,7 +1,7 @@
-﻿/// <amd-module name="Selama.Core.Main" />
-import Core = require("Selama.Core");
-import Alert = require("Selama.Core.Alert");
-import SpinShield = require("Selama.Core.SpinShield");
+﻿/// <amd-module name="Core/Selama.Core.Main" />
+import * as Core from "Core/Selama.Core";
+import * as Alert from "Core/Selama.Core.Alert";
+import * as SpinShield from "Core/Selama.Core.SpinShield";
 
 export function Run(Selama: Object)
 {

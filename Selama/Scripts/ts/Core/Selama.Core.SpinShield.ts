@@ -1,10 +1,10 @@
-﻿/// <amd-module name="Selama.Core.SpinShield" />
-import Core = require("Selama.Core");
+﻿/// <amd-module name="Core/Selama.Core.SpinShield" />
+import * as Core from "Core/Selama.Core";
 
 let _spinShieldSelector = "> .spin-wrapper";
 let _defaultTargetSelector = "body";
 
-export function raiseShield(target?: JQuery | string)
+export function raiseShield(target?: JQuery | string): void
 {
     let $target: JQuery;
     if (typeof target === "string")
@@ -29,7 +29,7 @@ function _isValidTarget($target: JQuery): boolean
         $target.length !== 0;
 }
 
-function _createNewShieldInTarget($target: JQuery)
+function _createNewShieldInTarget($target: JQuery): void
 {
     if ($target.find(_spinShieldSelector).length === 0)
     {
@@ -40,11 +40,11 @@ function _createNewShieldInTarget($target: JQuery)
                 )
             )
         )
-        .css("overflow", "hidden");
+            .css("overflow", "hidden");
     }
 }
 
-export function lowerShield(target: JQuery | string)
+export function lowerShield(target?: JQuery | string): void
 {
     let $target: JQuery;
     if (typeof target === "string")
@@ -57,15 +57,15 @@ export function lowerShield(target: JQuery | string)
     }
     if (!_isValidTarget($target))
     {
-        target = $(_defaultTargetSelector);
+        $target = $(_defaultTargetSelector);
     }
     _destoryShieldInTarget($target);
 }
 
-function _destoryShieldInTarget($target: JQuery)
+function _destoryShieldInTarget($target: JQuery): void
 {
     /// <param name="$target" type="jQuery" />
-    var $shield = $target.find(_spinShieldSelector);
+    var $shield: JQuery = $target.find(_spinShieldSelector);
     if ($shield.length !== 0)
     {
         $shield.remove();

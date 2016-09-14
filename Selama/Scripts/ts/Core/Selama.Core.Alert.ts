@@ -1,5 +1,6 @@
-﻿/// <amd-module name="Selama.Core.Alert" />
-import Core = require("Selama.Core");
+﻿/// <amd-module name="Core/Selama.Core.Alert" />
+/// <reference path="../typings/bootstrap/bootstrap.d.ts" />
+import * as Core from "Core/Selama.Core";
 
 let _defaultAlertTitle = "Alert";
 

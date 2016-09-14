@@ -21,7 +21,7 @@
         {
         <text>
         requireJsOptions = {
-            baseUrl: "/Scripts/JavaScript",
+            baseUrl: "/Scripts/js",
         };
         </text>
         }
@@ -31,10 +31,10 @@
         requireJsOptions = {
             bundles: {
                 '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
-                    "Selama.Core",
-                    "Selama.Core.Alert",
-                    "Selama.Core.SpinShield",
-                    "Selama.Core.Main"
+                    "Core/Selama.Core",
+                    "Core/Selama.Core.Alert",
+                    "Core/Selama.Core.SpinShield",
+                    "Core/Selama.Core.Main"
                 ]
             }
         };
@@ -42,7 +42,7 @@
         }
 
         requirejs.config(requireJsOptions);
-        require(["Selama.Core.Main"], function (Main)
+        require(["Core/Selama.Core.Main"], function (Main)
         {
             Main.Run();
         });
