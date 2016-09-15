@@ -1,5 +1,4 @@
 ﻿@using Selama.Areas.Forums.Models;
-@using Selama.Areas.Forums.ViewModels;
 @using Selama.ViewModels;
 @model ThreadViewModel
 @{
@@ -7,7 +6,9 @@
 }
 
 @section MetaData {
-    @* TODO: Include Open Protocol meta data tags *@
+    @Html.OpenGraphProtocolMetaTag("title", Model.Title)
+    @Html.OpenGraphProtocolMetaTag("type", "website")
+    @Html.OpenGraphProtocolMetaTag("url", Request.Url.ToString())
 }
 
 @section Styles {
