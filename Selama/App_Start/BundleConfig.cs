@@ -34,17 +34,20 @@ namespace Selama
                 RootJavaScriptFile("Core/Main.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Forums").Include(
-                RootJavaScriptFile("Forums/Selama.Forums.js")
+                RootJavaScriptFile("Forums/Common.js"),
+                RootJavaScriptFile("Forums/Threads.js")
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/js/modernizr-*"));
+                RootJavaScriptFile("modernizr-*")
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/js/Bootstrap/bootstrap.js",
-                      "~/Scripts/js/Bootstrap/respond.js"));
+                RootJavaScriptFile("Bootstrap/bootstrap.js"),
+                RootJavaScriptFile("Bootstrap/respond.js"))
+            );
             bundles.Add(new ScriptBundle("~/bundles/Selama/Forums").Include(
                 "~/Areas/Forums/Scripts/js/Forums.js"
             ));

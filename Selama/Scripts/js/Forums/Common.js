@@ -1,4 +1,4 @@
-define("Forums/Selama.Forums", ["require", "exports", "Core/SpinShield"], function (require, exports, SpinShield) {
+define("Forums/Common", ["require", "exports", "Core/SpinShield"], function (require, exports, SpinShield) {
     "use strict";
     function onAjaxRequestBegin() {
         console.log("onAjaxRequestBegin");
@@ -11,4 +11,4 @@ define("Forums/Selama.Forums", ["require", "exports", "Core/SpinShield"], functi
     }
     exports.onAjaxRequestEnd = onAjaxRequestEnd;
 });
-//# sourceMappingURL=Selama.Forums.js.map
+//# sourceMappingURL=Common.js.map

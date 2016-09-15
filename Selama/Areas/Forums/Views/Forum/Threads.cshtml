@@ -7,24 +7,12 @@
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/Selama/Forums")
     <script type="text/javascript">
-        $(document).ready(function ()
+        require(["Forums/Threads"], function (Threads)
         {
-            $("td.thread-title").on("mousemove", "", Selama.Forums.Threads.onThreadTitleMouseMove)
-                .on("mouseleave", "", Selama.Forums.Threads.onThreadTitleMouseLeave)
-                .each(function ()
-                {
-                    $(this).popover({
-                        animation: false,
-                        container: "body",
-                        html: true,
-                        placement: "right",
-                        trigger: "manual",
-                    });
-                });
-            $("[data-toggle='tooltip']").tooltip();
+            Threads.Run();
         });
+        
     </script>
 }
 

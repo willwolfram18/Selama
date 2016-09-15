@@ -44,7 +44,7 @@
         {
         <text>
         requireJsOptions.bundles = {
-            '@Scripts.Url("~/bundles/bootstrap")': [
+            '@Scripts.Url("~/bundles/bootstrap").ToString()': [
                 "bootstrap"
             ],
             '@Scripts.Url("~/bundles/jquery").ToString()': [
@@ -63,6 +63,10 @@
                 "Core/Alert",
                 "Core/SpinShield",
                 "Core/Main"
+            ],
+            '@Scripts.Url("~/bundles/Selama-Forums").ToString()': [
+                "Forums/Common",
+                "Forums/Threads"
             ],
         };
         </text>

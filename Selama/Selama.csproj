@@ -499,15 +499,15 @@
     <Content Include="Scripts\js\Core\Common.js" />
     <Content Include="Scripts\js\Core\Main.js" />
     <Content Include="Scripts\js\Core\SpinShield.js" />
-    <Content Include="Scripts\js\Forums\Selama.Forums.js.map" />
-    <Content Include="Scripts\js\Forums\Selama.Forums.Threads.js.map" />
     <Content Include="Scripts\js\Core\Alert.js.map" />
     <Content Include="Scripts\js\Core\Common.js.map" />
     <Content Include="Scripts\js\Core\Main.js.map" />
     <Content Include="Scripts\js\Core\SpinShield.js.map" />
+    <Content Include="Scripts\js\Forums\Common.js.map" />
+    <Content Include="Scripts\js\Forums\Threads.js.map" />
     <None Include="Scripts\js\jQuery\jquery-3.1.0.intellisense.js" />
-    <Content Include="Scripts\js\Forums\Selama.Forums.js" />
-    <Content Include="Scripts\js\Forums\Selama.Forums.Threads.js" />
+    <Content Include="Scripts\js\Forums\Common.js" />
+    <Content Include="Scripts\js\Forums\Threads.js" />
     <Content Include="Scripts\js\jQuery\jquery-3.1.0.js" />
     <Content Include="Scripts\js\jQuery\jquery-3.1.0.min.js" />
     <Content Include="Scripts\js\jQuery\jquery-3.1.0.slim.js" />
@@ -639,8 +639,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\ts\Forums\Selama.Forums.Threads.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Forums\Selama.Forums.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Forums\Threads.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Forums\Common.ts" />
     <TypeScriptCompile Include="Scripts\ts\Core\Main.ts" />
     <TypeScriptCompile Include="Scripts\ts\Core\Alert.ts" />
     <TypeScriptCompile Include="Scripts\ts\Core\SpinShield.ts" />
