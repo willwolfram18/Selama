@@ -61,19 +61,17 @@
     {
         using (Html.BeginForm("LinkLogin", "Manage"))
         {
-            bool firstItem = true;
             @Html.AntiForgeryToken()
             <div id="socialLoginList">
                 <p>
                     @foreach (AuthenticationDescription p in Model.OtherLogins)
                     {
                         <button type="submit" class="btn btn-lg btn-social btn-@p.AuthenticationType.ToLower()" id="@p.AuthenticationType" name="provider"
-                                value="@p.AuthenticationType" title="Log in using your @p.Caption account" style="@(!firstItem ? "margin-top: 10px;" : "")">
+                                value="@p.AuthenticationType" title="Log in using your @p.Caption account">
                             <span class="fa fa-@p.AuthenticationType.ToLower()"></span>
                             Associate your @p.Caption account
                         </button>
                         <br />
-                        firstItem = false;
                     }
                 </p>
             </div>

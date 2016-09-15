@@ -365,3 +365,7 @@ blockquote {
         }
     }
 }
+
+#socialLoginList p .btn.btn-social:not(:first-child) {
+    margin-top: 10px;
+}

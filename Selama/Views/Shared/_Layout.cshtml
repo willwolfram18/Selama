@@ -10,9 +10,6 @@
     @Styles.Render("~/Content/css")
 
     @Scripts.Render("~/bundles/modernizr")
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*@Scripts.Render("~/bundles/bootstrap")*@
-
     @Scripts.Render("~/bundles/requirejs")
     <script type="text/javascript">
         // Define requireJS config options
@@ -63,6 +60,7 @@
 
         requirejs.config(requireJsOptions);
         require(["jquery", "bootstrap"]);
+        @* Need to add unobtrusive ajax in debug since it's a separate file; production has it in the jquery bundle*@
         @if (HttpContext.Current.IsDebuggingEnabled) { <text>require(["jquery.unobtrusive-ajax"]);</text> }
         require(["Core/Selama.Core.Main"], function (Main)
         {
