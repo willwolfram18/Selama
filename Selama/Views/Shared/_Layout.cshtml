@@ -21,7 +21,7 @@
                 "bootstrap": ["jquery"],
                 "jquery.validate": ["jquery"],
                 "jquery.validate.unobtrusive": ["jquery", "jquery.validate"],
-                "jquery.unobtrusive-ajax": ["jquery"],
+                "jquery.unobtrusive-ajax": ["jquery"]
             },
         };
         @if (HttpContext.Current.IsDebuggingEnabled)
@@ -46,7 +46,6 @@
             ],
             '@Scripts.Url("~/bundles/jquery").ToString()': [
                 "jquery",
-                "jquery.unobtrusive-ajax",
             ],
             '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
                 "Core/Selama.Core",
@@ -63,7 +62,8 @@
         }
 
         requirejs.config(requireJsOptions);
-        require(["jquery", "bootstrap", "jquery.unobtrusive-ajax"])
+        require(["jquery", "bootstrap"]);
+        @if (HttpContext.Current.IsDebuggingEnabled) { <text>require(["jquery.unobtrusive-ajax"]);</text> }
         require(["Core/Selama.Core.Main"], function (Main)
         {
             Main.Run();

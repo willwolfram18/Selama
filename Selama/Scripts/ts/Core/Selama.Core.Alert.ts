@@ -6,9 +6,9 @@ import $ = require("jquery");
 import bootstrap = require("bootstrap");
 import Core = require("Core/Selama.Core");
 
-let _defaultAlertTitle = "Alert";
+let _defaultAlertTitle: string = "Alert";
 
-export function raiseAlert(text: string, title?: string)
+export function raiseAlert(text: string, title?: string): void
 {
     bootstrap; // hack to force bootstrap as a required module
     if (title === undefined)
@@ -16,7 +16,7 @@ export function raiseAlert(text: string, title?: string)
         title = _defaultAlertTitle;
     }
 
-    let $modal = _initModalAndAttachToBody();
+    let $modal: JQuery = _initModalAndAttachToBody();
 
     $modal.find(".modal-body").text(text);
     $modal.find(".modal-title").text(title);
@@ -25,7 +25,7 @@ export function raiseAlert(text: string, title?: string)
 
 function _initModalAndAttachToBody(): JQuery
 {
-    let $modal = _createModal();
+    let $modal: JQuery = _createModal();
     $("body").append($modal);
     return $modal;
 }
