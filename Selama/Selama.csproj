@@ -495,17 +495,17 @@
       <DependentUpon>Site.css</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
-    <Content Include="Scripts\js\Core\Selama.Core.Alert.js.map" />
-    <Content Include="Scripts\js\Core\Selama.Core.js.map" />
-    <Content Include="Scripts\js\Core\Selama.Core.Main.js.map" />
-    <Content Include="Scripts\js\Core\Selama.Core.SpinShield.js.map" />
+    <Content Include="Scripts\js\Core\Alert.js" />
+    <Content Include="Scripts\js\Core\Common.js" />
+    <Content Include="Scripts\js\Core\Main.js" />
+    <Content Include="Scripts\js\Core\SpinShield.js" />
     <Content Include="Scripts\js\Forums\Selama.Forums.js.map" />
     <Content Include="Scripts\js\Forums\Selama.Forums.Threads.js.map" />
+    <Content Include="Scripts\js\Core\Alert.js.map" />
+    <Content Include="Scripts\js\Core\Common.js.map" />
+    <Content Include="Scripts\js\Core\Main.js.map" />
+    <Content Include="Scripts\js\Core\SpinShield.js.map" />
     <None Include="Scripts\js\jQuery\jquery-3.1.0.intellisense.js" />
-    <Content Include="Scripts\js\Core\Selama.Core.Alert.js" />
-    <Content Include="Scripts\js\Core\Selama.Core.js" />
-    <Content Include="Scripts\js\Core\Selama.Core.Main.js" />
-    <Content Include="Scripts\js\Core\Selama.Core.SpinShield.js" />
     <Content Include="Scripts\js\Forums\Selama.Forums.js" />
     <Content Include="Scripts\js\Forums\Selama.Forums.Threads.js" />
     <Content Include="Scripts\js\jQuery\jquery-3.1.0.js" />
@@ -641,10 +641,10 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\ts\Forums\Selama.Forums.Threads.ts" />
     <TypeScriptCompile Include="Scripts\ts\Forums\Selama.Forums.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\Selama.Core.Main.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\Selama.Core.Alert.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\Selama.Core.SpinShield.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\Selama.Core.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Core\Main.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Core\Alert.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Core\SpinShield.ts" />
+    <TypeScriptCompile Include="Scripts\ts\Core\Common.ts" />
     <TypeScriptCompile Include="Scripts\ts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\ts\typings\bootstrap\bootstrap.d.ts" />
   </ItemGroup>

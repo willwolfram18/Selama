@@ -1,10 +1,10 @@
-﻿/// <amd-module name="Core/Selama.Core.Alert" />
+﻿/// <amd-module name="Core/Alert" />
 /// <amd-dependency name="jquery" />
 /// <amd-dependency name="bootstrap" />
 /// <reference path="../typings/bootstrap/bootstrap.d.ts" />
 import $ = require("jquery");
 import bootstrap = require("bootstrap");
-import Core = require("Core/Selama.Core");
+import Core = require("Core/Common");
 
 let _defaultAlertTitle: string = "Alert";
 

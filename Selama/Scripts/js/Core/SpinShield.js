@@ -1,4 +1,4 @@
-define("Core/Selama.Core.SpinShield", ["require", "exports", "Core/Selama.Core", "jquery"], function (require, exports, Core, $) {
+define("Core/SpinShield", ["require", "exports", "Core/Common", "jquery"], function (require, exports, Core, $) {
     "use strict";
     var _spinShieldSelector = "> .spin-wrapper";
     var _defaultTargetSelector = "body";
@@ -50,4 +50,4 @@ define("Core/Selama.Core.SpinShield", ["require", "exports", "Core/Selama.Core",
         }
     }
 });
-//# sourceMappingURL=Selama.Core.SpinShield.js.map
+//# sourceMappingURL=SpinShield.js.map

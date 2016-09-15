@@ -1,8 +1,8 @@
-﻿/// <amd-module name="Core/Selama.Core.Main" />
+﻿/// <amd-module name="Core/Main" />
 /// <amd-dependency name="jquery" />
-import Core = require("Core/Selama.Core");
-import Alert = require("Core/Selama.Core.Alert");
-import SpinShield = require("Core/Selama.Core.SpinShield");
+import Core = require("Core/Common");
+import Alert = require("Core/Alert");
+import SpinShield = require("Core/SpinShield");
 import $ = require("jquery");
 
 export function Run(Selama: Object)

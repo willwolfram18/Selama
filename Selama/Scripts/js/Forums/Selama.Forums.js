@@ -1,4 +1,4 @@
-define("Forums/Selama.Forums", ["require", "exports", "Core/Selama.Core.SpinShield"], function (require, exports, SpinShield) {
+define("Forums/Selama.Forums", ["require", "exports", "Core/SpinShield"], function (require, exports, SpinShield) {
     "use strict";
     function onAjaxRequestBegin() {
         console.log("onAjaxRequestBegin");

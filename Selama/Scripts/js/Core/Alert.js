@@ -1,4 +1,4 @@
-define("Core/Selama.Core.Alert", ["require", "exports", "jquery", "bootstrap", "Core/Selama.Core"], function (require, exports, $, bootstrap, Core) {
+define("Core/Alert", ["require", "exports", "jquery", "bootstrap", "Core/Common"], function (require, exports, $, bootstrap, Core) {
     "use strict";
     var _defaultAlertTitle = "Alert";
     function raiseAlert(text, title) {
@@ -41,4 +41,4 @@ define("Core/Selama.Core.Alert", ["require", "exports", "jquery", "bootstrap", "
             .text("OK")));
     }
 });
-//# sourceMappingURL=Selama.Core.Alert.js.map
+//# sourceMappingURL=Alert.js.map

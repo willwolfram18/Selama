@@ -28,10 +28,10 @@ namespace Selama
                 RootJavaScriptFile("require.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Core").Include(
-                RootJavaScriptFile("Core/Selama.Core.js"),
-                RootJavaScriptFile("Core/Selama.Core.Alert.js"),
-                RootJavaScriptFile("Core/Selama.Core.SpinShield.js"),
-                RootJavaScriptFile("Core/Selama.Core.Main.js")
+                RootJavaScriptFile("Core/Common.js"),
+                RootJavaScriptFile("Core/Alert.js"),
+                RootJavaScriptFile("Core/SpinShield.js"),
+                RootJavaScriptFile("Core/Main.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Forums").Include(
                 RootJavaScriptFile("Forums/Selama.Forums.js")

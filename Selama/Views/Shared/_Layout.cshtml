@@ -59,10 +59,10 @@
                 "markdown-custom",
             ],
             '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
-                "Core/Selama.Core",
-                "Core/Selama.Core.Alert",
-                "Core/Selama.Core.SpinShield",
-                "Core/Selama.Core.Main"
+                "Core/Common",
+                "Core/Alert",
+                "Core/SpinShield",
+                "Core/Main"
             ],
         };
         </text>
@@ -72,7 +72,7 @@
         require(["jquery", "bootstrap"]);
         @* Need to add unobtrusive ajax in debug since it's a separate file; production has it in the jquery bundle*@
         @if (HttpContext.Current.IsDebuggingEnabled) { <text>require(["jquery.unobtrusive-ajax"]);</text> }
-        require(["Core/Selama.Core.Main"], function (Main)
+        require(["Core/Main"], function (Main)
         {
             Main.Run();
         });

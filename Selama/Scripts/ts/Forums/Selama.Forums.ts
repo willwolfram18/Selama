@@ -1,5 +1,5 @@
 ﻿/// <amd-module name="Forums/Selama.Forums" />
-import SpinShield = require("Core/Selama.Core.SpinShield");
+import SpinShield = require("Core/SpinShield");
 
 export function onAjaxRequestBegin(): void
 {

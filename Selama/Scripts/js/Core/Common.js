@@ -1,4 +1,4 @@
-define("Core/Selama.Core", ["require", "exports", "jquery"], function (require, exports, $) {
+define("Core/Common", ["require", "exports", "jquery"], function (require, exports, $) {
     "use strict";
     function $$bind(func, context) {
         return func.bind(context);
@@ -27,4 +27,4 @@ define("Core/Selama.Core", ["require", "exports", "jquery"], function (require, 
         });
     }
 });
-//# sourceMappingURL=Selama.Core.js.map
+//# sourceMappingURL=Common.js.map

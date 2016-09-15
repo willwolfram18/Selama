@@ -1,4 +1,4 @@
-﻿/// <amd-module name="Core/Selama.Core" />
+﻿/// <amd-module name="Core/Common" />
 /// <amd-dependency name="jquery" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
 import $ = require("jquery");
