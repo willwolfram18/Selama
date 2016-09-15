@@ -7,7 +7,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - @ViewBag.ApplicationName</title>
+    @RenderSection("MetaData", false)
     @Styles.Render("~/Content/css")
+    @RenderSection("Styles", false)
 
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/requirejs")
@@ -18,7 +20,9 @@
                 "bootstrap": ["jquery"],
                 "jquery.validate": ["jquery"],
                 "jquery.validate.unobtrusive": ["jquery", "jquery.validate"],
-                "jquery.unobtrusive-ajax": ["jquery"]
+                "jquery.unobtrusive-ajax": ["jquery"],
+                "markdown": ["jquery"],
+                "markdown-custom": ["jquery", "markdown"],
             },
         };
         @if (HttpContext.Current.IsDebuggingEnabled)
@@ -31,6 +35,8 @@
             "jquery.validate": "jQuery/jquery.validate",
             "jquery.validate.unobtrusive": "jQuery/jquery.validate.unobtrusive",
             "jquery.unobtrusive-ajax": "jQuery/jquery.unobtrusive-ajax",
+            "markdown": "MarkdownDeep/MarkdownDeepLib.min",
+            "markdown-custom": "MarkdownDeep/MarkdownDeep",
         };
         </text>
         }
@@ -44,15 +50,19 @@
             '@Scripts.Url("~/bundles/jquery").ToString()': [
                 "jquery",
             ],
+            '@Scripts.Url("~/bundles/jqueryval").ToString()': [
+                "jquery.validate",
+                "jquery.validate.unobtrusive"
+            ],
+            '@Scripts.Url("~/bundles/MarkdownDeep").ToString()': [
+                "markdown",
+                "markdown-custom",
+            ],
             '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
                 "Core/Selama.Core",
                 "Core/Selama.Core.Alert",
                 "Core/Selama.Core.SpinShield",
                 "Core/Selama.Core.Main"
-            ],
-            '@Scripts.Url("~/bundles/jqueryval")': [
-                "jquery.validate",
-                "jquery.validate.unobtrusive"
             ],
         };
         </text>
