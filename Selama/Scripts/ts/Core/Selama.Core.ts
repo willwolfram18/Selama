@@ -1,5 +1,7 @@
 ﻿/// <amd-module name="Core/Selama.Core" />
+/// <amd-dependency name="jquery" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
+import $ = require("jquery");
 
 export function $$bind(func: Function, context: any): Function
 {

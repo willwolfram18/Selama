@@ -1,6 +1,4 @@
-/// <amd-module name="Core/Selama.Core" />
-/// <reference path="../typings/jquery/jquery.d.ts" />
-define("Core/Selama.Core", ["require", "exports"], function (require, exports) {
+define("Core/Selama.Core", ["require", "exports", "jquery"], function (require, exports, $) {
     "use strict";
     function $$bind(func, context) {
         return func.bind(context);

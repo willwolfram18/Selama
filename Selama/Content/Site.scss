@@ -195,6 +195,10 @@ $maxScreenWidth: 991px;
     }
 }
 
+.navbar-header {
+    z-index: 100;
+}
+
 @media screen and (min-width: $minScreenWidth) and (max-width: $maxScreenWidth) {
     .jumbotron {
         padding: 30px 15px !important;

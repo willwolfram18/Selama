@@ -1,7 +1,8 @@
-define("Core/Selama.Core.Alert", ["require", "exports", "Core/Selama.Core"], function (require, exports, Core) {
+define("Core/Selama.Core.Alert", ["require", "exports", "jquery", "bootstrap", "Core/Selama.Core"], function (require, exports, $, bootstrap, Core) {
     "use strict";
     var _defaultAlertTitle = "Alert";
     function raiseAlert(text, title) {
+        bootstrap; // hack to force bootstrap as a required module
         if (title === undefined) {
             title = _defaultAlertTitle;
         }

@@ -1,4 +1,4 @@
-define("Core/Selama.Core.Main", ["require", "exports", "Core/Selama.Core", "Core/Selama.Core.Alert", "Core/Selama.Core.SpinShield"], function (require, exports, Core, Alert, SpinShield) {
+define("Core/Selama.Core.Main", ["require", "exports", "Core/Selama.Core", "Core/Selama.Core.Alert", "Core/Selama.Core.SpinShield", "jquery"], function (require, exports, Core, Alert, SpinShield, $) {
     "use strict";
     function Run(Selama) {
         Alert.raiseAlert("Testing");

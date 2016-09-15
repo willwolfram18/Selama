@@ -1,11 +1,16 @@
 ﻿/// <amd-module name="Core/Selama.Core.Alert" />
+/// <amd-dependency name="jquery" />
+/// <amd-dependency name="bootstrap" />
 /// <reference path="../typings/bootstrap/bootstrap.d.ts" />
-import * as Core from "Core/Selama.Core";
+import $ = require("jquery");
+import bootstrap = require("bootstrap");
+import Core = require("Core/Selama.Core");
 
 let _defaultAlertTitle = "Alert";
 
 export function raiseAlert(text: string, title?: string)
 {
+    bootstrap; // hack to force bootstrap as a required module
     if (title === undefined)
     {
         title = _defaultAlertTitle;

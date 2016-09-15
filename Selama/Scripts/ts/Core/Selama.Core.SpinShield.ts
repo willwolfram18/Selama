@@ -1,5 +1,7 @@
 ﻿/// <amd-module name="Core/Selama.Core.SpinShield" />
-import * as Core from "Core/Selama.Core";
+/// <amd-dependency name="jquery" />
+import Core = require("Core/Selama.Core");
+import $ = require("jquery");
 
 let _spinShieldSelector = "> .spin-wrapper";
 let _defaultTargetSelector = "body";

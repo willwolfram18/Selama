@@ -124,6 +124,9 @@ textarea {
       background-color: transparent;
       background-image: none; } }
 
+.navbar-header {
+  z-index: 100; }
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .jumbotron {
     padding: 30px 15px !important;

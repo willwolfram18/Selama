@@ -10,38 +10,60 @@
     @Styles.Render("~/Content/css")
 
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
 
     @Scripts.Render("~/bundles/requirejs")
     <script type="text/javascript">
         // Define requireJS config options
-        var requireJsOptions;
+        var requireJsOptions = {
+            shim: {
+                "bootstrap": ["jquery"],
+                "jquery.validate": ["jquery"],
+                "jquery.validate.unobtrusive": ["jquery", "jquery.validate"],
+                "jquery.unobtrusive-ajax": ["jquery"],
+            },
+        };
         @if (HttpContext.Current.IsDebuggingEnabled)
         {
         <text>
-        requireJsOptions = {
-            baseUrl: "/Scripts/js",
+        requireJsOptions.baseUrl = "/Scripts/js";
+        requireJsOptions.paths = {
+            "bootstrap": "bootstrap/bootstrap",
+            "jquery": "jQuery/jquery-3.1.0",
+            "jquery.validate": "jQuery/jquery.validate",
+            "jquery.validate.unobtrusive": "jQuery/jquery.validate.unobtrusive",
+            "jquery.unobtrusive-ajax": "jQuery/jquery.unobtrusive-ajax",
         };
         </text>
         }
         else
         {
         <text>
-        requireJsOptions = {
-            bundles: {
-                '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
-                    "Core/Selama.Core",
-                    "Core/Selama.Core.Alert",
-                    "Core/Selama.Core.SpinShield",
-                    "Core/Selama.Core.Main"
-                ]
-            }
+        requireJsOptions.bundles = {
+            '@Scripts.Url("~/bundles/bootstrap")': [
+                "bootstrap"
+            ],
+            '@Scripts.Url("~/bundles/jquery").ToString()': [
+                "jquery",
+                "jquery.unobtrusive-ajax",
+            ],
+            '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
+                "Core/Selama.Core",
+                "Core/Selama.Core.Alert",
+                "Core/Selama.Core.SpinShield",
+                "Core/Selama.Core.Main"
+            ],
+            '@Scripts.Url("~/bundles/jqueryval")': [
+                "jquery.validate",
+                "jquery.validate.unobtrusive"
+            ],
         };
         </text>
         }
 
         requirejs.config(requireJsOptions);
+        require(["jquery", "bootstrap", "jquery.unobtrusive-ajax"])
         require(["Core/Selama.Core.Main"], function (Main)
         {
             Main.Run();
