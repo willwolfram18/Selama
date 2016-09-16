@@ -640,6 +640,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\ts\Forums\Thread.ts" />
     <TypeScriptCompile Include="Scripts\ts\Forums\Threads.ts" />
     <TypeScriptCompile Include="Scripts\ts\Forums\Common.ts" />
     <TypeScriptCompile Include="Scripts\ts\Core\Main.ts" />
@@ -648,6 +649,7 @@
     <TypeScriptCompile Include="Scripts\ts\Core\Common.ts" />
     <TypeScriptCompile Include="Scripts\ts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\ts\typings\bootstrap\bootstrap.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts\typings\markdowndeep\MarkdownDeep.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
