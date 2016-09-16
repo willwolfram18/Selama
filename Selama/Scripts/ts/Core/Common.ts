@@ -2,6 +2,14 @@
 /// <amd-dependency name="jquery" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
 import $ = require("jquery");
+import MarkdownDeep = require("MarkdownDeep");
+
+export const MarkdownEditorOptions: MarkdownDeepOptions = {
+    SafeMode: true,
+    MarkdownInHtml: true,
+    resizebar: false,
+    help_location: "/Content/MarkdownDeep/mdd_help.htm",
+};
 
 export function $$bind(func: Function, context: any): Function
 {

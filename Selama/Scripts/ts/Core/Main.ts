@@ -4,16 +4,12 @@ import Core = require("Core/Common");
 import Alert = require("Core/Alert");
 import SpinShield = require("Core/SpinShield");
 import $ = require("jquery");
+import MarkdownDeep = require("MarkdownDeep");
 
-export function Run(Selama: Object)
+export function Run()
 {
-    Alert.raiseAlert("Testing");
-    SpinShield.raiseShield(".jumbotron");
-    SpinShield.raiseShield();
+    MarkdownDeep; // Force markdowndeep dependency
+    Core.generateFixedTables();
     $(window).on("resize", "", Core.generateFixedTables);
-
-    $(".spin-wrapper").click(function ()
-    {
-        SpinShield.lowerShield($(this).parent());
-    });
+    $("textarea.mdd_editor").MarkdownDeep(Core.MarkdownEditorOptions);
 }

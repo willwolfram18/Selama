@@ -1,5 +1,11 @@
 define("Core/Common", ["require", "exports", "jquery"], function (require, exports, $) {
     "use strict";
+    exports.MarkdownEditorOptions = {
+        SafeMode: true,
+        MarkdownInHtml: true,
+        resizebar: false,
+        help_location: "/Content/MarkdownDeep/mdd_help.htm",
+    };
     function $$bind(func, context) {
         return func.bind(context);
     }

@@ -1,13 +1,10 @@
-define("Core/Main", ["require", "exports", "Core/Common", "Core/Alert", "Core/SpinShield", "jquery"], function (require, exports, Core, Alert, SpinShield, $) {
+define("Core/Main", ["require", "exports", "Core/Common", "jquery", "MarkdownDeep"], function (require, exports, Core, $, MarkdownDeep) {
     "use strict";
-    function Run(Selama) {
-        Alert.raiseAlert("Testing");
-        SpinShield.raiseShield(".jumbotron");
-        SpinShield.raiseShield();
+    function Run() {
+        MarkdownDeep; // Force markdowndeep dependency
+        Core.generateFixedTables();
         $(window).on("resize", "", Core.generateFixedTables);
-        $(".spin-wrapper").click(function () {
-            SpinShield.lowerShield($(this).parent());
-        });
+        $("textarea.mdd_editor").MarkdownDeep(Core.MarkdownEditorOptions);
     }
     exports.Run = Run;
 });

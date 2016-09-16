@@ -21,8 +21,8 @@
                 "jquery.validate": ["jquery"],
                 "jquery.validate.unobtrusive": ["jquery", "jquery.validate"],
                 "jquery.unobtrusive-ajax": ["jquery"],
-                "markdown": ["jquery"],
-                "markdown-custom": ["jquery", "markdown"],
+                "MarkdownDeep": ["jquery"],
+                "MarkdownDeepEditor": ["MarkdownDeep"],
             },
         };
         @if (HttpContext.Current.IsDebuggingEnabled)
@@ -35,8 +35,8 @@
             "jquery.validate": "jQuery/jquery.validate",
             "jquery.validate.unobtrusive": "jQuery/jquery.validate.unobtrusive",
             "jquery.unobtrusive-ajax": "jQuery/jquery.unobtrusive-ajax",
-            "markdown": "MarkdownDeep/MarkdownDeepLib.min",
-            "markdown-custom": "MarkdownDeep/MarkdownDeep",
+            "MarkdownDeep": "MarkdownDeep/MarkdownDeepLib.min",
+            "MarkDownDeepEditor": "MarkdownDeep/MarkdownDeepLib.min",
         };
         </text>
         }
@@ -55,8 +55,8 @@
                 "jquery.validate.unobtrusive"
             ],
             '@Scripts.Url("~/bundles/MarkdownDeep").ToString()': [
-                "markdown",
-                "markdown-custom",
+                "MarkdownDeep",
+                "MarkdownDeepEditor",
             ],
             '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
                 "Core/Common",
