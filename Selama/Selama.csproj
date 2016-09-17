@@ -651,7 +651,6 @@
     <TypeScriptCompile Include="Scripts\ts\Core\Common.ts" />
     <TypeScriptCompile Include="Scripts\ts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\ts\typings\bootstrap\bootstrap.d.ts" />
-    <TypeScriptCompile Include="Scripts\ts\typings\markdowndeep\MarkdownDeep.d.ts" />
     <TypeScriptCompile Include="Scripts\ts\typings\markdowndeep\MarkdownDeepEditor.d.ts" />
   </ItemGroup>
   <PropertyGroup>

@@ -2,7 +2,7 @@
 /// <amd-dependency name="jquery" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
 import $ = require("jquery");
-import MarkdownDeep = require("MarkdownDeep");
+import MarkdownDeepEditor = require("MarkdownDeepEditor");
 
 export const MarkdownEditorOptions: MarkdownDeepOptions = {
     SafeMode: true,

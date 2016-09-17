@@ -7,7 +7,7 @@ export function onAjaxRequestBegin(): void
     SpinShield.raiseShield();
 }
 
-export function onAjaxRequestEnd(): void
+export function onAjaxRequestComplete(): void
 {
     console.log("onAjaxRequestEnd");
     SpinShield.lowerShield();

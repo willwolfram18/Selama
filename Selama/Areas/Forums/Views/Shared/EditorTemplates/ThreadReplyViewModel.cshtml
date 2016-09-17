@@ -44,8 +44,14 @@
 </div>
 
 @Styles.Render("~/Content/MarkdownDeep/css")
-@Scripts.Render("~/bundles/MarkdownDeep")
 <script type="text/javascript">
+    require(["MarkdownDeepEditor"], function ()
+    {
+        $(document).ready(function ()
+        {
+            $(ReplyCancelBtn).click(onCancelClick);
+        });
+    });
     function onCancelClick()
     {
         $("#ThreadReplyEditor").effect("blind");
@@ -91,9 +97,4 @@
             }
         }
     }
-
-    $(document).ready(function ()
-    {
-        $(ReplyCancelBtn).click(onCancelClick);
-    });
 </script>

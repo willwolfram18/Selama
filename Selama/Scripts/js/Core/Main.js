@@ -1,7 +1,7 @@
-define("Core/Main", ["require", "exports", "Core/Common", "jquery", "MarkdownDeep"], function (require, exports, Core, $, MarkdownDeep) {
+define("Core/Main", ["require", "exports", "Core/Common", "jquery", "MarkdownDeepEditor"], function (require, exports, Core, $, MarkdownDeepEditor) {
     "use strict";
     function Run() {
-        MarkdownDeep; // Force markdowndeep dependency
+        MarkdownDeepEditor; // Force markdowndeep dependency
         Core.generateFixedTables();
         $(window).on("resize", "", Core.generateFixedTables);
         $("textarea.mdd_editor").MarkdownDeep(Core.MarkdownEditorOptions);

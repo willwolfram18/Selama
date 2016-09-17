@@ -17,11 +17,20 @@
 
 @section Scripts {
     <script type="text/javascript">
-        require(["jquery.validate.unobtrusive", "Forums/Thread"]);
+        require(["jquery.validate.unobtrusive", "Forums/Thread"], function (unobtrusive, Thread)
+        {
+            $(".thread-post-quote").on("click", "",
+                {
+                    replyUrl: '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })',
+                    threadUrl: '@Url.Action("GetThreadQuote", new { area = "Forums" })',
+                },
+                Thread.onQuoteBtnClick
+            );
+        });
     </script>
     
     <script type="text/javascript">
-        $(document).ready(function ()
+        @*$(document).ready(function ()
         {
             // Bind jQuery events
             $(".btn.btn-post-reply").on("click", "", Selama.Forums.Thread.onPostReplyClick);
@@ -60,7 +69,7 @@
             $(".row.thread-reply:last").addClass("last");
             $("#ThreadReplyEditor").hide();
             $("[data-toggle='tooltip']").tooltip();
-        });
+        });*@
     </script>
 }
 

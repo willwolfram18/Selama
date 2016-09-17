@@ -5,10 +5,10 @@ define("Forums/Common", ["require", "exports", "Core/SpinShield"], function (req
         SpinShield.raiseShield();
     }
     exports.onAjaxRequestBegin = onAjaxRequestBegin;
-    function onAjaxRequestEnd() {
+    function onAjaxRequestComplete() {
         console.log("onAjaxRequestEnd");
         SpinShield.lowerShield();
     }
-    exports.onAjaxRequestEnd = onAjaxRequestEnd;
+    exports.onAjaxRequestComplete = onAjaxRequestComplete;
 });
 //# sourceMappingURL=Common.js.map

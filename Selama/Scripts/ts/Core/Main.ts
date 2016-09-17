@@ -4,11 +4,11 @@ import Core = require("Core/Common");
 import Alert = require("Core/Alert");
 import SpinShield = require("Core/SpinShield");
 import $ = require("jquery");
-import MarkdownDeep = require("MarkdownDeep");
+import MarkdownDeepEditor = require("MarkdownDeepEditor");
 
 export function Run()
 {
-    MarkdownDeep; // Force markdowndeep dependency
+    MarkdownDeepEditor; // Force markdowndeep dependency
     Core.generateFixedTables();
     $(window).on("resize", "", Core.generateFixedTables);
     $("textarea.mdd_editor").MarkdownDeep(Core.MarkdownEditorOptions);
