@@ -1,11 +1,15 @@
-define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Common", "Forums/Common", "MarkdownDeepEditor", "Core/SpinShield"], function (require, exports, $, Alert, Common, Forums, MarkdownDeepEditor, SpinShield) {
+define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Common", "Forums/Common", "Core/SpinShield"], function (require, exports, $, Alert, Common, Forums, SpinShield) {
     "use strict";
+    var MarkdownDeepEditor;
+    function Setup(mdEditor) {
+        MarkdownDeepEditor = mdEditor;
+    }
+    exports.Setup = Setup;
     function onPostReplyClick() {
         $("#ThreadReplyEditor").show("blind")
             .find(".mdd_editor").focus();
     }
     function onEditorModalShown(e) {
-        MarkdownDeepEditor; // force MarkdownDeep into dependency statement
         var $target = $(e.target);
         var $editor = $target.find("textarea.mdd_editor").focus();
         $("textarea.mdd_editor").MarkdownDeep(Common.MarkdownEditorOptions);

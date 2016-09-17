@@ -1,10 +1,17 @@
 ﻿/// <amd-module name="Forums/Thread" />
+/// <reference path="../typings/markdowndeep/MarkdownDeepEditor.d.ts" />
 import $ = require("jquery");
 import Alert = require("Core/Alert");
 import Common = require("Core/Common");
 import Forums = require("Forums/Common");
-import MarkdownDeepEditor = require("MarkdownDeepEditor");
 import SpinShield = require("Core/SpinShield");
+
+var MarkdownDeepEditor: any;
+
+export function Setup(mdEditor: any): void
+{
+    MarkdownDeepEditor = mdEditor;
+}
 
 function onPostReplyClick(): void
 {
@@ -14,11 +21,10 @@ function onPostReplyClick(): void
 
 function onEditorModalShown(e: JQueryEventObject): void
 {
-    MarkdownDeepEditor; // force MarkdownDeep into dependency statement
     let $target: JQuery = $(e.target);
     let $editor: JQuery = $target.find("textarea.mdd_editor").focus();
     $("textarea.mdd_editor").MarkdownDeep(Common.MarkdownEditorOptions);
-    let editorObj: MarkdownDeepEditor.Editor = new MarkdownDeepEditor.Editor($editor[0], $target.find("div.mdd_preview")[0]);
+    let editorObj: Editor = new MarkdownDeepEditor.Editor($editor[0], $target.find("div.mdd_preview")[0]);
 }
 
 export function onQuoteBtnClick(e: JQueryEventObject): void
@@ -71,7 +77,7 @@ function onQuoteBtnClick_Success(response: string, status: string, jqXhr: JQuery
         $editor.val(currentVal + "\n\n" + response);
     }
     $editor.trigger("change");
-    var editorMarkdown = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview")[0]);
+    var editorMarkdown: Editor = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview")[0]);
 }
 
 export function onDeleteFormSubmitClick(e: JQueryEventObject): void

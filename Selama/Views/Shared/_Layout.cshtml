@@ -22,6 +22,7 @@
                 "jquery.validate.unobtrusive": ["jquery", "jquery.validate"],
                 "jquery.unobtrusive-ajax": ["jquery"],
                 "MarkdownDeepEditor": ["jquery"],
+                "Forums/Thread": ["MarkdownDeepEditor"]
             },
         };
         @if (HttpContext.Current.IsDebuggingEnabled)
@@ -72,7 +73,8 @@
         requirejs.config(requireJsOptions);
         require(["jquery", "bootstrap"]);
         @* Need to add unobtrusive ajax in debug since it's a separate file; production has it in the jquery bundle*@
-        @if (HttpContext.Current.IsDebuggingEnabled) { <text>require(["jquery.unobtrusive-ajax"]);</text> }
+        @if (HttpContext.Current.IsDebuggingEnabled) { <text>require(["jquery.unobtrusive-ajax"]);
+    </text> }
         require(["Core/Main"], function (Main)
         {
             Main.Run();

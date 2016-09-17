@@ -19,6 +19,7 @@
     <script type="text/javascript">
         require(["jquery.validate.unobtrusive", "Forums/Thread"], function (unobtrusive, Thread)
         {
+            Thread.Setup(MarkdownDeepEditor);
             $(".thread-post-quote").on("click", "",
                 {
                     replyUrl: '@Url.Action("GetReplyQuote", new { area = "Forums", page = Model.ViewPageNum })',
@@ -26,6 +27,15 @@
                 },
                 Thread.onQuoteBtnClick
             );
+
+            $(".btn.btn-post-reply").on("click", "", Thread.onPostReplyClick);
+            $(".row.thread[data-thread] .post-options-list")
+                .on("click", ".thread-post-edit",
+                    {
+
+                    },
+                    Thread.onThreadEditLinkClick
+                )
         });
     </script>
     

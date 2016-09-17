@@ -23,9 +23,11 @@ interface JQuery
     MarkdownDeep(options?: MarkdownDeepOptions): JQuery;
 }
 
+declare class Editor
+{
+    constructor(editorElement: Element, previewElement: Element);
+}
+
 declare module "MarkdownDeepEditor" {
-    class Editor
-    {
-        constructor(editorElement: Element, previewElement: Element);
-    }
+    
 }
