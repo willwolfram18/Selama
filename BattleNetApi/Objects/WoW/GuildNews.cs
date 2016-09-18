@@ -31,7 +31,8 @@ namespace BattleNetApi.Objects.WoW
                 case "itemCraft":
                     return GuildNewsPlayerItem.BuildPlayerItemNews(guildNewsJson);
                 case "playerAchievement":
-                    return GuildNewsPlayerAchievement.BuildPlayerAchievement(guildNewsJson);
+                case "guildAchievement":
+                    return GuildNewsAchievement.BuildPlayerAchievement(guildNewsJson);
                 default:
                     return new GuildNews(guildNewsJson);
             }

@@ -70,7 +70,7 @@
     <Compile Include="Objects\WoW\DataResources\RaceDataResource.cs" />
     <Compile Include="Objects\WoW\GoldValue.cs" />
     <Compile Include="Objects\WoW\GuildEmblem.cs" />
-    <Compile Include="Objects\WoW\GuildNewsPlayerAchievement.cs" />
+    <Compile Include="Objects\WoW\GuildNewsAchievement.cs" />
     <Compile Include="Objects\WoW\GuildNewsPlayerItem.cs" />
     <Compile Include="Objects\WoW\GuildMember.cs" />
     <Compile Include="Objects\WoW\GuildNews.cs" />
