@@ -46,7 +46,7 @@ define("Core/SpinShield", ["require", "exports", "Core/Common", "jquery"], funct
         var $shield = $target.find(_spinShieldSelector);
         if ($shield.length !== 0) {
             $shield.remove();
-            $target.css("overflow", "inherit");
+            $target.css("overflow", "");
         }
     }
 });

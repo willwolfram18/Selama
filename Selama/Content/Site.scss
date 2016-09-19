@@ -369,3 +369,15 @@ blockquote {
 #socialLoginList p .btn.btn-social:not(:first-child) {
     margin-top: 10px;
 }
+
+#GuildNewsPanel {
+    .panel-body {
+        padding: 0;
+        height: 200px;
+        overflow-y: scroll;
+
+        .table {
+            margin-bottom: 0;
+        }
+    }
+}

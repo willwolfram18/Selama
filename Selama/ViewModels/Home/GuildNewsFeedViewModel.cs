@@ -3,6 +3,7 @@ using BattleNetApi.Objects.WoW;
 using Selama.Common.Utility;
 using System;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Selama.ViewModels.Home
 {
@@ -12,36 +13,36 @@ namespace Selama.ViewModels.Home
 
         public DateTime Timestamp { get; private set; }
 
-        public string Content { get; private set; }
+        [AllowHtml]
+        public MvcHtmlString Content { get; private set; }
 
-        public async static Task<GuildNewsFeedViewModel> BuildFromBattleNetGuildNews(GuildNews battleNetNews)
+        public static GuildNewsFeedViewModel BuildFromBattleNetGuildNews(GuildNews battleNetNews)
         {
             switch (battleNetNews.Type)
             {
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemLoot:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemPurchase:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemCraft:
-                    return await BuildGuildItemNews(battleNetNews as GuildNewsPlayerItem);
+                    return BuildGuildItemNews(battleNetNews as GuildNewsPlayerItem);
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.PlayerAchievement:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.GuildAchievement:
                     return BuildGuildAchievementNews(battleNetNews as GuildNewsAchievement);
                 default:
-                    return new GuildNewsFeedViewModel { Timestamp = battleNetNews.Timestamp, Content = "Sample" };
+                    return new GuildNewsFeedViewModel { Timestamp = battleNetNews.Timestamp, Content = new MvcHtmlString("Sample") };
                     throw new NotImplementedException(string.Format("No action defined for GuildNewsType of {0}", battleNetNews.Type.ToString()));
             }
         }
 
-        private async static Task<GuildNewsFeedViewModel> BuildGuildItemNews(GuildNewsPlayerItem itemNews)
+        private static GuildNewsFeedViewModel BuildGuildItemNews(GuildNewsPlayerItem itemNews)
         {
-            var itemGetTask = _bnetApi.WowCommunityApi.GetItemAsync(itemNews.ItemId);
             string itemAcquisitionAction = DetermineItemNewsAction(itemNews.Type);
-
-            var item = await itemGetTask;
 
             return new GuildNewsFeedViewModel
             {
                 Timestamp = itemNews.Timestamp,
-                Content = string.Format("{0} {1} {2}.", itemNews.CharacterName, itemAcquisitionAction,item.Name),
+                Content = new MvcHtmlString(
+                    string.Format("{0} {1} <a href='#' class='item' rel='item={2}'></a>.", itemNews.CharacterName, itemAcquisitionAction, itemNews.ItemId)
+                ),
             };
         }
 
@@ -66,7 +67,9 @@ namespace Selama.ViewModels.Home
             return new GuildNewsFeedViewModel
             {
                 Timestamp = achievementNews.Timestamp,
-                Content = string.Format("{0} earned {1}.", achievementEarner, achievementNews.Achievement.Title),
+                Content = new MvcHtmlString(
+                    string.Format("{0} earned {1}.", achievementEarner, achievementNews.Achievement.Title)
+                ),
             };
         }
 

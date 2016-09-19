@@ -359,7 +359,7 @@
     <Compile Include="Models\DAL\IdentityRepository.cs" />
     <Compile Include="Models\Home\DAL\GuildNewsUnitOfWork.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="ViewModels\Home\GuildNewsViewModel.cs" />
+    <Compile Include="ViewModels\Home\GuildNewsFeedViewModel.cs" />
     <Compile Include="ViewModels\PagerViewModel.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -568,6 +568,7 @@
     <Content Include="Views\Shared\_AdminMenuItemPartial.cshtml" />
     <Content Include="Views\Shared\_PagerPartial.cshtml" />
     <Content Include="Scripts\ts\tsconfig.json" />
+    <Content Include="Views\Home\GetGuildNewsFeed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,6 +3,7 @@
 }
 
 @section Scripts {
+
     <script type="text/javascript">
         require(["jquery", "Core/SpinShield"], function ($, SpinShield)
         {
@@ -16,6 +17,10 @@
                 complete: function ()
                 {
                     SpinShield.lowerShield("#GuildNewsPanel .panel-body");
+                },
+                success: function (response)
+                {
+                    $("#GuildNewsPanel .panel-body").prepend(response);
                 }
             });
         });
@@ -59,13 +64,12 @@
     <div class="col-sm-12 col-md-12 col-lg-12">
         <div id="GuildNewsPanel" class="panel panel-default">
             <div class="panel-heading">
-                Guild News Feed
+                <h4>
+                    Guild News Feed
+                </h4>
             </div>
             <div class="panel-body">
-                
-                <table class="table table-striped guild-news-table">
-                    
-                </table>
+
             </div>
         </div>
     </div>

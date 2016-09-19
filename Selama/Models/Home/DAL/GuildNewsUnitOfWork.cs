@@ -40,7 +40,7 @@ namespace Selama.Models.Home.DAL
         {
             Guild guildProfile = await _battleNetClient.WowCommunityApi.GetGuildProfileAsync(Util.WowRealmName, Util.WowGuildName, "news");
 
-            return await guildProfile.News.Skip(0).Take(25).ToListOfDifferentType(GuildNewsFeedViewModel.BuildFromBattleNetGuildNews);
+            return guildProfile.News.Skip(0).Take(25).ToListOfDifferentType(GuildNewsFeedViewModel.BuildFromBattleNetGuildNews);
         }
 
 

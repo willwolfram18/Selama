@@ -42,7 +42,7 @@ function _createNewShieldInTarget($target: JQuery): void
                 )
             )
         )
-            .css("overflow", "hidden");
+        .css("overflow", "hidden");
     }
 }
 
@@ -71,6 +71,6 @@ function _destoryShieldInTarget($target: JQuery): void
     if ($shield.length !== 0)
     {
         $shield.remove();
-        $target.css("overflow", "inherit");
+        $target.css("overflow", "");
     }
 }
