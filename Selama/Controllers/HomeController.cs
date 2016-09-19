@@ -1,13 +1,7 @@
-﻿using BattleNetApi.Api;
-using BattleNetApi.Objects.WoW;
-using Microsoft.AspNet.Identity;
-using Selama.Common.Utility;
-using System;
+﻿using Selama.Models.Home.DAL;
+using Selama.ViewModels.Home;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Selama.Controllers
@@ -32,10 +26,13 @@ namespace Selama.Controllers
 
         public async Task<ActionResult> GetGuildNews()
         {
-            BattleNetApiClient client = new BattleNetApiClient(Util.BattleNetApiClientId);
-            Guild guild = await client.WowCommunityApi.GetGuildProfileAsync(Util.WowRealmName, Util.WowGuildName, "news");
+            List<GuildNewsViewModel> result = new List<GuildNewsViewModel>();
+            using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
+            {
+                result = await db.GetGuildNews();
+            }
 
-            return null;
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Error(string errorMsg = null)

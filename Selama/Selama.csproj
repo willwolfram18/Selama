@@ -357,7 +357,9 @@
     <Compile Include="Models\DAL\GenericEntityRepository.cs" />
     <Compile Include="Models\DAL\GenericUnitOfWork.cs" />
     <Compile Include="Models\DAL\IdentityRepository.cs" />
+    <Compile Include="Models\Home\DAL\GuildNewsUnitOfWork.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="ViewModels\Home\GuildNewsViewModel.cs" />
     <Compile Include="ViewModels\PagerViewModel.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
