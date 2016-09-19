@@ -9,12 +9,14 @@ define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Com
         $("#ThreadReplyEditor").show("blind")
             .find(".mdd_editor").focus();
     }
+    exports.onPostReplyClick = onPostReplyClick;
     function onEditorModalShown(e) {
         var $target = $(e.target);
         var $editor = $target.find("textarea.mdd_editor").focus();
         $("textarea.mdd_editor").MarkdownDeep(Common.MarkdownEditorOptions);
         var editorObj = new MarkdownDeepEditor.Editor($editor[0], $target.find("div.mdd_preview")[0]);
     }
+    exports.onEditorModalShown = onEditorModalShown;
     function onQuoteBtnClick(e) {
         var replyQuoteUrl = e.data.replyUrl;
         var threadQuoteUrl = e.data.threadUrl;
@@ -76,6 +78,7 @@ define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Com
         $(".row.thread[data-thread]").find(".thread-content").html(response);
         $("#ThreadEditModal").modal("hide");
     }
+    exports.onThreadUpdateRequest_Success = onThreadUpdateRequest_Success;
     function onThreadUpdateRequest_Failure(response) {
         if (response.statusText === "Thread is locked") {
             Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
@@ -84,11 +87,13 @@ define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Com
             Alert.raiseAlert("An unexpected error occurred while updating the thread");
         }
     }
+    exports.onThreadUpdateRequest_Failure = onThreadUpdateRequest_Failure;
     function onReplyUpdateRequest_Success(response, status, jqXhr) {
         $(".thread-reply[data-thread-reply='" + response.id + "']")
             .find(".thread-reply-content").html(response.content);
         $("#ThreadReplyEditModal").modal("hide");
     }
+    exports.onReplyUpdateRequest_Success = onReplyUpdateRequest_Success;
     function onReplyUpdateRequest_Failure(response) {
         if (response.statusText === "Thread is locked") {
             Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
@@ -97,6 +102,7 @@ define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Com
             Alert.raiseAlert("An unexpected error occurred while updating");
         }
     }
+    exports.onReplyUpdateRequest_Failure = onReplyUpdateRequest_Failure;
     function onThreadEditLinkClick(e) {
         $.ajax({
             url: e.data.url,
@@ -107,6 +113,7 @@ define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Com
             error: onThreadEditLinkClick_Failure,
         });
     }
+    exports.onThreadEditLinkClick = onThreadEditLinkClick;
     function onThreadEditLinkClick_Success(response, status, jqXhr) {
         $("#ThreadEditModal").modal("show").find(".modal-body").html(response);
     }
@@ -121,7 +128,7 @@ define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Com
             Alert.raiseAlert("An unexpected error occurred");
         }
     }
-    function onReplyEditLinkClikc(e) {
+    function onReplyEditLinkClick(e) {
         var replyId = $(e.target).closest(".row[data-thread-reply]").attr("data-thread-reply");
         $.ajax({
             url: e.data.url,
@@ -129,8 +136,11 @@ define("Forums/Thread", ["require", "exports", "jquery", "Core/Alert", "Core/Com
             type: "GET",
             beforeSend: Forums.onAjaxRequestBegin,
             complete: Forums.onAjaxRequestComplete,
+            success: onReplyEditLinkClick_Success,
+            error: onReplyEditLinkClick_Failure
         });
     }
+    exports.onReplyEditLinkClick = onReplyEditLinkClick;
     function onReplyEditLinkClick_Success(response, status, jqXhr) {
         $("#ThreadReplyEditModal").modal("show").find(".modal-body").html(response);
     }

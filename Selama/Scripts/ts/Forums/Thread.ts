@@ -13,13 +13,13 @@ export function Setup(mdEditor: any): void
     MarkdownDeepEditor = mdEditor;
 }
 
-function onPostReplyClick(): void
+export function onPostReplyClick(): void
 {
     $("#ThreadReplyEditor").show("blind")
         .find(".mdd_editor").focus();
 }
 
-function onEditorModalShown(e: JQueryEventObject): void
+export function onEditorModalShown(e: JQueryEventObject): void
 {
     let $target: JQuery = $(e.target);
     let $editor: JQuery = $target.find("textarea.mdd_editor").focus();
@@ -99,12 +99,12 @@ export function onThreadDeleteClick(e: JQueryEventObject): void
     $("#ThreadDeleteModal").modal("show");
 }
 
-function onThreadUpdateRequest_Success(response: string, status: string, jqXhr: JQueryXHR): void
+export function onThreadUpdateRequest_Success(response: string, status: string, jqXhr: JQueryXHR): void
 {
     $(".row.thread[data-thread]").find(".thread-content").html(response);
     $("#ThreadEditModal").modal("hide");
 }
-function onThreadUpdateRequest_Failure(response: JQueryXHR): void
+export function onThreadUpdateRequest_Failure(response: JQueryXHR): void
 {
     if (response.statusText === "Thread is locked")
     {
@@ -116,13 +116,13 @@ function onThreadUpdateRequest_Failure(response: JQueryXHR): void
     }
 }
 
-function onReplyUpdateRequest_Success(response: any, status: string, jqXhr: JQueryXHR): void
+export function onReplyUpdateRequest_Success(response: any, status: string, jqXhr: JQueryXHR): void
 {
     $(".thread-reply[data-thread-reply='" + response.id + "']")
         .find(".thread-reply-content").html(response.content);
     $("#ThreadReplyEditModal").modal("hide");
 }
-function onReplyUpdateRequest_Failure(response: JQueryXHR): void
+export function onReplyUpdateRequest_Failure(response: JQueryXHR): void
 {
     if (response.statusText === "Thread is locked")
     {
@@ -134,7 +134,7 @@ function onReplyUpdateRequest_Failure(response: JQueryXHR): void
     }
 }
 
-function onThreadEditLinkClick(e: JQueryEventObject): void
+export function onThreadEditLinkClick(e: JQueryEventObject): void
 {
     $.ajax({
         url: e.data.url,
@@ -165,7 +165,7 @@ function onThreadEditLinkClick_Failure(response: JQueryXHR): void
     }
 }
 
-function onReplyEditLinkClikc(e: JQueryEventObject): void
+export function onReplyEditLinkClick(e: JQueryEventObject): void
 {
     var replyId: string = $(e.target).closest(".row[data-thread-reply]").attr("data-thread-reply");
     $.ajax({
@@ -174,6 +174,8 @@ function onReplyEditLinkClikc(e: JQueryEventObject): void
         type: "GET",
         beforeSend: Forums.onAjaxRequestBegin,
         complete: Forums.onAjaxRequestComplete,
+        success: onReplyEditLinkClick_Success,
+        error: onReplyEditLinkClick_Failure
     });
 }
 function onReplyEditLinkClick_Success(response: string, status: string, jqXhr: JQueryXHR): void

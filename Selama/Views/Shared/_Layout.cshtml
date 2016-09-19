@@ -70,23 +70,37 @@
         </text>
         }
 
+        var Selama = Selama || {};
         requirejs.config(requireJsOptions);
         require(["jquery", "bootstrap"]);
         @* Need to add unobtrusive ajax in debug since it's a separate file; production has it in the jquery bundle*@
         @if (HttpContext.Current.IsDebuggingEnabled) { <text>require(["jquery.unobtrusive-ajax"]);
     </text> }
-        require(["Core/Main"], function (Main)
+        require(["Core/Common", "Core/Alert", "Core/SpinShield", "Core/Main"], function (Common, Alert, SpinShield, Main)
         {
+            // #region Build global core namespace
+            Selama.Core = Selama.Core || {};
+            Selama.Core.Common = Selama.Core.Common || {};
+            Selama.Core.Common.$$bind = Common.$$bind;
+            Selama.Core.Common.createElem = Common.createElem;
+
+            Selama.Core.Alert = Selama.Core.Alert || {};
+            Selama.Core.Alert.raiseAlert = Alert.raiseAlert;
+
+            Selama.Core.SpinShield = Selama.Core.SpinShield || {};
+            Selama.Core.SpinShield.raiseShield = SpinShield.raiseShield;
+            Selama.Core.SpinShield.lowerShield = SpinShield.lowerShield;
+            //#endregion
+
             Main.Run();
         });
     </script>
-    @RenderSection("scripts", required: false)
     <script type="text/javascript">
         // Define the link to the help html
-        var Selama = Selama || {};
         Selama.MarkdownEditor = Selama.MarkdownEditor || {};
         Selama.MarkdownEditor.HelpLocation = '@Url.Content("~/Content/MarkdownDeep/mdd_help.htm")';
     </script>
+    @RenderSection("scripts", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

@@ -6,8 +6,8 @@
         {
             HttpMethod = "POST",
             UpdateTargetId = "ThreadReplyResult",
-            OnBegin = "Selama.$$bind(Selama.SpinShield.raiseShield, Selama.SpinShield)()",
-            OnComplete = "Selama.$$bind(Selama.SpinShield.lowerShield, Selama.SpinShield)()",
+            OnBegin = "Selama.Core.SpinShield.raiseShield",
+            OnComplete = "Selama.Core.SpinShield.lowerShield",
             OnSuccess = "onPostClick_Success",
             OnFailure = "onPostClick_Error"
         },
@@ -45,7 +45,12 @@
 
 @Styles.Render("~/Content/MarkdownDeep/css")
 <script type="text/javascript">
-    require(["MarkdownDeepEditor"], function ()
+    var Selama = Selama || {};
+    Selama.Core = Selama.Core || {};
+    Selama.Core.Alert = Selama.Core.Alert || {};
+    Selama.Core.SpinShield = Selama.Core.SpinShield || {};
+
+    require(["MarkdownDeepEditor"], function (md)
     {
         $(document).ready(function ()
         {
@@ -66,35 +71,11 @@
     {
         if (response.statusText === "Thread is locked")
         {
-            Selama.Alert.raiseAlert("The thread you're trying to reply to is locked from editing.", "Thread is locked");
+            Selama.Core.Alert.raiseAlert("The thread you're trying to reply to is locked from editing.", "Thread is locked");
         }
         else
         {
-            var modelState = eval(response.responseText);
-            if (modelState !== undefined)
-            {
-                for (var i = 0; i < modelState.length; i++)
-                {
-                    var error = {};
-                    error[modelState[i].Property] = [];
-                    for (var j = 0; j < modelState[i].Errors.length; j++)
-                    {
-                        error[modelState[i].Property].push("<li>" + modelState[i].Errors[j] + "</li>");
-                    }
-
-                    if (modelState[i].Property !== "")
-                    {
-                        $("#ThreadReplyEditor form").validate().showErrors(error);
-                    }
-                    else
-                    {
-                        for (var j = 0; j < error[""].length; j++)
-                        {
-                            $("#ThreadReplyEditor form .validation-summary-valid ul").append(error[""][j]);
-                        }
-                    }
-                }
-            }
+            Selama.Core.Alert.raiseAlert("An unexpected error occurred.");
         }
     }
 </script>
