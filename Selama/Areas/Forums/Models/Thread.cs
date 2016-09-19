@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Security.Principal;
 using System.Web.Mvc;
 
@@ -13,36 +14,6 @@ namespace Selama.Areas.Forums.Models
 {
     public class Thread
     {
-        public Thread() { }
-        public Thread(ThreadViewModel model, string authorId, int forumId)
-        {
-            Title = model.Title;
-            Content = model.Content;
-            PostDate = model.PostDate;
-            AuthorID = authorId;
-            ForumID = forumId;
-            IsActive = true;
-            IsPinned = model.IsPinned;
-            IsLocked = model.IsLocked;
-        }
-
-        public void UpdateFromViewModel(ThreadEditViewModel viewModel)
-        {
-            Content = viewModel.Content;
-            Convert.FromBase64String(viewModel.Version).CopyTo(Version, 0);
-        }
-
-        public void DeleteThread(ForumsUnitOfWork db)
-        {
-            IsActive = false;
-            foreach (ThreadReply reply in Replies)
-            {
-                reply.IsActive = false;
-                db.ThreadReplyRepository.Update(reply);
-            }
-            db.ThreadRepository.Update(this);
-        }
-
         #region Database columns
         [Key]
         public int ID { get; set; }
@@ -86,9 +57,46 @@ namespace Selama.Areas.Forums.Models
         #region Navigation properties
         [InverseProperty("Threads")]
         public virtual Forum Forum { get; set; }
+        
         public virtual ApplicationUser Author { get; set; }
+        
         public virtual ICollection<ThreadReply> Replies { get; set; }
         #endregion
+
+        public Thread() { }
+        public Thread(ThreadViewModel model, string authorId, int forumId)
+        {
+            Title = model.Title;
+            Content = model.Content;
+            PostDate = model.PostDate;
+            AuthorID = authorId;
+            ForumID = forumId;
+            IsActive = true;
+            IsPinned = model.IsPinned;
+            IsLocked = model.IsLocked;
+        }
+
+        public IEnumerable<ThreadReply> GetReplies()
+        {
+            return Replies.Where(r => r.IsActive);
+        }
+
+        public void UpdateFromViewModel(ThreadEditViewModel viewModel)
+        {
+            Content = viewModel.Content;
+            Convert.FromBase64String(viewModel.Version).CopyTo(Version, 0);
+        }
+
+        public void DeleteThread(ForumsUnitOfWork db)
+        {
+            IsActive = false;
+            foreach (ThreadReply reply in Replies)
+            {
+                reply.IsActive = false;
+                db.ThreadReplyRepository.Update(reply);
+            }
+            db.ThreadRepository.Update(this);
+        }
 
         public static bool CanPinOrLockThreads(IPrincipal User)
         {

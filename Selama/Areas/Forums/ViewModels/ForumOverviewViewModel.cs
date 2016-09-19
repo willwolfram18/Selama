@@ -9,16 +9,30 @@ namespace Selama.Areas.Forums.ViewModels
 {
     public class ForumOverviewViewModel
     {
+        #region Instance properties
+        public int ID { get; set; }
+
+        public string Title { get; set; }
+
+        [Display(Name = "Subtitle")]
+        public string SubTitle { get; set; }
+
+        [Display(Name = "Threads")]
+        public int NumThreads { get; set; }
+
+        public LastForumPostViewModel LastPost { get; set; }
+        #endregion
+
         public ForumOverviewViewModel(Forum forum)
         {
             ID = forum.ID;
             Title = forum.Title;
             SubTitle = forum.SubTitle;
-            NumThreads = forum.Threads.Count();
+            NumThreads = forum.GetThreads().Count();
 
             Thread lastPost = null;
             DateTime? lastPostDate = null;
-            foreach (Thread thread in forum.Threads.Where(t => t.IsActive))
+            foreach (Thread thread in forum.GetThreads())
             {
                 DateTime threadPostDate = thread.PostDate;
                 if (thread.Replies.Count > 0)
@@ -43,18 +57,5 @@ namespace Selama.Areas.Forums.ViewModels
                 };
             }
         }
-
-        public int ID { get; set; }
-
-        public string Title { get; set; }
-
-        [Display(Name = "Subtitle")]
-        public string SubTitle { get; set; }
-
-        [Display(Name = "Threads")]
-        public int NumThreads { get; set; }
-
-        public LastForumPostViewModel LastPost { get; set; }
-        // TODO: Add LastPost attribute
     }
 }

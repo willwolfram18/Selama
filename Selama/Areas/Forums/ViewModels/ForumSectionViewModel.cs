@@ -10,6 +10,12 @@ namespace Selama.Areas.Forums.ViewModels
 {
     public class ForumSectionViewModel
     {
+        #region Instance properties
+        public string Title { get; set; }
+
+        public IEnumerable<ForumOverviewViewModel> Forums { get; set; }
+        #endregion
+
         public ForumSectionViewModel(ForumSection section)
         {
             Title = section.Title;
@@ -17,9 +23,5 @@ namespace Selama.Areas.Forums.ViewModels
                 f => new ForumOverviewViewModel(f)
             );
         }
-
-        public string Title { get; set; }
-
-        public IEnumerable<ForumOverviewViewModel> Forums { get; set; }
     }
 }

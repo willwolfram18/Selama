@@ -2,7 +2,7 @@
 import $ = require("jquery");
 import bootstrap = require("bootstrap");
 
-export function Run()
+export function Setup()
 {
     bootstrap; // hacky way to force bootstrap dependency
     $("td.thread-title").on("mousemove", onThreadTitleMouseMove)
@@ -13,10 +13,19 @@ export function Run()
 
 function onThreadTitleMouseMove(e: JQueryMouseEventObject): void
 {
+    let $target: JQuery = $(e.target);
+    if ($target.is("a"))
+    {
+        // Update target to point to thread title parent
+        e.target = $target.closest("td.thread-title")[0];
+        onThreadTitleMouseLeave(e);
+        return;
+    }
+
     let pageYOffset: number = -14;
     let pageXOffest: number = 6;
     let arrowTopPos: string = "14px";
-    $(e.target).popover("show");
+    $target.popover("show");
     // offset popover position to reduce flashing on mousemove
     // adjust .arrow top to align with cursor position
     $(".popover").css({ top: e.pageY + pageYOffset, left: e.pageX + pageXOffest })
@@ -25,7 +34,8 @@ function onThreadTitleMouseMove(e: JQueryMouseEventObject): void
 
 function onThreadTitleMouseLeave(e: JQueryMouseEventObject): void
 {
-    $(e.target).popover("hide");
+    let $target = $(e.target);
+    $target.popover("hide");
 }
 
 function initPopover(index: number, popoverElem: Element): any

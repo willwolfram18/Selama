@@ -9,43 +9,11 @@ namespace Selama.Areas.Forums.ViewModels
 {
     public class ThreadOverviewViewModel
     {
-        private int _previewLen = 270;
+        #region Class constants
+        private const int MAX_PREVIEW_LEN = 270;
+        #endregion
 
-        public ThreadOverviewViewModel(Thread thread)
-        {
-            ID = thread.ID;
-            Title = thread.Title;
-            NumReplies = thread.Replies.Where(r => r.IsActive).Count();
-            IsLocked = thread.IsLocked;
-            IsPinned = thread.IsPinned;
-
-            Preview = Util.Markdown.Transform(thread.Content);
-            Preview = Regex.Replace(Preview, "<.*?>", "");
-            Preview = Preview.Substring(0, (Preview.Length < _previewLen ? Preview.Length : _previewLen));
-            if (Preview.Length == _previewLen)
-            {
-                Preview += "...";
-            }
-            
-            if (thread.Replies.Count > 0)
-            {
-                ThreadReply lastPost = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault();
-                LastPost = new LastThreadPostViewModel
-                {
-                    Author = lastPost.Author.UserName,
-                    PostDate = lastPost.PostDate
-                };
-            }
-            else
-            {
-                LastPost = new LastThreadPostViewModel
-                {
-                    Author = thread.Author.UserName,
-                    PostDate = thread.PostDate,
-                };
-            }
-        }
-
+        #region Instance properties
         public int ID { get; set; }
 
         public string Title { get; set; }
@@ -60,5 +28,52 @@ namespace Selama.Areas.Forums.ViewModels
         public string Preview { get; set; }
 
         public LastThreadPostViewModel LastPost { get; set; }
+        #endregion
+
+        public ThreadOverviewViewModel(Thread thread)
+        {
+            ID = thread.ID;
+            Title = thread.Title;
+            NumReplies = thread.GetReplies().Count();
+            IsLocked = thread.IsLocked;
+            IsPinned = thread.IsPinned;
+
+            InitThreadPreview(thread);
+            SetLastPost(thread);
+        }
+
+        private void InitThreadPreview(Thread thread)
+        {
+            // Transform content to HTML, and strip HTML from preview
+            Preview = Util.Markdown.Transform(thread.Content);
+            Preview = Regex.Replace(Preview, "<.*?>", "");
+
+            int previewLength = (Preview.Length < MAX_PREVIEW_LEN ? Preview.Length : MAX_PREVIEW_LEN);
+            Preview = Preview.Substring(0, previewLength);
+            if (Preview.Length == MAX_PREVIEW_LEN)
+            {
+                Preview += "...";
+            }
+        }
+
+        private void SetLastPost(Thread thread)
+        {
+            // Set last post to thread initially, overwrite when a reply was added
+            LastPost = new LastThreadPostViewModel
+            {
+                Author = thread.Author.UserName,
+                PostDate = thread.PostDate,
+            };
+
+            if (thread.Replies.Count > 0)
+            {
+                ThreadReply lastPost = thread.Replies.OrderByDescending(r => r.PostDate).FirstOrDefault();
+                LastPost = new LastThreadPostViewModel
+                {
+                    Author = lastPost.Author.UserName,
+                    PostDate = lastPost.PostDate
+                };
+            }
+        }
     }
 }

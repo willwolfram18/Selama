@@ -48,5 +48,10 @@ namespace Selama.Areas.Forums.Models
                 return Threads.Where(t => t.IsPinned && t.IsActive).OrderByDescending(t => t.PostDate).ToList();
             }
         }
+
+        public IEnumerable<Thread> GetThreads()
+        {
+            return Threads.Where(t => t.IsActive);
+        }
     }
 }

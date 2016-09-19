@@ -11,35 +11,7 @@ namespace Selama.Areas.Forums.ViewModels
 {
     public class ForumViewModel
     {
-        public ForumViewModel(Forum forum, int pageSize, int currentPage)
-        {
-            ID = forum.ID;
-            Title = forum.Title;
-            SubTitle = forum.SubTitle;
-
-            var activeThreads = forum.Threads.Where(t => t.IsActive);
-
-            _pageSize = pageSize;
-            _currentPage = currentPage;
-            SetNumPagesAndCurrentPage(forum, activeThreads.Count());
-
-            #region Get threads
-            Threads = activeThreads.Skip(StartingIndex).Take(_pageSize).ToListOfDifferentType(
-                t => new ThreadOverviewViewModel(t)
-            ).OrderByDescending(t => t.IsPinned)
-            .ThenByDescending(t => t.LastPost.PostDate);
-            #endregion
-        }
-
-        private void SetNumPagesAndCurrentPage(Forum forum, int numActiveThreads)
-        {
-            NumPages = (int)Math.Ceiling((1.0 * numActiveThreads) / _pageSize);
-            if (StartingIndex >= numActiveThreads)
-            {
-                _currentPage = NumPages - 1;
-            }
-        }
-
+        #region Instance properties
         public int ID { get; set; }
 
         public string Title { get; set; }
@@ -96,5 +68,35 @@ namespace Selama.Areas.Forums.ViewModels
 
         public int NumPages { get; set; }
         #endregion
+        #endregion
+
+        public ForumViewModel(Forum forum, int pageSize, int currentPage)
+        {
+            ID = forum.ID;
+            Title = forum.Title;
+            SubTitle = forum.SubTitle;
+
+            var activeThreads = forum.Threads.Where(t => t.IsActive);
+
+            _pageSize = pageSize;
+            _currentPage = currentPage;
+            SetNumPagesAndCurrentPage(forum, activeThreads.Count());
+
+            #region Get threads
+            Threads = activeThreads.Skip(StartingIndex).Take(_pageSize).ToListOfDifferentType(
+                t => new ThreadOverviewViewModel(t)
+            ).OrderByDescending(t => t.IsPinned)
+            .ThenByDescending(t => t.LastPost.PostDate);
+            #endregion
+        }
+
+        private void SetNumPagesAndCurrentPage(Forum forum, int numActiveThreads)
+        {
+            NumPages = (int)Math.Ceiling((1.0 * numActiveThreads) / _pageSize);
+            if (StartingIndex >= numActiveThreads)
+            {
+                _currentPage = NumPages - 1;
+            }
+        }
     }
 }
