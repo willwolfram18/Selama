@@ -40,7 +40,7 @@ namespace Selama.Controllers
                 ModelState.AddModelError("", "The data was updated before your changes could be saved.");
                 foreach (var entity in concurrencyException.Entries)
                 {
-                    await entity.ReloadAsync();
+                    entity.Reload();
                 }
             }
             catch (Exception ex)

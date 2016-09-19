@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Owin.Security.Providers.BattleNet;
+using Selama.Common.Utility;
 using Selama.Models;
 using System;
 using System.Configuration;
@@ -71,8 +72,8 @@ namespace Selama
 
             app.UseBattleNetAuthentication(new BattleNetAuthenticationOptions
             {
-                ClientId = ConfigurationManager.AppSettings["BattleNetOAuthClientId"],
-                ClientSecret = ConfigurationManager.AppSettings["BattleNetOAuthClientSecret"],
+                ClientId = Util.BattleNetApiClientId,
+                ClientSecret = Util.BattleNetApiClientSecret,
                 Region = Region.Us,
                 Caption = "Battle.net"
             });

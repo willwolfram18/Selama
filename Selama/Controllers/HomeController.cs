@@ -1,6 +1,7 @@
 ﻿using BattleNetApi.Api;
 using BattleNetApi.Objects.WoW;
 using Microsoft.AspNet.Identity;
+using Selama.Common.Utility;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,8 +17,6 @@ namespace Selama.Controllers
     {
         public ViewResult Index()
         {
-            BattleNetApiClient client = new BattleNetApiClient(ConfigurationManager.AppSettings["BattleNetOAuthClientId"]);
-
             return View();
         }
 
@@ -29,6 +28,14 @@ namespace Selama.Controllers
         public ViewResult Join()
         {
             return View();
+        }
+
+        public async Task<ActionResult> GetGuildNews()
+        {
+            BattleNetApiClient client = new BattleNetApiClient(Util.BattleNetApiClientId);
+            Guild guild = await client.WowCommunityApi.GetGuildProfileAsync(Util.WowRealmName, Util.WowGuildName, "news");
+
+            return null;
         }
 
         public ActionResult Error(string errorMsg = null)
