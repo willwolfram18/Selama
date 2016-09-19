@@ -1,4 +1,5 @@
 ﻿using BattleNetApi.Common;
+using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace BattleNetApi.Objects.WoW
     public class GuildNews
     {
         #region Properties
-        public string Type { get; private set; }
+        public GuildNewsType Type { get; private set; }
 
         public string CharacterName { get; private set; }
 
@@ -40,7 +41,7 @@ namespace BattleNetApi.Objects.WoW
 
         protected GuildNews(JObject guildNewsJson)
         {
-            Type = guildNewsJson["type"].Value<string>();
+            Type = Util.ParseEnum<GuildNewsType>(guildNewsJson, "type");
             Context = guildNewsJson["context"].Value<string>();
             Timestamp = Util.BuildUnixTimestamp(guildNewsJson["timestamp"].Value<long>());
             // TODO: Watch for character not being present in json

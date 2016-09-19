@@ -1,5 +1,7 @@
 ﻿using BattleNetApi.Api;
+using BattleNetApi.Objects.WoW;
 using Selama.Areas.Forums.Models.DAL;
+using Selama.Common.ExtensionMethods;
 using Selama.Common.Utility;
 using Selama.ViewModels.Home;
 using System;
@@ -23,20 +25,21 @@ namespace Selama.Models.Home.DAL
 
         public async Task<List<GuildNewsViewModel>> GetGuildNews()
         {
-            Task battleNetNews = GetBattleNetNews();
+            Task<List<GuildNewsViewModel>> battleNetNews = GetBattleNetNews();
 
             List<GuildNewsViewModel> result = new List<GuildNewsViewModel>();
-
             battleNetNews.Wait();
+            result.AddRange(battleNetNews.Result);
 
+            result.Sort();
             return result;
         }
 
         private async Task<List<GuildNewsViewModel>> GetBattleNetNews()
         {
-            Task battleNetNews = _battleNetClient.WowCommunityApi.GetGuildProfileAsync(Util.WowRealmName, Util.WowGuildName, "news");
+            Guild guildProfile = await _battleNetClient.WowCommunityApi.GetGuildProfileAsync(Util.WowRealmName, Util.WowGuildName, "news");
 
-            return null;
+            return guildProfile.News.ToListOfDifferentType(GuildNewsViewModel.BuildModelFromBattleNetGuildNews);
         }
 
 

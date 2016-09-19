@@ -64,6 +64,7 @@
     <Compile Include="Common\ExtensionMethods\JObjectExtensionMethods.cs" />
     <Compile Include="Objects\WoW\DataResources\ItemClassDataResource.cs" />
     <Compile Include="Objects\WoW\DataResources\ItemSubClassDataResource.cs" />
+    <Compile Include="Objects\WoW\Enums\GuildNewsType.cs" />
     <Compile Include="Objects\WoW\Enums\ItemQuality.cs" />
     <Compile Include="Objects\WoW\Enums\PowerType.cs" />
     <Compile Include="Objects\WoW\Enums\Role.cs" />
