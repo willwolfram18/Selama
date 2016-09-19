@@ -2,6 +2,26 @@
     ViewBag.Title = "Home Page";
 }
 
+@section Scripts {
+    <script type="text/javascript">
+        require(["jquery", "Core/SpinShield"], function ($, SpinShield)
+        {
+            $.ajax({
+                url: '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })',
+                type: "GET",
+                beforeSend: function ()
+                {
+                    SpinShield.raiseShield("#GuildNewsPanel .panel-body");
+                },
+                complete: function ()
+                {
+                    SpinShield.lowerShield("#GuildNewsPanel .panel-body");
+                }
+            });
+        });
+    </script>
+}
+
 <div class="jumbotron">
     <h1>Selama Ashal'anore!</h1>
     <p class="lead">
@@ -39,11 +59,12 @@
     <div class="col-sm-12 col-md-12 col-lg-12">
         <div id="GuildNewsPanel" class="panel panel-default">
             <div class="panel-heading">
-                Guild News
+                Guild News Feed
             </div>
-            <div id="GuildNewsPanelBody" class="panel-body">
+            <div class="panel-body">
+                
                 <table class="table table-striped guild-news-table">
-
+                    
                 </table>
             </div>
         </div>

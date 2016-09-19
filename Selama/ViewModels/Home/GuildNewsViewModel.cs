@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Selama.ViewModels.Home
 {
-    public class GuildNewsViewModel : IComparable<GuildNewsViewModel>
+    public class GuildNewsFeedViewModel : IComparable<GuildNewsFeedViewModel>
     {
         private static BattleNetApiClient _bnetApi = new BattleNetApiClient(Util.BattleNetApiClientId);
 
@@ -14,33 +14,34 @@ namespace Selama.ViewModels.Home
 
         public string Content { get; private set; }
 
-        public static GuildNewsViewModel BuildModelFromBattleNetGuildNews(GuildNews battleNetNews)
+        public async static Task<GuildNewsFeedViewModel> BuildFromBattleNetGuildNews(GuildNews battleNetNews)
         {
             switch (battleNetNews.Type)
             {
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemLoot:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemPurchase:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemCraft:
-                    return BuildGuildItemNews(battleNetNews as GuildNewsPlayerItem);
+                    return await BuildGuildItemNews(battleNetNews as GuildNewsPlayerItem);
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.PlayerAchievement:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.GuildAchievement:
-                    return null;
+                    return BuildGuildAchievementNews(battleNetNews as GuildNewsAchievement);
                 default:
+                    return new GuildNewsFeedViewModel { Timestamp = battleNetNews.Timestamp, Content = "Sample" };
                     throw new NotImplementedException(string.Format("No action defined for GuildNewsType of {0}", battleNetNews.Type.ToString()));
             }
         }
 
-        private static GuildNewsViewModel BuildGuildItemNews(GuildNewsPlayerItem battleNetNews)
+        private async static Task<GuildNewsFeedViewModel> BuildGuildItemNews(GuildNewsPlayerItem itemNews)
         {
-            Task<Item> itemTask = _bnetApi.WowCommunityApi.GetItemAsync(battleNetNews.ItemId);
-            string itemAcquisitionAction = DetermineItemNewsAction(battleNetNews.Type);
-            
-            itemTask.Wait(); // need to wait for item response before building message
+            var itemGetTask = _bnetApi.WowCommunityApi.GetItemAsync(itemNews.ItemId);
+            string itemAcquisitionAction = DetermineItemNewsAction(itemNews.Type);
 
-            return new GuildNewsViewModel
+            var item = await itemGetTask;
+
+            return new GuildNewsFeedViewModel
             {
-                Timestamp = battleNetNews.Timestamp,
-                Content = string.Format("{0} {1} {2}.", battleNetNews.CharacterName, itemAcquisitionAction, itemTask.Result.Name),
+                Timestamp = itemNews.Timestamp,
+                Content = string.Format("{0} {1} {2}.", itemNews.CharacterName, itemAcquisitionAction,item.Name),
             };
         }
 
@@ -55,13 +56,36 @@ namespace Selama.ViewModels.Home
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemCraft:
                     return "crafted";
                 default:
-                    throw new NotImplementedException(string.Format("No action defined for GuildNewsType of {0}", battleNetNews.Type.ToString()));
+                    throw new NotImplementedException(string.Format("No action defined for GuildNewsType of {0}", guildNewsType.ToString()));
             }
         }
 
-        public int CompareTo(GuildNewsViewModel other)
+        private static GuildNewsFeedViewModel BuildGuildAchievementNews(GuildNewsAchievement achievementNews)
         {
-            return Timestamp.CompareTo(other.Timestamp);
+            string achievementEarner = DetermineAchievementEarner(achievementNews);
+            return new GuildNewsFeedViewModel
+            {
+                Timestamp = achievementNews.Timestamp,
+                Content = string.Format("{0} earned {1}.", achievementEarner, achievementNews.Achievement.Title),
+            };
+        }
+
+        private static string DetermineAchievementEarner(GuildNewsAchievement achievementNews)
+        {
+            switch (achievementNews.Type)
+            {
+                case BattleNetApi.Objects.WoW.Enums.GuildNewsType.PlayerAchievement:
+                    return achievementNews.CharacterName;
+                case BattleNetApi.Objects.WoW.Enums.GuildNewsType.GuildAchievement:
+                    return Util.WowGuildName;
+                default:
+                    throw new NotImplementedException(string.Format("No case implemented for guild news type {0}", achievementNews.Type.ToString()));
+            }
+        }
+
+        public int CompareTo(GuildNewsFeedViewModel other)
+        {
+            return -(Timestamp.CompareTo(other.Timestamp));
         }
     }
 }

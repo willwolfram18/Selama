@@ -23,23 +23,24 @@ namespace Selama.Models.Home.DAL
             _forumsDb = new ForumsUnitOfWork();
         }
 
-        public async Task<List<GuildNewsViewModel>> GetGuildNews()
+        public async Task<List<GuildNewsFeedViewModel>> GetGuildNews()
         {
-            Task<List<GuildNewsViewModel>> battleNetNews = GetBattleNetNews();
+            var battleNetNews = GetBattleNetNews();
+            
 
-            List<GuildNewsViewModel> result = new List<GuildNewsViewModel>();
-            battleNetNews.Wait();
-            result.AddRange(battleNetNews.Result);
+            List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
+            
+            result.AddRange(await battleNetNews);
 
             result.Sort();
             return result;
         }
 
-        private async Task<List<GuildNewsViewModel>> GetBattleNetNews()
+        private async Task<List<GuildNewsFeedViewModel>> GetBattleNetNews()
         {
             Guild guildProfile = await _battleNetClient.WowCommunityApi.GetGuildProfileAsync(Util.WowRealmName, Util.WowGuildName, "news");
 
-            return guildProfile.News.ToListOfDifferentType(GuildNewsViewModel.BuildModelFromBattleNetGuildNews);
+            return await guildProfile.News.Skip(0).Take(25).ToListOfDifferentType(GuildNewsFeedViewModel.BuildFromBattleNetGuildNews);
         }
 
 

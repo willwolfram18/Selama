@@ -5,7 +5,7 @@ namespace BattleNetApi.Objects.WoW
     public class BonusChanceStat
     {
         #region Properties
-        public int Stat { get; private set; }
+        public string Stat { get; private set; }
 
         public int Delta { get; private set; }
         #endregion
@@ -14,7 +14,7 @@ namespace BattleNetApi.Objects.WoW
         {
             return new BonusChanceStat
             {
-                Stat = bonusChanceStatJson["statId"].Value<int>(),
+                Stat = bonusChanceStatJson["statId"].Value<string>(),
                 Delta = bonusChanceStatJson["delta"].Value<int>(),
             };
         }

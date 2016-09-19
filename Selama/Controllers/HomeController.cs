@@ -24,9 +24,9 @@ namespace Selama.Controllers
             return View();
         }
 
-        public async Task<ActionResult> GetGuildNews()
+        public async Task<JsonResult> GetGuildNewsFeed()
         {
-            List<GuildNewsViewModel> result = new List<GuildNewsViewModel>();
+            List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
             using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
             {
                 result = await db.GetGuildNews();
