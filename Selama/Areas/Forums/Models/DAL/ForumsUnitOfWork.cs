@@ -50,7 +50,7 @@ namespace Selama.Areas.Forums.Models.DAL
             GuildNewsFeedItem news = new GuildNewsFeedItem
             {
                 Timestamp = thread.PostDate,
-                Content = string.Format("{0} posted <a href='{1}'>{2}</a>.", thread.Author.UserName,
+                Content = string.Format("{0} posted <a target='_blank' href='{1}'>{2}</a>.", thread.Author.UserName,
                     threadUrl, thread.Title),
             };
             GuildNewsFeedRepository.Add(news);

@@ -8,5 +8,6 @@ namespace Selama.ViewModels.Home
     public enum GuildNewsFeedType
     {
         BattleNet,
+        Forums
     }
 }

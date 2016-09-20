@@ -1,6 +1,7 @@
 ﻿using BattleNetApi.Api;
 using BattleNetApi.Objects.WoW;
 using Selama.Common.Utility;
+using Selama.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -10,8 +11,11 @@ namespace Selama.ViewModels.Home
 {
     public class GuildNewsFeedViewModel : IComparable<GuildNewsFeedViewModel>
     {
+        #region Class properties
         private static BattleNetApiClient _bnetApi = new BattleNetApiClient(Util.BattleNetApiClientId);
+        #endregion
 
+        #region Instance properties
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime Timestamp { get; private set; }
@@ -20,8 +24,31 @@ namespace Selama.ViewModels.Home
         public MvcHtmlString Content { get; private set; }
 
         public GuildNewsFeedType Type { get; private set; }
+        #endregion
 
-        public static GuildNewsFeedViewModel BuildFromBattleNetGuildNews(GuildNews battleNetNews)
+        public static GuildNewsFeedViewModel BuildGuildNewsFeedItem(object newsSource)
+        {
+            if (newsSource == null)
+            {
+                throw new ArgumentNullException("newsSource");
+            }
+
+            if (newsSource is GuildNews)
+            {
+                return BuildFromBattleNetGuildNews(newsSource as GuildNews);
+            }
+            else if (newsSource is GuildNewsFeedItem)
+            {
+                return BuildFromForumNews(newsSource as GuildNewsFeedItem);
+            }
+            else
+            {
+                throw new NotImplementedException("Nothing implemented for type " + newsSource.GetType());
+            }
+        }
+
+        #region Build Battle.net News
+        private static GuildNewsFeedViewModel BuildFromBattleNetGuildNews(GuildNews battleNetNews)
         {
             GuildNewsFeedViewModel result;
             switch (battleNetNews.Type)
@@ -98,6 +125,19 @@ namespace Selama.ViewModels.Home
                     throw new NotImplementedException(string.Format("No case implemented for guild news type {0}", achievementNews.Type.ToString()));
             }
         }
+        #endregion
+
+        #region Build forum news
+        private static GuildNewsFeedViewModel BuildFromForumNews(GuildNewsFeedItem forumNews)
+        {
+            return new GuildNewsFeedViewModel
+            {
+                Timestamp = forumNews.Timestamp,
+                Content = new MvcHtmlString(forumNews.Content),
+                Type = GuildNewsFeedType.Forums
+            };
+        }
+        #endregion
 
         public int CompareTo(GuildNewsFeedViewModel other)
         {
