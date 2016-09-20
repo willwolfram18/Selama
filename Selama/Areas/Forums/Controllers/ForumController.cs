@@ -117,21 +117,15 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Index");
             }
 
-            thread.PostDate = DateTime.Now;
             thread.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
-                Thread dbThread = new Thread(thread, User.Identity.GetUserId(), id);
-                _db.ThreadRepository.Add(dbThread);
-
-                // Only admins and forum mods can pin and lock threads
-                if (!Models.Thread.CanPinOrLockThreads(User))
-                {
-                    dbThread.IsLocked = dbThread.IsPinned = false;
-                }
-
+                Thread dbThread = _db.CreateNewThread(thread, User, id);
+                
                 if (await _db.TrySaveChangesAsync())
                 {
+                    await _db.AddNewThreadToNewsFeed(dbThread,
+                        Url.Action("Thread", new { id = dbThread.ID }));
                     return RedirectToAction("Thread", new { id = dbThread.ID });
                 }
             }
