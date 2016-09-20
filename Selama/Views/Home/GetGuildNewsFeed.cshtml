@@ -7,6 +7,11 @@
         iconizelinks: false,
         renamelinks: true,
     };
+
+    $(document).ready(function ()
+    {
+        $("[data-toggle='tooltip']").tooltip();
+    })
 </script>
 
 <table class="table table-striped guild-news-table">
@@ -16,8 +21,10 @@
             <td>
                 @item.Content
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
+            <td style="text-align: right;">
+                <span data-toggle="tooltip" data-placement="bottom" title="@Html.DisplayFor(modelItem => item.Timestamp)">
+                    @item.Timestamp.ToRelativeDateTimeString()
+                </span>
             </td>
         </tr>
     }

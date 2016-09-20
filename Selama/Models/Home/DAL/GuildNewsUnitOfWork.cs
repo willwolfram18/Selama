@@ -6,9 +6,7 @@ using Selama.Common.Utility;
 using Selama.ViewModels.Home;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Selama.Models.Home.DAL
 {
@@ -40,7 +38,9 @@ namespace Selama.Models.Home.DAL
         {
             Guild guildProfile = await _battleNetClient.WowCommunityApi.GetGuildProfileAsync(Util.WowRealmName, Util.WowGuildName, "news");
 
-            return guildProfile.News.Skip(0).Take(25).ToListOfDifferentType(GuildNewsFeedViewModel.BuildFromBattleNetGuildNews);
+            var result = guildProfile.News.ToListOfDifferentType(GuildNewsFeedViewModel.BuildFromBattleNetGuildNews);
+            result.Sort();
+            return result;
         }
 
 

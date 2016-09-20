@@ -229,3 +229,29 @@ blockquote {
   .table.table-fixed-col.active tr:nth-of-type(odd) td {
     background-color: #f9f9f9; }
 
+#socialLoginList p .btn.btn-social:not(:first-child) {
+  margin-top: 10px; }
+
+#GuildNewsPanel .panel-body {
+  padding: 0;
+  height: 200px;
+  overflow-y: scroll; }
+  #GuildNewsPanel .panel-body .table {
+    margin-bottom: 0; }
+
+.item::before,
+.achievement::before {
+  content: "[";
+  position: relative; }
+
+.item::after,
+.achievement::after {
+  content: "]";
+  position: relative; }
+
+.item.q2 {
+  color: #4cae4c !important; }
+
+.achievement {
+  color: #ffb100; }
+

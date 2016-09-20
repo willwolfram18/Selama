@@ -381,3 +381,25 @@ blockquote {
         }
     }
 }
+
+.item,
+.achievement {
+    &::before {
+        content: "[";
+        position: relative;
+    }
+    &::after {
+        content: "]";
+        position: relative;
+    }
+}
+
+.item {
+    &.q2 {
+        color: #4cae4c!important;
+    }
+}
+
+.achievement {
+    color: #ffb100;
+}

@@ -2,6 +2,7 @@
 using BattleNetApi.Objects.WoW;
 using Selama.Common.Utility;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -11,6 +12,8 @@ namespace Selama.ViewModels.Home
     {
         private static BattleNetApiClient _bnetApi = new BattleNetApiClient(Util.BattleNetApiClientId);
 
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:g}")]
         public DateTime Timestamp { get; private set; }
 
         [AllowHtml]
@@ -35,30 +38,21 @@ namespace Selama.ViewModels.Home
 
         private static GuildNewsFeedViewModel BuildGuildItemNews(GuildNewsPlayerItem itemNews)
         {
-            string itemAcquisitionAction = DetermineItemNewsAction(itemNews.Type);
-
             return new GuildNewsFeedViewModel
             {
                 Timestamp = itemNews.Timestamp,
                 Content = new MvcHtmlString(
-                    string.Format("{0} {1} <a href='#' class='item' rel='item={2}'></a>.", itemNews.CharacterName, itemAcquisitionAction, itemNews.ItemId)
+                    string.Format("{0} obtained {1}.", itemNews.CharacterName, ItemTag(itemNews))
                 ),
             };
         }
 
-        private static string DetermineItemNewsAction(BattleNetApi.Objects.WoW.Enums.GuildNewsType guildNewsType)
+        private static string ItemTag(GuildNewsPlayerItem itemNews)
         {
-            switch (guildNewsType)
-            {
-                case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemLoot:
-                    return "looted";
-                case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemPurchase:
-                    return "purchased";
-                case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemCraft:
-                    return "crafted";
-                default:
-                    throw new NotImplementedException(string.Format("No action defined for GuildNewsType of {0}", guildNewsType.ToString()));
-            }
+            string baseTag = "<a href = '//wowhead.com/item={0}' class='item' target='_blank' rel='item={1}'>Item {0}</a>";
+            string relAttribute = "item=" + itemNews.ItemId.ToString();
+            relAttribute += "&" + string.Join(":", itemNews.BonusLists);
+            return string.Format(baseTag, itemNews.ItemId, relAttribute);
         }
 
         private static GuildNewsFeedViewModel BuildGuildAchievementNews(GuildNewsAchievement achievementNews)
@@ -68,9 +62,21 @@ namespace Selama.ViewModels.Home
             {
                 Timestamp = achievementNews.Timestamp,
                 Content = new MvcHtmlString(
-                    string.Format("{0} earned {1}.", achievementEarner, achievementNews.Achievement.Title)
+                    string.Format("{0} earned {1} for {2} points.", achievementEarner, AchievementTag(achievementNews), achievementNews.Achievement.Points)
                 ),
             };
+        }
+
+        private static string AchievementTag(GuildNewsAchievement achievementNews)
+        {
+            string baseTag = "<a class='achievement' href='//wowhead.com/achievement={0}' rel='achievement={0}&who={1}&when={2}' target='_blank'>Achievement {0}</a>";
+            return string.Format(baseTag, achievementNews.Achievement.Id, 
+                achievementNews.CharacterName, ConverDateTimeToUnixMilliseconds(achievementNews.Timestamp));
+        }
+
+        private static long ConverDateTimeToUnixMilliseconds(DateTime timestamp)
+        {
+            return timestamp.AddMilliseconds(-(new DateTime(1970, 1, 1).Millisecond)).Millisecond;
         }
 
         private static string DetermineAchievementEarner(GuildNewsAchievement achievementNews)
