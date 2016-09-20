@@ -44,6 +44,16 @@ namespace Selama.Models.Home.DAL
             return result;
         }
 
+        private List<GuildNewsFeedViewModel> GetPageItems(List<List<GuildNewsFeedViewModel>> newsSources, int pageNumber, int pageSize)
+        {
+            if (pageNumber < 0 || newsSources == null || newsSources.Count == 0)
+            {
+                return new List<GuildNewsFeedViewModel>();
+            }
+
+            return null;
+        }
+
         public void Dispose()
         {
             _forumsDb.Dispose();

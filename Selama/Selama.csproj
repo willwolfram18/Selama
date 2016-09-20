@@ -353,10 +353,16 @@
     <Compile Include="Migrations\201607300057491_StringLengthRequirements.Designer.cs">
       <DependentUpon>201607300057491_StringLengthRequirements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609201516033_GuildNewsFeed.cs" />
+    <Compile Include="Migrations\201609201516033_GuildNewsFeed.Designer.cs">
+      <DependentUpon>201609201516033_GuildNewsFeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DAL\GenericEntityRepository.cs" />
     <Compile Include="Models\DAL\GenericUnitOfWork.cs" />
+    <Compile Include="Models\DAL\GuildNewsFeedRepository.cs" />
     <Compile Include="Models\DAL\IdentityRepository.cs" />
+    <Compile Include="Models\GuildNewsFeedItem.cs" />
     <Compile Include="Models\Home\DAL\GuildNewsUnitOfWork.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\Home\GuildNewsFeedType.cs" />
@@ -634,6 +640,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607300057491_StringLengthRequirements.resx">
       <DependentUpon>201607300057491_StringLengthRequirements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609201516033_GuildNewsFeed.resx">
+      <DependentUpon>201609201516033_GuildNewsFeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

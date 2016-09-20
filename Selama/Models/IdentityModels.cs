@@ -93,6 +93,8 @@ namespace Selama.Models
             return new ApplicationDbContext();
         }
 
+        public DbSet<GuildNewsFeedItem> GuildNewsFeed { get; set; }
+
         #region Forums Area Models
         public DbSet<ForumSection> ForumSections { get; set; }
         public DbSet<Forum> Forums { get; set; }
