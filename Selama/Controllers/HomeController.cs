@@ -1,5 +1,6 @@
 ﻿using Selama.Models.Home.DAL;
 using Selama.ViewModels.Home;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -26,15 +27,22 @@ namespace Selama.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> GetGuildNewsFeed(int page = 0)
+        public async Task<ActionResult> GetGuildNewsFeed(int page = 0)
         {
-            List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
-            using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
+            try
             {
-                result = await db.GetGuildNews(page, NEWS_FEED_SIZE);
-            }
+                List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
+                using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
+                {
+                    result = await db.GetGuildNews(page, NEWS_FEED_SIZE);
+                }
 
-            return PartialView(result);
+                return PartialView(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult Error(string errorMsg = null)

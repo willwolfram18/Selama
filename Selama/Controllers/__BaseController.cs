@@ -14,6 +14,7 @@ namespace Selama.Controllers
     public class __BaseController : Controller
     {
         public const int HTTP_UNPROCESSABLE_ENTITY = 422;
+        public const int HTTP_SERVER_ERROR = 500;
 
         protected bool TrySaveChanges(DbContext db)
         {

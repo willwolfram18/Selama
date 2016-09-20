@@ -1,10 +1,10 @@
-define("Core/Main", ["require", "exports", "Core/Common", "jquery", "MarkdownDeepEditor"], function (require, exports, Core, $, MarkdownDeepEditor) {
+define("Core/Main", ["require", "exports", "Core/Common", "jquery", "MarkdownDeepEditor"], function (require, exports, Common, $, MarkdownDeepEditor) {
     "use strict";
     function Run() {
         MarkdownDeepEditor; // Force markdowndeep dependency
-        Core.generateFixedTables();
-        $(window).on("resize", "", Core.generateFixedTables);
-        $("textarea.mdd_editor").MarkdownDeep(Core.MarkdownEditorOptions);
+        Common.generateFixedTables();
+        $(window).on("resize", "", Common.generateFixedTables);
+        $("textarea.mdd_editor").MarkdownDeep(Common.MarkdownEditorOptions);
     }
     exports.Run = Run;
 });

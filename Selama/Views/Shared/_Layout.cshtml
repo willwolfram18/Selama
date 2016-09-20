@@ -18,11 +18,12 @@
         var requireJsOptions = {
             shim: {
                 "bootstrap": ["jquery"],
+                "Forums/Thread": ["MarkdownDeepEditor"],
                 "jquery.validate": ["jquery"],
-                "jquery.validate.unobtrusive": ["jquery", "jquery.validate"],
+                "jquery.validate.unobtrusive": ["jquery"@if (HttpContext.Current.IsDebuggingEnabled){<text> , "jquery.validate"</text>}],
                 "jquery.unobtrusive-ajax": ["jquery"],
                 "MarkdownDeepEditor": ["jquery"],
-                "Forums/Thread": ["MarkdownDeepEditor"]
+                "Core/Main": ["MarkdownDeepEditor"],
             },
         };
         @if (HttpContext.Current.IsDebuggingEnabled)

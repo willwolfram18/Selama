@@ -517,6 +517,7 @@
     <Content Include="Scripts\js\Forums\Thread.js" />
     <Content Include="Scripts\js\Forums\Threads.js.map" />
     <Content Include="Scripts\js\Forums\Thread.js.map" />
+    <None Include="Properties\PublishProfiles\selamaashalanore-dev - Web Deploy.pubxml" />
     <None Include="Scripts\js\jQuery\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\js\Forums\Common.js" />
     <Content Include="Scripts\js\Forums\Threads.js" />
@@ -576,6 +577,9 @@
     <Content Include="Views\Shared\_PagerPartial.cshtml" />
     <Content Include="Scripts\ts\tsconfig.json" />
     <Content Include="Views\Home\GetGuildNewsFeed.cshtml" />
+    <Content Include="Scripts\js\jQuery\jquery.validate.unobtrusive.min.js.map">
+      <DependentUpon>jquery.validate.unobtrusive.min.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

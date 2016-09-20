@@ -16,12 +16,12 @@ namespace Selama
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                RootJavaScriptFile("jQuery/jquery.validate*")
+                RootJavaScriptFile("jQuery/jquery.validate.js"),
+                RootJavaScriptFile("jQuery/jquery.validate.unobtrusive.js")
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/MarkdownDeep").Include(
-                RootJavaScriptFile("MarkdownDeepLib.min.js"),
-                RootJavaScriptFile("MarkdownDeep/MarkdownDeep.js")
+                RootJavaScriptFile("MarkdownDeep/MarkdownDeepLib.min.js")
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/requirejs").Include(
