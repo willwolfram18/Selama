@@ -19,21 +19,28 @@ namespace Selama.ViewModels.Home
         [AllowHtml]
         public MvcHtmlString Content { get; private set; }
 
+        public GuildNewsFeedType Type { get; private set; }
+
         public static GuildNewsFeedViewModel BuildFromBattleNetGuildNews(GuildNews battleNetNews)
         {
+            GuildNewsFeedViewModel result;
             switch (battleNetNews.Type)
             {
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemLoot:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemPurchase:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.ItemCraft:
-                    return BuildGuildItemNews(battleNetNews as GuildNewsPlayerItem);
+                    result = BuildGuildItemNews(battleNetNews as GuildNewsPlayerItem);
+                    break;
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.PlayerAchievement:
                 case BattleNetApi.Objects.WoW.Enums.GuildNewsType.GuildAchievement:
-                    return BuildGuildAchievementNews(battleNetNews as GuildNewsAchievement);
+                    result = BuildGuildAchievementNews(battleNetNews as GuildNewsAchievement);
+                    break;
                 default:
-                    return new GuildNewsFeedViewModel { Timestamp = battleNetNews.Timestamp, Content = new MvcHtmlString("Sample") };
-                    throw new NotImplementedException(string.Format("No action defined for GuildNewsType of {0}", battleNetNews.Type.ToString()));
+                    result = new GuildNewsFeedViewModel { Timestamp = battleNetNews.Timestamp, Content = new MvcHtmlString("Sample") };
+                    break;
             }
+            result.Type = GuildNewsFeedType.BattleNet;
+            return result;
         }
 
         private static GuildNewsFeedViewModel BuildGuildItemNews(GuildNewsPlayerItem itemNews)

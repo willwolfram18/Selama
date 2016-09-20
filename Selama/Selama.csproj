@@ -359,6 +359,7 @@
     <Compile Include="Models\DAL\IdentityRepository.cs" />
     <Compile Include="Models\Home\DAL\GuildNewsUnitOfWork.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="ViewModels\Home\GuildNewsFeedType.cs" />
     <Compile Include="ViewModels\Home\GuildNewsFeedViewModel.cs" />
     <Compile Include="ViewModels\PagerViewModel.cs" />
     <Compile Include="ViewModels\_BaseEditableViewModel.cs" />

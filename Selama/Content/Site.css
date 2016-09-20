@@ -235,7 +235,7 @@ blockquote {
 #GuildNewsPanel .panel-body {
   padding: 0;
   height: 200px;
-  overflow-y: scroll; }
+  overflow-y: auto; }
   #GuildNewsPanel .panel-body .table {
     margin-bottom: 0; }
 

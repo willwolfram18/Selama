@@ -6,6 +6,7 @@ using Selama.Common.Utility;
 using Selama.ViewModels.Home;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Selama.Models.Home.DAL
@@ -21,7 +22,7 @@ namespace Selama.Models.Home.DAL
             _forumsDb = new ForumsUnitOfWork();
         }
 
-        public async Task<List<GuildNewsFeedViewModel>> GetGuildNews()
+        public async Task<List<GuildNewsFeedViewModel>> GetGuildNews(int pageNumber, int pageSize)
         {
             var battleNetNews = GetBattleNetNews();
             
@@ -31,7 +32,7 @@ namespace Selama.Models.Home.DAL
             result.AddRange(await battleNetNews);
 
             result.Sort();
-            return result;
+            return result.Skip(pageNumber * pageSize).Take(pageSize).ToList();
         }
 
         private async Task<List<GuildNewsFeedViewModel>> GetBattleNetNews()
@@ -42,8 +43,6 @@ namespace Selama.Models.Home.DAL
             result.Sort();
             return result;
         }
-
-
 
         public void Dispose()
         {

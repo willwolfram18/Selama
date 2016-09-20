@@ -374,7 +374,7 @@ blockquote {
     .panel-body {
         padding: 0;
         height: 200px;
-        overflow-y: scroll;
+        overflow-y: auto;
 
         .table {
             margin-bottom: 0;

@@ -9,6 +9,8 @@ namespace Selama.Controllers
     [AllowAnonymous]
     public class HomeController : _BaseAuthorizeController
     {
+        private const int NEWS_FEED_SIZE = 25;
+
         public ViewResult Index()
         {
             return View();
@@ -24,12 +26,12 @@ namespace Selama.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> GetGuildNewsFeed()
+        public async Task<PartialViewResult> GetGuildNewsFeed(int page = 0)
         {
             List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
             using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
             {
-                result = await db.GetGuildNews();
+                result = await db.GetGuildNews(page, NEWS_FEED_SIZE);
             }
 
             return PartialView(result);
