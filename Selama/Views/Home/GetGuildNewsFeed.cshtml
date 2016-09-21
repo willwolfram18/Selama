@@ -1,31 +1,15 @@
 ﻿@model IEnumerable<Selama.ViewModels.Home.GuildNewsFeedViewModel>
 
-<script type="text/javascript" src="https://wow.zamimg.com/widgets/power.js"></script>
-<script type="text/javascript">
-    var wowhead_tooltips = {
-        colorlinks: true,
-        iconizelinks: false,
-        renamelinks: true,
-    };
-
-    $(document).ready(function ()
-    {
-        $("[data-toggle='tooltip']").tooltip();
-    })
-</script>
-
-<table class="table table-striped guild-news-table">
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @item.Content
-            </td>
-            <td style="text-align: right;">
-                <span data-toggle="tooltip" data-placement="bottom" title="@Html.DisplayFor(modelItem => item.Timestamp)">
-                    @item.Timestamp.ToRelativeDateTimeString()
-                </span>
-            </td>
-        </tr>
-    }
-</table>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @item.Content
+        </td>
+        <td style="text-align: right;">
+            <span data-toggle="tooltip" data-placement="bottom" title="@Html.DisplayFor(modelItem => item.Timestamp)">
+                @item.Timestamp.ToRelativeDateTimeString()
+            </span>
+        </td>
+    </tr>
+}

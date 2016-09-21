@@ -3,25 +3,49 @@
 }
 
 @section Scripts {
-
+    <script type="text/javascript" src="https://wow.zamimg.com/widgets/power.js"></script>
     <script type="text/javascript">
-        require(["jquery", "Core/SpinShield"], function ($, SpinShield)
+        var wowhead_tooltips = {
+            colorlinks: true,
+            iconizelinks: false,
+            renamelinks: true,
+        };
+
+        require(["jquery", "bootstrap", "Core/SpinShield"], function ($, bootstrap, SpinShield)
         {
-            $.ajax({
-                url: '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })',
-                type: "GET",
-                beforeSend: function ()
+            /// <param name="$" type="jQuery" />
+            $(document).ready(function ()
+            {
+                function loadGuildNewsFeedPanel(i)
                 {
-                    SpinShield.raiseShield("#GuildNewsPanel .panel-body");
-                },
-                complete: function ()
-                {
-                    SpinShield.lowerShield("#GuildNewsPanel .panel-body");
-                },
-                success: function (response)
-                {
-                    $("#GuildNewsPanel .panel-body").prepend(response);
+                    $.ajax({
+                        url: '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })',
+                        type: "GET",
+                        data: { page: i },
+                        beforeSend: function ()
+                        {
+                            SpinShield.raiseShield("#GuildNewsPanel .panel-body");
+                        },
+                        complete: function ()
+                        {
+                            SpinShield.lowerShield("#GuildNewsPanel .panel-body");
+                        },
+                        success: function (response)
+                        {
+                            $("#GuildNewsPanel .panel-body table tbody").append(response);
+                            $WowheadPower.refreshLinks();
+                            $("[data-toggle='tooltip']").tooltip();
+                        }
+                    });
                 }
+
+
+                $("[data-toggle='tooltip']").tooltip();
+                loadGuildNewsFeedPanel(0);
+                $("#GuildNewsPanel").on("click", "", function ()
+                {
+                    loadGuildNewsFeedPanel(1);
+                })
             });
         });
     </script>
@@ -69,7 +93,9 @@
                 </h4>
             </div>
             <div class="panel-body">
-
+                <table class="table table-striped">
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
