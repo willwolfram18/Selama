@@ -29,14 +29,13 @@ namespace Selama.Controllers
 
         public async Task<ActionResult> GetGuildNewsFeed(int page = 0)
         {
-                List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
-                using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
-                {
-                    result = await db.GetGuildNews(page, NEWS_FEED_SIZE);
-                }
+            List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
+            using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
+            {
+                result = await db.GetGuildNews(page, NEWS_FEED_SIZE);
+            }
 
-                return PartialView(result);
-            
+            return PartialView(result);
         }
 
         public ActionResult Error(string errorMsg = null)

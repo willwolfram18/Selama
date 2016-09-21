@@ -83,9 +83,12 @@ namespace Selama.ViewModels.Home
 
         private static string ItemTag(GuildNewsPlayerItem itemNews)
         {
-            string baseTag = "<a href = '//wowhead.com/item={0}' class='item' target='_blank' rel='item={1}'>Item {0}</a>";
-            string relAttribute = "item=" + itemNews.ItemId.ToString();
-            relAttribute += "&" + string.Join(":", itemNews.BonusLists);
+            string baseTag = "<a href = '//wowhead.com/item={0}' class='item' target='_blank' rel='{1}' >Item {0}</a>";
+            string relAttribute = "";
+            if (itemNews.BonusLists.Count > 0)
+            {
+                relAttribute = "bonus=" + string.Join(":", itemNews.BonusLists);
+            }
             return string.Format(baseTag, itemNews.ItemId, relAttribute);
         }
 
@@ -105,12 +108,13 @@ namespace Selama.ViewModels.Home
         {
             string baseTag = "<a class='achievement' href='//wowhead.com/achievement={0}' rel='achievement={0}&who={1}&when={2}' target='_blank'>Achievement {0}</a>";
             return string.Format(baseTag, achievementNews.Achievement.Id, 
-                achievementNews.CharacterName, ConverDateTimeToUnixMilliseconds(achievementNews.Timestamp));
+                achievementNews.CharacterName, ConvertDateTimeToUnixMilliseconds(achievementNews.Timestamp));
         }
 
-        private static long ConverDateTimeToUnixMilliseconds(DateTime timestamp)
+        private static long ConvertDateTimeToUnixMilliseconds(DateTime timestamp)
         {
-            return timestamp.AddMilliseconds(-(new DateTime(1970, 1, 1).Millisecond)).Millisecond;
+            TimeSpan timestampDelta = new TimeSpan(timestamp.Ticks - new DateTime(1970, 1, 1).Ticks);
+            return (long)timestampDelta.TotalMilliseconds;
         }
 
         private static string DetermineAchievementEarner(GuildNewsAchievement achievementNews)
