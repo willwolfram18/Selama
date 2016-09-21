@@ -374,6 +374,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Forums\Scripts\js\Forums.js" />
+    <Content Include="Content\Bootstrap\bootstrap-social.css" />
     <Content Include="Content\Bootstrap\bootstrap-theme.css" />
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.css" />
@@ -562,6 +563,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />

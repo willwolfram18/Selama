@@ -35,7 +35,8 @@ namespace Selama
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Forums").Include(
                 RootJavaScriptFile("Forums/Common.js"),
-                RootJavaScriptFile("Forums/Threads.js")
+                RootJavaScriptFile("Forums/Threads.js"),
+                RootJavaScriptFile("Forums/Thread.js")
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

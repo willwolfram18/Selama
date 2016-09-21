@@ -29,8 +29,6 @@ namespace Selama.Controllers
 
         public async Task<ActionResult> GetGuildNewsFeed(int page = 0)
         {
-            try
-            {
                 List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
                 using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
                 {
@@ -38,11 +36,7 @@ namespace Selama.Controllers
                 }
 
                 return PartialView(result);
-            }
-            catch (Exception ex)
-            {
-                return Json(ex, JsonRequestBehavior.AllowGet);
-            }
+            
         }
 
         public ActionResult Error(string errorMsg = null)
