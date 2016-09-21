@@ -352,16 +352,13 @@ blockquote {
     position: absolute;
     display: inline-block;
     width: auto;
+    z-index: 2;
+    /* Z-index to remove "transparency" of table with it's original*/
 
     tr {
-        td, th {
+        th {
+            /* Remove transparency of th tags */
             background-color: white;
-        }
-
-        &:nth-of-type(odd) {
-            td {
-                background-color: #f9f9f9;
-            }
         }
     }
 }
@@ -402,4 +399,9 @@ blockquote {
 
 .achievement {
     color: #ffb100;
+}
+
+.table,
+.table-responsive {
+    position:unset;
 }
