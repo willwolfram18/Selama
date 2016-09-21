@@ -17,7 +17,7 @@ define("Core/Common", ["require", "exports", "jquery"], function (require, expor
     function generateFixedTables() {
         // Remove all fixed tables previously generated
         $(".table.table-fixed-col.active").remove();
-        var $tablesToTransform = $(".table.table-fixed.col");
+        var $tablesToTransform = $(".table.table-fixed-col");
         $tablesToTransform.each(_copyTableToFixedTable);
     }
     exports.generateFixedTables = generateFixedTables;

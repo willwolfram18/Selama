@@ -25,7 +25,7 @@ export function generateFixedTables(): void
 {
     // Remove all fixed tables previously generated
     $(".table.table-fixed-col.active").remove();
-    let $tablesToTransform: JQuery = $(".table.table-fixed.col");
+    let $tablesToTransform: JQuery = $(".table.table-fixed-col");
     $tablesToTransform.each(_copyTableToFixedTable);
 }
 function _copyTableToFixedTable(index: number, elem: Element): void
