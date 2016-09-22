@@ -35,6 +35,10 @@ namespace Selama.Controllers
                 result = await db.GetGuildNews(page, NEWS_FEED_SIZE);
             }
 
+            if (result.Count == 0)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
             return PartialView(result);
         }
 

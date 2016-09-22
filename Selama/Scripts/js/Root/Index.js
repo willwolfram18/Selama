@@ -6,6 +6,7 @@ define("Root/Index", ["require", "exports", "jquery", "Core/SpinShield"], functi
             $WowheadPower = wowheadPower;
             var $guildNewsPanel = $("#GuildNewsPanel");
             $guildNewsPanel.on("click", "", { url: newsFeedUrl }, loadGuildNewsFeedPanel);
+            $guildNewsPanel.trigger("click");
         });
     }
     exports.Setup = Setup;
@@ -19,6 +20,9 @@ define("Root/Index", ["require", "exports", "jquery", "Core/SpinShield"], functi
             beforeSend: guildNewsFeedAjaxBeforeSend,
             complete: guildNewsFeedAjaxComplete,
             success: function (response) {
+                if (response === "") {
+                    return;
+                }
                 if (!isNaN(curPage)) {
                     $guildNewsPanel.attr("data-page", curPage + 1);
                 }

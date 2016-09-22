@@ -63,7 +63,7 @@ namespace Selama.ViewModels.Home
                     result = BuildGuildAchievementNews(battleNetNews as GuildNewsAchievement);
                     break;
                 default:
-                    result = new GuildNewsFeedViewModel { Timestamp = battleNetNews.Timestamp, Content = new MvcHtmlString("Sample") };
+                    result = new GuildNewsFeedViewModel { Timestamp = battleNetNews.DateTimeTimestamp, Content = new MvcHtmlString("Sample") };
                     break;
             }
             result.Type = GuildNewsFeedType.BattleNet;
@@ -74,7 +74,7 @@ namespace Selama.ViewModels.Home
         {
             return new GuildNewsFeedViewModel
             {
-                Timestamp = itemNews.Timestamp,
+                Timestamp = itemNews.DateTimeTimestamp,
                 Content = new MvcHtmlString(
                     string.Format("{0} obtained {1}.", itemNews.CharacterName, ItemTag(itemNews))
                 ),
@@ -97,7 +97,7 @@ namespace Selama.ViewModels.Home
             string achievementEarner = DetermineAchievementEarner(achievementNews);
             return new GuildNewsFeedViewModel
             {
-                Timestamp = achievementNews.Timestamp,
+                Timestamp = achievementNews.DateTimeTimestamp,
                 Content = new MvcHtmlString(
                     string.Format("{0} earned {1} for {2} points.", achievementEarner, AchievementTag(achievementNews), achievementNews.Achievement.Points)
                 ),
@@ -108,13 +108,7 @@ namespace Selama.ViewModels.Home
         {
             string baseTag = "<a class='achievement' href='//wowhead.com/achievement={0}' rel='achievement={0}&who={1}&when={2}' target='_blank'>Achievement {0}</a>";
             return string.Format(baseTag, achievementNews.Achievement.Id, 
-                achievementNews.CharacterName, ConvertDateTimeToUnixMilliseconds(achievementNews.Timestamp));
-        }
-
-        private static long ConvertDateTimeToUnixMilliseconds(DateTime timestamp)
-        {
-            TimeSpan timestampDelta = new TimeSpan(timestamp.Ticks - new DateTime(1970, 1, 1).Ticks);
-            return (long)timestampDelta.TotalMilliseconds;
+                achievementNews.CharacterName, achievementNews.BattleNetTimestamp);
         }
 
         private static string DetermineAchievementEarner(GuildNewsAchievement achievementNews)

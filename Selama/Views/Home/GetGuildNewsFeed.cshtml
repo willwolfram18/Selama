@@ -7,7 +7,7 @@
             @item.Content
         </td>
         <td style="text-align: right;">
-            <span data-toggle="tooltip" data-placement="bottom" title="@Html.DisplayFor(modelItem => item.Timestamp)">
+            <span data-toggle="tooltip" data-placement="auto bottom" data-container="#GuildNewsPanel .panel-body" title="@Html.DisplayFor(modelItem => item.Timestamp)">
                 @item.Timestamp.ToRelativeDateTimeString()
             </span>
         </td>

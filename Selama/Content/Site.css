@@ -325,10 +325,14 @@ blockquote .quote-head .quote-post-date {
 #GuildNewsPanel .panel-body {
   padding: 0;
   height: 200px;
+}
+
+#GuildNewsPanel .panel-body .table-wrapper {
+  height: 100%;
   overflow-y: auto;
 }
 
-#GuildNewsPanel .panel-body .table {
+#GuildNewsPanel .panel-body .table-wrapper .table {
   margin-bottom: 0;
 }
 

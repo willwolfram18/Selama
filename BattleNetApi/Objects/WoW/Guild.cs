@@ -67,9 +67,9 @@ namespace BattleNetApi.Objects.WoW
         #region Private methods
         private void ParseCharacters(JObject guildJson)
         {
+            Members = new List<Character>();
             if (guildJson.ContainsKey("members"))
             {
-                Members = new List<Character>();
                 foreach (JToken member in guildJson["members"].AsJEnumerable())
                 {
                     Members.Add(GuildMember.BuildGuildMemberFromJson(
@@ -83,9 +83,9 @@ namespace BattleNetApi.Objects.WoW
 
         private void ParseNews(JObject guildJson)
         {
+            News = new List<GuildNews>();
             if (guildJson.ContainsKey("news"))
             {
-                News = new List<GuildNews>();
                 foreach (var newsJson in guildJson["news"].AsJEnumerable())
                 {
                     News.Add(GuildNews.ParseGuildNews(newsJson.Value<JObject>()));

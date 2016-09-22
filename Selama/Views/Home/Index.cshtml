@@ -13,7 +13,7 @@
 
         require(["jquery", "bootstrap", "Root/Index"], function ($, bootstrap, Index)
         {
-            Index.Setup();
+            Index.Setup($WowheadPower, '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })');
         });
     </script>
 }
@@ -60,9 +60,11 @@
                 </h4>
             </div>
             <div class="panel-body">
-                <table class="table table-striped">
-                    <tbody></tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table class="table table-striped">
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

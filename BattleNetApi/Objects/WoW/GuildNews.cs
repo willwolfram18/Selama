@@ -14,7 +14,9 @@ namespace BattleNetApi.Objects.WoW
 
         public string CharacterName { get; private set; }
 
-        public DateTime Timestamp { get; private set; }
+        public long BattleNetTimestamp { get; private set; }
+
+        public DateTime DateTimeTimestamp { get; private set; }
 
         public string Context { get; private set; }
 
@@ -43,7 +45,8 @@ namespace BattleNetApi.Objects.WoW
         {
             Type = Util.ParseEnum<GuildNewsType>(guildNewsJson, "type");
             Context = guildNewsJson["context"].Value<string>();
-            Timestamp = Util.BuildUnixTimestamp(guildNewsJson["timestamp"].Value<long>());
+            BattleNetTimestamp = guildNewsJson["timestamp"].Value<long>();
+            DateTimeTimestamp = Util.BuildUnixTimestamp(BattleNetTimestamp);
             // TODO: Watch for character not being present in json
             CharacterName = guildNewsJson["character"].Value<string>();
 

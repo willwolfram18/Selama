@@ -354,7 +354,6 @@ blockquote {
     width: auto;
     z-index: 2;
     /* Z-index to remove "transparency" of table with it's original*/
-
     tr {
         th {
             /* Remove transparency of th tags */
@@ -371,10 +370,13 @@ blockquote {
     .panel-body {
         padding: 0;
         height: 200px;
-        overflow-y: auto;
 
-        .table {
-            margin-bottom: 0;
+        .table-wrapper {
+            height: 100%;
+            overflow-y: auto;
+            .table {
+                margin-bottom: 0;
+            }
         }
     }
 }
@@ -385,6 +387,7 @@ blockquote {
         content: "[";
         position: relative;
     }
+
     &::after {
         content: "]";
         position: relative;
@@ -393,7 +396,7 @@ blockquote {
 
 .item {
     &.q2 {
-        color: #4cae4c!important;
+        color: #4cae4c !important;
     }
 }
 
@@ -403,5 +406,5 @@ blockquote {
 
 .table,
 .table-responsive {
-    position:unset;
+    position: unset;
 }

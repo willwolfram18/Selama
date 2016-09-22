@@ -11,6 +11,7 @@ export function Setup(wowheadPower: any, newsFeedUrl: string): void
         $WowheadPower = wowheadPower;
         let $guildNewsPanel: JQuery = $("#GuildNewsPanel");
         $guildNewsPanel.on("click", "", { url: newsFeedUrl }, loadGuildNewsFeedPanel);
+        $guildNewsPanel.trigger("click");
     });
 }
 
@@ -27,6 +28,10 @@ function loadGuildNewsFeedPanel(e: JQueryEventObject): void
         complete: guildNewsFeedAjaxComplete,
         success: (response: string) =>
         {
+            if (response === "")
+            {
+                return;
+            }
             if (!isNaN(curPage))
             {
                 $guildNewsPanel.attr("data-page", curPage + 1);

@@ -14,6 +14,10 @@ namespace Selama.Common.ExtensionMethods
         public static string ToRelativeDateTimeString(this DateTime dateToFormat)
         {
             DateTime now = DateTime.Now;
+            if (dateToFormat.Kind == DateTimeKind.Utc)
+            {
+                now = DateTime.Now.ToUniversalTime();
+            }
             TimeSpan timeDiff = new TimeSpan(now.Ticks - dateToFormat.Ticks);
             double timeDeltaInSeconds = Math.Abs(timeDiff.TotalSeconds);
 

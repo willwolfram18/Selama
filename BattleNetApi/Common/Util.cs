@@ -46,7 +46,8 @@ namespace BattleNetApi.Common
 
         internal static DateTime BuildUnixTimestamp(long milliseconds)
         {
-            return new DateTime(1970, 1, 1).AddMilliseconds(milliseconds);
+            DateTime timestamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(milliseconds);
+            return TimeZoneInfo.ConvertTimeFromUtc(timestamp, TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
         }
     }
 }
