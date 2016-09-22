@@ -34,6 +34,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NodaTime, Version=1.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.1.3.2\lib\net35-Client\NodaTime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -67,6 +71,8 @@
     <Compile Include="Objects\WoW\Enums\GuildNewsType.cs" />
     <Compile Include="Objects\WoW\Enums\ItemQuality.cs" />
     <Compile Include="Objects\WoW\Enums\PowerType.cs" />
+    <Compile Include="Objects\WoW\Enums\RealmPopulation.cs" />
+    <Compile Include="Objects\WoW\Enums\RealmType.cs" />
     <Compile Include="Objects\WoW\Enums\Role.cs" />
     <Compile Include="Objects\WoW\DataResources\RaceDataResource.cs" />
     <Compile Include="Objects\WoW\GoldValue.cs" />
@@ -80,6 +86,7 @@
     <Compile Include="Objects\WoW\ItemSpell.cs" />
     <Compile Include="Objects\WoW\ItemTooltipParams.cs" />
     <Compile Include="Objects\WoW\ItemUpgradeInfo.cs" />
+    <Compile Include="Objects\WoW\RealmStatus.cs" />
     <Compile Include="Objects\WoW\Specialization.cs" />
     <Compile Include="Objects\WoW\Spell.cs" />
     <Compile Include="Objects\WoW\Stats.cs" />

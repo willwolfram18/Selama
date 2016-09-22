@@ -71,6 +71,7 @@ namespace BattleNetApi.Api.ApiInterfaces
                     return null;
                 }
 
+                // TODO: Get RealmStatus from API and include in Guild object construction
                 JObject guildJson = await ParseJsonResponseAsync(response);
                 return Guild.BuildGuildProfileFromJson(guildJson);
             }

@@ -1,11 +1,13 @@
 ﻿using BattleNetApi.Objects.WoW.Enums;
 using Newtonsoft.Json.Linq;
+using NodaTime;
 using System;
 
 namespace BattleNetApi.Common
 {
     internal static class Util
     {
+        private const int TICKS_IN_MILLISECOND = 10000;
         internal const double COPPER_IN_SILVER = 100.0;
         internal const double SILVER_IN_GOLD = 100.0;
 
@@ -46,8 +48,11 @@ namespace BattleNetApi.Common
 
         internal static DateTime BuildUnixTimestamp(long milliseconds)
         {
-            DateTime timestamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(milliseconds);
-            return TimeZoneInfo.ConvertTimeFromUtc(timestamp, TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
+            // TODO: Update to accept a timezone string for dynamic timezone selection
+            Instant t = Instant.FromMillisecondsSinceUnixEpoch(milliseconds);
+            DateTimeZone timezone = DateTimeZoneProviders.Tzdb["America/Los_Angeles"];
+            var l = t.InZone(timezone);
+            return l.ToDateTimeUnspecified();
         }
     }
 }
