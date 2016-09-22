@@ -6,12 +6,12 @@ namespace BattleNetApi.Objects.WoW
     {
         public Achievement Achievement { get; private set; }
 
-        internal static GuildNewsAchievement BuildPlayerAchievement(JObject playerAchievementNewsJson)
+        internal static GuildNewsAchievement BuildPlayerAchievement(JObject playerAchievementNewsJson, string timezone)
         {
-            return new GuildNewsAchievement(playerAchievementNewsJson);
+            return new GuildNewsAchievement(playerAchievementNewsJson, timezone);
         }
 
-        private GuildNewsAchievement(JObject playerAchievementNewsJson) : base(playerAchievementNewsJson)
+        private GuildNewsAchievement(JObject playerAchievementNewsJson, string timezone) : base(playerAchievementNewsJson, timezone)
         {
             Achievement = WoW.Achievement.BuildFullAchievement(playerAchievementNewsJson["achievement"].Value<JObject>());
         }

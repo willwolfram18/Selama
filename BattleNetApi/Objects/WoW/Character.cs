@@ -93,7 +93,7 @@ namespace BattleNetApi.Objects.WoW
         {
             if (jsonCharacter.ContainsKey("guild"))
             {
-                Guild = Guild.BuildOAuthCharacterGuild(jsonCharacter);
+                Guild = Guild.BuildCharacterGuild(jsonCharacter);
             }
 
             if (jsonCharacter.ContainsKey("spec"))

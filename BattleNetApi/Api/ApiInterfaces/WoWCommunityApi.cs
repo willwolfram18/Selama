@@ -65,15 +65,19 @@ namespace BattleNetApi.Api.ApiInterfaces
         {
             using (HttpClient httpClient = BuildHttpClient())
             {
-                var response = await httpClient.GetAsync(GuildProfileUri(realm, guildName, fields).ToString());
-                if (!response.IsSuccessStatusCode)
+                var getGuildProfileTask = httpClient.GetAsync(GuildProfileUri(realm, guildName, fields).ToString());
+                var getGuildRealmTask = GetRealmStatusesAsync(realm);
+
+                var realmListRepsonse = await getGuildRealmTask;
+                var guildProfileResponse = await getGuildProfileTask;
+                if (!guildProfileResponse.IsSuccessStatusCode || realmListRepsonse == null || realmListRepsonse.Count != 1)
                 {
                     return null;
                 }
 
-                // TODO: Get RealmStatus from API and include in Guild object construction
-                JObject guildJson = await ParseJsonResponseAsync(response);
-                return Guild.BuildGuildProfileFromJson(guildJson);
+
+                JObject guildJson = await ParseJsonResponseAsync(guildProfileResponse);
+                return Guild.BuildGuildProfileFromJson(guildJson, realmListRepsonse[0]);
             }
         }
 
@@ -92,7 +96,7 @@ namespace BattleNetApi.Api.ApiInterfaces
             }
         }
 
-        public async Task<IEnumerable<RaceDataResource>> GetCharacterRacesAsync()
+        public async Task<List<RaceDataResource>> GetCharacterRacesAsync()
         {
             using (HttpClient httpClient = BuildHttpClient())
             {
@@ -107,7 +111,7 @@ namespace BattleNetApi.Api.ApiInterfaces
             }
         }
 
-        public async Task<IEnumerable<ItemClassDataResource>> GetItemClassesAsync()
+        public async Task<List<ItemClassDataResource>> GetItemClassesAsync()
         {
             using (HttpClient httpClient = BuildHttpClient())
             {
@@ -122,7 +126,7 @@ namespace BattleNetApi.Api.ApiInterfaces
             }
         }
 
-        public async Task<IEnumerable<RealmStatus>> GetRealmStatusesAsync(params string[] realms)
+        public async Task<List<RealmStatus>> GetRealmStatusesAsync(params string[] realms)
         {
             using (HttpClient httpClient = BuildHttpClient())
             {

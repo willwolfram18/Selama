@@ -30,6 +30,11 @@ namespace BattleNetApi.Objects.WoW
         public List<string> ConnectedRealms { get; private set; }
         #endregion
 
+        internal static RealmStatus BuildRealmStatusWithOnlyName(string name)
+        {
+            return new RealmStatus(name);
+        }
+
         internal static RealmStatus ParseRealmStatusJson(JObject realmStatusJson)
         {
             return new RealmStatus(realmStatusJson);
@@ -45,6 +50,10 @@ namespace BattleNetApi.Objects.WoW
             return statuses;
         }
 
+        private RealmStatus(string realmName)
+        {
+            Name = realmName;
+        }
         private RealmStatus(JObject realmStatusJson)
         {
             ParseEnums(realmStatusJson);

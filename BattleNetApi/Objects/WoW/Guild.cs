@@ -11,7 +11,7 @@ namespace BattleNetApi.Objects.WoW
         #region Properties
         public string Name { get; private set; }
 
-        public string Realm { get; private set; }
+        public RealmStatus Realm { get; private set; }
 
         public int Level { get; private set; }
 
@@ -27,7 +27,7 @@ namespace BattleNetApi.Objects.WoW
         #endregion
 
         #region Static factory functions
-        internal static Guild BuildOAuthCharacterGuild(JObject characterProfile)
+        internal static Guild BuildCharacterGuild(JObject characterProfile)
         {
             return new Guild(
                 characterProfile["guild"].Value<string>(),
@@ -36,9 +36,9 @@ namespace BattleNetApi.Objects.WoW
             );
         }
 
-        internal static Guild BuildGuildProfileFromJson(JObject guildProfile)
+        internal static Guild BuildGuildProfileFromJson(JObject guildProfile, RealmStatus realmStatus)
         {
-            return new Guild(guildProfile);
+            return new Guild(guildProfile, realmStatus);
         }
         #endregion
 
@@ -46,14 +46,14 @@ namespace BattleNetApi.Objects.WoW
         private Guild(string name, string realm, Faction faction)
         {
             Name = name;
-            Realm = realm;
+            Realm = RealmStatus.BuildRealmStatusWithOnlyName(realm);
             Faction = faction;
         }
 
-        private Guild(JObject guildJson)
+        private Guild(JObject guildJson, RealmStatus realmStatus)
         {
             Name = guildJson["name"].Value<string>();
-            Realm = guildJson["realm"].Value<string>();
+            Realm = realmStatus;
             Level = guildJson["level"].Value<int>();
             Faction = Util.ParseEnum<Faction>(guildJson, "side");
             AchievementPoints = guildJson["achievementPoints"].Value<int>();
@@ -88,7 +88,7 @@ namespace BattleNetApi.Objects.WoW
             {
                 foreach (var newsJson in guildJson["news"].AsJEnumerable())
                 {
-                    News.Add(GuildNews.ParseGuildNews(newsJson.Value<JObject>()));
+                    News.Add(GuildNews.ParseGuildNews(newsJson.Value<JObject>(), Realm.Timezone));
                 }
             }
         }

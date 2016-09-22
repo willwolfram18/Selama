@@ -46,13 +46,11 @@ namespace BattleNetApi.Common
             }
         }
 
-        internal static DateTime BuildUnixTimestamp(long milliseconds)
+        internal static DateTime BuildUnixTimestamp(long milliseconds, string timezoneName)
         {
-            // TODO: Update to accept a timezone string for dynamic timezone selection
-            Instant t = Instant.FromMillisecondsSinceUnixEpoch(milliseconds);
-            DateTimeZone timezone = DateTimeZoneProviders.Tzdb["America/Los_Angeles"];
-            var l = t.InZone(timezone);
-            return l.ToDateTimeUnspecified();
+            Instant timestampInstant = Instant.FromMillisecondsSinceUnixEpoch(milliseconds);
+            DateTimeZone timezone = DateTimeZoneProviders.Tzdb[timezoneName];
+            return timestampInstant.InZone(timezone).ToDateTimeUnspecified();
         }
     }
 }

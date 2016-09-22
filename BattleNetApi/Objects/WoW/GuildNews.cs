@@ -24,7 +24,7 @@ namespace BattleNetApi.Objects.WoW
 
         #endregion
 
-        internal static GuildNews ParseGuildNews(JObject guildNewsJson)
+        internal static GuildNews ParseGuildNews(JObject guildNewsJson, string timezone)
         {
             string context = guildNewsJson["type"].Value<string>();
             switch (context)
@@ -32,21 +32,21 @@ namespace BattleNetApi.Objects.WoW
                 case "itemLoot":
                 case "itemPurchase":
                 case "itemCraft":
-                    return GuildNewsPlayerItem.BuildPlayerItemNews(guildNewsJson);
+                    return GuildNewsPlayerItem.BuildPlayerItemNews(guildNewsJson, timezone);
                 case "playerAchievement":
                 case "guildAchievement":
-                    return GuildNewsAchievement.BuildPlayerAchievement(guildNewsJson);
+                    return GuildNewsAchievement.BuildPlayerAchievement(guildNewsJson, timezone);
                 default:
-                    return new GuildNews(guildNewsJson);
+                    return new GuildNews(guildNewsJson, timezone);
             }
         }
 
-        protected GuildNews(JObject guildNewsJson)
+        protected GuildNews(JObject guildNewsJson, string timezone)
         {
             Type = Util.ParseEnum<GuildNewsType>(guildNewsJson, "type");
             Context = guildNewsJson["context"].Value<string>();
             BattleNetTimestamp = guildNewsJson["timestamp"].Value<long>();
-            DateTimeTimestamp = Util.BuildUnixTimestamp(BattleNetTimestamp);
+            DateTimeTimestamp = Util.BuildUnixTimestamp(BattleNetTimestamp, timezone);
             // TODO: Watch for character not being present in json
             CharacterName = guildNewsJson["character"].Value<string>();
 
