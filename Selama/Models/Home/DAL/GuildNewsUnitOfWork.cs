@@ -35,7 +35,7 @@ namespace Selama.Models.Home.DAL
             result.AddRange(await battleNetNews);
             result.Sort();
             
-            return result.Skip(pageNumber * pageSize).Take(pageSize).ToList();
+            return result.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
 
         private async Task<List<GuildNewsFeedViewModel>> GetBattleNetNews()

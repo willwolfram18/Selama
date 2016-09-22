@@ -11,42 +11,9 @@
             renamelinks: true,
         };
 
-        require(["jquery", "bootstrap", "Core/SpinShield"], function ($, bootstrap, SpinShield)
+        require(["jquery", "bootstrap", "Root/Index"], function ($, bootstrap, Index)
         {
-            /// <param name="$" type="jQuery" />
-            $(document).ready(function ()
-            {
-                function loadGuildNewsFeedPanel(i)
-                {
-                    $.ajax({
-                        url: '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })',
-                        type: "GET",
-                        data: { page: i },
-                        beforeSend: function ()
-                        {
-                            SpinShield.raiseShield("#GuildNewsPanel .panel-body");
-                        },
-                        complete: function ()
-                        {
-                            SpinShield.lowerShield("#GuildNewsPanel .panel-body");
-                        },
-                        success: function (response)
-                        {
-                            $("#GuildNewsPanel .panel-body table tbody").append(response);
-                            $WowheadPower.refreshLinks();
-                            $("[data-toggle='tooltip']").tooltip();
-                        }
-                    });
-                }
-
-
-                $("[data-toggle='tooltip']").tooltip();
-                loadGuildNewsFeedPanel(0);
-                $("#GuildNewsPanel").on("click", "", function ()
-                {
-                    loadGuildNewsFeedPanel(1);
-                })
-            });
+            Index.Setup();
         });
     </script>
 }
@@ -86,7 +53,7 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-12">
-        <div id="GuildNewsPanel" class="panel panel-default">
+        <div id="GuildNewsPanel" class="panel panel-default" data-page="1">
             <div class="panel-heading">
                 <h4>
                     Guild News Feed
