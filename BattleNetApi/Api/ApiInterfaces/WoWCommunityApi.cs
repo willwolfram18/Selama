@@ -121,6 +121,21 @@ namespace BattleNetApi.Api.ApiInterfaces
                 return ItemClassDataResource.BuildItemClassListFromJson(itemClassesJson);
             }
         }
+
+        public async Task<IEnumerable<RealmStatus>> GetRealmStatusesAsync(params string[] realms)
+        {
+            using (HttpClient httpClient = BuildHttpClient())
+            {
+                var response = await httpClient.GetAsync(RealmStatusUri(realms).ToString());
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                JObject realmStatusesJson = await ParseJsonResponseAsync(response);
+                return RealmStatus.ParseStatusesJson(realmStatusesJson);
+            }
+        }
         #endregion
 
         #region Private/Internal functions
@@ -178,6 +193,21 @@ namespace BattleNetApi.Api.ApiInterfaces
             dataResourceUriBuilder.Query = query.ToString();
 
             return dataResourceUriBuilder;
+        }
+
+        private UriBuilder RealmStatusUri(params string[] realms)
+        {
+            UriBuilder realmStatusUrilBuilder = BuildUriWithEndpoint("realm/status");
+            var query = BuildCommonQuery();
+            if (realms.Length > 0)
+            {
+                foreach (string realm in realms)
+                {
+                    query.Add("realm", realm);
+                }
+            }
+            realmStatusUrilBuilder.Query = query.ToString();
+            return realmStatusUrilBuilder;
         }
 
         private NameValueCollection BuildCommonQuery()
