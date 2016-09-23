@@ -1,4 +1,4 @@
-define("Root/Home/Index", ["require", "exports", "jquery", "Core/SpinShield"], function (require, exports, $, SpinShield) {
+define("Root/Home/Index", ["require", "exports", "jquery", "Core/Common", "Core/SpinShield"], function (require, exports, $, Common, SpinShield) {
     "use strict";
     var $WowheadPower;
     function Setup(wowheadPower, newsFeedUrl) {
@@ -39,7 +39,10 @@ define("Root/Home/Index", ["require", "exports", "jquery", "Core/SpinShield"], f
         });
     }
     function disableGuildNewsFeedLoad($guildNewsPanel) {
-        $guildNewsPanel.find(".row-load-more").removeClass("row-load-more").find("td").text("No more news to load");
+        var $loadBtn = $guildNewsPanel.find(".row-load-more");
+        $loadBtn.removeClass("row-load-more").find("a").remove();
+        Common.createElem("div", "col-sm-12 col-md-12 col-lg-12")
+            .html("No more news to load").appendTo($loadBtn);
     }
     function guildNewsFeedAjaxBeforeSend() {
         SpinShield.raiseShield("#GuildNewsPanel .panel-body");

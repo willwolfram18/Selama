@@ -327,13 +327,18 @@ blockquote .quote-head .quote-post-date {
   height: 200px;
 }
 
+#GuildNewsPanel .panel-body .container-fluid {
+  padding: 0;
+}
+
 #GuildNewsPanel .panel-body .table-wrapper {
   height: 100%;
   overflow-y: auto;
 }
 
-#GuildNewsPanel .panel-body .table-wrapper .table {
-  margin-bottom: 0;
+#GuildNewsPanel .panel-body .table-wrapper .row {
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .item::before,
@@ -359,6 +364,11 @@ blockquote .quote-head .quote-post-date {
 .table,
 .table-responsive {
   position: unset;
+}
+
+.container.container-striped .row:nth-of-type(odd),
+.container-fluid.container-striped .row:nth-of-type(odd) {
+  background-color: #f9f9f9;
 }
 
 /*# sourceMappingURL=Site.css.map */

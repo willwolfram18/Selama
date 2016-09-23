@@ -1,5 +1,6 @@
 ﻿/// <amd-module name="Root/Home/Index" />
 import $ = require("jquery");
+import Common = require("Core/Common");
 import SpinShield = require("Core/SpinShield");
 
 var $WowheadPower;
@@ -53,7 +54,10 @@ function loadGuildNewsFeedPanel(e: JQueryEventObject): void
 
 function disableGuildNewsFeedLoad($guildNewsPanel: JQuery): void
 {
-    $guildNewsPanel.find(".row-load-more").removeClass("row-load-more").find("td").text("No more news to load");
+    let $loadBtn: JQuery = $guildNewsPanel.find(".row-load-more");
+    $loadBtn.removeClass("row-load-more").find("a").remove();
+    Common.createElem("div", "col-sm-12 col-md-12 col-lg-12")
+        .html("No more news to load").appendTo($loadBtn);
 }
 
 function guildNewsFeedAjaxBeforeSend(): void

@@ -2,14 +2,14 @@
 
 @foreach (var item in Model)
 {
-    <tr>
-        <td>
+    <div class="row">
+        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
             @item.Content
-        </td>
-        <td style="text-align: right;">
-            <span data-toggle="tooltip" data-placement="auto bottom" data-container="#GuildNewsPanel .panel-body" title="@Html.DisplayFor(modelItem => item.Timestamp)">
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-right">
+            <span data-toggle="tooltip" data-placement="bottom" data-container="#GuildNewsPanel .panel-body" title="@Html.DisplayFor(modelItem => item.Timestamp)">
                 @item.Timestamp.ToRelativeDateTimeString()
             </span>
-        </td>
-    </tr>
+        </div>
+    </div>
 }

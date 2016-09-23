@@ -371,11 +371,17 @@ blockquote {
         padding: 0;
         height: 200px;
 
+        .container-fluid {
+            padding: 0;
+        }
+
         .table-wrapper {
             height: 100%;
             overflow-y: auto;
-            .table {
-                margin-bottom: 0;
+
+            .row {
+                padding-top: 12px;
+                padding-bottom: 12px;
             }
         }
     }
@@ -407,4 +413,15 @@ blockquote {
 .table,
 .table-responsive {
     position: unset;
+}
+
+.container,
+.container-fluid {
+    &.container-striped {
+        .row {
+            &:nth-of-type(odd) {
+                background-color: #f9f9f9;
+            }
+        }
+    }
 }
