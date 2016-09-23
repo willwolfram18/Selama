@@ -39,7 +39,7 @@ namespace Selama
                 RootJavaScriptFile("Forums/Thread.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Root").Include(
-                RootJavaScriptFile("Root/Index.js")
+                RootJavaScriptFile("Root/Home/Index.js")
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

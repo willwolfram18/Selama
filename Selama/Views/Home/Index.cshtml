@@ -11,7 +11,7 @@
             renamelinks: true,
         };
 
-        require(["jquery", "bootstrap", "Root/Index"], function ($, bootstrap, Index)
+        require(["jquery", "bootstrap", "Root/Home/Index"], function ($, bootstrap, Index)
         {
             Index.Setup($WowheadPower, '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })');
         });
@@ -62,7 +62,15 @@
             <div class="panel-body">
                 <div class="table-wrapper">
                     <table class="table table-striped">
-                        <tbody></tbody>
+                        <tbody>
+                            <tr class="row-load-more">
+                                <td colspan="2" class="text-center">
+                                    <a href="#" style="display: inline-block; height: 100%; width: 100%;">
+                                        <span class="fa fa-refresh"></span> Load more
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>

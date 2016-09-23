@@ -1,4 +1,6 @@
-﻿using Selama.Models.Home.DAL;
+﻿using BattleNetApi.Api;
+using Selama.Common.Utility;
+using Selama.Models.Home.DAL;
 using Selama.ViewModels.Home;
 using System;
 using System.Collections.Generic;

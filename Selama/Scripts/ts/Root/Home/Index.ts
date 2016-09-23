@@ -1,4 +1,4 @@
-﻿/// <amd-module name="Root/Index" />
+﻿/// <amd-module name="Root/Home/Index" />
 import $ = require("jquery");
 import SpinShield = require("Core/SpinShield");
 
@@ -10,15 +10,22 @@ export function Setup(wowheadPower: any, newsFeedUrl: string): void
     {
         $WowheadPower = wowheadPower;
         let $guildNewsPanel: JQuery = $("#GuildNewsPanel");
-        $guildNewsPanel.on("click", "", { url: newsFeedUrl }, loadGuildNewsFeedPanel);
-        $guildNewsPanel.trigger("click");
+        $guildNewsPanel.on("click", ".row-load-more", { url: newsFeedUrl }, loadGuildNewsFeedPanel);
+        $guildNewsPanel.find(".row-load-more").trigger("click");
     });
 }
 
 function loadGuildNewsFeedPanel(e: JQueryEventObject): void
 {
     let $guildNewsPanel: JQuery = $("#GuildNewsPanel");
+    let $loadMoreBtn: JQuery = $guildNewsPanel.find(".row-load-more");
     let curPage: number = +$guildNewsPanel.attr("data-page");
+
+    if (isNaN(curPage))
+    {
+        disableGuildNewsFeedLoad($guildNewsPanel);
+        return;
+    }
 
     $.ajax({
         url: e.data.url,
@@ -30,17 +37,23 @@ function loadGuildNewsFeedPanel(e: JQueryEventObject): void
         {
             if (response === "")
             {
+                disableGuildNewsFeedLoad($guildNewsPanel);
                 return;
             }
-            if (!isNaN(curPage))
-            {
-                $guildNewsPanel.attr("data-page", curPage + 1);
-            }
-            $guildNewsPanel.find(".panel-body table tbody").append(response);
+
+            // Setup for next load call
+            $guildNewsPanel.attr("data-page", curPage + 1);
+            // Insert and update UI
+            $(response).insertBefore($loadMoreBtn);
             $WowheadPower.refreshLinks();
             $("[data-toggle='tooltip']").tooltip();
         }
     });
+}
+
+function disableGuildNewsFeedLoad($guildNewsPanel: JQuery): void
+{
+    $guildNewsPanel.find(".row-load-more").removeClass("row-load-more").find("td").text("No more news to load");
 }
 
 function guildNewsFeedAjaxBeforeSend(): void
