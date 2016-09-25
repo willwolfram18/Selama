@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/Selama/Properties/PublishProfiles/selamaashalanore-dev - Web Deploy.pubxml
