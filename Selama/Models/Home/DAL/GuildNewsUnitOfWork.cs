@@ -25,17 +25,20 @@ namespace Selama.Models.Home.DAL
             GuildNewsFeedRepository = new GuildNewsFeedRepository(appDbContext);
         }
 
-        public async Task<List<GuildNewsFeedViewModel>> GetGuildNews(int pageNumber, int pageSize)
+        public async Task<List<GuildNewsFeedViewModel>> GetPublicGuildNews(int pageNumber, int pageSize)
+        {
+            return GetPageItems(new List<List<GuildNewsFeedViewModel>> { await GetBattleNetNews() }, pageNumber, pageSize);
+        }
+                    
+        public async Task<List<GuildNewsFeedViewModel>> GetMembersOnlyNews(int pageNumber, int pageSize)
         {
             var battleNetNews = GetBattleNetNews();
+            List<List<GuildNewsFeedViewModel>> sources = new List<List<GuildNewsFeedViewModel>>();
 
-            List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
+            sources.Add(GetForumNews());
+            sources.Add(await battleNetNews);
 
-            result.AddRange(GetForumNews());
-            result.AddRange(await battleNetNews);
-            result.Sort();
-            
-            return result.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            return GetPageItems(sources, pageNumber, pageSize);
         }
 
         private async Task<List<GuildNewsFeedViewModel>> GetBattleNetNews()
@@ -60,7 +63,15 @@ namespace Selama.Models.Home.DAL
                 return new List<GuildNewsFeedViewModel>();
             }
 
-            return null;
+            // TODO: Convert to a "Merge"
+            List<GuildNewsFeedViewModel> results = new List<GuildNewsFeedViewModel>();
+            foreach (var newSource in newsSources)
+            {
+                results.AddRange(newSource);
+            }
+            results.Sort();
+
+            return results.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
 
         public void Dispose()

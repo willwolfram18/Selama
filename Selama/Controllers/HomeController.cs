@@ -29,12 +29,20 @@ namespace Selama.Controllers
             return View();
         }
 
+        [OutputCache(Duration = 300, Location = System.Web.UI.OutputCacheLocation.Client, VaryByParam = "page")]
         public async Task<ActionResult> GetGuildNewsFeed(int page = 1)
         {
             List<GuildNewsFeedViewModel> result = new List<GuildNewsFeedViewModel>();
             using (GuildNewsUnitOfWork db = new GuildNewsUnitOfWork())
             {
-                result = await db.GetGuildNews(page, NEWS_FEED_SIZE);
+                if (User.Identity.IsAuthenticated)
+                {
+                    result = await db.GetMembersOnlyNews(page, NEWS_FEED_SIZE);
+                }
+                else
+                {
+                    result = await db.GetPublicGuildNews(page, NEWS_FEED_SIZE);
+                }
             }
 
             if (result.Count == 0)
