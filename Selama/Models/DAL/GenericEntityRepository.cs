@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Selama.Models.DAL
 {
-    public class GenericEntityRepository<TContext, TEntity> : IDisposable
+    public class GenericEntityRepository<TContext, TEntity> : IGenericEntityRepository<TEntity>
         where TContext : DbContext
         where TEntity : class
     {

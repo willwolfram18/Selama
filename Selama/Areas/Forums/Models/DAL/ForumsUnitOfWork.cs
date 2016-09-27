@@ -12,13 +12,13 @@ using System.Web;
 
 namespace Selama.Areas.Forums.Models.DAL
 {
-    public class ForumsUnitOfWork : GenericUnitOfWork<ApplicationDbContext>
+    public class ForumsUnitOfWork : GenericUnitOfWork<ApplicationDbContext>, IForumsUnitOfWork
     {
-        public ForumRepository ForumRepository { get; private set; }
-        public ForumSectionRepository ForumSectionRepository { get; private set; }
-        public ThreadRepository ThreadRepository { get; private set; }
-        public ThreadReplyRepository ThreadReplyRepository { get; private set; }
-        public IdentityRepository IdentityRepository { get; private set; }
+        public IGenericEntityRepository<Forum> ForumRepository { get; private set; }
+        public IGenericEntityRepository<ForumSection> ForumSectionRepository { get; private set; }
+        public IGenericEntityRepository<Thread> ThreadRepository { get; private set; }
+        public IGenericEntityRepository<ThreadReply> ThreadReplyRepository { get; private set; }
+        public IGenericEntityRepository<ApplicationUser> IdentityRepository { get; private set; }
         private GuildNewsFeedRepository GuildNewsFeedRepository { get; set; }
 
         public ForumsUnitOfWork()
@@ -42,6 +42,17 @@ namespace Selama.Areas.Forums.Models.DAL
             }
             ThreadRepository.Add(dbThread);
             return dbThread;
+        }
+
+        public void DeleteThread(Thread thread)
+        {
+            thread.IsActive = false;
+            foreach (var reply in thread.Replies)
+            {
+                reply.IsActive = false;
+                ThreadReplyRepository.Update(reply);
+            }
+            ThreadRepository.Update(thread);
         }
 
         public async Task AddNewThreadToNewsFeed(Thread thread, string threadUrl)

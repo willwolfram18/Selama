@@ -13,8 +13,18 @@ namespace Selama.Areas.Forums.Controllers
 {
     public class ForumController : _BaseAuthorizeController
     {
-        private ForumsUnitOfWork _db = new ForumsUnitOfWork();
+        private IForumsUnitOfWork _db;
         private const int PAGE_SIZE = 20;
+
+        public ForumController()
+        {
+            _db = new ForumsUnitOfWork();
+        }
+
+        public ForumController(IForumsUnitOfWork db)
+        {
+            _db = db;
+        }
 
         // GET: Forums
         public ActionResult Index(string redirectFrom = null)
@@ -322,7 +332,7 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             // Mark thread "deleted"
-            thread.DeleteThread(_db);
+            _db.DeleteThread(thread);
             if (await _db.TrySaveChangesAsync())
             {
                 return RedirectToAction("Threads", new { id = thread.ForumID });

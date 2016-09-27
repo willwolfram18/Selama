@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Selama.Models.DAL
 {
-    public class GenericUnitOfWork<TContext> : IDisposable
+    public class GenericUnitOfWork<TContext> : IGenericUnitOfWork
         where TContext : DbContext
     {
         protected TContext _context;
@@ -22,7 +22,7 @@ namespace Selama.Models.DAL
             await _context.Entry(entity).ReloadAsync();
         }
 
-        protected void SaveChanges()
+        public void SaveChanges()
         {
             TrySaveChanges();
         }

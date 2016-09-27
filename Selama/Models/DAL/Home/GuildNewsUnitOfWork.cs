@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Selama.Models.Home.DAL
+namespace Selama.Models.DAL.Home
 {
-    public class GuildNewsUnitOfWork: IDisposable
+    public class GuildNewsUnitOfWork : IDisposable
     {
         private BattleNetApiClient BattleNetApi { get; set; }
         private GuildNewsFeedRepository GuildNewsFeedRepository { get; set; }

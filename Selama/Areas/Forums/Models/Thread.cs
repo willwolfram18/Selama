@@ -87,17 +87,6 @@ namespace Selama.Areas.Forums.Models
             Convert.FromBase64String(viewModel.Version).CopyTo(Version, 0);
         }
 
-        public void DeleteThread(ForumsUnitOfWork db)
-        {
-            IsActive = false;
-            foreach (ThreadReply reply in Replies)
-            {
-                reply.IsActive = false;
-                db.ThreadReplyRepository.Update(reply);
-            }
-            db.ThreadRepository.Update(this);
-        }
-
         public static bool CanPinOrLockThreads(IPrincipal User)
         {
             return User.IsInRole("Admin") || User.IsInRole("Forum Mod");
