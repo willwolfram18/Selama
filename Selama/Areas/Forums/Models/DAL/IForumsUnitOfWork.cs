@@ -17,10 +17,11 @@ namespace Selama.Areas.Forums.Models.DAL
         IGenericEntityRepository<Thread> ThreadRepository { get; }
         IGenericEntityRepository<ThreadReply> ThreadReplyRepository { get; }
         IGenericEntityRepository<ApplicationUser> IdentityRepository { get; }
+        IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedRepository { get; }
 
         Thread CreateNewThread(ThreadViewModel threadToCreate, IPrincipal author, int forumId);
         void DeleteThread(Thread thread);
-        Task AddNewThreadToNewsFeed(Thread thread, string threadUrl);
+        Task AddNewThreadToNewsFeedAsync(Thread thread, string threadUrl);
 
     }
 }

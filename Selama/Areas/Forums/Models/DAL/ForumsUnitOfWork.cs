@@ -19,7 +19,7 @@ namespace Selama.Areas.Forums.Models.DAL
         public IGenericEntityRepository<Thread> ThreadRepository { get; private set; }
         public IGenericEntityRepository<ThreadReply> ThreadReplyRepository { get; private set; }
         public IGenericEntityRepository<ApplicationUser> IdentityRepository { get; private set; }
-        private GuildNewsFeedRepository GuildNewsFeedRepository { get; set; }
+        public IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedRepository { get; private set; }
 
         public ForumsUnitOfWork()
         {
@@ -55,15 +55,10 @@ namespace Selama.Areas.Forums.Models.DAL
             ThreadRepository.Update(thread);
         }
 
-        public async Task AddNewThreadToNewsFeed(Thread thread, string threadUrl)
+        public async Task AddNewThreadToNewsFeedAsync(Thread thread, string threadUrl)
         {
             _context.Entry(thread).Reference(t => t.Author).Load();
-            GuildNewsFeedItem news = new GuildNewsFeedItem
-            {
-                Timestamp = thread.PostDate,
-                Content = string.Format("{0} posted <a href='{1}'>{2}</a>.", thread.Author.UserName,
-                    threadUrl, thread.Title),
-            };
+            GuildNewsFeedItem news = new GuildNewsFeedItem(thread, threadUrl);
             GuildNewsFeedRepository.Add(news);
             await SaveChangesAsync();
         }

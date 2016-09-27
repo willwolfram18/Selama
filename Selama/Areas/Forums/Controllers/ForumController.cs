@@ -134,7 +134,7 @@ namespace Selama.Areas.Forums.Controllers
                 
                 if (await _db.TrySaveChangesAsync())
                 {
-                    await _db.AddNewThreadToNewsFeed(dbThread,
+                    await _db.AddNewThreadToNewsFeedAsync(dbThread,
                         Url.Action("Thread", new { id = dbThread.ID }));
                     return RedirectToAction("Thread", new { id = dbThread.ID });
                 }
