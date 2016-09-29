@@ -5,16 +5,13 @@ using System.Web.Mvc;
 namespace Selama.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class HomeControllerTest : _BaseControllerUnitTest<HomeController>
     {
         [TestMethod]
         public void IndexIsNotNull()
         {
-            // Arrange
-            HomeController controller = new HomeController();
-
             // Act
-            ViewResult result = controller.Index();
+            ViewResult result = Controller.Index();
 
             // Assert
             Assert.IsNotNull(result);
@@ -23,11 +20,8 @@ namespace Selama.Tests.Controllers
         [TestMethod]
         public void AboutIsNotNull()
         {
-            // Arrange
-            HomeController controller = new HomeController();
-
             // Act
-            ViewResult result = controller.About();
+            ViewResult result = Controller.About();
 
             // Assert
             Assert.IsNotNull(result);
@@ -36,11 +30,8 @@ namespace Selama.Tests.Controllers
         [TestMethod]
         public void JoinResultIsNotNull()
         {
-            // Arrange
-            HomeController controller = new HomeController();
-
             // Act
-            ViewResult result = controller.Join();
+            ViewResult result = Controller.Join();
 
             // Assert
             Assert.IsNotNull(result);
@@ -49,11 +40,8 @@ namespace Selama.Tests.Controllers
         [TestMethod]
         public void ErrorResultIsNotNull()
         {
-
-            HomeController controller = new HomeController();
-
             string errorMessage = "My error message";
-            ViewResult result = controller.Error("My error message") as ViewResult;
+            ViewResult result = Controller.Error("My error message") as ViewResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual(errorMessage, result.ViewBag.ErrorMessage);
@@ -62,9 +50,7 @@ namespace Selama.Tests.Controllers
         [TestMethod]
         public void ErrorResultIsRedirect()
         {
-            HomeController controller = new HomeController();
-
-            ActionResult result = controller.Error() as RedirectToRouteResult;
+            ActionResult result = Controller.Error() as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
         }

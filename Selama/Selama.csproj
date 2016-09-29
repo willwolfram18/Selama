@@ -282,7 +282,7 @@
     <Compile Include="Common\Utility\Util.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\_BaseAuthorizeController.cs" />
-    <Compile Include="Controllers\__BaseController.cs" />
+    <Compile Include="Controllers\_BaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
