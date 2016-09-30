@@ -7,7 +7,7 @@ namespace Selama.Areas.Forums.Models
     {
         #region Database Columns
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "A title must be provided")]
         [StringLength(35, ErrorMessage = "The title's length must be between {0} and {1} characters long", MinimumLength = 4)]

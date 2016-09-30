@@ -15,7 +15,7 @@ namespace Selama.Areas.Forums.ViewModels
         public ThreadReplyViewModel() { }
         public ThreadReplyViewModel(ThreadReply reply)
         {
-            ID = reply.ID;
+            ID = reply.Id;
             ThreadID = reply.ThreadID;
             Content = reply.Content;
             

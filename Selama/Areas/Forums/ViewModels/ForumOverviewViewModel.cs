@@ -25,7 +25,7 @@ namespace Selama.Areas.Forums.ViewModels
 
         public ForumOverviewViewModel(Forum forum)
         {
-            ID = forum.ID;
+            ID = forum.Id;
             Title = forum.Title;
             SubTitle = forum.SubTitle;
             NumThreads = forum.GetThreads().Count();
@@ -51,7 +51,7 @@ namespace Selama.Areas.Forums.ViewModels
             {
                 LastPost = new LastForumPostViewModel
                 {
-                    ThreadID = lastPost.ID,
+                    ThreadID = lastPost.Id,
                     ThreadTitle = lastPost.Title,
                     Author = lastPost.Author.UserName,
                 };

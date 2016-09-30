@@ -16,7 +16,7 @@ namespace Selama.Areas.Forums.Models
     {
         #region Database columns
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(ForumsConstants.ThreadTitleMaxLen, ErrorMessage = ForumsConstants.ThreadTitleLenErrorMsg, MinimumLength = ForumsConstants.ThreadTitleMinLen)]

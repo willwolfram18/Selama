@@ -41,42 +41,42 @@ namespace Selama.Migrations
             #region Forum sections
             context.ForumSections.AddOrUpdate(new ForumSection
             {
-                ID = 1,
+                Id = 1,
                 Title = "Officers' Section",
                 DisplayOrder = 1,
                 IsActive = true,
             },
             new ForumSection
             {
-                ID = 2,
+                Id = 2,
                 Title = "General Section",
                 DisplayOrder = 2,
                 IsActive = true,
             },
             new ForumSection
             {
-                ID = 3,
+                Id = 3,
                 Title = "Members Only",
                 DisplayOrder = 3,
                 IsActive = true,
             },
             new ForumSection
             {
-                ID = 4,
+                Id = 4,
                 Title = "Eastern Kingdom Liberators",
                 DisplayOrder = 4,
                 IsActive = true,
             },
             new ForumSection
             {
-                ID = 5,
+                Id = 5,
                 Title = "Admin Section",
                 DisplayOrder = 5,
                 IsActive = true,
             },
             new ForumSection
             {
-                ID = 6,
+                Id = 6,
                 Title = "Lore",
                 DisplayOrder = 6,
                 IsActive = true,
@@ -86,7 +86,7 @@ namespace Selama.Migrations
             #region Forums
             context.Forums.AddOrUpdate(new Forum
             {
-                ID = 1,
+                Id = 1,
                 Title = "Officers' Lounge",
                 SubTitle = "Officer's only area for discussion",
                 IsActive = true,
@@ -94,7 +94,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 2,
+                Id = 2,
                 Title = "General Discussion",
                 SubTitle = "General discussion, open to everyone!",
                 IsActive = true,
@@ -102,7 +102,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 3,
+                Id = 3,
                 Title = "Recruitment",
                 SubTitle = null,
                 IsActive = true,
@@ -110,7 +110,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 4,
+                Id = 4,
                 Title = "News!",
                 SubTitle = null,
                 IsActive = true,
@@ -118,7 +118,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 5,
+                Id = 5,
                 Title = "Dossiers",
                 SubTitle = "Members' profiles here. Read and learn about your fellow guildmates",
                 IsActive = true,
@@ -126,7 +126,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 6,
+                Id = 6,
                 Title = "Helpful Tips and Guides",
                 SubTitle = "Questions? Learn how to make a lore abiding character!",
                 IsActive = true,
@@ -134,7 +134,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 7,
+                Id = 7,
                 Title = "Creativity Corner",
                 SubTitle = "Creative works written by our talented members!",
                 IsActive = true,
@@ -142,7 +142,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 8,
+                Id = 8,
                 Title = "Screenshots",
                 SubTitle = null,
                 IsActive = false,
@@ -150,7 +150,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 9,
+                Id = 9,
                 Title = "Synopses",
                 SubTitle = "In game RP synopses",
                 IsActive = true,
@@ -158,7 +158,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 10,
+                Id = 10,
                 Title = "Members Only Discussion",
                 SubTitle = null,
                 IsActive = true,
@@ -166,7 +166,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 11,
+                Id = 11,
                 Title = "Creativity Corner",
                 SubTitle = null,
                 IsActive = true,
@@ -174,7 +174,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 12,
+                Id = 12,
                 Title = "Dossiers",
                 SubTitle = null,
                 IsActive = true,
@@ -182,7 +182,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 13,
+                Id = 13,
                 Title = "Synopses",
                 SubTitle = null,
                 IsActive = true,
@@ -190,7 +190,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 14,
+                Id = 14,
                 Title = "Random Discussion",
                 SubTitle = null,
                 IsActive = true,
@@ -198,7 +198,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 15,
+                Id = 15,
                 Title = "Admin/Council Discussion",
                 SubTitle = null,
                 IsActive = true,
@@ -206,7 +206,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 16,
+                Id = 16,
                 Title = "Horde",
                 SubTitle = null,
                 IsActive = true,
@@ -214,7 +214,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 17,
+                Id = 17,
                 Title = "Alliance",
                 SubTitle = null,
                 IsActive = true,
@@ -222,7 +222,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 18,
+                Id = 18,
                 Title = "Dragons",
                 SubTitle = null,
                 IsActive = true,
@@ -230,7 +230,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 19,
+                Id = 19,
                 Title = "Races",
                 SubTitle = null,
                 IsActive = true,
@@ -238,7 +238,7 @@ namespace Selama.Migrations
             },
             new Forum
             {
-                ID = 20,
+                Id = 20,
                 Title = "Organizations",
                 SubTitle = null,
                 IsActive = true,

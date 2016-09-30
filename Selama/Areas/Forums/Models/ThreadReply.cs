@@ -10,26 +10,9 @@ namespace Selama.Areas.Forums.Models
 {
     public class ThreadReply
     {
-        public ThreadReply() { }
-        public ThreadReply(ThreadReplyViewModel model, string authorId, int threadId, int replyIndex)
-        {
-            Content = model.Content;
-            PostDate = DateTime.Now;
-            ThreadID = threadId;
-            AuthorID = authorId;
-            ReplyIndex = replyIndex;
-            IsActive = true;
-        }
-
-        public void UpdateFromViewModel(ThreadReplyEditViewModel viewModel)
-        {
-            Content = viewModel.Content;
-            Version = Convert.FromBase64String(viewModel.Version);
-        }
-
         #region Database columns
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [AllowHtml]
@@ -65,5 +48,22 @@ namespace Selama.Areas.Forums.Models
         public virtual Thread Thread { get; set; }
         public virtual ApplicationUser Author { get; set; }
         #endregion
+
+        public ThreadReply() { }
+        public ThreadReply(ThreadReplyViewModel model, string authorId, int threadId, int replyIndex)
+        {
+            Content = model.Content;
+            PostDate = DateTime.Now;
+            ThreadID = threadId;
+            AuthorID = authorId;
+            ReplyIndex = replyIndex;
+            IsActive = true;
+        }
+
+        public void UpdateFromViewModel(ThreadReplyEditViewModel viewModel)
+        {
+            Content = viewModel.Content;
+            Version = Convert.FromBase64String(viewModel.Version);
+        }
     }
 }

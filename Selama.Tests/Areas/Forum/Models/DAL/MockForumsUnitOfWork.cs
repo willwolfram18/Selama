@@ -52,7 +52,7 @@ namespace Selama.Tests.Areas.Forum.Models.DAL
         public void DeleteThread(Thread thread)
         {
             thread.IsActive = false;
-            foreach (var reply in ThreadReplyRepository.Get(r => r.ThreadID == thread.ID))
+            foreach (var reply in ThreadReplyRepository.Get(r => r.ThreadID == thread.Id))
             {
                 reply.IsActive = false;
                 ThreadReplyRepository.Update(reply);

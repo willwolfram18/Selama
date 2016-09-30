@@ -72,7 +72,7 @@ namespace Selama.Areas.Forums.ViewModels
 
         public ForumViewModel(Forum forum, int pageSize, int currentPage)
         {
-            ID = forum.ID;
+            ID = forum.Id;
             Title = forum.Title;
             SubTitle = forum.SubTitle;
 

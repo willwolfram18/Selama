@@ -17,7 +17,7 @@ namespace Selama.Areas.Forums.ViewModels
         public ThreadViewModel() { }
         public ThreadViewModel(Thread thread, int pageSize, int pageNum)
         {
-            ID = thread.ID;
+            ID = thread.Id;
             ForumID = thread.ForumID;
             ForumName = thread.Forum.Title;
             Title = thread.Title;

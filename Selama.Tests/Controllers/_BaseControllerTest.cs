@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Selama.Tests.Controllers
 {
     [TestClass]
-    public class _BaseControllerUnitTest<TController>
+    public abstract class _BaseControllerUnitTest<TController>
         where TController : _BaseController, new()
     {
         protected TController Controller { get; private set; }

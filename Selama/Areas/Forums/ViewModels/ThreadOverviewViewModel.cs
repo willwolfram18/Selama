@@ -32,7 +32,7 @@ namespace Selama.Areas.Forums.ViewModels
 
         public ThreadOverviewViewModel(Thread thread)
         {
-            ID = thread.ID;
+            ID = thread.Id;
             Title = thread.Title;
             NumReplies = thread.GetReplies().Count();
             IsLocked = thread.IsLocked;
