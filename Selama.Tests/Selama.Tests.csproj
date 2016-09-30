@@ -109,6 +109,7 @@
     <Compile Include="Common\Utility\UtilTest.cs" />
     <Compile Include="Controllers\_BaseControllerTest.cs" />
     <Compile Include="Models\DAL\MockGenericEntityRepository.cs" />
+    <Compile Include="Models\DAL\MockIdentityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>

@@ -19,6 +19,7 @@ namespace Selama.Tests.Models.DAL
         {
             var entityId = _nextId++;
             _source[entityId] = entity;
+            SetObjectId(entity, entityId);
         }
 
         public TEntity FindById(object id)
@@ -57,7 +58,10 @@ namespace Selama.Tests.Models.DAL
 
         public void RemoveById(object id)
         {
-            _source.Remove(id);
+            if (_source.ContainsKey(id))
+            {
+                _source.Remove(id);
+            }
         }
 
         public Task RemoveByIdAsync(object id)
@@ -76,9 +80,13 @@ namespace Selama.Tests.Models.DAL
         {
         }
 
+        private void SetObjectId(TEntity entity, object id)
+        {
+            entity.GetType().GetProperty("Id").SetValue(entity, id);
+        }
         private object GetObjectId(TEntity entity)
         {
-            return entity.GetType().GetProperty("ID").GetValue(entity);
+            return entity.GetType().GetProperty("Id").GetValue(entity);
         }
     }
 }
