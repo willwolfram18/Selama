@@ -28,7 +28,7 @@ namespace Selama.Tests.Models.DAL
         {
             if (!_source.ContainsKey(id.ToString()))
             {
-
+                return null;
             }
             return _source[id.ToString()];
         }
