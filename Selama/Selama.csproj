@@ -558,7 +558,8 @@
     <Content Include="Scripts\js\Selama.js" />
     <Content Include="Scripts\js\r.js" />
     <Content Include="Scripts\js\require.js" />
-    <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\js\Selama\Common.js" />
+    <None Include="Scripts\js\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
