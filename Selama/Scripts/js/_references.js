@@ -3,3 +3,4 @@
 /// <reference path="~/Scripts/js/Bootstrap/bootstrap.js" />
 /// <reference path="~/Scripts/js/MarkdownDeep/MarkdownDeepLib.min.js" />
 /// <reference path="~/Scripts/js/Selama.js" />
+/// <reference path="~/Scripts/js/Selama/Core/Common.js" />
