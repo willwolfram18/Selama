@@ -27,3 +27,5 @@
 /// <reference path="Selama/Core/Common.js" />
 /// <reference path="Selama/Core/SpinShield.js" />
 /// <reference path="Selama/RootArea/Home/Index.js" />
+/// <reference path="../respond.matchmedia.addlistener.min.js" />
+/// <reference path="../respond.min.js" />
