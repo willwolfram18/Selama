@@ -123,8 +123,8 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
         $.ajax({
             url: e.data.url,
             type: 'GET',
-            before: Selama.Forums.OnAjaxRequestBegin,
-            complete: Selama.Forums.OnAjaxRequestComplete,
+            before: Selama.Forums.OnAjaxRequestBeginCallback,
+            complete: Selama.Forums.OnAjaxRequestCompleteCallback,
             success: Selama.Core.$$bind(this._onThreadEditLinkClick_Success, this),
             error: Selama.Core.$$bind(this._onThreadEditLinkClick_Error, this),
         });
@@ -158,8 +158,8 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
             url: e.data.url,
             data: { id: replyId },
             type: 'GET',
-            before: Selama.Forums.OnAjaxRequestBegin,
-            complete: Selama.Forums.OnAjaxRequestComplete,
+            before: Selama.Forums.OnAjaxRequestBeginCallback,
+            complete: Selama.Forums.OnAjaxRequestCompleteCallback,
             success: Selama.Core.$$bind(this._onReplyEditLinkClick_Success, this),
             error: Selama.Core.$$bind(this._onReplyEditLinkClick_Error, this),
         });

@@ -10,5 +10,5 @@ Selama.Forums = Selama.Forums || {
         Selama.SpinShield.lowerShield();
     },
 };
-Selama.Forums.OnAjaxRequestBegin = Selama.Core.$$bind(Selama.Forums._onAjaxRequestBegin, Selama.Forums);
-Selama.Forums.OnAjaxRequestComplete = Selama.Core.$$bind(Selama.Forums._onAjaxRequestComplete, Selama.Forums);
+Selama.Forums.OnAjaxRequestBeginCallback = Selama.Core.$$bind(Selama.Forums._onAjaxRequestBegin, Selama.Forums);
+Selama.Forums.OnAjaxRequestCompleteCallback = Selama.Core.$$bind(Selama.Forums._onAjaxRequestComplete, Selama.Forums);
