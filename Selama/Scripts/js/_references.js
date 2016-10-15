@@ -4,3 +4,6 @@
 /// <reference path="~/Scripts/js/MarkdownDeep/MarkdownDeepLib.min.js" />
 /// <reference path="~/Scripts/js/Selama.js" />
 /// <reference path="~/Scripts/js/Selama/Core/Common.js" />
+/// <reference path="~/Scripts/js/Selama/Core/SpinShield.js" />
+/// <reference path="~/Scripts/js/Selama/Core/Alert.js" />
+/// <reference path="~/Scripts/js/Selama/RootArea/Home/Index.js" />

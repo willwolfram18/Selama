@@ -558,9 +558,11 @@
     <Content Include="Scripts\js\Selama.js" />
     <Content Include="Scripts\js\r.js" />
     <Content Include="Scripts\js\require.js" />
+    <Content Include="Scripts\js\Selama\Core\Alert.js" />
     <Content Include="Scripts\js\Selama\Core\Common.js" />
     <None Include="Scripts\js\_references.js" />
     <Content Include="Scripts\js\Selama\Core\SpinShield.js" />
+    <Content Include="Scripts\js\Selama\RootArea\Home\Index.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
