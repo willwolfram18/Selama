@@ -37,8 +37,25 @@ Selama.RootArea.Home = Selama.RootArea.Home || {
             return;
         }
 
-        $.ajax()
-    },
+        $.ajax({
+            url: requestUrl,
+            type: "GET",
+            data: { page: curPage },
+            beforeSend: this._guildNewsFeedAjaxBeforeSend,
+            complete: this._guildNewsFeedAjaxComplete,
+            success: function _guildNewsFeedAjaxSuccess(response)
+            {
+                if (response === "")
+                {
+                    this._disableGuildNewsFeedLoad($guildNewsPanel);
+                    return;
+                }
 
-    
+                $guildNewsPanel.attr("data-page", curPage + 1);
+                $(response).insertBefore($loadMoreBtn);
+                $WowheadPower.refreshLinks();
+                $("[data-toggle='tooltip']").tooltip();
+            },
+        });
+    },
 };
