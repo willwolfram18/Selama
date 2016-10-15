@@ -516,6 +516,9 @@
     <Content Include="Scripts\js\Selama\Core\Common.js" />
     <None Include="Scripts\js\_references.js" />
     <Content Include="Scripts\js\Selama\Core\SpinShield.js" />
+    <Content Include="Scripts\js\Selama\Forums\Common.js" />
+    <Content Include="Scripts\js\Selama\Forums\Thread.js" />
+    <Content Include="Scripts\js\Selama\Forums\Threads.js" />
     <Content Include="Scripts\js\Selama\RootArea\Home\Index.js" />
     <Content Include="Scripts\js\Bootstrap\respond.js" />
     <Content Include="Scripts\js\Bootstrap\respond.matchmedia.addListener.js" />

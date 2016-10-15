@@ -27,4 +27,7 @@
 /// <reference path="Selama/Core/Alert.js" />
 /// <reference path="Selama/Core/Common.js" />
 /// <reference path="Selama/Core/SpinShield.js" />
+/// <reference path="selama/forums/common.js" />
+/// <reference path="selama/forums/thread.js" />
+/// <reference path="selama/forums/threads.js" />
 /// <reference path="Selama/RootArea/Home/Index.js" />
