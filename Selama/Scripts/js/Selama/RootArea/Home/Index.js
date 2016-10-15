@@ -63,4 +63,4 @@ Selama.RootArea.Home = Selama.RootArea.Home || {
         });
     },
 };
-Selama.RootArea.Home.LoadGuildNewsFeedPanel = Selama.Core.$$bind(Selama.RootArea.Home._loadGuildNewsFeedPanel, Selama.RootArea.Home);
+Selama.RootArea.Home.LoadGuildNewsFeedPanelCallback = Selama.Core.$$bind(Selama.RootArea.Home._loadGuildNewsFeedPanel, Selama.RootArea.Home);

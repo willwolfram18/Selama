@@ -19,7 +19,7 @@
                 {
                     url: '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })',
                 },
-                Selama.RootArea.Home.LoadGuildNewsFeedPanel
+                Selama.RootArea.Home.LoadGuildNewsFeedPanelCallback
             );
             $guildNewsPanel.find(".row-load-more").trigger("click");
         });
