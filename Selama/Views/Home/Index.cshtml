@@ -3,6 +3,7 @@
 }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/Selama-RootArea")
     <script type="text/javascript" src="https://wow.zamimg.com/widgets/power.js"></script>
     <script type="text/javascript">
         var wowhead_tooltips = {
@@ -11,9 +12,16 @@
             renamelinks: true,
         };
 
-        require(["jquery", "bootstrap", "Root/Home/Index"], function ($, bootstrap, Index)
+        $(document).ready(function ()
         {
-            Index.Setup($WowheadPower, '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })');
+            var $guildNewsPanel = $("#GuildNewsPanel");
+            $guildNewsPanel.on("click", ".row-load-more",
+                {
+                    url: '@Url.Action("GetGuildNewsFeed", "Home", new { area = "" })',
+                },
+                Selama.RootArea.Home.LoadGuildNewsFeedPanel
+            );
+            $guildNewsPanel.find(".row-load-more").trigger("click");
         });
     </script>
 }

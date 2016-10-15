@@ -10,9 +10,7 @@ namespace Selama
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 RootJavaScriptFile("jQuery/jquery-{version}.js"),
-                RootJavaScriptFile("jQuery/jquery.unobtrusive-ajax.js"),
-                RootJavaScriptFile("jQuery/jquery-ui-{version}.js"),
-                RootJavaScriptFile("jQuery/jquery.spin.js")
+                RootJavaScriptFile("jQuery/jquery.unobtrusive-ajax.js")
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -28,10 +26,12 @@ namespace Selama
                 RootJavaScriptFile("require.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Core").Include(
-                RootJavaScriptFile("Core/Common.js"),
-                RootJavaScriptFile("Core/Alert.js"),
-                RootJavaScriptFile("Core/SpinShield.js"),
-                RootJavaScriptFile("Core/Main.js")
+                RootJavaScriptFile("Selama/Core/Common.js"),
+                RootJavaScriptFile("Selama/Core/Alert.js"),
+                RootJavaScriptFile("Selama/Core/SpinShield.js")
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/Selama-RootArea").Include(
+                RootJavaScriptFile("Selama/RootArea/Home/Index.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Forums").Include(
                 RootJavaScriptFile("Forums/Common.js"),

@@ -507,8 +507,6 @@
     <Content Include="Content\MarkdownDeep\mdd_modal_background.png" />
     <Content Include="Content\MarkdownDeep\mdd_styles.css" />
     <Content Include="Content\MarkdownDeep\mdd_toolbar.png" />
-    <Content Include="Scripts\js\Bootstrap\respond.js" />
-    <Content Include="Scripts\js\Bootstrap\respond.min.js" />
     <Content Include="Scripts\js\modernizr-2.8.3.js" />
     <Content Include="Scripts\js\Root\Home\Index.js" />
     <Content Include="Scripts\js\Selama.js" />
@@ -519,10 +517,10 @@
     <None Include="Scripts\js\_references.js" />
     <Content Include="Scripts\js\Selama\Core\SpinShield.js" />
     <Content Include="Scripts\js\Selama\RootArea\Home\Index.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\js\Bootstrap\respond.js" />
+    <Content Include="Scripts\js\Bootstrap\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\js\Bootstrap\respond.matchmedia.addListener.min.js" />
+    <Content Include="Scripts\js\Bootstrap\respond.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

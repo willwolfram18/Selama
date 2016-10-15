@@ -24,7 +24,7 @@ Selama.Core.SpinShield = Selama.Core.SpinShield || {
         {
             return target;
         }
-        else if (target instanceof String)
+        else if (typeof target === typeof '')
         {
             return $(target);
         }

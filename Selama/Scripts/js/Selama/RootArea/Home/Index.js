@@ -24,7 +24,7 @@ Selama.RootArea.Home = Selama.RootArea.Home || {
         Selama.Core.SpinShield.lowerShield(this._defaultShieldTarget);
     },
 
-    loadGuildNewsFeedPanel: function Selama_RootArea_Home_LoadGuildNewsFeedPanel(e)
+    _loadGuildNewsFeedPanel: function Selama_RootArea_Home_InternalLoadGuildNewsFeedPanel(e)
     {
         /// <param name="e" type="jQuery.Event" />
         var $guildNewsPanel = $("#GuildNewsPanel");
@@ -33,29 +33,34 @@ Selama.RootArea.Home = Selama.RootArea.Home || {
 
         if (isNaN(curPage))
         {
-            this._disableGuildNewsFeedLoad($guildNewsPanel);
+            Selama.RootArea.Home._disableGuildNewsFeedLoad($guildNewsPanel);
             return;
         }
 
+        var beforeSendCallback = Selama.Core.$$bind(Selama.RootArea.Home._guildNewsFeedAjaxBeforeSend, Selama.RootArea.Home);
+        var completeCallback = Selama.Core.$$bind(Selama.RootArea.Home._guildNewsFeedAjaxComplete, Selama.RootArea.Home);
+        var successCallback = Selama.Core.$$bind(function _guildNewsFeedAjaxSuccess(response)
+        {
+            if (response === "")
+            {
+                this._disableGuildNewsFeedLoad($guildNewsPanel);
+                return;
+            }
+
+            $guildNewsPanel.attr("data-page", curPage + 1);
+            $(response).insertBefore($loadMoreBtn);
+            $WowheadPower.refreshLinks();
+            $("[data-toggle='tooltip']").tooltip();
+        }, Selama.RootArea.Home);
+
         $.ajax({
-            url: requestUrl,
+            url: e.data.url,
             type: "GET",
             data: { page: curPage },
-            beforeSend: this._guildNewsFeedAjaxBeforeSend,
-            complete: this._guildNewsFeedAjaxComplete,
-            success: function _guildNewsFeedAjaxSuccess(response)
-            {
-                if (response === "")
-                {
-                    this._disableGuildNewsFeedLoad($guildNewsPanel);
-                    return;
-                }
-
-                $guildNewsPanel.attr("data-page", curPage + 1);
-                $(response).insertBefore($loadMoreBtn);
-                $WowheadPower.refreshLinks();
-                $("[data-toggle='tooltip']").tooltip();
-            },
+            beforeSend: beforeSendCallback,
+            complete: completeCallback,
+            success: successCallback,
         });
     },
 };
+Selama.RootArea.Home.LoadGuildNewsFeedPanel = Selama.Core.$$bind(Selama.RootArea.Home._loadGuildNewsFeedPanel, Selama.RootArea.Home);

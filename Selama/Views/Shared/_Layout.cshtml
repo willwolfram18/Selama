@@ -11,95 +11,10 @@
     @Styles.Render("~/Content/css")
     @RenderSection("Styles", false)
 
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/requirejs")
-    <script type="text/javascript">
-        // Define requireJS config options
-        var requireJsOptions = {
-            shim: {
-                "bootstrap": ["jquery"],
-                "Forums/Thread": ["MarkdownDeepEditor"],
-                "jquery.validate": ["jquery"],
-                "jquery.validate.unobtrusive": ["jquery"@if (HttpContext.Current.IsDebuggingEnabled){<text> , "jquery.validate"</text>}],
-                "jquery.unobtrusive-ajax": ["jquery"],
-                "MarkdownDeepEditor": ["jquery"],
-                "Core/Main": ["MarkdownDeepEditor"],
-            },
-        };
-        @if (HttpContext.Current.IsDebuggingEnabled)
-        {
-        <text>
-        requireJsOptions.baseUrl = "/Scripts/js";
-        requireJsOptions.paths = {
-            "bootstrap": "bootstrap/bootstrap",
-            "jquery": "jQuery/jquery-3.1.0",
-            "jquery.validate": "jQuery/jquery.validate",
-            "jquery.validate.unobtrusive": "jQuery/jquery.validate.unobtrusive",
-            "jquery.unobtrusive-ajax": "jQuery/jquery.unobtrusive-ajax",
-            "MarkdownDeepEditor": "MarkdownDeep/MarkdownDeepLib.min",
-        };
-        </text>
-        }
-        else
-        {
-        <text>
-        requireJsOptions.bundles = {
-            '@Scripts.Url("~/bundles/bootstrap").ToString()': [
-                "bootstrap",
-            ],
-            '@Scripts.Url("~/bundles/jquery").ToString()': [
-                "jquery",
-            ],
-            '@Scripts.Url("~/bundles/jqueryval").ToString()': [
-                "jquery.validate",
-                "jquery.validate.unobtrusive",
-            ],
-            '@Scripts.Url("~/bundles/MarkdownDeep").ToString()': [
-                "MarkdownDeepEditor",
-            ],
-            '@Scripts.Url("~/bundles/Selama-Core").ToString()': [
-                "Core/Common",
-                "Core/Alert",
-                "Core/SpinShield",
-                "Core/Main",
-            ],
-            '@Scripts.Url("~/bundles/Selama-Forums").ToString()': [
-                "Forums/Common",
-                "Forums/Threads",
-                "Forums/Thread",
-            ],
-            '@Scripts.Url("~/bundles/Selama-Root").ToString()': [
-                "Root/Home/Index"
-            ],
-        };
-        </text>
-        }
-
-        var Selama = Selama || {};
-        requirejs.config(requireJsOptions);
-        require(["jquery", "bootstrap"]);
-        @* Need to add unobtrusive ajax in debug since it's a separate file; production has it in the jquery bundle*@
-        @if (HttpContext.Current.IsDebuggingEnabled) { <text>require(["jquery.unobtrusive-ajax"]);
-    </text> }
-        require(["Core/Common", "Core/Alert", "Core/SpinShield", "Core/Main"], function (Common, Alert, SpinShield, Main)
-        {
-            // #region Build global core namespace
-            Selama.Core = Selama.Core || {};
-            Selama.Core.Common = Selama.Core.Common || {};
-            Selama.Core.Common.$$bind = Common.$$bind;
-            Selama.Core.Common.createElem = Common.createElem;
-
-            Selama.Core.Alert = Selama.Core.Alert || {};
-            Selama.Core.Alert.raiseAlert = Alert.raiseAlert;
-
-            Selama.Core.SpinShield = Selama.Core.SpinShield || {};
-            Selama.Core.SpinShield.raiseShield = SpinShield.raiseShield;
-            Selama.Core.SpinShield.lowerShield = SpinShield.lowerShield;
-            //#endregion
-
-            Main.Run();
-        });
-    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/Selama-Core")
+    @Scripts.Render("~/bundles/modernizr")    
     <script type="text/javascript">
         // Define the link to the help html
         Selama.MarkdownEditor = Selama.MarkdownEditor || {};
