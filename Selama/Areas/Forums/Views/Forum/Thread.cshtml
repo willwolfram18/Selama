@@ -16,27 +16,12 @@
 }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/Selama-Forums")
     <script type="text/javascript">
-        var Selama = Selama || {};
-        Selama.Forums = Selama.Forums || {};
-        Selama.Forums.Common = Selama.Forums.Common || {};
-        Selama.Forums.Thread = Selama.Forums.Thread || {};
-
-        require(["jquery.validate.unobtrusive", "Forums/Common", "Forums/Thread"], function (unobtrusive, Common, Thread)
+        $(document).ready(function ()
         {
-            Thread.Setup(MarkdownDeepEditor);
-            // #region Bind function callbacks to global namespace
-            Selama.Forums.Common.onAjaxRequestBegin = Common.onAjaxRequestBegin;
-            Selama.Forums.Common.onAjaxRequestComplete = Common.onAjaxRequestComplete;
-
-            Selama.Forums.Thread.onThreadUpdateRequest_Success = Thread.onThreadUpdateRequest_Success;
-            Selama.Forums.Thread.onThreadUpdateRequest_Failure = Thread.onThreadUpdateRequest_Failure;
-
-            Selama.Forums.Thread.onReplyUpdateRequest_Success = Thread.onReplyUpdateRequest_Success;
-            Selama.Forums.Thread.onReplyUpdateRequest_Failure = Thread.onReplyUpdateRequest_Failure;
-            // #endregion
-
-            $(".btn.btn-post-reply").on("click", "", Thread.onPostReplyClick);
+            $(".btn.btn-post-reply").on("click", "", Selama.Forums.Thread.OnPostReplyClickCallback);
 
             // #region Thread & Reply edit/delete clicks
             $(".row.thread-post[data-thread] .post-options-list")
@@ -44,15 +29,17 @@
                     {
                         url: '@Url.Action("EditThread", "Forum", new { area = "Forums", id = Model.ID })',
                     },
-                    Thread.onThreadEditLinkClick
-                ).on("click", ".thread-post-delete", Thread.onThreadDeleteClick);
+                    Selama.Forums.Thread.OnThreadEditLinkClickCallback
+                )
+                .on("click", ".thread-post-delete", Selama.Forums.Thread.OnThreadDeleteLinkClickCallback);
             $(".row.thread-post[data-thread-reply] .post-options-list")
                 .on("click", ".thread-post-edit",
                     {
                         url: '@Url.Action("EditReply", "Forum", new { area = "Forums" })',
                     },
-                    Thread.onReplyEditLinkClick
-                ).on("click", ".thread-post-delete", Thread.onReplyDeleteClick);
+                    Selama.Forums.Thread.OnReplyEditLinkClickCallback
+                )
+                .on("click", ".thread-post-delete", Selama.Forums.Thread.OnReplyDeleteLinkClickCallback);
             // #endregion
 
             $(".row.thread-post .post-options-list").on(
@@ -61,11 +48,11 @@
                     replyUrl: '@Url.Action("GetReplyQuote", "Forum", new { area = "Forums", page = Model.ViewPageNum })',
                     threadUrl: '@Url.Action("GetThreadQuote", new { area = "Forums" })',
                 },
-                Thread.onQuoteBtnClick
+                Selama.Forums.Thread.OnQuoteBtnClickCallback
             );
 
-            $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", Thread.onEditorModalShown);
-            $("#ThreadDeleteModal form", "#ReplyDeleteModal form").submit(Thread.onDeleteFormSubmitClick);
+            $("#ThreadReplyEditModal, #ThreadEditModal").on("shown.bs.modal", Selama.Forums.Thread.OnEditorModalShownCallback);
+            $("#ThreadDeleteModal form", "#ReplyDeleteModal form").submit(Selama.Forums.Thread.OnDeleteFormSubmitClickCallback);
 
             $(".row.thread-reply:last").addClass("last");
             $("#ThreadReplyEditor").hide();
@@ -198,10 +185,10 @@
                 </div>
                 @using (Ajax.BeginForm("EditThread", "Forum", new { area = "Forums", id = Model.ID }, new AjaxOptions
             {
-                OnBegin = "Selama.Forums.Common.onAjaxRequestBegin",
-                OnComplete = "Selama.Forums.Common.onAjaxRequestComplete",
-                OnSuccess = "Selama.Forums.Thread.onThreadUpdateRequest_Success",
-                OnFailure = "Selama.Forums.Thread.onThreadUpdateRequest_Failure"
+                OnBegin = "Selama.Forums.OnAjaxRequestBeginCallback",
+                OnComplete = "Selama.Forums.OnAjaxRequestCompleteCallback",
+                OnSuccess = "Selama.Forums.Thread.OnThreadUpdateRequestSuccessCallback",
+                OnFailure = "Selama.Forums.Thread.OnThreadUpdateRequestFailureCallback"
             }))
                 {
                     @Html.AntiForgeryToken()
@@ -233,10 +220,10 @@
                 </div>
                 @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
             {
-                OnBegin = "Selama.Forums.Common.onAjaxRequestBegin",
-                OnComplete = "Selama.Forums.Common.onAjaxRequestComplete",
-                OnFailure = "Selama.Forums.Thread.onReplyUpdateRequest_Failure",
-                OnSuccess = "Selama.Forums.Thread.onReplyUpdateRequest_Success"
+                OnBegin = "Selama.Forums.OnAjaxRequestBeginCallback",
+                OnComplete = "Selama.Forums.OnAjaxRequestCompleteCallback",
+                OnFailure = "Selama.Forums.Thread.OnReplyUpdateRequestFailureCallback",
+                OnSuccess = "Selama.Forums.Thread.OnReplyUpdateRequestSuccessCallback"
             }))
                 {
                     @Html.AntiForgeryToken()

@@ -1,5 +1,4 @@
 ﻿/// <autosync enabled="true" />
-/// <reference path="../../Areas/Forums/Scripts/js/Forums.js" />
 /// <reference path="ai.0.22.9-build00167.js" />
 /// <reference path="Bootstrap/bootstrap.js" />
 /// <reference path="bootstrap/respond.matchmedia.addlistener.min.js" />

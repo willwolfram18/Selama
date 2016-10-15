@@ -1,13 +1,13 @@
 ﻿var Selama = Selama || {};
 Selama.Forums = Selama.Forums || {};
 Selama.Forums.Thread = Selama.Forums.Thread || {
-    onPostReplyClick: function onPostReplyClick()
+    _onPostReplyClick: function Selama_Forums_Thread_OnPostReplyClick()
     {
         $("#ThreadReplyEditor").show("blind")
             .find(".mdd_editor").focus();
     },
 
-    onEditorModalShown: function Sealam_Forums_Thread_OnEditorModalShow(e)
+    _onEditorModalShown: function Sealam_Forums_Thread_OnEditorModalShow(e)
     {
         /// <param name="e" type="jQuery.Event" />
         var $target = $(e.currentTarget);
@@ -16,7 +16,7 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
         var m = new MarkdownDeepEditor.Editor($editor[0], $target.find("div.mdd_preview")[0]);
     },
 
-    onQuoteBtnClick: function Selama_Forums_Thread_OnQuoteBtnClick(e)
+    _onQuoteBtnClick: function Selama_Forums_Thread_OnQuoteBtnClick(e)
     {
         /// <param name="e" type="jQuery.Event" />
         // Set both urls, we don't know which one we'll need
@@ -61,12 +61,12 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
         var m = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview")[0]);
     },
 
-    onDeleteFormSubmitClick: function Selama_Forums_Thread_OnDeletFormSubmitClick()
+    _onDeleteFormSubmitClick: function Selama_Forums_Thread_OnDeletFormSubmitClick()
     {
         Selama.SpinShield.raiseShield();
     },
 
-    onReplyDeleteClick: function Selama_Forums_Thread_OnReplyDeleteClick(e)
+    _onReplyDeleteLinkClick: function Selama_Forums_Thread_OnReplyDeleteLinkClick(e)
     {
         /// <param name="e" type="jQuery.Event" />
         // Set the hidden ID input for the reply
@@ -76,18 +76,18 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
             ).trigger("change");
         $("#ReplyDeleteModal").modal("show");
     },
-    onThreadDeleteClick: function Selama_Forums_Thread_OnThreadDeleteClick(e)
+    _onThreadDeleteLinkClick: function Selama_Forums_Thread_OnThreadDeleteLinkClick(e)
     {
         /// <param name="e" type="jQuery.Event" />
         $("#ThreadDeleteModal").modal("show");
     },
 
-    onThreadUpdateRequestSuccess: function Selama_Forums_Thread_OnThreadUpdateRequestSuccess(response)
+    _onThreadUpdateRequestSuccess: function Selama_Forums_Thread_OnThreadUpdateRequestSuccess(response)
     {
         $(".row.thread[data-thread]").find(".thread-content").html(response);
         $("#ThreadEditModal").modal("hide");
     },
-    onThreadUpdateRequestFailure: function Selama_Forums_Thread_OnThreadUpdateRequestFailure(response)
+    _onThreadUpdateRequestFailure: function Selama_Forums_Thread_OnThreadUpdateRequestFailure(response)
     {
         if (response.statusText === "Thread is locked")
         {
@@ -99,13 +99,13 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
         }
     },
 
-    onReplyUpdateRequestSuccess: function Selama_Forums_Thread_OnReplyUpdateRequestSuccess(response)
+    _onReplyUpdateRequestSuccess: function Selama_Forums_Thread_OnReplyUpdateRequestSuccess(response)
     {
         $(".thread-reply[data-thread-reply='" + response.id + "']")
             .find(".thread-reply-content").html(response.content);
         $("#ThreadReplyEditModal").modal("hide");
     },
-    onReplyUpdateRequestFailure: function Selama_Forums_Thread_OnReplyUpdateRequestFailure(response)
+    _onReplyUpdateRequestFailure: function Selama_Forums_Thread_OnReplyUpdateRequestFailure(response)
     {
         if (response.statusText === "Thread is locked")
         {
@@ -185,4 +185,20 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
     },
 };
 Selama.Forums.Thread.OnThreadEditLinkClickCallback = Selama.Core.$$bind(Selama.Forums.Thread._onThreadEditLinkClick, Selama.Forums.Thread);
+Selama.Forums.Thread.OnThreadDeleteLinkClickCallback = Selama.Core.$$bind(Selama.Forums.Thread._onThreadDeleteLinkClick, Selama.Forums.Thread);
+
 Selama.Forums.Thread.OnReplyEditLinkClickCallback = Selama.Core.$$bind(Selama.Forums.Thread._onReplyEditLinkClick, Selama.Forums.Thread);
+Selama.Forums.Thread.OnReplyDeleteLinkClickCallback = Selama.Core.$$bind(Selama.Forums.Thread._onReplyDeleteLinkClick, Selama.Forums.Thread);
+
+Selama.Forums.Thread.OnQuoteBtnClickCallback = Selama.Core.$$bind(Selama.Forums.Thread._onQuoteBtnClick, Selama.Forums.Thread);
+
+Selama.Forums.Thread.OnPostReplyClickCallback = Selama.Core.$$bind(Selama.Forums.Thread._onPostReplyClick, Selama.Forums.Thread);
+
+Selama.Forums.Thread.OnEditorModalShownCallback = Selama.Core.$$bind(Selama.Forums.Thread._onEditorModalShown, Selama.Forums.Thread);
+
+Selama.Forums.Thread.OnDeleteFormSubmitClickCallback = Selama.Core.$$bind(Selama.Forums.Thread._onDeleteFormSubmitClick, Selama.Forums.Thread);
+
+Selama.Forums.Thread.OnThreadUpdateRequestSuccessCallback = Selama.Core.$$bind(Selama.Forums.Thread._onThreadUpdateRequestSuccess, Selama.Forums.Thread);
+Selama.Forums.Thread.OnThreadUpdateRequestFailureCallback = Selama.Core.$$bind(Selama.Forums.Thread._onThreadUpdateRequestFailure, Selama.Forums.Thread);
+Selama.Forums.Thread.OnReplyUpdateRequestSuccessCallback = Selama.Core.$$bind(Selama.Forums.Thread._onReplyUpdateRequestSuccess, Selama.Forums.Thread);
+Selama.Forums.Thread.OnReplyUpdateRequestFailureCallback = Selama.Core.$$bind(Selama.Forums.Thread._onReplyUpdateRequestFailure, Selama.Forums.Thread);
