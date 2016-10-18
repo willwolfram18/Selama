@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - @ViewBag.ApplicationName</title>
     @RenderSection("MetaData", false)
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Selama/css")
     @RenderSection("Styles", false)
 
     @Scripts.Render("~/bundles/jquery")
@@ -18,7 +18,7 @@
     <script type="text/javascript">
         // Define the link to the help html
         Selama.MarkdownEditor = Selama.MarkdownEditor || {};
-        Selama.MarkdownEditor.HelpLocation = '@Url.Content("~/Content/MarkdownDeep/mdd_help.htm")';
+        Selama.MarkdownEditor.HelpLocation = '@Url.Action("MarkdownHelp", "Home", new { area = "" })';
     </script>
     @RenderSection("scripts", required: false)
 </head>

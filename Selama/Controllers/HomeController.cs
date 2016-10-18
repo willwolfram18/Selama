@@ -26,6 +26,11 @@ namespace Selama.Controllers
             return View();
         }
 
+        public PartialViewResult MarkdownHelp()
+        {
+            return PartialView();
+        }
+
         [OutputCache(Duration = 300, Location = System.Web.UI.OutputCacheLocation.Client, VaryByParam = "page")]
         public async Task<ActionResult> GetGuildNewsFeed(int page = 1)
         {

@@ -59,27 +59,22 @@ namespace Selama
             ));
 
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Bootstrap/bootstrap.css",
-                      "~/Content/Bootstrap/bootstrap-theme.css",
-                      "~/Content/Bootstrap/bootstrap-social.css",
-                      "~/Content/FontAwesome/font-awesome.css",
-                      "~/Content/jquery.spin.css",
-                      "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/Selama/css").Include(
+                      "~/Content/css/Bootstrap/bootstrap.css",
+                      "~/Content/css/Bootstrap/bootstrap-theme.css",
+                      "~/Content/css/Bootstrap/bootstrap-social.css",
+                      "~/Content/css/FontAwesome/font-awesome.css",
+                      "~/Content/css/jquery.spin.css",
+                      "~/Content/css/site.css"));
             bundles.Add(new StyleBundle("~/Content/MarkdownDeep/css").Include(
-                "~/Content/MarkdownDeep/mdd_styles.css",
-                "~/Content/MarkdownDeep/MarkdownDeep.css"
+                "~/Content/css/MarkdownDeep/mdd_styles.css",
+                "~/Content/css/MarkdownDeep/MarkdownDeep.css"
             ));
         }
 
         private static string RootJavaScriptFile(string nameInScriptsFolder)
         {
-            return string.Format("~/Scripts/js/{0}", nameInScriptsFolder);
-        }
-
-        private static string AreaJavaScriptFile(string areaName, string nameInScriptsFolder)
-        {
-            return string.Format("~/{0}/Scripts/js/{1}", areaName, nameInScriptsFolder);
+            return string.Format("~/Content/js/{0}", nameInScriptsFolder);
         }
     }
 }
