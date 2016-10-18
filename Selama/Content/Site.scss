@@ -355,9 +355,14 @@ blockquote {
     z-index: 2;
     /* Z-index to remove "transparency" of table with it's original*/
     tr {
-        th {
+        th,
+        td {
             /* Remove transparency of th tags */
-            background-color: white;
+            background: white;
+        }
+        &:nth-of-type(odd)
+        {
+            background: #f9f9f9;
         }
     }
 }

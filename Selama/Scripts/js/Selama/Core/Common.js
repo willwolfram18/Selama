@@ -28,3 +28,9 @@ Selama.Core.generateFixedTable = function Selama_Core_GenerateFixedTable()
         $(this).height($table.find("tr:eq(" + i + ")").height());
     });
 };
+
+$(document).ready(function ()
+{
+    Selama.Core.generateFixedTable();
+    $(window).on("resize", "", Selama.generateFixedTable);
+});

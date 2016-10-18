@@ -510,22 +510,8 @@
       <DependentUpon>Site.css</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
-    <Content Include="Scripts\js\Core\Alert.js" />
-    <Content Include="Scripts\js\Core\Common.js" />
-    <Content Include="Scripts\js\Core\Main.js" />
-    <Content Include="Scripts\js\Core\SpinShield.js" />
-    <Content Include="Scripts\js\Core\Alert.js.map" />
-    <Content Include="Scripts\js\Core\Common.js.map" />
-    <Content Include="Scripts\js\Core\Main.js.map" />
-    <Content Include="Scripts\js\Core\SpinShield.js.map" />
-    <Content Include="Scripts\js\Forums\Common.js.map" />
-    <Content Include="Scripts\js\Forums\Thread.js" />
-    <Content Include="Scripts\js\Forums\Threads.js.map" />
-    <Content Include="Scripts\js\Forums\Thread.js.map" />
     <None Include="Properties\PublishProfiles\selamaashalanore-dev - Web Deploy.pubxml" />
     <None Include="Scripts\js\jQuery\jquery-3.1.0.intellisense.js" />
-    <Content Include="Scripts\js\Forums\Common.js" />
-    <Content Include="Scripts\js\Forums\Threads.js" />
     <Content Include="Scripts\js\jQuery\jquery-3.1.0.js" />
     <Content Include="Scripts\js\jQuery\jquery-3.1.0.min.js" />
     <Content Include="Scripts\js\jQuery\jquery-3.1.0.slim.js" />
@@ -550,10 +536,6 @@
     <Content Include="Content\MarkdownDeep\mdd_styles.css" />
     <Content Include="Content\MarkdownDeep\mdd_toolbar.png" />
     <Content Include="Scripts\js\modernizr-2.8.3.js" />
-    <Content Include="Scripts\js\Root\Home\Index.js" />
-    <Content Include="Scripts\js\Selama.js" />
-    <Content Include="Scripts\js\r.js" />
-    <Content Include="Scripts\js\require.js" />
     <Content Include="Scripts\js\Selama\Core\Alert.js" />
     <Content Include="Scripts\js\Selama\Core\Common.js" />
     <None Include="Scripts\js\_references.js" />
@@ -588,12 +570,10 @@
     <Content Include="Views\Shared\_MenuBarPartial.cshtml" />
     <Content Include="Views\Shared\_AdminMenuItemPartial.cshtml" />
     <Content Include="Views\Shared\_PagerPartial.cshtml" />
-    <Content Include="Scripts\ts\tsconfig.json" />
     <Content Include="Views\Home\GetGuildNewsFeed.cshtml" />
     <Content Include="Scripts\js\jQuery\jquery.validate.unobtrusive.min.js.map">
       <DependentUpon>jquery.validate.unobtrusive.min.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\js\Root\Home\Index.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -601,7 +581,6 @@
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Scripts\typings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -671,19 +650,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\ts\Forums\Thread.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Forums\Threads.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Forums\Common.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\Main.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\Alert.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\SpinShield.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Core\Common.ts" />
-    <TypeScriptCompile Include="Scripts\ts\Root\Home\Index.ts" />
-    <TypeScriptCompile Include="Scripts\ts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\ts\typings\bootstrap\bootstrap.d.ts" />
-    <TypeScriptCompile Include="Scripts\ts\typings\markdowndeep\MarkdownDeepEditor.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
