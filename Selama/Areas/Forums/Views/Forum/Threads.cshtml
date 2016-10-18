@@ -6,10 +6,24 @@
 }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/Selama-Forums")
     <script type="text/javascript">
-        require(["Forums/Threads"], function (Threads)
+        $(document).ready(function ()
         {
-            Threads.Setup();
+            $("td.thread-title").on("mousemove", Selama.Forums.Threads.OnThreadTitleMouseMoveCallback)
+                .on("mouseleave", Selama.Forums.Threads.OnThreadTitleMouseLeaveCallback)
+                .each(function (index, popoverElem)
+                {
+                    var popoverOptions = {
+                        animation: false,
+                        container: "body",
+                        html: true,
+                        placement: "right",
+                        trigger: "manual"
+                    };
+                    $(popoverElem).popover(popoverOptions);
+                });
+            $("[data-toggle='tooltip']").tooltip();
         });
     </script>
 }

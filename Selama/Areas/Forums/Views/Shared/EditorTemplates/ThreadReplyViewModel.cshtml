@@ -8,8 +8,8 @@
             UpdateTargetId = "ThreadReplyResult",
             OnBegin = "Selama.Core.SpinShield.raiseShield",
             OnComplete = "Selama.Core.SpinShield.lowerShield",
-            OnSuccess = "onPostClick_Success",
-            OnFailure = "onPostClick_Error"
+            OnSuccess = "Selama.Forums.OnPostReplyClickSuccessCallback",
+            OnFailure = "Selama.Forums.OnPostReplyClickErrorCallback"
         },
         new { id = "ThreadReplyEditorForm" })
     )
@@ -44,30 +44,17 @@
 </div>
 
 @Styles.Render("~/Content/MarkdownDeep/css")
+@Scripts.Render("~/bundles/MarkdownDeep")
 <script type="text/javascript">
     var Selama = Selama || {};
-    Selama.Core = Selama.Core || {};
-    Selama.Core.Alert = Selama.Core.Alert || {};
-    Selama.Core.SpinShield = Selama.Core.SpinShield || {};
-
-    require(["MarkdownDeepEditor"], function (md)
-    {
-        $(document).ready(function ()
-        {
-            $(ReplyCancelBtn).click(onCancelClick);
-        });
-    });
-    function onCancelClick()
-    {
-        $("#ThreadReplyEditor").effect("blind");
-    }
-
-    function onPostClick_Success(response)
+    Selama.Forums = Selama.Forums || {};
+    Selama.Forums.OnPostReplyClickSuccessCallback = function Selama_Forums_OnPostClickSuccess(response)
     {
         var redirectLocation = '@Url.Action("Thread", new { area = "Forums", id = Model.ThreadID, page = "-1" })';
         window.location.href = redirectLocation + $(response).find(".anchor").attr("href");
-    }
-    function onPostClick_Error(response)
+    };
+
+    Selama.Forums.OnPostReplyClickErrorCallback = function Selama_Forums_OnPostClickError(response)
     {
         if (response.statusText === "Thread is locked")
         {
@@ -77,5 +64,15 @@
         {
             Selama.Core.Alert.raiseAlert("An unexpected error occurred.");
         }
-    }
+    };
+
+    Selama.Forums.OnCancelBtnClickCallback = function Selma_Forums_OnCancelClick()
+    {
+        $("#ThreadReplyEditor").effect("blind");
+    };
+
+    $(document).ready(function ()
+    {
+        $("#ReplyCancelBtn").on("click", "", Selama.Forums.OnCancelBtnClickCallback);
+    });
 </script>

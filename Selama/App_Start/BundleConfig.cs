@@ -19,7 +19,8 @@ namespace Selama
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/MarkdownDeep").Include(
-                RootJavaScriptFile("MarkdownDeep/MarkdownDeepLib.min.js")
+                RootJavaScriptFile("MarkdownDeep/MarkdownDeepLib.min.js"),
+                RootJavaScriptFile("MarkdownDeep/MarkdownDeep.js")
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/requirejs").Include(
@@ -34,9 +35,9 @@ namespace Selama
                 RootJavaScriptFile("Selama/RootArea/Home/Index.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Forums").Include(
-                RootJavaScriptFile("Forums/Common.js"),
-                RootJavaScriptFile("Forums/Threads.js"),
-                RootJavaScriptFile("Forums/Thread.js")
+                RootJavaScriptFile("Selama/Forums/Common.js"),
+                RootJavaScriptFile("Selama/Forums/Threads.js"),
+                RootJavaScriptFile("Selama/Forums/Thread.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Root").Include(
                 RootJavaScriptFile("Root/Home/Index.js")
