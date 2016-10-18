@@ -48,7 +48,7 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
     {
         var $editor = $("#ThreadReplyEditor textarea.mdd_editor");
         var currentVal = $editor.val().trim();
-        Selama.Forums.Thread.onPostReplyClick(); // show the editor
+        Selama.Forums.Thread.OnPostReplyClickCallback(); // show the editor
         if (currentVal === "")
         {
             $editor.val(response).trigger("change");

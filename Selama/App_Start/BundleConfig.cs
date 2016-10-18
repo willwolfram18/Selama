@@ -10,7 +10,8 @@ namespace Selama
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 RootJavaScriptFile("jQuery/jquery-{version}.js"),
-                RootJavaScriptFile("jQuery/jquery.unobtrusive-ajax.js")
+                RootJavaScriptFile("jQuery/jquery.unobtrusive-ajax.js"),
+                RootJavaScriptFile("jQuery/jquery-ui-{version}.js")
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

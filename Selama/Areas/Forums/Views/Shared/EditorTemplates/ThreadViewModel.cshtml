@@ -2,9 +2,7 @@
 @using Selama.Areas.Forums.Models
 @model ThreadViewModel
 
-<script type="text/javascript">
-    require(["MarkdownDeepEditor"]);
-</script>
+@Scripts.Render("~/bundles/MarkdownDeep")
 @Styles.Render("~/Content/MarkdownDeep/css")
 
 <div class="form-group">

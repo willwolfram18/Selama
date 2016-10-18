@@ -30,7 +30,7 @@ Selama.Core.SpinShield = Selama.Core.SpinShield || {
         }
         else
         {
-            throw new Error("target is not of type String or jQuery");
+            return $(this._defaultTargetSelector);
         }
     },
 
