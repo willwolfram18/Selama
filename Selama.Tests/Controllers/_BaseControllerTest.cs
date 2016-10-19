@@ -18,6 +18,9 @@ namespace Selama.Tests.Controllers
         public void SetupTest()
         {
             Controller = new TController();
+            InjectDependencies();
         }
+
+        public abstract void InjectDependencies();
     }
 }

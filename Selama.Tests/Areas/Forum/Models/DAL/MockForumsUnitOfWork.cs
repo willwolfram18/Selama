@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
-using Selama.Areas.Forums.Models.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Selama.Areas.Forums.Models;
+using Selama.Areas.Forums.Models.DAL;
 using Selama.Areas.Forums.ViewModels;
 using Selama.Models;
 using Selama.Models.DAL;
-using System.Security.Principal;
 using Selama.Tests.Models.DAL;
+using System;
+using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace Selama.Tests.Areas.Forum.Models.DAL
 {

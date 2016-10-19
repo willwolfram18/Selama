@@ -2,6 +2,7 @@
 using Moq;
 using Selama.Areas.Forums.Controllers;
 using Selama.Areas.Forums.Models.DAL;
+using Selama.Tests.Areas.Forum.Models.DAL;
 using Selama.Tests.Controllers;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,13 @@ namespace Selama.Tests.Areas.Forum.Controllers
     [TestClass]
     public class ForumControllerTest : _BaseControllerUnitTest<ForumController>
     {
+        public override void InjectDependencies()
+        {
+            Controller.InjectUnitOfWork(new MockForumsUnitOfWork());
+        }
+
         [TestMethod]
-        public void Index()
+        public void IndexIsNotNull()
         {
             ViewResult result = Controller.Index() as ViewResult;
 
@@ -24,17 +30,19 @@ namespace Selama.Tests.Areas.Forum.Controllers
         }
 
         [TestMethod]
-        public async Task ThreadsNoId()
+        public async Task ThreadsActionWithoutForumIdGivesRedirect()
         {
             RedirectToRouteResult result = await Controller.Threads() as RedirectToRouteResult;
 
+            Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
 
         [TestMethod]
         public async Task ThreadsValidId()
         {
-            // Require dependency injection
+            // TODO: Create forum, and thread and place in unit of work
+
             ViewResult result = await Controller.Threads(1) as ViewResult;
 
             Assert.IsNotNull(result);

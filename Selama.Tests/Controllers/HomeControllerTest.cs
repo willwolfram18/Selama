@@ -1,12 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Selama.Controllers;
 using System.Web.Mvc;
+using System;
 
 namespace Selama.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest : _BaseControllerUnitTest<HomeController>
     {
+        public override void InjectDependencies()
+        {
+            // No dependency to inject
+        }
+
         [TestMethod]
         public void IndexIsNotNull()
         {
