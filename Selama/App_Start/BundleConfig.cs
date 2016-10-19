@@ -24,21 +24,18 @@ namespace Selama
                 RootJavaScriptFile("MarkdownDeep/MarkdownDeep.js")
             ));
 
-            bundles.Add(new ScriptBundle("~/bundles/requirejs").Include(
-                RootJavaScriptFile("require.js")
-            ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Core").Include(
-                RootJavaScriptFile("Selama/Core/Common.js"),
-                RootJavaScriptFile("Selama/Core/Alert.js"),
-                RootJavaScriptFile("Selama/Core/SpinShield.js")
+                SelamaJavaScriptFile("Core/Common.js"),
+                SelamaJavaScriptFile("Core/Alert.js"),
+                SelamaJavaScriptFile("Core/SpinShield.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-RootArea").Include(
-                RootJavaScriptFile("Selama/RootArea/Home/Index.js")
+                SelamaJavaScriptFile("RootArea/Home/Index.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Forums").Include(
-                RootJavaScriptFile("Selama/Forums/Common.js"),
-                RootJavaScriptFile("Selama/Forums/Threads.js"),
-                RootJavaScriptFile("Selama/Forums/Thread.js")
+                SelamaJavaScriptFile("Forums/Common.js"),
+                SelamaJavaScriptFile("Forums/Threads.js"),
+                SelamaJavaScriptFile("Forums/Thread.js")
             ));
             bundles.Add(new ScriptBundle("~/bundles/Selama-Root").Include(
                 RootJavaScriptFile("Root/Home/Index.js")
@@ -54,27 +51,33 @@ namespace Selama
                 RootJavaScriptFile("Bootstrap/bootstrap.js"),
                 RootJavaScriptFile("Bootstrap/respond.js"))
             );
-            bundles.Add(new ScriptBundle("~/bundles/Selama/Forums").Include(
-                "~/Areas/Forums/Scripts/js/Forums.js"
-            ));
 
 
             bundles.Add(new StyleBundle("~/Content/Selama/css").Include(
-                      "~/Content/css/Bootstrap/bootstrap.css",
-                      "~/Content/css/Bootstrap/bootstrap-theme.css",
-                      "~/Content/css/Bootstrap/bootstrap-social.css",
-                      "~/Content/css/FontAwesome/font-awesome.css",
-                      "~/Content/css/jquery.spin.css",
-                      "~/Content/css/site.css"));
+                RootCssFile("Bootstrap/bootstrap.css"),
+                RootCssFile("Bootstrap/bootstrap-theme.css"),
+                RootCssFile("Bootstrap/bootstrap-social.css"),
+                RootCssFile("FontAwesome/font-awesome.css"),
+                RootCssFile("jquery.spin.css"),
+                RootCssFile("site.css")
+            ));
             bundles.Add(new StyleBundle("~/Content/MarkdownDeep/css").Include(
-                "~/Content/css/MarkdownDeep/mdd_styles.css",
-                "~/Content/css/MarkdownDeep/MarkdownDeep.css"
+                RootCssFile("MarkdownDeep/mdd_styles.css"),
+                RootCssFile("MarkdownDeep/MarkdownDeep.css")
             ));
         }
 
-        private static string RootJavaScriptFile(string nameInScriptsFolder)
+        private static string RootJavaScriptFile(string nameInJsFolder)
         {
-            return string.Format("~/Content/js/{0}", nameInScriptsFolder);
+            return string.Format("~/Content/js/{0}", nameInJsFolder);
+        }
+        private static string RootCssFile(string nameInCssFolder)
+        {
+            return string.Format("~/Content/css/{0}", nameInCssFolder);
+        }
+        private static string SelamaJavaScriptFile(string jsFileName)
+        {
+            return RootJavaScriptFile(string.Format("Selama/{0}", jsFileName));
         }
     }
 }
