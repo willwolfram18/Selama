@@ -1,4 +1,4 @@
-﻿using Selama.Common.ExtensionMethods;
+﻿using Selama.Common.Extensions;
 using Selama.Common.Utility;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using BattleNetApi.Api;
 using BattleNetApi.Objects.WoW;
 using Selama.Areas.Forums.Models.DAL;
-using Selama.Common.ExtensionMethods;
+using Selama.Common.Extensions;
 using Selama.Common.Utility;
 using Selama.Models.DAL;
 using Selama.ViewModels.Home;

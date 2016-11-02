@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Selama.Common.ExtensionMethods
+namespace Selama.Common.Extensions
 {
-    public static class IEnumerableExtensionMethods
+    public static class IEnumerableExtensions
     {
         public static List<TOut> ToListOfDifferentType<TIn, TOut>(this IEnumerable<TIn> source, Func<TIn, TOut> constructor)
         {

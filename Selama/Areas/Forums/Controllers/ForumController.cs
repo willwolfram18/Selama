@@ -2,7 +2,7 @@
 using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.Models.DAL;
 using Selama.Areas.Forums.ViewModels;
-using Selama.Common.ExtensionMethods;
+using Selama.Common.Extensions;
 using Selama.Controllers;
 using System;
 using System.Collections.Generic;

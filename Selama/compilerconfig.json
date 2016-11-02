@@ -10,5 +10,9 @@
   {
     "outputFile": "Content/FontAwesome/bootstrap-social.css",
     "inputFile": "Content/FontAwesome/bootstrap-social.scss"
+  },
+  {
+    "outputFile": "Content/css/Site.css",
+    "inputFile": "Content/css/Site.scss"
   }
 ]

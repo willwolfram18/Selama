@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Selama.Common.ExtensionMethods
+namespace Selama.Common.Extensions
 {
-    public static class DateTimeExtensionMethods
+    public static class DateTimeExtensions
     {
         private const int SEC_IN_MIN = 60;
         private const int SEC_IN_HR = SEC_IN_MIN * 60;

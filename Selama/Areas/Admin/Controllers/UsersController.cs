@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Selama.Areas.Admin.ViewModels.Users;
 using Selama.Common.Attributes;
-using Selama.Common.ExtensionMethods;
+using Selama.Common.Extensions;
 using Selama.Common.Utility;
 using Selama.Controllers;
 using Selama.Models;
