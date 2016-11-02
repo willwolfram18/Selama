@@ -8,11 +8,6 @@ namespace Selama.Tests.Controllers
     [TestClass]
     public class HomeControllerTest : _BaseControllerUnitTest<HomeController>
     {
-        public override void InjectDependencies()
-        {
-            // No dependency to inject
-        }
-
         [TestMethod]
         public void IndexIsNotNull()
         {

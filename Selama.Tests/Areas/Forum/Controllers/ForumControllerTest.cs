@@ -16,9 +16,9 @@ namespace Selama.Tests.Areas.Forum.Controllers
     [TestClass]
     public class ForumControllerTest : _BaseControllerUnitTest<ForumController>
     {
-        public override void InjectDependencies()
+        protected override ForumController SetupController()
         {
-            Controller.InjectUnitOfWork(new MockForumsUnitOfWork());
+            return new ForumController(new MockForumsUnitOfWork());
         }
 
         [TestMethod]

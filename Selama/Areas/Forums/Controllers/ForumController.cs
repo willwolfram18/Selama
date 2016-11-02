@@ -21,7 +21,7 @@ namespace Selama.Areas.Forums.Controllers
             _db = new ForumsUnitOfWork();
         }
 
-        public void InjectUnitOfWork(IForumsUnitOfWork db)
+        public ForumController(IForumsUnitOfWork db)
         {
             _db = db;
         }
