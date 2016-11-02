@@ -59,9 +59,17 @@ textarea {
     margin-right: 8px;
 }
 
-.fa.fa-icontext
+.fa
 {
-    margin-right: 8px;
+    &.fa-icontext
+    {
+        margin-right: 8px;
+    }
+
+    &.fa-thumb-tack
+    {
+        transform: rotate(45deg);
+    }
 }
 
 .btn-battlenet {
@@ -435,3 +443,5 @@ blockquote {
         }
     }
 }
+
+
