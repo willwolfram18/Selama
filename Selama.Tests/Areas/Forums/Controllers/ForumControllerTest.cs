@@ -39,7 +39,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
         {
             for (int i = 0; i < NUM_FORUM_SECTIONS; i++)
             {
-                controllerDb.ForumSectionRepository.Add(new ForumSection
+                controllerDb.ForumSections.Add(new ForumSection
                 {
                     DisplayOrder = i,
                     IsActive = true,
@@ -52,7 +52,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
             for (int i = 0; i < NUM_FORUMS; i++)
             {
                 int forumSectionId = i % NUM_FORUM_SECTIONS;
-                ForumSection section = controllerDb.ForumSectionRepository.FindById(forumSectionId);
+                ForumSection section = controllerDb.ForumSections.FindById(forumSectionId);
                 Forum forum = new Forum
                 {
                     ForumSectionID = forumSectionId,
@@ -63,7 +63,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
                     Threads = new List<Thread>(),
                 };
                 section.Forums.Add(forum);
-                controllerDb.ForumRepository.Add(forum);
+                controllerDb.Forums.Add(forum);
             }
         }
         private void SetupThreads()
@@ -71,7 +71,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
             for (int i = 0; i < NUM_THREADS; i++)
             {
                 int forumId = i % NUM_FORUMS;
-                Forum forum = controllerDb.ForumRepository.FindById(forumId);
+                Forum forum = controllerDb.Forums.FindById(forumId);
             }
         }
 

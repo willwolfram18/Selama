@@ -12,12 +12,12 @@ namespace Selama.Areas.Forums.Models.DAL
 {
     public interface IForumsUnitOfWork : IGenericUnitOfWork
     {
-        IGenericEntityRepository<Forum> ForumRepository { get; }
-        IGenericEntityRepository<ForumSection> ForumSectionRepository { get; }
-        IGenericEntityRepository<Thread> ThreadRepository { get; }
-        IGenericEntityRepository<ThreadReply> ThreadReplyRepository { get; }
-        IGenericEntityRepository<ApplicationUser> IdentityRepository { get; }
-        IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedRepository { get; }
+        IGenericEntityRepository<Forum> Forums { get; }
+        IGenericEntityRepository<ForumSection> ForumSections { get; }
+        IGenericEntityRepository<Thread> Threads { get; }
+        IGenericEntityRepository<ThreadReply> ThreadReplies { get; }
+        IGenericEntityRepository<ApplicationUser> Identities { get; }
+        IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; }
 
         Thread CreateNewThread(ThreadViewModel threadToCreate, IPrincipal author, int forumId);
         void DeleteThread(Thread thread);
