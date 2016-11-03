@@ -52,9 +52,9 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             // we want a zero-indexed page number on the server, but a one-indexed page client-side
-            page--;
-            ForumViewModel model = new ForumViewModel(forum, PAGE_SIZE, page);
-            if (page >= model.NumPages)
+            int zeroIndexedPage = page - 1;
+            ForumViewModel model = new ForumViewModel(forum, PAGE_SIZE, zeroIndexedPage);
+            if (zeroIndexedPage >= model.NumPages)
             {
                 // Perform redirect to put URL page within [1,NumPages]
                 return RedirectToAction("Threads", new { id = id, page = model.NumPages });
