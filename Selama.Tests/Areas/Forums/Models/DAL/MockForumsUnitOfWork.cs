@@ -15,7 +15,7 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
     {
         public IGenericEntityRepository<Selama.Areas.Forums.Models.Forum> Forums { get; private set; }
         public IGenericEntityRepository<ForumSection> ForumSections { get; private set; }
-        public IGenericEntityRepository<ApplicationUser> Identities { get; private set; }
+        public IGenericEntityRepository<ApplicationUser> Authors { get; private set; }
         public IGenericEntityRepository<ThreadReply> ThreadReplies { get; private set; }
         public IGenericEntityRepository<Thread> Threads { get; private set; }
         public IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; private set; }
@@ -24,7 +24,7 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
         {
             Forums = new MockGenericEntityRepository<Selama.Areas.Forums.Models.Forum>();
             ForumSections = new MockGenericEntityRepository<ForumSection>();
-            Identities = new MockGenericEntityRepository<ApplicationUser>();
+            Authors = new MockIdentityRepository();
             ThreadReplies = new MockGenericEntityRepository<ThreadReply>();
             Threads = new MockGenericEntityRepository<Thread>();
             GuildNewsFeedItems = new MockGenericEntityRepository<GuildNewsFeedItem>();
@@ -34,7 +34,7 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
         {
             if (thread.Author == null)
             {
-                thread.Author = await Identities.FindByIdAsync(thread.AuthorId);
+                thread.Author = await Authors.FindByIdAsync(thread.AuthorId);
             }
             GuildNewsFeedItems.Add(new GuildNewsFeedItem(thread, threadUrl));
         }
@@ -81,7 +81,7 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
             }
             else if (entity is ApplicationUser)
             {
-                SetReloadObject(entity, Identities);
+                SetReloadObject(entity, Authors);
             }
             else if (entity is GuildNewsFeedItem)
             {

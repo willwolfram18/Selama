@@ -18,7 +18,7 @@ namespace Selama.Areas.Forums.Models.DAL
         public IGenericEntityRepository<ForumSection> ForumSections { get; private set; }
         public IGenericEntityRepository<Thread> Threads { get; private set; }
         public IGenericEntityRepository<ThreadReply> ThreadReplies { get; private set; }
-        public IGenericEntityRepository<ApplicationUser> Identities { get; private set; }
+        public IGenericEntityRepository<ApplicationUser> Authors { get; private set; }
         public IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; private set; }
 
         public ForumsUnitOfWork()
@@ -28,7 +28,7 @@ namespace Selama.Areas.Forums.Models.DAL
             ForumSections = new ForumSectionRepository(_context);
             Threads = new ThreadRepository(_context);
             ThreadReplies = new ThreadReplyRepository(_context);
-            Identities = new IdentityRepository(_context);
+            Authors = new IdentityRepository(_context);
             GuildNewsFeedItems = new GuildNewsFeedRepository(_context);
         }
 

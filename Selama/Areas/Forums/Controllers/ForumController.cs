@@ -54,7 +54,7 @@ namespace Selama.Areas.Forums.Controllers
             // we want a zero-indexed page number on the server, but a one-indexed page client-side
             page--;
             ForumViewModel model = new ForumViewModel(forum, PAGE_SIZE, page);
-            if (page > model.NumPages)
+            if (page >= model.NumPages)
             {
                 // Perform redirect to put URL page within [1,NumPages]
                 return RedirectToAction("Threads", new { id = id, page = model.NumPages });
@@ -171,7 +171,7 @@ namespace Selama.Areas.Forums.Controllers
                 _db.ThreadReplies.Add(dbReply);
                 if (await _db.TrySaveChangesAsync())
                 {
-                    dbReply.Author = await _db.Identities.FindByIdAsync(User.Identity.GetUserId());
+                    dbReply.Author = await _db.Authors.FindByIdAsync(User.Identity.GetUserId());
                     Response.StatusCode = 200;
 
                     return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply));

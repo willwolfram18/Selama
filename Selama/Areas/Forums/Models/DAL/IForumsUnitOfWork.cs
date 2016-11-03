@@ -16,7 +16,7 @@ namespace Selama.Areas.Forums.Models.DAL
         IGenericEntityRepository<ForumSection> ForumSections { get; }
         IGenericEntityRepository<Thread> Threads { get; }
         IGenericEntityRepository<ThreadReply> ThreadReplies { get; }
-        IGenericEntityRepository<ApplicationUser> Identities { get; }
+        IGenericEntityRepository<ApplicationUser> Authors { get; }
         IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; }
 
         Thread CreateNewThread(ThreadViewModel threadToCreate, IPrincipal author, int forumId);
