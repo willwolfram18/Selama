@@ -16,12 +16,12 @@ namespace Selama.Areas.Forums.ViewModels
         public ThreadReplyViewModel(ThreadReply reply)
         {
             ID = reply.Id;
-            ThreadID = reply.ThreadID;
+            ThreadID = reply.ThreadId;
             Content = reply.Content;
             
             HtmlContent = new HtmlString(Util.Markdown.Transform(Content));
             PostDate = reply.PostDate;
-            AuthorID = reply.AuthorID;
+            AuthorID = reply.AuthorId;
             Author = reply.Author.UserName;
             // Add 2 because index has a base 0, and want base 1, and the thread content
             // itself is part of the index

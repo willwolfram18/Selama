@@ -14,7 +14,7 @@ namespace Selama.Areas.Forums.Controllers
     public class ForumController : _BaseAuthorizeController
     {
         private IForumsUnitOfWork _db;
-        private const int PAGE_SIZE = 20;
+        public const int PAGE_SIZE = 20;
 
         public ForumController()
         {
@@ -29,7 +29,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums
         public ActionResult Index(string redirectFrom = null)
         {
-            List<ForumSectionViewModel> forums = _db.ForumSectionRepository.Get(f => f.IsActive).ToListOfDifferentType(
+            List<ForumSectionViewModel> forums = _db.ForumSections.Get(f => f.IsActive).ToListOfDifferentType(
                 section => new ForumSectionViewModel(section)
             );
             ViewBag.ErrorMsg = SelectErrorMessageFromRedirect(redirectFrom);
@@ -40,7 +40,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums/Threads/3
         public async Task<ActionResult> Threads(int id = 0, int page = 1)
         {
-            Forum forum = await _db.ForumRepository.FindByIdAsync(id);
+            Forum forum = await _db.Forums.FindByIdAsync(id);
             if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index", new { redirectFrom = "Threads" });
@@ -52,9 +52,9 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             // we want a zero-indexed page number on the server, but a one-indexed page client-side
-            page--;
-            ForumViewModel model = new ForumViewModel(forum, PAGE_SIZE, page);
-            if (page > model.NumPages)
+            int zeroIndexedPage = page - 1;
+            ForumViewModel model = new ForumViewModel(forum, PAGE_SIZE, zeroIndexedPage);
+            if (zeroIndexedPage >= model.NumPages)
             {
                 // Perform redirect to put URL page within [1,NumPages]
                 return RedirectToAction("Threads", new { id = id, page = model.NumPages });
@@ -66,7 +66,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums/Thread/2
         public async Task<ActionResult> Thread(int id = 0, int page = 1, string msg = null)
         {
-            Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(id);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index", new { redirectFrom = "Thread" });
@@ -108,7 +108,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: /Forums/CreateThread/3
         public async Task<ActionResult> CreateThread(int id = 0)
         {
-            Forum forum = await _db.ForumRepository.FindByIdAsync(id);
+            Forum forum = await _db.Forums.FindByIdAsync(id);
             if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index");
@@ -121,7 +121,7 @@ namespace Selama.Areas.Forums.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateThread(ThreadViewModel thread, int id = 0)
         {
-            Forum forum = await _db.ForumRepository.FindByIdAsync(id);
+            Forum forum = await _db.Forums.FindByIdAsync(id);
             if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index");
@@ -149,7 +149,7 @@ namespace Selama.Areas.Forums.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> PostReply(ThreadReplyViewModel reply, int id = 0)
         {
-            Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(id);
             if (thread == null || !thread.IsActive)
             {
                 return HttpNotFound();
@@ -168,10 +168,10 @@ namespace Selama.Areas.Forums.Controllers
             if (ModelState.IsValid)
             {
                 ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), id, thread.Replies.Count + 1);
-                _db.ThreadReplyRepository.Add(dbReply);
+                _db.ThreadReplies.Add(dbReply);
                 if (await _db.TrySaveChangesAsync())
                 {
-                    dbReply.Author = await _db.IdentityRepository.FindByIdAsync(User.Identity.GetUserId());
+                    dbReply.Author = await _db.Authors.FindByIdAsync(User.Identity.GetUserId());
                     Response.StatusCode = 200;
 
                     return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply));
@@ -205,7 +205,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums/EditThread/2
         public async Task<ActionResult> EditThread(int id = 0)
         {
-            Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(id);
             if (thread == null || !thread.IsActive)
             {
                 return HttpNotFound("Invalid ID");
@@ -223,7 +223,7 @@ namespace Selama.Areas.Forums.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditThread(ThreadEditViewModel thread)
         {
-            Thread dbThread = await _db.ThreadRepository.FindByIdAsync(thread.ID);
+            Thread dbThread = await _db.Threads.FindByIdAsync(thread.ID);
             if (dbThread == null || !dbThread.IsActive)
             {
                 return HttpNotFound("Invalid ID");
@@ -234,7 +234,7 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             thread.ValidateModel(ModelState);
-            if (dbThread.AuthorID != User.Identity.GetUserId())
+            if (dbThread.AuthorId != User.Identity.GetUserId())
             {
                 ModelState.AddModelError("", "You are not the author of this post");
             }
@@ -257,7 +257,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums/EditReply/2
         public async Task<ActionResult> EditReply(int id = 0)
         {
-            ThreadReply reply = await _db.ThreadReplyRepository.FindByIdAsync(id);
+            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(id);
             if (reply == null || !reply.IsActive)
             {
                 return HttpNotFound("Invalid ID");
@@ -275,7 +275,7 @@ namespace Selama.Areas.Forums.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditReply(ThreadReplyEditViewModel reply)
         {
-            ThreadReply dbReply = await _db.ThreadReplyRepository.FindByIdAsync(reply.ID);
+            ThreadReply dbReply = await _db.ThreadReplies.FindByIdAsync(reply.ID);
             if (reply == null || !dbReply.IsActive)
             {
                 return HttpNotFound("Invalid ID");
@@ -286,12 +286,12 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             reply.ValidateModel(ModelState);
-            if (dbReply.ThreadID != reply.ThreadID)
+            if (dbReply.ThreadId != reply.ThreadID)
             {
                 ModelState.AddModelError("ThreadID", "Invalid Thread ID");
             }
             // Only the author can edit
-            if (dbReply.AuthorID != User.Identity.GetUserId())
+            if (dbReply.AuthorId != User.Identity.GetUserId())
             {
                 ModelState.AddModelError("", "You are not the author of this post, and therfore cannot edit it");
             }
@@ -315,7 +315,7 @@ namespace Selama.Areas.Forums.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteThread(int id = 0, int page = 1)
         {
-            Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(id);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index", new { redirectFrom = "Thread" });
@@ -326,7 +326,7 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Thread", new { id = thread.Id, page = page, msg = "This thread is locked from editing and cannot be deleted" });
             }
             // Cannot delete a thread that isn't yours
-            if (thread.AuthorID != User.Identity.GetUserId())
+            if (thread.AuthorId != User.Identity.GetUserId())
             {
                 return RedirectToAction("Thread", new { id = thread.Id, page = page, msg = "You are not the author of this thread and cannot delete it" });
             }
@@ -335,7 +335,7 @@ namespace Selama.Areas.Forums.Controllers
             _db.DeleteThread(thread);
             if (await _db.TrySaveChangesAsync())
             {
-                return RedirectToAction("Threads", new { id = thread.ForumID });
+                return RedirectToAction("Threads", new { id = thread.ForumId });
             }
             return RedirectToAction("Thread", new { id = id, page = page });
         }
@@ -345,8 +345,8 @@ namespace Selama.Areas.Forums.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteReply(int id = 0, int threadId = 0, int page = 1)
         {
-            ThreadReply reply = await _db.ThreadReplyRepository.FindByIdAsync(id);
-            if (reply == null || reply.ThreadID != threadId || !reply.Thread.IsActive)
+            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(id);
+            if (reply == null || reply.ThreadId != threadId || !reply.Thread.IsActive)
             {
                 return HttpNotFound();
             }
@@ -356,13 +356,13 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Thread", new { id = threadId, page = page, msg = "The thread is locked for editing and therefore the reply cannot be deleted" });
             }
             // Cannot delete a thread you do not own
-            if (reply.AuthorID != User.Identity.GetUserId())
+            if (reply.AuthorId != User.Identity.GetUserId())
             {
                 return RedirectToAction("Thread", new { id = threadId, page = page, msg = "You are not the author of this reply and cannot delete it" });
             }
 
             reply.IsActive = false;
-            _db.ThreadReplyRepository.Update(reply);
+            _db.ThreadReplies.Update(reply);
             await _db.SaveChangesAsync();
             return RedirectToAction("Thread", new { id = threadId, page = page });
         }
@@ -386,7 +386,7 @@ namespace Selama.Areas.Forums.Controllers
 
         private async Task<ActionResult> SetThreadLock(int id, int page, bool locking, string lockWord)
         {
-            Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(id);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index");
@@ -396,7 +396,7 @@ namespace Selama.Areas.Forums.Controllers
             if (Models.Thread.CanPinOrLockThreads(User))
             {
                 thread.IsLocked = locking;
-                _db.ThreadRepository.Update(thread);
+                _db.Threads.Update(thread);
                 if (!await _db.TrySaveChangesAsync())
                 {
                     message = "There was an error " + lockWord + " the thread. Please try again.";
@@ -426,7 +426,7 @@ namespace Selama.Areas.Forums.Controllers
 
         private async Task<ActionResult> SetThreadPin(int id, int page, bool pinning, string pinningWord)
         {
-            Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(id);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index");
@@ -436,7 +436,7 @@ namespace Selama.Areas.Forums.Controllers
             if (Models.Thread.CanPinOrLockThreads(User))
             {
                 thread.IsPinned = pinning;
-                _db.ThreadRepository.Update(thread);
+                _db.Threads.Update(thread);
                 if (!await _db.TrySaveChangesAsync())
                 {
                     message = "There was an error " + pinningWord + " the thread. Please try again.";
@@ -450,7 +450,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums/GetThreadQuote/2
         public async Task<ActionResult> GetThreadQuote(int id = 0)
         {
-            Thread thread = await _db.ThreadRepository.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(id);
             if (thread == null || !thread.IsActive)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
@@ -462,7 +462,7 @@ namespace Selama.Areas.Forums.Controllers
         // GET: Forums/GetReplyQuote/4
         public async Task<ActionResult> GetReplyQuote(int id = 0, int page = 1)
         {
-            ThreadReply reply = await _db.ThreadReplyRepository.FindByIdAsync(id);
+            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(id);
             if (reply == null || !reply.IsActive)
             {
                 return Json("", JsonRequestBehavior.AllowGet);

@@ -36,6 +36,7 @@ namespace Selama.Tests.Controllers
 
             Controller = SetupController();
             Controller.ControllerContext = MockControllerContext.Object;
+            AdditionalSetup();
         }
 
         #region Overridable setup functions
@@ -58,6 +59,10 @@ namespace Selama.Tests.Controllers
         protected virtual Mock<IPrincipal> SetupUser()
         {
             return new Mock<IPrincipal>();
+        }
+        protected virtual void AdditionalSetup()
+        {
+            // Nothing to do in base
         }
         #endregion
 

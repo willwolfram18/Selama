@@ -15,7 +15,7 @@ namespace Selama.Tests.Models.DAL
 
         public void Add(ApplicationUser entity)
         {
-            var entityId = new Guid().ToString();
+            var entityId = Guid.NewGuid().ToString();
             _source[entityId] = entity;
             entity.Id = entityId;
         }

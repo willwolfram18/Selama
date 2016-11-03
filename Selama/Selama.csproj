@@ -358,6 +358,10 @@
     <Compile Include="Migrations\201609201516033_GuildNewsFeed.Designer.cs">
       <DependentUpon>201609201516033_GuildNewsFeed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611030233096_ChangeForumForeignKeyColumnNames.cs" />
+    <Compile Include="Migrations\201611030233096_ChangeForumForeignKeyColumnNames.Designer.cs">
+      <DependentUpon>201611030233096_ChangeForumForeignKeyColumnNames.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DAL\GenericEntityRepository.cs" />
     <Compile Include="Models\DAL\GenericUnitOfWork.cs" />
@@ -637,6 +641,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609201516033_GuildNewsFeed.resx">
       <DependentUpon>201609201516033_GuildNewsFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611030233096_ChangeForumForeignKeyColumnNames.resx">
+      <DependentUpon>201611030233096_ChangeForumForeignKeyColumnNames.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

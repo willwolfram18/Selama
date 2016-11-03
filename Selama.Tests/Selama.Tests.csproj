@@ -104,8 +104,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\Forum\Controllers\ForumControllerTest.cs" />
-    <Compile Include="Areas\Forum\Models\DAL\MockForumsUnitOfWork.cs" />
+    <Compile Include="Areas\Forums\Controllers\ForumControllerTest.cs" />
+    <Compile Include="Areas\Forums\Models\DAL\MockForumsUnitOfWork.cs" />
     <Compile Include="Common\InMemorySession.cs" />
     <Compile Include="Common\Utility\UtilTest.cs" />
     <Compile Include="Controllers\_BaseControllerTest.cs" />

@@ -9,52 +9,52 @@ using System;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
-namespace Selama.Tests.Areas.Forum.Models.DAL
+namespace Selama.Tests.Areas.Forums.Models.DAL
 {
     public class MockForumsUnitOfWork : IForumsUnitOfWork
     {
-        public IGenericEntityRepository<Selama.Areas.Forums.Models.Forum> ForumRepository { get; private set; }
-        public IGenericEntityRepository<ForumSection> ForumSectionRepository { get; private set; }
-        public IGenericEntityRepository<ApplicationUser> IdentityRepository { get; private set; }
-        public IGenericEntityRepository<ThreadReply> ThreadReplyRepository { get; private set; }
-        public IGenericEntityRepository<Thread> ThreadRepository { get; private set; }
-        public IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedRepository { get; private set; }
+        public IGenericEntityRepository<Selama.Areas.Forums.Models.Forum> Forums { get; private set; }
+        public IGenericEntityRepository<ForumSection> ForumSections { get; private set; }
+        public IGenericEntityRepository<ApplicationUser> Authors { get; private set; }
+        public IGenericEntityRepository<ThreadReply> ThreadReplies { get; private set; }
+        public IGenericEntityRepository<Thread> Threads { get; private set; }
+        public IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; private set; }
 
         public MockForumsUnitOfWork()
         {
-            ForumRepository = new MockGenericEntityRepository<Selama.Areas.Forums.Models.Forum>();
-            ForumSectionRepository = new MockGenericEntityRepository<ForumSection>();
-            IdentityRepository = new MockGenericEntityRepository<ApplicationUser>();
-            ThreadReplyRepository = new MockGenericEntityRepository<ThreadReply>();
-            ThreadRepository = new MockGenericEntityRepository<Thread>();
-            GuildNewsFeedRepository = new MockGenericEntityRepository<GuildNewsFeedItem>();
+            Forums = new MockGenericEntityRepository<Selama.Areas.Forums.Models.Forum>();
+            ForumSections = new MockGenericEntityRepository<ForumSection>();
+            Authors = new MockIdentityRepository();
+            ThreadReplies = new MockGenericEntityRepository<ThreadReply>();
+            Threads = new MockGenericEntityRepository<Thread>();
+            GuildNewsFeedItems = new MockGenericEntityRepository<GuildNewsFeedItem>();
         }
 
         public async Task AddNewThreadToNewsFeedAsync(Thread thread, string threadUrl)
         {
             if (thread.Author == null)
             {
-                thread.Author = await IdentityRepository.FindByIdAsync(thread.AuthorID);
+                thread.Author = await Authors.FindByIdAsync(thread.AuthorId);
             }
-            GuildNewsFeedRepository.Add(new GuildNewsFeedItem(thread, threadUrl));
+            GuildNewsFeedItems.Add(new GuildNewsFeedItem(thread, threadUrl));
         }
 
         public Thread CreateNewThread(ThreadViewModel threadToCreate, IPrincipal author, int forumId)
         {
             Thread t = new Thread(threadToCreate, author.Identity.GetUserId(), forumId);
-            ThreadRepository.Add(t);
+            Threads.Add(t);
             return t;
         }
 
         public void DeleteThread(Thread thread)
         {
             thread.IsActive = false;
-            foreach (var reply in ThreadReplyRepository.Get(r => r.ThreadID == thread.Id))
+            foreach (var reply in ThreadReplies.Get(r => r.ThreadId == thread.Id))
             {
                 reply.IsActive = false;
-                ThreadReplyRepository.Update(reply);
+                ThreadReplies.Update(reply);
             }
-            ThreadRepository.Update(thread);
+            Threads.Update(thread);
         }
 
         public void Dispose()
@@ -65,27 +65,27 @@ namespace Selama.Tests.Areas.Forum.Models.DAL
         {
             if (entity is Thread)
             {
-                SetReloadObject(entity, ThreadRepository);
+                SetReloadObject(entity, Threads);
             }
             else if (entity is ThreadReply)
             {
-                SetReloadObject(entity, ThreadReplyRepository);
+                SetReloadObject(entity, ThreadReplies);
             }
             else if (entity is Selama.Areas.Forums.Models.Forum)
             {
-                SetReloadObject(entity, ForumRepository);
+                SetReloadObject(entity, Forums);
             }
             else if (entity is ForumSection)
             {
-                SetReloadObject(entity, ForumSectionRepository);
+                SetReloadObject(entity, ForumSections);
             }
             else if (entity is ApplicationUser)
             {
-                SetReloadObject(entity, IdentityRepository);
+                SetReloadObject(entity, Authors);
             }
             else if (entity is GuildNewsFeedItem)
             {
-                SetReloadObject(entity, GuildNewsFeedRepository);
+                SetReloadObject(entity, GuildNewsFeedItems);
             }
             else
             {

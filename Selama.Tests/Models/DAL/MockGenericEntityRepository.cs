@@ -20,6 +20,7 @@ namespace Selama.Tests.Models.DAL
             var entityId = _nextId++;
             _source[entityId] = entity;
             SetObjectId(entity, entityId);
+            InitializeEntityVersion(entity);
         }
 
         public TEntity FindById(object id)
@@ -74,6 +75,7 @@ namespace Selama.Tests.Models.DAL
         {
             var objectId = GetObjectId(entity);
             _source[objectId] = entity;
+            UpdateEntityVersion(entity);
         }
 
         public void Dispose()
@@ -87,6 +89,14 @@ namespace Selama.Tests.Models.DAL
         private object GetObjectId(TEntity entity)
         {
             return entity.GetType().GetProperty("Id").GetValue(entity);
+        }
+        private void InitializeEntityVersion(TEntity entity)
+        {
+            entity.GetType().GetProperty("Version").SetValue(entity, Guid.NewGuid().ToByteArray());
+        }
+        private void UpdateEntityVersion(TEntity entity)
+        {
+            entity.GetType().GetProperty("Version").SetValue(entity, Guid.NewGuid().ToByteArray());
         }
     }
 }

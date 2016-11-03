@@ -16,7 +16,7 @@ namespace Selama.Areas.Forums.ViewModels
         public ThreadReplyEditViewModel(ThreadReply reply)
         {
             ID = reply.Id;
-            ThreadID = reply.ThreadID;
+            ThreadID = reply.ThreadId;
             Content = reply.Content;
             Version = Convert.ToBase64String(reply.Version);
         }
