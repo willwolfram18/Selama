@@ -9,7 +9,7 @@ using System;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
-namespace Selama.Tests.Areas.Forum.Models.DAL
+namespace Selama.Tests.Areas.Forums.Models.DAL
 {
     public class MockForumsUnitOfWork : IForumsUnitOfWork
     {
