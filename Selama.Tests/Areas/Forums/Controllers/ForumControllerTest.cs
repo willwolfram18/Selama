@@ -23,11 +23,12 @@ namespace Selama.Tests.Areas.Forums.Controllers
         private const int NUM_FORUMS = 2 * NUM_FORUM_SECTIONS;
         private const int NUM_THREADS = NUM_FORUMS * 3;
 
-        private MockForumsUnitOfWork controllerDb = new MockForumsUnitOfWork();
+        private MockForumsUnitOfWork ControllerDb { get; set; }
 
         protected override ForumController SetupController()
         {
-            return new ForumController(controllerDb);
+            ControllerDb = new MockForumsUnitOfWork();
+            return new ForumController(ControllerDb);
         }
 
         protected override void AdditionalSetup()
@@ -42,7 +43,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
         {
             for (int i = 0; i < NUM_AUTHORS; i++)
             {
-                controllerDb.Authors.Add(new ApplicationUser
+                ControllerDb.Authors.Add(new ApplicationUser
                 {
                     IsActive = true,
                     UserName = "App User " + i.ToString(),
@@ -58,7 +59,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
         {
             for (int i = 0; i < NUM_FORUM_SECTIONS; i++)
             {
-                controllerDb.ForumSections.Add(new ForumSection
+                ControllerDb.ForumSections.Add(new ForumSection
                 {
                     DisplayOrder = i,
                     IsActive = true,
@@ -72,7 +73,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
             for (int i = 0; i < NUM_FORUMS; i++)
             {
                 int forumSectionId = (i % NUM_FORUM_SECTIONS) + 1;
-                ForumSection section = controllerDb.ForumSections.FindById(forumSectionId);
+                ForumSection section = ControllerDb.ForumSections.FindById(forumSectionId);
                 Forum forum = new Forum
                 {
                     ForumSectionId = forumSectionId,
@@ -83,7 +84,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
                     Threads = new List<Thread>(),
                 };
                 section.Forums.Add(forum);
-                controllerDb.Forums.Add(forum);
+                ControllerDb.Forums.Add(forum);
             }
         }
         private void SetupThreads()
@@ -91,8 +92,8 @@ namespace Selama.Tests.Areas.Forums.Controllers
             for (int i = 0; i < NUM_THREADS; i++)
             {
                 int forumId = (i % NUM_FORUMS) + 1;
-                Forum forum = controllerDb.Forums.FindById(forumId);
-                ApplicationUser author = controllerDb.Authors.Get().ToList()[i % NUM_AUTHORS];
+                Forum forum = ControllerDb.Forums.FindById(forumId);
+                ApplicationUser author = ControllerDb.Authors.Get().ToList()[i % NUM_AUTHORS];
                 Thread thread = new Thread
                 {
                     Content = string.Format("This is a sample paragraph for thread {0} in forum {1}.", i, forumId),
@@ -108,7 +109,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
                     AuthorId = author.Id
                 };
                 forum.Threads.Add(thread);
-                controllerDb.Threads.Add(thread);
+                ControllerDb.Threads.Add(thread);
             }
         }
 
@@ -183,15 +184,36 @@ namespace Selama.Tests.Areas.Forums.Controllers
         public async Task ThreadsWithPageNumGreaterThanMaximumPageNumRedirectsToLastPage()
         {
             // Arrange
-            // TODO: Need to add more threads to check proper page number in redirect
+            int forumId = 1;
+            Forum forum = ControllerDb.Forums.FindById(forumId);
+            ApplicationUser author = ControllerDb.Authors.Get().ToList()[0];
+            for (int i = 0; i < ForumController.PAGE_SIZE; i++)
+            {
+                Thread tempThread = new Thread
+                {
+                    Content = string.Format("A sample paragraph for thread {0} in forum {1}", i, forumId),
+                    IsActive = true,
+                    IsLocked = false,
+                    IsPinned = false,
+                    PostDate = DateTime.Now,
+                    Title = "Extra Thread " + i.ToString(),
+                    Author = author,
+                    AuthorId = author.Id,
+                    Forum = forum,
+                    ForumId = forum.Id,
+                    Replies = new List<ThreadReply>(),
+                };
+                ControllerDb.Threads.Add(tempThread);
+                forum.Threads.Add(tempThread);
+            }
 
             // Act
-            RedirectToRouteResult result = await Controller.Threads(1, 2) as RedirectToRouteResult;
+            RedirectToRouteResult result = await Controller.Threads(1, 3) as RedirectToRouteResult;
 
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("Threads", result.RouteValues["action"].ToString());
-            Assert.AreEqual(1, Convert.ToInt32(result.RouteValues["page"]));
+            Assert.AreEqual(2, Convert.ToInt32(result.RouteValues["page"]));
         }
         #endregion
     }

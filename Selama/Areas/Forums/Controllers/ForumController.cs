@@ -14,7 +14,7 @@ namespace Selama.Areas.Forums.Controllers
     public class ForumController : _BaseAuthorizeController
     {
         private IForumsUnitOfWork _db;
-        private const int PAGE_SIZE = 20;
+        public const int PAGE_SIZE = 20;
 
         public ForumController()
         {
