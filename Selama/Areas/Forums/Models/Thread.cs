@@ -35,11 +35,11 @@ namespace Selama.Areas.Forums.Models
 
         [Required]
         [ForeignKey("Author")]
-        public string AuthorID { get; set; }
+        public string AuthorId { get; set; }
 
         [Required]
         [ForeignKey("Forum")]
-        public int ForumID { get; set; }
+        public int ForumId { get; set; }
 
         [Required]
         public bool IsActive { get; set; }
@@ -69,8 +69,8 @@ namespace Selama.Areas.Forums.Models
             Title = model.Title;
             Content = model.Content;
             PostDate = model.PostDate;
-            AuthorID = authorId;
-            ForumID = forumId;
+            AuthorId = authorId;
+            ForumId = forumId;
             IsActive = true;
             IsPinned = model.IsPinned;
             IsLocked = model.IsLocked;

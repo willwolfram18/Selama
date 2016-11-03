@@ -18,7 +18,7 @@ namespace Selama.Areas.Forums.ViewModels
         public ThreadViewModel(Thread thread, int pageSize, int pageNum)
         {
             ID = thread.Id;
-            ForumID = thread.ForumID;
+            ForumID = thread.ForumId;
             ForumName = thread.Forum.Title;
             Title = thread.Title;
 
@@ -28,7 +28,7 @@ namespace Selama.Areas.Forums.ViewModels
 
             IsPinned = thread.IsPinned;
             PostDate = thread.PostDate;
-            AuthorID = thread.AuthorID;
+            AuthorID = thread.AuthorId;
             Author = thread.Author.UserName;
             IsLocked = thread.IsLocked;
 

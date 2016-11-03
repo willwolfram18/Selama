@@ -28,11 +28,11 @@ namespace Selama.Areas.Forums.Models
         [Required]
         [ForeignKey("Author")]
         [InverseProperty("ThreadReplies")]
-        public string AuthorID { get; set; }
+        public string AuthorId { get; set; }
 
         [Required]
         [ForeignKey("Thread")]
-        public int ThreadID { get; set; }
+        public int ThreadId { get; set; }
 
         [Required]
         public bool IsActive { get; set; }
@@ -54,8 +54,8 @@ namespace Selama.Areas.Forums.Models
         {
             Content = model.Content;
             PostDate = DateTime.Now;
-            ThreadID = threadId;
-            AuthorID = authorId;
+            ThreadId = threadId;
+            AuthorId = authorId;
             ReplyIndex = replyIndex;
             IsActive = true;
         }

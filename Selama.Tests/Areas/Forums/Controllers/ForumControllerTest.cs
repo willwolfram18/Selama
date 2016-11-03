@@ -55,7 +55,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
                 ForumSection section = controllerDb.ForumSections.FindById(forumSectionId);
                 Forum forum = new Forum
                 {
-                    ForumSectionID = forumSectionId,
+                    ForumSectionId = forumSectionId,
                     ForumSection = section,
                     IsActive = true,
                     Title = "Forum " + i.ToString(),
@@ -72,6 +72,12 @@ namespace Selama.Tests.Areas.Forums.Controllers
             {
                 int forumId = i % NUM_FORUMS;
                 Forum forum = controllerDb.Forums.FindById(forumId);
+                Thread thread = new Thread
+                {
+                    Content = string.Format("This is a sample paragraph for thread {0} in forum {1}.", i, forumId),
+                    Forum = forum,
+                    ForumId = forumId,
+                };
             }
         }
 

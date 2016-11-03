@@ -234,7 +234,7 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             thread.ValidateModel(ModelState);
-            if (dbThread.AuthorID != User.Identity.GetUserId())
+            if (dbThread.AuthorId != User.Identity.GetUserId())
             {
                 ModelState.AddModelError("", "You are not the author of this post");
             }
@@ -286,12 +286,12 @@ namespace Selama.Areas.Forums.Controllers
             }
 
             reply.ValidateModel(ModelState);
-            if (dbReply.ThreadID != reply.ThreadID)
+            if (dbReply.ThreadId != reply.ThreadID)
             {
                 ModelState.AddModelError("ThreadID", "Invalid Thread ID");
             }
             // Only the author can edit
-            if (dbReply.AuthorID != User.Identity.GetUserId())
+            if (dbReply.AuthorId != User.Identity.GetUserId())
             {
                 ModelState.AddModelError("", "You are not the author of this post, and therfore cannot edit it");
             }
@@ -326,7 +326,7 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Thread", new { id = thread.Id, page = page, msg = "This thread is locked from editing and cannot be deleted" });
             }
             // Cannot delete a thread that isn't yours
-            if (thread.AuthorID != User.Identity.GetUserId())
+            if (thread.AuthorId != User.Identity.GetUserId())
             {
                 return RedirectToAction("Thread", new { id = thread.Id, page = page, msg = "You are not the author of this thread and cannot delete it" });
             }
@@ -335,7 +335,7 @@ namespace Selama.Areas.Forums.Controllers
             _db.DeleteThread(thread);
             if (await _db.TrySaveChangesAsync())
             {
-                return RedirectToAction("Threads", new { id = thread.ForumID });
+                return RedirectToAction("Threads", new { id = thread.ForumId });
             }
             return RedirectToAction("Thread", new { id = id, page = page });
         }
@@ -346,7 +346,7 @@ namespace Selama.Areas.Forums.Controllers
         public async Task<ActionResult> DeleteReply(int id = 0, int threadId = 0, int page = 1)
         {
             ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(id);
-            if (reply == null || reply.ThreadID != threadId || !reply.Thread.IsActive)
+            if (reply == null || reply.ThreadId != threadId || !reply.Thread.IsActive)
             {
                 return HttpNotFound();
             }
@@ -356,7 +356,7 @@ namespace Selama.Areas.Forums.Controllers
                 return RedirectToAction("Thread", new { id = threadId, page = page, msg = "The thread is locked for editing and therefore the reply cannot be deleted" });
             }
             // Cannot delete a thread you do not own
-            if (reply.AuthorID != User.Identity.GetUserId())
+            if (reply.AuthorId != User.Identity.GetUserId())
             {
                 return RedirectToAction("Thread", new { id = threadId, page = page, msg = "You are not the author of this reply and cannot delete it" });
             }

@@ -34,7 +34,7 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
         {
             if (thread.Author == null)
             {
-                thread.Author = await Identities.FindByIdAsync(thread.AuthorID);
+                thread.Author = await Identities.FindByIdAsync(thread.AuthorId);
             }
             GuildNewsFeedItems.Add(new GuildNewsFeedItem(thread, threadUrl));
         }
@@ -49,7 +49,7 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
         public void DeleteThread(Thread thread)
         {
             thread.IsActive = false;
-            foreach (var reply in ThreadReplies.Get(r => r.ThreadID == thread.Id))
+            foreach (var reply in ThreadReplies.Get(r => r.ThreadId == thread.Id))
             {
                 reply.IsActive = false;
                 ThreadReplies.Update(reply);
