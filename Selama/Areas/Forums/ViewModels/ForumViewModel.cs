@@ -92,11 +92,17 @@ namespace Selama.Areas.Forums.ViewModels
 
         private void SetNumPagesAndCurrentPage(Forum forum, int numActiveThreads)
         {
-            NumPages = (int)Math.Ceiling((1.0 * numActiveThreads) / _pageSize);
+            NumPages = Math.Max(CalculateNumPages(numActiveThreads), 1);
+
             if (StartingIndex >= numActiveThreads)
             {
                 _currentPage = NumPages - 1;
             }
+        }
+
+        private int CalculateNumPages(int numActiveThreads)
+        {
+            return (int)Math.Ceiling((1.0 * numActiveThreads) / _pageSize);
         }
     }
 }

@@ -108,22 +108,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
             ApplicationUser author = ControllerDb.Authors.Get().ToList()[0];
             for (int i = 0; i < ForumController.PAGE_SIZE; i++)
             {
-                Thread tempThread = new Thread
-                {
-                    Content = string.Format("A sample paragraph for thread {0} in forum {1}", i, forumId),
-                    IsActive = true,
-                    IsLocked = false,
-                    IsPinned = false,
-                    PostDate = DateTime.Now,
-                    Title = "Extra Thread " + i.ToString(),
-                    Author = author,
-                    AuthorId = author.Id,
-                    Forum = forum,
-                    ForumId = forum.Id,
-                    Replies = new List<ThreadReply>(),
-                };
-                ControllerDb.Threads.Add(tempThread);
-                forum.Threads.Add(tempThread);
+                InsertNewThreadToForum(forum, author, i);
             }
 
             // Act
@@ -136,49 +121,137 @@ namespace Selama.Tests.Areas.Forums.Controllers
         [TestMethod]
         public async Task ThreadsWithInactiveForumRedirectsToIndex()
         {
-            // Arrange
-            ControllerDb.Forums.FindById(1).IsActive = false;
+            #region Arrange
+            int forumId = 1;
+            ControllerDb.Forums.FindById(forumId).IsActive = false;
+            #endregion
 
-            // Act
-            RedirectToRouteResult result = await Controller.Threads(1) as RedirectToRouteResult;
+            #region Act
+            RedirectToRouteResult result = await Controller.Threads(forumId) as RedirectToRouteResult;
+            #endregion
 
-            // Assert
+            #region Assert
             AssertIsRedirectToIndex(result, "Threads");
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task ThreadsWithNoThreadsReturnsModelWithNoThreads()
+        {
+            #region Arrange
+            int forumId = 1;
+            Forum expectedForum = ControllerDb.Forums.FindById(forumId);
+            expectedForum.Threads.Clear();
+            #endregion
+
+            #region Act
+            ViewResult result = await Controller.Threads(forumId) as ViewResult;
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(result);
+            ForumViewModel Model = result.Model as ForumViewModel;
+            AssertForumMatchesViewModel(expectedForum, Model);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task ThreadsWithOnlyInactiveThreadsGivesCorrectReslut()
+        {
+            #region Arrange
+            int forumId = 1;
+            foreach (var thread in ControllerDb.Threads.Get(t => t.ForumId == forumId))
+            {
+                thread.IsActive = false;
+            }
+            #endregion
+
+            #region Act
+            ViewResult result = await Controller.Threads(forumId) as ViewResult;
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(result);
+            ForumViewModel Model = result.Model as ForumViewModel;
+            AssertForumMatchesViewModel(ControllerDb.Forums.FindById(forumId), Model);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task ThreadsWithSomeInactiveThreadsGivesCorrectResult()
+        {
+            #region Arrange
+            int forumId = 1;
+            Forum expectedForum = ControllerDb.Forums.FindById(forumId);
+            expectedForum.Threads.First().IsActive = false;
+            #endregion
+
+            #region Act
+            ViewResult result = await Controller.Threads(forumId) as ViewResult;
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(result);
+            ForumViewModel Model = result.Model as ForumViewModel;
+            AssertForumMatchesViewModel(expectedForum, Model);
+            #endregion
+        }
+
+        [TestMethod]
+        public void ThreadsPagedModelGivesCorrectSetOfThreads()
+        {
+            #region Arrange
+            int forumId = 1;
+            Forum expectedForum = ControllerDb.Forums.FindById(forumId);
+            ApplicationUser author = ControllerDb.Authors.Get().ToList()[0];
+            for (int i = 0; i < ForumController.PAGE_SIZE + 5; i++)
+            {
+                InsertNewThreadToForum(expectedForum, author, i);
+            }
+
+            #endregion
+
+            #region Act
+            #endregion
+
+            #region Assert
+            #endregion
         }
 
         [TestMethod]
         public async Task ThreadsWithValidIdReturnsCorrectResult()
         {
-            // Arrange
+            #region Arrange
+            int forumId = 1;
+            Forum expectedForum = ControllerDb.Forums.FindById(forumId);
+            #endregion
 
-            // Act
-            ViewResult result = await Controller.Threads(1) as ViewResult;
+            #region Act
+            ViewResult result = await Controller.Threads(forumId) as ViewResult;
+            #endregion
 
-            // Assert
-            ForumViewModel Model = result.Model as ForumViewModel;
+            #region Assert
             Assert.IsNotNull(result);
-            Assert.IsNotNull(Model);
-            Assert.AreEqual(ControllerDb.Forums.FindById(1).Title, Model.Title);
+            ForumViewModel Model = result.Model as ForumViewModel;
+            AssertForumMatchesViewModel(expectedForum, Model);
+            #endregion
         }
-
-        /* TODO:
-         *   - Forum is active and no threads, check model's threads
-         *   - Forum is inactive
-         *   - Forum with inactive threads
-         */
         #endregion
 
         #region Thread unit tests
         [TestMethod]
         public async Task ThreadWithoutIdRedirectsToIndex()
         {
-            // Arrange
+            #region Arrange
+            #endregion
 
-            // Act
+            #region Act
             RedirectToRouteResult result = await Controller.Thread() as RedirectToRouteResult;
+            #endregion
 
-            // Assert
+            #region Assert
             AssertIsRedirectToIndex(result, "Thread");
+            #endregion
         }
 
         [TestMethod]
@@ -268,18 +341,21 @@ namespace Selama.Tests.Areas.Forums.Controllers
         public async Task ThreadWithValidIdReturnsCorrectResult()
         {
             #region Arrange
+            int threadId = 1;
+            Thread expectedThread = ControllerDb.Threads.FindById(threadId);
             #endregion
 
             #region Act
-            ViewResult result = await Controller.Thread(1) as ViewResult;
+            ViewResult result = await Controller.Thread(threadId) as ViewResult;
             #endregion
 
             #region Assert
-            ThreadViewModel Model = result.Model as ThreadViewModel;
             Assert.IsNotNull(result);
+            ThreadViewModel Model = result.Model as ThreadViewModel;
             Assert.IsNotNull(Model);
-            Assert.AreEqual(ControllerDb.Threads.FindById(1).Title, Model.Title);
-            Assert.AreEqual(ControllerDb.Threads.FindById(1).Content, Model.Content);
+            Assert.AreEqual(expectedThread.Title, Model.Title);
+            Assert.AreEqual(expectedThread.Content, Model.Content);
+            Assert.AreEqual(expectedThread.GetReplies().Count(), Model.Replies.Count);
             #endregion
         }
         #endregion
@@ -376,6 +452,34 @@ namespace Selama.Tests.Areas.Forums.Controllers
             Assert.IsNotNull(result);
             Assert.AreEqual(actionRedirectTarget, result.RouteValues["action"].ToString());
             Assert.AreEqual(targetPageNum, Convert.ToInt32(result.RouteValues["page"]));
+        }
+
+        private void AssertForumMatchesViewModel(Forum expectedForum, ForumViewModel Model)
+        {
+            Assert.IsNotNull(Model);
+            Assert.AreEqual(expectedForum.Title, Model.Title);
+            Assert.AreEqual(expectedForum.SubTitle, Model.SubTitle);
+            Assert.AreEqual(expectedForum.GetThreads().Count(), Model.Threads.Count());
+        }
+
+        private void InsertNewThreadToForum(Forum forum, ApplicationUser author, int counter)
+        {
+            Thread tempThread = new Thread
+            {
+                Content = string.Format("A sample paragraph for thread {0} in forum {1}", counter, forum.Id),
+                IsActive = true,
+                IsLocked = false,
+                IsPinned = false,
+                PostDate = DateTime.Now.AddHours(-counter),
+                Title = "Extra Thread " + counter.ToString(),
+                Author = author,
+                AuthorId = author.Id,
+                Forum = forum,
+                ForumId = forum.Id,
+                Replies = new List<ThreadReply>(),
+            };
+            ControllerDb.Threads.Add(tempThread);
+            forum.Threads.Add(tempThread);
         }
 
         private void InsertReplyToThread(Thread thread, int replyIndex)
