@@ -50,13 +50,16 @@ namespace Selama.Tests.Areas.Forums.Controllers
         [TestMethod]
         public void IndexIsNotNull()
         {
-            // Arrange
+            #region Arrange
+            #endregion
 
-            // Act
+            #region Act
             ViewResult result = Controller.Index() as ViewResult;
+            #endregion
 
-            // Assert
+            #region Assert
             Assert.IsNotNull(result);
+            #endregion
         }
 
         #region Threads unit tests
@@ -127,9 +130,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
             RedirectToRouteResult result = await Controller.Threads(1, 3) as RedirectToRouteResult;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Threads", result.RouteValues["action"].ToString());
-            Assert.AreEqual(2, Convert.ToInt32(result.RouteValues["page"]));
+            AssertIsRedirectToSpecificActionPage(result, "Threads", 2);
         }
 
         [TestMethod]
@@ -159,6 +160,12 @@ namespace Selama.Tests.Areas.Forums.Controllers
             Assert.IsNotNull(Model);
             Assert.AreEqual(ControllerDb.Forums.FindById(1).Title, Model.Title);
         }
+
+        /* TODO:
+         *   - Forum is active and no threads, check model's threads
+         *   - Forum is inactive
+         *   - Forum with inactive threads
+         */
         #endregion
 
         #region Thread unit tests
@@ -190,10 +197,11 @@ namespace Selama.Tests.Areas.Forums.Controllers
         public async Task ThreadWithInactiveThreadResultsInRedirectToIndex()
         {
             // Arrange
-            ControllerDb.Threads.FindById(1).IsActive = false;
+            int threadId = 1;
+            ControllerDb.Threads.FindById(threadId).IsActive = false;
 
             // Act
-            RedirectToRouteResult result = await Controller.Thread(1) as RedirectToRouteResult;
+            RedirectToRouteResult result = await Controller.Thread(threadId) as RedirectToRouteResult;
 
             // Assert
             AssertIsRedirectToIndex(result, "Thread");
@@ -202,56 +210,77 @@ namespace Selama.Tests.Areas.Forums.Controllers
         [TestMethod]
         public async Task ThreadWithBelowOnePageNumRedirectsToPageOne()
         {
-            // Arrange
+            #region Arrange
+            #endregion
 
-            // Act
+            #region Act
             RedirectToRouteResult result = await Controller.Thread(1, 0) as RedirectToRouteResult;
+            #endregion
 
-            // Assert
+            #region Assert
             AssertIsRedirectToActionPageOne(result, "Thread");
+            #endregion
         }
 
         [TestMethod]
-        public void ThreadWithPageNumGreaterThanMaximumPageNumRedirectsToLastPage()
+        public async Task ThreadWithPageNumGreaterThanMaximumPageNumRedirectsToLastPage()
         {
-            // Arrange
-            Thread t = ControllerDb.Threads.FindById(1);
-            for (int i = 0; i < ForumController.PAGE_SIZE; i++)
+            #region Arrange
+            int threadId = 1;
+            Thread t = ControllerDb.Threads.FindById(threadId);
+            for (int i = 0; i < ForumController.PAGE_SIZE + 2; i++)
             {
-                var reply = new ThreadReply
-                {
-                    Thread = t,
-                    ThreadId = t.Id,
-                    Author = t.Author,
-                    AuthorId = t.AuthorId,
-                    Content = "Reply " + i + " to thread " + t.Title,
-                    IsActive = true,
-                    PostDate = DateTime.Now,
-                    ReplyIndex = i,
-                };
-                t.Replies.Add(reply);
-                ControllerDb.ThreadReplies.Add(reply);
+                InsertReplyToThread(t, i);
             }
+            #endregion
 
-            // Act
+            #region Act
+            RedirectToRouteResult result = await Controller.Thread(threadId, 3) as RedirectToRouteResult;
+            #endregion
 
-            // Assert
+            #region Assert
+            AssertIsRedirectToSpecificActionPage(result, "Thread", 2);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task ThreadWithNegativeOnePageNumberRedirectsToLastPage()
+        {
+            #region Arrange
+            int threadId = 1;
+            Thread t = ControllerDb.Threads.FindById(threadId);
+            for (int i = 0; i < ForumController.PAGE_SIZE + 2; i++)
+            {
+                InsertReplyToThread(t, i);
+            }
+            #endregion
+
+            #region Act
+            RedirectToRouteResult result = await Controller.Thread(threadId, -1) as RedirectToRouteResult;
+            #endregion
+
+            #region Assert
+            AssertIsRedirectToSpecificActionPage(result, "Thread", 2);
+            #endregion
         }
 
         [TestMethod]
         public async Task ThreadWithValidIdReturnsCorrectResult()
         {
-            // Arrange
+            #region Arrange
+            #endregion
 
-            // Act
+            #region Act
             ViewResult result = await Controller.Thread(1) as ViewResult;
+            #endregion
 
-            // Assert
+            #region Assert
             ThreadViewModel Model = result.Model as ThreadViewModel;
             Assert.IsNotNull(result);
             Assert.IsNotNull(Model);
             Assert.AreEqual(ControllerDb.Threads.FindById(1).Title, Model.Title);
             Assert.AreEqual(ControllerDb.Threads.FindById(1).Content, Model.Content);
+            #endregion
         }
         #endregion
         #endregion
@@ -338,11 +367,32 @@ namespace Selama.Tests.Areas.Forums.Controllers
             Assert.AreEqual(redirectFromAction, result.RouteValues["redirectFrom"].ToString());
         }
 
-        private void AssertIsRedirectToActionPageOne(RedirectToRouteResult result, string redirectFromAction)
+        private void AssertIsRedirectToActionPageOne(RedirectToRouteResult result, string actionRedirectTarget)
+        {
+            AssertIsRedirectToSpecificActionPage(result, actionRedirectTarget, 1);
+        }
+        private void AssertIsRedirectToSpecificActionPage(RedirectToRouteResult result, string actionRedirectTarget, int targetPageNum)
         {
             Assert.IsNotNull(result);
-            Assert.AreEqual(redirectFromAction, result.RouteValues["action"].ToString());
-            Assert.AreEqual(1, Convert.ToInt32(result.RouteValues["page"]));
+            Assert.AreEqual(actionRedirectTarget, result.RouteValues["action"].ToString());
+            Assert.AreEqual(targetPageNum, Convert.ToInt32(result.RouteValues["page"]));
+        }
+
+        private void InsertReplyToThread(Thread thread, int replyIndex)
+        {
+            var reply = new ThreadReply
+            {
+                Thread = thread,
+                ThreadId = thread.Id,
+                Author = thread.Author,
+                AuthorId = thread.AuthorId,
+                Content = "Reply " + replyIndex + " to thread " + thread.Title,
+                IsActive = true,
+                PostDate = DateTime.Now,
+                ReplyIndex = replyIndex,
+            };
+            thread.Replies.Add(reply);
+            ControllerDb.ThreadReplies.Add(reply);
         }
         #endregion
         #endregion
