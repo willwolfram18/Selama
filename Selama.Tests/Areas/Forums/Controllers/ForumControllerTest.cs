@@ -198,7 +198,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
         }
 
         [TestMethod]
-        public void ThreadsPagedModelGivesCorrectSetOfThreads()
+        public async Task ThreadsPagedModelGivesCorrectSetOfThreads()
         {
             #region Arrange
             int forumId = 1;
@@ -208,14 +208,48 @@ namespace Selama.Tests.Areas.Forums.Controllers
             {
                 InsertNewThreadToForum(expectedForum, author, i);
             }
-
+            int numToDeactivate = 3;
+            foreach (var thread in expectedForum.Threads)
+            {
+                thread.IsActive = false;
+                numToDeactivate--;
+                if (numToDeactivate == 0)
+                {
+                    break;
+                }
+            }
             #endregion
 
-            #region Act
+            #region Act & Assert
+            await AssertForumViewModelForSpecificPageMatchesExpected(expectedForum, 1, ForumController.PAGE_SIZE);
+            await AssertForumViewModelForSpecificPageMatchesExpected(expectedForum, 2, expectedForum.GetThreads().Count() - ForumController.PAGE_SIZE);
             #endregion
+        }
 
-            #region Assert
-            #endregion
+        private async Task AssertForumViewModelForSpecificPageMatchesExpected(Forum expectedForum, int page, int expectedThreadCount)
+        {
+            ViewResult result = await Controller.Threads(expectedForum.Id, page) as ViewResult;
+
+            Assert.IsNotNull(result);
+            ForumViewModel Model = result.Model as ForumViewModel;
+            Assert.AreEqual(expectedForum.Title, Model.Title);
+            Assert.AreEqual(expectedForum.SubTitle, Model.SubTitle);
+            Assert.AreEqual(page, Model.ViewPageNum);
+
+            var orderedThreadsFromExpected = expectedForum.GetThreads()
+                .OrderByDescending(t => t.PostDate)
+                .Skip(ForumController.PAGE_SIZE * (page - 1))
+                .Take(ForumController.PAGE_SIZE)
+                .ToList();
+            var viewmodelThreads = Model.Threads.ToList();
+            Assert.AreEqual(expectedThreadCount, viewmodelThreads.Count);
+            for (int i = 0; i < expectedThreadCount; i++)
+            {
+                Thread expectedThread = orderedThreadsFromExpected[i];
+                ThreadOverviewViewModel viewModel = viewmodelThreads[i];
+                Assert.AreEqual(expectedThread.Title, viewModel.Title);
+                Assert.AreEqual(expectedThread.Id, viewModel.ID);
+            }
         }
 
         [TestMethod]
@@ -425,7 +459,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
                     IsActive = true,
                     IsLocked = false,
                     IsPinned = false,
-                    PostDate = DateTime.Now,
+                    PostDate = DateTime.Now.AddMinutes(-i),
                     Title = "Thread " + i.ToString(),
                     Replies = new List<ThreadReply>(),
                     Author = author,
