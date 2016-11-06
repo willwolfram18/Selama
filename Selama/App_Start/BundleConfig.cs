@@ -53,7 +53,7 @@ namespace Selama
             );
 
 
-            bundles.Add(new StyleBundle("~/Content/Selama/css").Include(
+            bundles.Add(new StyleBundle("~/Content/bundles/Selama/css").Include(
                 RootCssFile("Bootstrap/bootstrap.css"),
                 RootCssFile("Bootstrap/bootstrap-theme.css"),
                 RootCssFile("Bootstrap/bootstrap-social.css"),
