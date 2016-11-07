@@ -452,23 +452,6 @@ namespace Selama.Tests.Areas.Forums.Controllers
             Assert.AreEqual(ForumController.HTTP_UNPROCESSABLE_ENTITY, result.StatusCode);
             #endregion
         }
-
-        [TestMethod]
-        public async Task PostReplyToThreadWithMismatchingIds()
-        {
-            #region Arrange
-            int replyThreadId = 1;
-            int threadId = 2;
-            ThreadReplyViewModel reply = CreatePostedReplyForThread(replyThreadId);
-            #endregion
-
-            #region Act
-            
-            #endregion
-
-            #region Assert
-            #endregion
-        }
         #endregion
 
         #region EditThread
