@@ -58,7 +58,7 @@
     {
         if (response.statusText === "Thread is locked")
         {
-            Selama.Core.Alert.raiseAlert("The thread you're trying to reply to is locked from editing.", "Thread is locked");
+            Selama.Core.Alert.raiseAlert("You cannot post to a reply to a locked thread.", "Thread is locked");
         }
         else
         {
@@ -73,6 +73,7 @@
 
     $(document).ready(function ()
     {
+        $.validator.unobtrusive.parse(document);
         $("#ReplyCancelBtn").on("click", "", Selama.Forums.OnCancelBtnClickCallback);
     });
 </script>

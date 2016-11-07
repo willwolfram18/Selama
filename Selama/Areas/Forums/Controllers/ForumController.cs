@@ -178,27 +178,7 @@ namespace Selama.Areas.Forums.Controllers
                 }
             }
 
-            // Generate the errors as a seriarlizable list of objects
-            List<object> errors = new List<object>();
-            foreach (var error in ModelState)
-            {
-                if (error.Value.Errors.Count > 0)
-                {
-                    var errorObj = new
-                    {
-                        Property = error.Key,
-                        Errors = new List<string>()
-                    };
-                    foreach (var errorMsg in error.Value.Errors)
-                    {
-                        errorObj.Errors.Add(errorMsg.ErrorMessage);
-                    }
-                    errors.Add(errorObj);
-                }
-            }
-
-            Response.StatusCode = 400; // Bad Request
-            return Json(errors);
+            return HttpBadRequest();
         }
 
         #region Thread editing

@@ -37,14 +37,34 @@ Selama.Core.Alert = Selama.Core.Alert || {
     _createModalContent: function Selama_Core_Alert_CreateModalContent()
     {
         return Selama.Core.createElem("div", "modal-content")
+            .attr("role", "document")
             .append(
                 Selama.Core.createElem("div", "modal-header")
                     .append(
                         Selama.Core.createElem("button", "close")
                             .attr("type", "button")
                             .attr("data-dismiss", "modal")
+                            .append(
+                                Selama.Core.createElem("span")
+                                    .html("&times;")
+                            )
+                    )
+                    .append(
+                        Selama.Core.createElem("h4", "modal-title")
+                    )
+            )
+            .append(
+                Selama.Core.createElem("div", "modal-body")
+            )
+            .append(
+                Selama.Core.createElem("div", "modal-footer")
+                    .append(
+                        Selama.Core.createElem("div", "btn btn-primary")
+                            .attr("type", "button")
+                            .attr("data-dismiss", "modal")
                             .text("OK")
                     )
-            );
+            )
+        ;
     },
 };

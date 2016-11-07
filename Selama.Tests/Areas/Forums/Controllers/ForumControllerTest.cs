@@ -10,6 +10,7 @@ using Selama.Tests.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -224,33 +225,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
             await AssertForumViewModelForSpecificPageMatchesExpected(expectedForum, 1, ForumController.PAGE_SIZE);
             await AssertForumViewModelForSpecificPageMatchesExpected(expectedForum, 2, expectedForum.GetThreads().Count() - ForumController.PAGE_SIZE);
             #endregion
-        }
-
-        private async Task AssertForumViewModelForSpecificPageMatchesExpected(Forum expectedForum, int page, int expectedThreadCount)
-        {
-            ViewResult result = await Controller.Threads(expectedForum.Id, page) as ViewResult;
-
-            Assert.IsNotNull(result);
-            ForumViewModel Model = result.Model as ForumViewModel;
-            Assert.AreEqual(expectedForum.Title, Model.Title);
-            Assert.AreEqual(expectedForum.SubTitle, Model.SubTitle);
-            Assert.AreEqual(page, Model.ViewPageNum);
-
-            var orderedThreadsFromExpected = expectedForum.GetThreads()
-                .OrderByDescending(t => t.PostDate)
-                .Skip(ForumController.PAGE_SIZE * (page - 1))
-                .Take(ForumController.PAGE_SIZE)
-                .ToList();
-            var viewmodelThreads = Model.Threads.ToList();
-            Assert.AreEqual(expectedThreadCount, viewmodelThreads.Count);
-            for (int i = 0; i < expectedThreadCount; i++)
-            {
-                Thread expectedThread = orderedThreadsFromExpected[i];
-                ThreadOverviewViewModel viewModel = viewmodelThreads[i];
-                Assert.AreEqual(expectedThread.Title, viewModel.Title);
-                Assert.AreEqual(expectedThread.Id, viewModel.ID);
-            }
-        }
+        }        
 
         [TestMethod]
         public async Task ThreadsWithValidIdReturnsCorrectResult()
@@ -372,6 +347,31 @@ namespace Selama.Tests.Areas.Forums.Controllers
         }
 
         [TestMethod]
+        public async Task ThreadPagedResultsAreCorrect()
+        {
+            #region Arrange
+            int threadId = 1;
+            Thread expectedThread = ControllerDb.Threads.FindById(threadId);
+            for (int i = 0; i < ForumController.PAGE_SIZE + 5; i++)
+            {
+                InsertReplyToThread(expectedThread, i);
+                if (i < 3)
+                {
+                    ThreadReply toBeDisabled = expectedThread.Replies.Where(r => r.ReplyIndex == i).FirstOrDefault();
+                    toBeDisabled.IsActive = false;
+                }
+            }
+            #endregion
+
+            #region Act & Assert
+            // subtract 1 because thread content itself counts as an item for the page
+            await AssertThreadViewModelForSpecificPageMatchesExpected(expectedThread, 1, ForumController.PAGE_SIZE - 1);
+            // Add 1 here because the threasd, again, counts for the page items
+            await AssertThreadViewModelForSpecificPageMatchesExpected(expectedThread, 2, expectedThread.GetReplies().Count() + 1 - ForumController.PAGE_SIZE);
+            #endregion
+        }
+
+        [TestMethod]
         public async Task ThreadWithValidIdReturnsCorrectResult()
         {
             #region Arrange
@@ -392,6 +392,86 @@ namespace Selama.Tests.Areas.Forums.Controllers
             Assert.AreEqual(expectedThread.GetReplies().Count(), Model.Replies.Count);
             #endregion
         }
+        #endregion
+
+        #region PostReply
+        [TestMethod]
+        public async Task PostReplyToInvalidThreadIdGivesNotFound()
+        {
+            #region Arrange
+            int threadId = 0;
+            ThreadReplyViewModel reply = CreatePostedReplyForThread(threadId);
+            #endregion
+
+            #region Act
+            HttpStatusCodeResult result = await Controller.PostReply(reply, threadId) as HttpStatusCodeResult;
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.NotFound, result.StatusCode);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task PostReplyToInactiveThreadGivesNotFound()
+        {
+            #region Arrange
+            int threadId = 1;
+            Thread threadToPostTo = ControllerDb.Threads.FindById(threadId);
+            threadToPostTo.IsActive = false;
+            ThreadReplyViewModel reply = CreatePostedReplyForThread(threadId);
+            #endregion
+
+            #region Act
+            HttpStatusCodeResult result = await Controller.PostReply(reply, threadId) as HttpStatusCodeResult;
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.NotFound, result.StatusCode);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task PostReplyToLockedThreadGivesBadRequest()
+        {
+            #region Arrange
+            int threadId = 1;
+            Thread threadToPostTo = ControllerDb.Threads.FindById(threadId);
+            threadToPostTo.IsLocked = true;
+            ThreadReplyViewModel reply = CreatePostedReplyForThread(threadId);
+            #endregion
+
+            #region Act
+            HttpStatusCodeResult result = await Controller.PostReply(reply, threadId) as HttpStatusCodeResult;
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ForumController.HTTP_UNPROCESSABLE_ENTITY, result.StatusCode);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task PostReplyToThreadWithMismatchingIds()
+        {
+            #region Arrange
+            int replyThreadId = 1;
+            int threadId = 2;
+            ThreadReplyViewModel reply = CreatePostedReplyForThread(replyThreadId);
+            #endregion
+
+            #region Act
+            
+            #endregion
+
+            #region Assert
+            #endregion
+        }
+        #endregion
+
+        #region EditThread
         #endregion
         #endregion
 
@@ -488,14 +568,6 @@ namespace Selama.Tests.Areas.Forums.Controllers
             Assert.AreEqual(targetPageNum, Convert.ToInt32(result.RouteValues["page"]));
         }
 
-        private void AssertForumMatchesViewModel(Forum expectedForum, ForumViewModel Model)
-        {
-            Assert.IsNotNull(Model);
-            Assert.AreEqual(expectedForum.Title, Model.Title);
-            Assert.AreEqual(expectedForum.SubTitle, Model.SubTitle);
-            Assert.AreEqual(expectedForum.GetThreads().Count(), Model.Threads.Count());
-        }
-
         private void InsertNewThreadToForum(Forum forum, ApplicationUser author, int counter)
         {
             Thread tempThread = new Thread
@@ -516,6 +588,39 @@ namespace Selama.Tests.Areas.Forums.Controllers
             forum.Threads.Add(tempThread);
         }
 
+        private void AssertForumMatchesViewModel(Forum expectedForum, ForumViewModel Model)
+        {
+            Assert.IsNotNull(Model);
+            Assert.AreEqual(expectedForum.Title, Model.Title);
+            Assert.AreEqual(expectedForum.SubTitle, Model.SubTitle);
+            Assert.AreEqual(expectedForum.GetThreads().Count(), Model.Threads.Count());
+        }
+        private async Task AssertForumViewModelForSpecificPageMatchesExpected(Forum expectedForum, int page, int expectedThreadCount)
+        {
+            ViewResult result = await Controller.Threads(expectedForum.Id, page) as ViewResult;
+
+            Assert.IsNotNull(result);
+            ForumViewModel Model = result.Model as ForumViewModel;
+            Assert.AreEqual(expectedForum.Title, Model.Title);
+            Assert.AreEqual(expectedForum.SubTitle, Model.SubTitle);
+            Assert.AreEqual(page, Model.ViewPageNum);
+
+            var orderedThreadsFromExpected = expectedForum.GetThreads()
+                .OrderByDescending(t => t.PostDate)
+                .Skip(ForumController.PAGE_SIZE * (page - 1))
+                .Take(ForumController.PAGE_SIZE)
+                .ToList();
+            var viewmodelThreads = Model.Threads.ToList();
+            Assert.AreEqual(expectedThreadCount, viewmodelThreads.Count);
+            for (int i = 0; i < expectedThreadCount; i++)
+            {
+                Thread expectedThread = orderedThreadsFromExpected[i];
+                ThreadOverviewViewModel viewModel = viewmodelThreads[i];
+                Assert.AreEqual(expectedThread.Title, viewModel.Title);
+                Assert.AreEqual(expectedThread.Id, viewModel.ID);
+            }
+        }
+
         private void InsertReplyToThread(Thread thread, int replyIndex)
         {
             var reply = new ThreadReply
@@ -526,11 +631,34 @@ namespace Selama.Tests.Areas.Forums.Controllers
                 AuthorId = thread.AuthorId,
                 Content = "Reply " + replyIndex + " to thread " + thread.Title,
                 IsActive = true,
-                PostDate = DateTime.Now,
+                PostDate = DateTime.Now.AddMinutes(replyIndex),
                 ReplyIndex = replyIndex,
             };
             thread.Replies.Add(reply);
             ControllerDb.ThreadReplies.Add(reply);
+        }
+
+        private async Task AssertThreadViewModelForSpecificPageMatchesExpected(Thread expectedThread, int page, int expectedReplyCount)
+        {
+            ViewResult result = await Controller.Thread(expectedThread.Id, page) as ViewResult;
+
+            Assert.IsNotNull(result);
+            ThreadViewModel Model = result.Model as ThreadViewModel;
+            Assert.IsNotNull(Model);
+            Assert.AreEqual(expectedThread.Title, Model.Title);
+            Assert.AreEqual(expectedThread.IsLocked, Model.IsLocked);
+            Assert.AreEqual(expectedThread.IsPinned, Model.IsPinned);
+            Assert.AreEqual(expectedThread.Content, Model.Content);
+            Assert.AreEqual(expectedReplyCount, Model.Replies.Count);
+        }
+
+        private ThreadReplyViewModel CreatePostedReplyForThread(int threadId)
+        {
+            return new ThreadReplyViewModel
+            {
+                Content = "This is a posted reply for thread " + threadId.ToString(),
+                ThreadID = threadId,
+            };
         }
         #endregion
         #endregion

@@ -13,6 +13,7 @@ namespace Selama.Controllers
     [RequireHttps]
     public class _BaseController : Controller
     {
+        public const int HTTP_BAD_REQUEST = 400;
         public const int HTTP_UNPROCESSABLE_ENTITY = 422;
         public const int HTTP_SERVER_ERROR = 500;
 
@@ -87,6 +88,15 @@ namespace Selama.Controllers
             {
                 ModelState.AddModelError(propertyName, string.Format("Current Value: " + format, dbValue));
             }
+        }
+
+        protected HttpStatusCodeResult HttpBadRequest()
+        {
+            return new HttpStatusCodeResult(HTTP_BAD_REQUEST);
+        }
+        protected HttpStatusCodeResult HttpBadRequest(string description)
+        {
+            return new HttpStatusCodeResult(HTTP_BAD_REQUEST, description);
         }
 
         protected HttpStatusCodeResult HttpUnprocessable()
