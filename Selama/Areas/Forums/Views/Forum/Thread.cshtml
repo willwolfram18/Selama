@@ -21,6 +21,7 @@
     <script type="text/javascript">
         $(document).ready(function ()
         {
+            $.validator.unobtrusive.parse($("form[data-ajax='true']"));
             $(".btn.btn-post-reply").on("click", "", Selama.Forums.Thread.OnPostReplyClickCallback);
 
             // #region Thread & Reply edit/delete clicks
@@ -184,16 +185,17 @@
                     </h4>
                 </div>
                 @using (Ajax.BeginForm("EditThread", "Forum", new { area = "Forums", id = Model.ID }, new AjaxOptions
-            {
-                OnBegin = "Selama.Forums.OnAjaxRequestBeginCallback",
-                OnComplete = "Selama.Forums.OnAjaxRequestCompleteCallback",
-                OnSuccess = "Selama.Forums.Thread.OnThreadUpdateRequestSuccessCallback",
-                OnFailure = "Selama.Forums.Thread.OnThreadUpdateRequestFailureCallback"
-            }))
+                {
+                    OnBegin = "Selama.Forums.OnAjaxRequestBeginCallback",
+                    OnComplete = "Selama.Forums.OnAjaxRequestCompleteCallback",
+                    OnSuccess = "Selama.Forums.Thread.OnThreadUpdateRequestSuccessCallback",
+                    OnFailure = "Selama.Forums.Thread.OnThreadUpdateRequestFailureCallback"
+                }))
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="modal-body">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                         The editor goes here
                     </div>
                     <div class="modal-footer">
@@ -219,15 +221,14 @@
                     </h4>
                 </div>
                 @using (Ajax.BeginForm("EditReply", "Forum", new { area = "Forums" }, new AjaxOptions
-            {
-                OnBegin = "Selama.Forums.OnAjaxRequestBeginCallback",
-                OnComplete = "Selama.Forums.OnAjaxRequestCompleteCallback",
-                OnFailure = "Selama.Forums.Thread.OnReplyUpdateRequestFailureCallback",
-                OnSuccess = "Selama.Forums.Thread.OnReplyUpdateRequestSuccessCallback"
-            }))
+                {
+                    OnBegin = "Selama.Forums.OnAjaxRequestBeginCallback",
+                    OnComplete = "Selama.Forums.OnAjaxRequestCompleteCallback",
+                    OnFailure = "Selama.Forums.Thread.OnReplyUpdateRequestFailureCallback",
+                    OnSuccess = "Selama.Forums.Thread.OnReplyUpdateRequestSuccessCallback",
+                }))
                 {
                     @Html.AntiForgeryToken()
-
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                     <div class="modal-body">

@@ -91,11 +91,11 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
     {
         if (response.statusText === "Thread is locked")
         {
-            Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
+            Selama.Core.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
         }
         else
         {
-            Selama.Alert.raiseAlert("An error occurred while updating");
+            Selama.Core.Alert.raiseAlert("An error occurred while updating");
         }
     },
 
@@ -109,11 +109,11 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
     {
         if (response.statusText === "Thread is locked")
         {
-            Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
+            Selama.Core.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
         }
         else
         {
-            Selama.Alert.raiseAlert("An error occured while updating");
+            Selama.Core.Alert.raiseAlert("An error occured while updating");
         }
     },
 
@@ -137,15 +137,15 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
     {
         if (response.statusText === "Invalid ID")
         {
-            Selama.Alert.raiseAlert("An invalid thread ID was provided", "Invalid ID");
+            Selama.Core.Alert.raiseAlert("An invalid thread ID was provided", "Invalid ID");
         }
         else if (response.statusText === "Thread is locked")
         {
-            Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
+            Selama.Core.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
         }
         else
         {
-            Selama.Alert.raiseAlert("An error occurred");
+            Selama.Core.Alert.raiseAlert("An error occurred");
         }
     },
 
@@ -172,15 +172,15 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
     {
         if (response.statusText === "Invalid ID")
         {
-            Selama.Alert.raiseAlert("An invalid thread reply ID was provided", "Invalid ID");
+            Selama.Core.Alert.raiseAlert("An invalid thread reply ID was provided", "Invalid ID");
         }
         else if (response.statusText === "Thread is locked")
         {
-            Selama.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
+            Selama.Core.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
         }
         else
         {
-            Selama.Alert.raiseAlert("An error occurred");
+            Selama.Core.Alert.raiseAlert("An error occurred");
         }
     },
 };
