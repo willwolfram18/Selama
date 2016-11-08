@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Controllers
 {
-    public class ForumController : _BaseAuthorizeController
+    public class ForumController : _AuthorizeControllerBase
     {
         private IForumsUnitOfWork _db;
         public const int PAGE_SIZE = 20;

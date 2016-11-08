@@ -19,7 +19,7 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Account.Controllers
 {
-    public class HomeController : _BaseAuthorizeController
+    public class HomeController : _AuthorizeControllerBase
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
