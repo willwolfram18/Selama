@@ -248,7 +248,7 @@
     <Compile Include="Areas\Admin\ViewModels\Users\UserStatusUpdate.cs" />
     <Compile Include="Areas\Admin\ViewModels\Users\UserViewModel.cs" />
     <Compile Include="Areas\Forums\Controllers\ForumController.cs" />
-    <Compile Include="Areas\Forums\ForumsAreaRegistration.cs" />
+    <Compile Include="Areas\Forums\Controllers\_ForumsControllerBase.cs" />
     <Compile Include="Areas\Forums\Models\DAL\IForumsUnitOfWork.cs" />
     <Compile Include="Areas\Forums\Models\DAL\Repositories\ForumRepository.cs" />
     <Compile Include="Areas\Forums\Models\DAL\Repositories\ForumSectionRepository.cs" />
@@ -582,6 +582,7 @@
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\Forums\Views\_AdvisorsControllerBase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
