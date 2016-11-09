@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace Selama.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : _BaseAuthorizeController
+    public class HomeController : _AuthorizeControllerBase
     {
         private const int NEWS_FEED_SIZE = 25;
 

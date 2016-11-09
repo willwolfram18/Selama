@@ -281,8 +281,8 @@
     <Compile Include="Common\Utility\ModelBinders\TrimStringsModelBinder.cs" />
     <Compile Include="Common\Utility\Util.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\_BaseAuthorizeController.cs" />
-    <Compile Include="Controllers\_BaseController.cs" />
+    <Compile Include="Controllers\_AuthorizeControllerBase.cs" />
+    <Compile Include="Controllers\_ControllerBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

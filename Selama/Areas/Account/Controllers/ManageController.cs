@@ -18,7 +18,7 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Account.Controllers
 {
-    public class ManageController : _BaseAuthorizeController
+    public class ManageController : _AuthorizeControllerBase
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

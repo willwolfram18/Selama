@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace Selama.Controllers
 {
     [Authorize]
-    public class _BaseAuthorizeController : _BaseController
+    public class _AuthorizeControllerBase : _ControllerBase
     {
     }
 }

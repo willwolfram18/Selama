@@ -13,7 +13,7 @@ namespace Selama.Areas.Forums.Controllers
 {
     [RouteArea("Forums")]
     [Route("{action=Index}")]
-    public class ForumController : _BaseAuthorizeController
+    public class ForumController : _AuthorizeControllerBase
     {
         private IForumsUnitOfWork _db;
         public const int PAGE_SIZE = 20;

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace Selama.Controllers
 {
     [RequireHttps]
-    public class _BaseController : Controller
+    public class _ControllerBase : Controller
     {
         public const int HTTP_BAD_REQUEST = 400;
         public const int HTTP_UNPROCESSABLE_ENTITY = 422;

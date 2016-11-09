@@ -18,7 +18,7 @@ using System.Web.Security;
 namespace Selama.Areas.Admin.Controllers
 {
     [AuthorizePrivilege(Roles = "Admin,Guild Officer")]
-    public class UsersController : _BaseAuthorizeController
+    public class UsersController : _AuthorizeControllerBase
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
         private const int _pageSize = 20;

@@ -15,7 +15,7 @@ namespace Selama.Tests.Controllers
 {
     [TestClass]
     public abstract class _BaseControllerUnitTest<TController>
-        where TController : _BaseController, new()
+        where TController : _ControllerBase, new()
     {
         protected TController Controller { get; private set; }
 
