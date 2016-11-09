@@ -11,9 +11,8 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Controllers
 {
-    [RouteArea("Forums")]
     [Route("{action=Index}")]
-    public class ForumController : _AuthorizeControllerBase
+    public class ForumController : _ForumsControllerBase
     {
         private IForumsUnitOfWork _db;
         public const int PAGE_SIZE = 20;
