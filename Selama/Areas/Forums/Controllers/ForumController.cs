@@ -40,9 +40,9 @@ namespace Selama.Areas.Forums.Controllers
 
         // GET: Forums/Threads/3
         [Route("{id:int}/Threads")]
-        public async Task<ActionResult> Threads(int id = 0, int page = 1)
+        public async Task<ActionResult> Threads([Bind(Prefix = "id")] int forumId = 0, int page = 1)
         {
-            Forum forum = await _db.Forums.FindByIdAsync(id);
+            Forum forum = await _db.Forums.FindByIdAsync(forumId);
             if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index", new { redirectFrom = "Threads" });
@@ -50,7 +50,7 @@ namespace Selama.Areas.Forums.Controllers
             if (page <= 0)
             {
                 // Perform redirect to put URL page within [1,NumPages]
-                return RedirectToAction("Threads", new { id = id, page = 1 });
+                return RedirectToAction("Threads", new { id = forumId, page = 1 });
             }
 
             // we want a zero-indexed page number on the server, but a one-indexed page client-side
@@ -59,7 +59,7 @@ namespace Selama.Areas.Forums.Controllers
             if (zeroIndexedPage >= model.NumPages)
             {
                 // Perform redirect to put URL page within [1,NumPages]
-                return RedirectToAction("Threads", new { id = id, page = model.NumPages });
+                return RedirectToAction("Threads", new { id = forumId, page = model.NumPages });
             }
 
             return View(model);
@@ -67,9 +67,9 @@ namespace Selama.Areas.Forums.Controllers
 
         // GET: Forums/Thread/2
         [Route("Thread/{id:int}")]
-        public async Task<ActionResult> Thread(int id = 0, int page = 1, string msg = null)
+        public async Task<ActionResult> Thread([Bind(Prefix = "id")] int threadId = 0, int page = 1, string msg = null)
         {
-            Thread thread = await _db.Threads.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(threadId);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index", new { redirectFrom = "Thread" });
@@ -86,7 +86,7 @@ namespace Selama.Areas.Forums.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Thread", new { id = id, page = 1 });
+                    return RedirectToAction("Thread", new { id = threadId, page = 1 });
                 }
             }
 
@@ -101,7 +101,7 @@ namespace Selama.Areas.Forums.Controllers
             ThreadViewModel viewModel = new ThreadViewModel(thread, pageSize, page);
             if (viewModel.ViewPageNum != page + 1 || goToLastPage)
             {
-                return RedirectToAction("Thread", new { id = id, page = viewModel.NumPages });
+                return RedirectToAction("Thread", new { id = threadId, page = viewModel.NumPages });
             }
             ViewBag.Message = msg;
             return View(viewModel);
@@ -110,23 +110,23 @@ namespace Selama.Areas.Forums.Controllers
         #region Create thread
         // GET: /Forums/CreateThread/3
         [Route("{id:int}/CreateThread")]
-        public async Task<ActionResult> CreateThread(int id = 0)
+        public async Task<ActionResult> CreateThread([Bind(Prefix = "id")] int forumId = 0)
         {
-            Forum forum = await _db.Forums.FindByIdAsync(id);
+            Forum forum = await _db.Forums.FindByIdAsync(forumId);
             if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index");
             }
-            return View(new ThreadViewModel { ForumID = id });
+            return View(new ThreadViewModel { ForumID = forumId });
         }
 
         // POST: /Forums/CreateThread/3
         [HttpPost]
         [Route("{id:int}/CreateThread")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateThread(ThreadViewModel thread, int id = 0)
+        public async Task<ActionResult> CreateThread(ThreadViewModel thread, [Bind(Prefix = "id")] int forumId = 0)
         {
-            Forum forum = await _db.Forums.FindByIdAsync(id);
+            Forum forum = await _db.Forums.FindByIdAsync(forumId);
             if (forum == null || !forum.IsActive)
             {
                 return RedirectToAction("Index");
@@ -135,7 +135,7 @@ namespace Selama.Areas.Forums.Controllers
             thread.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
-                Thread dbThread = _db.CreateNewThread(thread, User, id);
+                Thread dbThread = _db.CreateNewThread(thread, User, forumId);
                 
                 if (await _db.TrySaveChangesAsync())
                 {
@@ -153,9 +153,9 @@ namespace Selama.Areas.Forums.Controllers
         [HttpPost]
         [Route("Thread/{id:int}/PostReply")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PostReply(ThreadReplyViewModel reply, int id = 0)
+        public async Task<ActionResult> PostReply(ThreadReplyViewModel reply, [Bind(Prefix = "id")] int threadId = 0)
         {
-            Thread thread = await _db.Threads.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(threadId);
             if (thread == null || !thread.IsActive)
             {
                 return HttpNotFound();
@@ -165,7 +165,7 @@ namespace Selama.Areas.Forums.Controllers
                 return HttpUnprocessable("Thread is locked");
             }
 
-            if (id != reply.ThreadID)
+            if (threadId != reply.ThreadID)
             {
                 ModelState.AddModelError("ThreadID", "Invalid thread selected");
             }
@@ -173,7 +173,7 @@ namespace Selama.Areas.Forums.Controllers
             reply.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
-                ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), id, thread.Replies.Count + 1);
+                ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), threadId, thread.Replies.Count + 1);
                 _db.ThreadReplies.Add(dbReply);
                 if (await _db.TrySaveChangesAsync())
                 {
@@ -190,9 +190,9 @@ namespace Selama.Areas.Forums.Controllers
         #region Thread editing
         // GET: Forums/EditThread/2
         [Route("Thread/{id:int}/Edit")]
-        public async Task<ActionResult> EditThread(int id = 0)
+        public async Task<ActionResult> EditThread([Bind(Prefix = "id")] int threadId = 0)
         {
-            Thread thread = await _db.Threads.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(threadId);
             if (thread == null || !thread.IsActive)
             {
                 return HttpNotFound("Invalid ID");
@@ -243,10 +243,10 @@ namespace Selama.Areas.Forums.Controllers
 
         #region Reply editing
         // GET: Forums/EditReply/2
-        [Route("Reply/{id:int}/Edit")]
-        public async Task<ActionResult> EditReply(int id = 0)
+        [Route("Reply/Edit")]
+        public async Task<ActionResult> EditReply([Bind(Prefix = "id")] int replyId = 0)
         {
-            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(id);
+            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(replyId);
             if (reply == null || !reply.IsActive)
             {
                 return HttpNotFound("Invalid ID");
@@ -261,7 +261,7 @@ namespace Selama.Areas.Forums.Controllers
 
         // POST: Forums/EditReply/2
         [HttpPost]
-        [Route("Reply/{id:int}/Edit")]
+        [Route("Reply/Edit")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditReply(ThreadReplyEditViewModel reply)
         {
@@ -304,9 +304,9 @@ namespace Selama.Areas.Forums.Controllers
         [HttpPost]
         [Route("Thread/{id:int}/Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteThread(int id = 0, int page = 1)
+        public async Task<RedirectToRouteResult> DeleteThread([Bind(Prefix = "id")] int threadId = 0, int page = 1)
         {
-            Thread thread = await _db.Threads.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(threadId);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index", new { redirectFrom = "Thread" });
@@ -328,16 +328,15 @@ namespace Selama.Areas.Forums.Controllers
             {
                 return RedirectToAction("Threads", new { id = thread.ForumId });
             }
-            return RedirectToAction("Thread", new { id = id, page = page });
+            return RedirectToAction("Thread", new { id = threadId, page = page });
         }
 
-        // POST: Forums/DeleteReply/4?threadId=2
         [HttpPost]
-        [Route("Thread/{threadId:int}/Reply/{id:int}/Delete")]
+        [Route("Thread/{threadId:int}/Reply/Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteReply(int id = 0, int threadId = 0, int page = 1)
+        public async Task<ActionResult> DeleteReply([Bind(Prefix = "id")] int replyId = 0, int threadId = 0, int page = 1)
         {
-            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(id);
+            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(replyId);
             if (reply == null || reply.ThreadId != threadId || !reply.Thread.IsActive)
             {
                 return HttpNotFound();
@@ -364,23 +363,23 @@ namespace Selama.Areas.Forums.Controllers
         [HttpPost]
         [Route("Thread/{id:int}/Lock")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> LockThread(int id = 0, int page = 1)
+        public async Task<ActionResult> LockThread([Bind(Prefix = "id")] int threadId = 0, int page = 1)
         {
-            return await SetThreadLock(id, page, true, "locking");
+            return await SetThreadLock(threadId, page, true, "locking");
         }
 
         // POST: Forums/UnlockThread/2
         [HttpPost]
         [Route("Thread/{id:int}/Unlock")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UnlockThread(int id = 0, int page = 1)
+        public async Task<ActionResult> UnlockThread([Bind(Prefix = "id")] int threadId = 0, int page = 1)
         {
-            return await SetThreadLock(id, page, false, "unlocking");
+            return await SetThreadLock(threadId, page, false, "unlocking");
         }
 
-        private async Task<ActionResult> SetThreadLock(int id, int page, bool locking, string lockWord)
+        private async Task<ActionResult> SetThreadLock(int threadId, int page, bool locking, string lockWord)
         {
-            Thread thread = await _db.Threads.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(threadId);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index");
@@ -397,7 +396,7 @@ namespace Selama.Areas.Forums.Controllers
                 }
             }
 
-            return RedirectToAction("Thread", new { id = id, page = page, msg = message });
+            return RedirectToAction("Thread", new { id = threadId, page = page, msg = message });
         }
         #endregion
 
@@ -406,23 +405,23 @@ namespace Selama.Areas.Forums.Controllers
         [HttpPost]
         [Route("Thread/{id:int}/Pin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PinThread(int id = 0, int page = 1)
+        public async Task<ActionResult> PinThread([Bind(Prefix = "id")] int threadId = 0, int page = 1)
         {
-            return await SetThreadPin(id, page, true, "pinning");
+            return await SetThreadPin(threadId, page, true, "pinning");
         }
 
         // POST: Forums/UnpinThread/2
         [HttpPost]
         [Route("Thread/{id:int}/Unpin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UnpinThread(int id = 0, int page = 1)
+        public async Task<ActionResult> UnpinThread([Bind(Prefix = "id")] int threadId = 0, int page = 1)
         {
-            return await SetThreadPin(id, page, false, "unpinning");
+            return await SetThreadPin(threadId, page, false, "unpinning");
         }
 
-        private async Task<ActionResult> SetThreadPin(int id, int page, bool pinning, string pinningWord)
+        private async Task<ActionResult> SetThreadPin(int threadId, int page, bool pinning, string pinningWord)
         {
-            Thread thread = await _db.Threads.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(threadId);
             if (thread == null || !thread.IsActive)
             {
                 return RedirectToAction("Index");
@@ -439,15 +438,15 @@ namespace Selama.Areas.Forums.Controllers
                 }
             }
 
-            return RedirectToAction("Thread", new { id = id, page = page, msg = message });
+            return RedirectToAction("Thread", new { id = threadId, page = page, msg = message });
         }
         #endregion
 
         // GET: Forums/GetThreadQuote/2
         [Route("Thread/{id:int}/Quote")]
-        public async Task<ActionResult> GetThreadQuote(int id = 0)
+        public async Task<ActionResult> GetThreadQuote([Bind(Prefix = "id")] int threadId = 0)
         {
-            Thread thread = await _db.Threads.FindByIdAsync(id);
+            Thread thread = await _db.Threads.FindByIdAsync(threadId);
             if (thread == null || !thread.IsActive)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
@@ -458,9 +457,9 @@ namespace Selama.Areas.Forums.Controllers
 
         // GET: Forums/GetReplyQuote/4
         [Route("Reply/Quote")]
-        public async Task<ActionResult> GetReplyQuote(int id = 0, int page = 1)
+        public async Task<ActionResult> GetReplyQuote([Bind(Prefix = "id")] int replyId = 0, int page = 1)
         {
-            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(id);
+            ThreadReply reply = await _db.ThreadReplies.FindByIdAsync(replyId);
             if (reply == null || !reply.IsActive)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
