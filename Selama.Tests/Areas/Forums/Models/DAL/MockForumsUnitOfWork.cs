@@ -13,12 +13,12 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
 {
     public class MockForumsUnitOfWork : IForumsUnitOfWork
     {
-        public IGenericEntityRepository<Selama.Areas.Forums.Models.Forum> Forums { get; private set; }
-        public IGenericEntityRepository<ForumSection> ForumSections { get; private set; }
-        public IGenericEntityRepository<ApplicationUser> Authors { get; private set; }
-        public IGenericEntityRepository<ThreadReply> ThreadReplies { get; private set; }
-        public IGenericEntityRepository<Thread> Threads { get; private set; }
-        public IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; private set; }
+        public IEntityRepository<Selama.Areas.Forums.Models.Forum> Forums { get; private set; }
+        public IEntityRepository<ForumSection> ForumSections { get; private set; }
+        public IEntityRepository<ApplicationUser> Authors { get; private set; }
+        public IEntityRepository<ThreadReply> ThreadReplies { get; private set; }
+        public IEntityRepository<Thread> Threads { get; private set; }
+        public IEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; private set; }
 
         public MockForumsUnitOfWork()
         {
@@ -93,7 +93,7 @@ namespace Selama.Tests.Areas.Forums.Models.DAL
             }
         }
 
-        private void SetReloadObject<T>(object entity, IGenericEntityRepository<T> repo)
+        private void SetReloadObject<T>(object entity, IEntityRepository<T> repo)
             where T : class
         {
             T entityToReturn = entity as T;

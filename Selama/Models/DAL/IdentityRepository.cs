@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Selama.Models
 {
-    public class IdentityRepository : GenericEntityRepository<ApplicationDbContext, ApplicationUser>
+    public class IdentityRepository : EntityRepositoryBase<ApplicationDbContext, ApplicationUser>
     {
         public IdentityRepository(ApplicationDbContext context) : base(context) { }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Selama.Models.DAL
 {
-    public interface IGenericUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         void Reload(object entity);
         Task ReloadAsync(object entity);

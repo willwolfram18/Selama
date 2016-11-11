@@ -8,18 +8,18 @@ using System.Web;
 
 namespace Selama.Models.DAL
 {
-    public class GenericUnitOfWork<TContext> : IGenericUnitOfWork
+    public abstract class UnitOfWorkBase<TContext> : IUnitOfWork
         where TContext : DbContext
     {
-        protected TContext _context;
+        protected TContext Context { get; set; }
 
         public void Reload(object entity)
         {
-            _context.Entry(entity).Reload();
+            Context.Entry(entity).Reload();
         }
         public async Task ReloadAsync(object entity)
         {
-            await _context.Entry(entity).ReloadAsync();
+            await Context.Entry(entity).ReloadAsync();
         }
 
         public void SaveChanges()
@@ -35,7 +35,7 @@ namespace Selama.Models.DAL
         {
             try
             {
-                _context.SaveChanges();
+                Context.SaveChanges();
                 return true;
             }
             catch (DbUpdateConcurrencyException concurrencyException)
@@ -56,7 +56,7 @@ namespace Selama.Models.DAL
         {
             try
             {
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
                 return true;
             }
             catch (DbUpdateConcurrencyException concurrencyException)
@@ -79,9 +79,9 @@ namespace Selama.Models.DAL
         {
             if (!_isDisposed)
             {
-                if (disposing && _context != null)
+                if (disposing && Context != null)
                 {
-                    _context.Dispose();
+                    Context.Dispose();
                 }
             }
             _isDisposed = true;

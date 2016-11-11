@@ -12,24 +12,24 @@ using System.Web;
 
 namespace Selama.Areas.Forums.Models.DAL
 {
-    public class ForumsUnitOfWork : GenericUnitOfWork<ApplicationDbContext>, IForumsUnitOfWork
+    public class ForumsUnitOfWork : UnitOfWorkBase<ApplicationDbContext>, IForumsUnitOfWork
     {
-        public IGenericEntityRepository<Forum> Forums { get; private set; }
-        public IGenericEntityRepository<ForumSection> ForumSections { get; private set; }
-        public IGenericEntityRepository<Thread> Threads { get; private set; }
-        public IGenericEntityRepository<ThreadReply> ThreadReplies { get; private set; }
-        public IGenericEntityRepository<ApplicationUser> Authors { get; private set; }
-        public IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; private set; }
+        public IEntityRepository<Forum> Forums { get; private set; }
+        public IEntityRepository<ForumSection> ForumSections { get; private set; }
+        public IEntityRepository<Thread> Threads { get; private set; }
+        public IEntityRepository<ThreadReply> ThreadReplies { get; private set; }
+        public IEntityRepository<ApplicationUser> Authors { get; private set; }
+        public IEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; private set; }
 
         public ForumsUnitOfWork()
         {
-            _context = new ApplicationDbContext();
-            Forums = new ForumRepository(_context);
-            ForumSections = new ForumSectionRepository(_context);
-            Threads = new ThreadRepository(_context);
-            ThreadReplies = new ThreadReplyRepository(_context);
-            Authors = new IdentityRepository(_context);
-            GuildNewsFeedItems = new GuildNewsFeedRepository(_context);
+            Context = new ApplicationDbContext();
+            Forums = new ForumRepository(Context);
+            ForumSections = new ForumSectionRepository(Context);
+            Threads = new ThreadRepository(Context);
+            ThreadReplies = new ThreadReplyRepository(Context);
+            Authors = new IdentityRepository(Context);
+            GuildNewsFeedItems = new GuildNewsFeedRepository(Context);
         }
 
         public Thread CreateNewThread(ThreadViewModel threadToCreate, IPrincipal author, int forumId)
@@ -57,7 +57,7 @@ namespace Selama.Areas.Forums.Models.DAL
 
         public async Task AddNewThreadToNewsFeedAsync(Thread thread, string threadUrl)
         {
-            _context.Entry(thread).Reference(t => t.Author).Load();
+            Context.Entry(thread).Reference(t => t.Author).Load();
             GuildNewsFeedItem news = new GuildNewsFeedItem(thread, threadUrl);
             GuildNewsFeedItems.Add(news);
             await SaveChangesAsync();

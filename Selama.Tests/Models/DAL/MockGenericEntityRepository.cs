@@ -9,7 +9,7 @@ using Selama.Models;
 
 namespace Selama.Tests.Models.DAL
 {
-    public class MockGenericEntityRepository<TEntity> : IGenericEntityRepository<TEntity>
+    public class MockGenericEntityRepository<TEntity> : IEntityRepository<TEntity>
         where TEntity : class
     {
         private int _nextId = 1;

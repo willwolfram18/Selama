@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Selama.Areas.Forums.Models.DAL
 {
-    public interface IForumsUnitOfWork : IGenericUnitOfWork
+    public interface IForumsUnitOfWork : IUnitOfWork
     {
-        IGenericEntityRepository<Forum> Forums { get; }
-        IGenericEntityRepository<ForumSection> ForumSections { get; }
-        IGenericEntityRepository<Thread> Threads { get; }
-        IGenericEntityRepository<ThreadReply> ThreadReplies { get; }
-        IGenericEntityRepository<ApplicationUser> Authors { get; }
-        IGenericEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; }
+        IEntityRepository<Forum> Forums { get; }
+        IEntityRepository<ForumSection> ForumSections { get; }
+        IEntityRepository<Thread> Threads { get; }
+        IEntityRepository<ThreadReply> ThreadReplies { get; }
+        IEntityRepository<ApplicationUser> Authors { get; }
+        IEntityRepository<GuildNewsFeedItem> GuildNewsFeedItems { get; }
 
         Thread CreateNewThread(ThreadViewModel threadToCreate, IPrincipal author, int forumId);
         void DeleteThread(Thread thread);

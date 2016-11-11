@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace Selama.Tests.Models.DAL
 {
-    public class MockIdentityRepository : IGenericEntityRepository<ApplicationUser>
+    public class MockIdentityRepository : IEntityRepository<ApplicationUser>
     {
         private Dictionary<string, ApplicationUser> _source = new Dictionary<string, ApplicationUser>();
 

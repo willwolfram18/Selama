@@ -8,21 +8,21 @@ using System.Web;
 
 namespace Selama.Models.DAL
 {
-    public class GenericEntityRepository<TContext, TEntity> : IGenericEntityRepository<TEntity>
+    public abstract class EntityRepositoryBase<TContext, TEntity> : IEntityRepository<TEntity>
         where TContext : DbContext
         where TEntity : class
     {
-        private TContext _context;
-        private DbSet<TEntity> _dbSet;
+        private TContext Context { get; set; }
+        private DbSet<TEntity> DbSet { get; set; }
 
-        public GenericEntityRepository(TContext context)
+        public EntityRepositoryBase(TContext context)
         {
             if (context == null)
             {
                 throw new ArgumentException("context");
             }
-            _context = context;
-            _dbSet = _context.Set<TEntity>();
+            Context = context;
+            DbSet = Context.Set<TEntity>();
         }
 
         public IQueryable<TEntity> Get(
@@ -30,7 +30,7 @@ namespace Selama.Models.DAL
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null
         )
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = DbSet;
 
             if (filter != null)
             {
@@ -47,47 +47,47 @@ namespace Selama.Models.DAL
 
         public TEntity FindById(object id)
         {
-            return _dbSet.Find(id);
+            return DbSet.Find(id);
         }
         public async Task<TEntity> FindByIdAsync(object id)
         {
-            return await _dbSet.FindAsync(id);
+            return await DbSet.FindAsync(id);
         }
 
         public void Add(TEntity entity)
         {
-            _dbSet.Add(entity);
+            DbSet.Add(entity);
         }
 
         public void Update(TEntity entity)
         {
-            _dbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            DbSet.Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Remove(TEntity entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
+            if (Context.Entry(entity).State == EntityState.Detached)
             {
-                _dbSet.Attach(entity);
+                DbSet.Attach(entity);
             }
-            _dbSet.Remove(entity);
+            DbSet.Remove(entity);
         }
-        
+
         public void RemoveById(object id)
         {
-            TEntity entityToRemove = _dbSet.Find(id);
-            _dbSet.Remove(entityToRemove);
+            TEntity entityToRemove = DbSet.Find(id);
+            DbSet.Remove(entityToRemove);
         }
         public async Task RemoveByIdAsync(object id)
         {
-            TEntity entityToRemove = await _dbSet.FindAsync(id);
-            _dbSet.Remove(entityToRemove);
+            TEntity entityToRemove = await DbSet.FindAsync(id);
+            DbSet.Remove(entityToRemove);
         }
 
         public void Dispose()
         {
-            _context.Dispose();
+            Context.Dispose();
         }
     }
 }

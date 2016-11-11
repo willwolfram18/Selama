@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Selama.Areas.Forums.Models.DAL.Repositories
 {
-    public class ForumSectionRepository : GenericEntityRepository<ApplicationDbContext, ForumSection>
+    public class ForumSectionRepository : EntityRepositoryBase<ApplicationDbContext, ForumSection>
     {
         public ForumSectionRepository(ApplicationDbContext context) : base(context) { }
     }

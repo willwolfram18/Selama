@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Selama.Models.DAL
 {
-    public interface IGenericEntityRepository<TEntity> : IDisposable
+    public interface IEntityRepository<TEntity> : IDisposable
         where TEntity : class
     {
         IQueryable<TEntity> Get(

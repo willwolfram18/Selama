@@ -29,7 +29,7 @@ namespace Selama.Models.DAL.Home
         {
             return GetPageItems(new List<List<GuildNewsFeedViewModel>> { await GetBattleNetNews() }, pageNumber, pageSize);
         }
-                    
+
         public async Task<List<GuildNewsFeedViewModel>> GetMembersOnlyNews(int pageNumber, int pageSize)
         {
             var battleNetNews = GetBattleNetNews();

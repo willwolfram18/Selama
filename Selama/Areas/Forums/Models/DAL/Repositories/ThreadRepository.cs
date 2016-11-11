@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Selama.Areas.Forums.Models.DAL.Repositories
 {
-    public class ThreadRepository : GenericEntityRepository<ApplicationDbContext, Thread>, IDisposable
+    public class ThreadRepository : EntityRepositoryBase<ApplicationDbContext, Thread>, IDisposable
     {
         public ThreadRepository(ApplicationDbContext context) : base(context) { }
     }
