@@ -2,17 +2,17 @@
 
 <div id="ThreadReplyEditor" class="row">
     @using (Ajax.BeginForm("PostReply", "Forum", new { area = "Forums", id = Model.ThreadID },
-        new AjaxOptions
-        {
-            HttpMethod = "POST",
-            UpdateTargetId = "ThreadReplyResult",
-            OnBegin = "Selama.Core.$$bind(Selama.Core.SpinShield.raiseShield, Selama.Core.SpinShield)",
-            OnComplete = "Selama.Core.$$bind(Selama.Core.SpinShield.lowerShield, Selama.Core.SpinShield)",
-            OnSuccess = "Selama.Forums.OnPostReplyClickSuccessCallback",
-            OnFailure = "Selama.Forums.OnPostReplyClickErrorCallback"
-        },
-        new { id = "ThreadReplyEditorForm" })
-    )
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "ThreadReplyResult",
+                    OnBegin = "Selama.Core.$$bind(Selama.Core.SpinShield.raiseShield, Selama.Core.SpinShield)",
+                    OnComplete = "Selama.Core.$$bind(Selama.Core.SpinShield.lowerShield, Selama.Core.SpinShield)",
+                    OnSuccess = "Selama.Forums.OnPostReplyClickSuccessCallback",
+                    OnFailure = "Selama.Forums.OnPostReplyClickErrorCallback"
+                },
+                new { id = "ThreadReplyEditorForm" })
+            )
     {
         @Html.AntiForgeryToken()
 
@@ -24,7 +24,6 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Content, new { @class = "col-md-1 control-label" })
                 <div class="col-md-11">
-                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                     <div class="markdown-wrap">
                         @Html.TextAreaFor(model => model.Content, new { @class = "form-control mdd_editor" })
                     </div>
@@ -41,38 +40,32 @@
             </div>
         </div>
     }
+
+    @Styles.Render("~/Content/MarkdownDeep/css")
+    @Scripts.Render("~/bundles/MarkdownDeep")
+    <script type="text/javascript">
+        var Selama = Selama || {};
+        Selama.Forums = Selama.Forums || {};
+        Selama.Forums.OnPostReplyClickSuccessCallback = function Selama_Forums_OnPostClickSuccess(response)
+        {
+            var redirectLocation = '@Url.Action("Thread", new { area = "Forums", id = Model.ThreadID, page = "-1" })';
+            window.location.href = redirectLocation + $(response).find(".anchor").attr("href");
+        };
+
+        Selama.Forums.OnPostReplyClickErrorCallback = function Selama_Forums_OnPostClickError(response)
+        {
+            debugger;
+            $("#ThreadReplyEditor").html(response.responseText);
+        };
+
+        Selama.Forums.OnCancelBtnClickCallback = function Selma_Forums_OnCancelClick()
+        {
+            $("#ThreadReplyEditor").effect("blind");
+        };
+
+        $(document).ready(function ()
+        {
+            $("#ReplyCancelBtn").on("click", "", Selama.Forums.OnCancelBtnClickCallback);
+        });
+    </script>
 </div>
-
-@Styles.Render("~/Content/MarkdownDeep/css")
-@Scripts.Render("~/bundles/MarkdownDeep")
-<script type="text/javascript">
-    var Selama = Selama || {};
-    Selama.Forums = Selama.Forums || {};
-    Selama.Forums.OnPostReplyClickSuccessCallback = function Selama_Forums_OnPostClickSuccess(response)
-    {
-        var redirectLocation = '@Url.Action("Thread", new { area = "Forums", id = Model.ThreadID, page = "-1" })';
-        window.location.href = redirectLocation + $(response).find(".anchor").attr("href");
-    };
-
-    Selama.Forums.OnPostReplyClickErrorCallback = function Selama_Forums_OnPostClickError(response)
-    {
-        if (response.statusText === "Thread is locked")
-        {
-            Selama.Core.Alert.raiseAlert("You cannot post to a reply to a locked thread.", "Thread is locked");
-        }
-        else
-        {
-            Selama.Core.Alert.raiseAlert("An unexpected error occurred.");
-        }
-    };
-
-    Selama.Forums.OnCancelBtnClickCallback = function Selma_Forums_OnCancelClick()
-    {
-        $("#ThreadReplyEditor").effect("blind");
-    };
-
-    $(document).ready(function ()
-    {
-        $("#ReplyCancelBtn").on("click", "", Selama.Forums.OnCancelBtnClickCallback);
-    });
-</script>

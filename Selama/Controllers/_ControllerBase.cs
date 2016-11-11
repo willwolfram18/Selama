@@ -13,6 +13,7 @@ namespace Selama.Controllers
     [RequireHttps]
     public class _ControllerBase : Controller
     {
+        public const int HTTP_OK = 200;
         public const int HTTP_BAD_REQUEST = 400;
         public const int HTTP_UNPROCESSABLE_ENTITY = 422;
         public const int HTTP_SERVER_ERROR = 500;

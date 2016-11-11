@@ -47,7 +47,7 @@
                 "click", ".thread-post-quote",
                 {
                     replyUrl: '@Url.Action("GetReplyQuote", "Forum", new { area = "Forums", page = Model.ViewPageNum })',
-                    threadUrl: '@Url.Action("GetThreadQuote", new { area = "Forums" })',
+                    threadUrl: '@Url.Action("GetThreadQuote", new { area = "Forums", id = Model.ID })',
                 },
                 Selama.Forums.Thread.OnQuoteBtnClickCallback
             );

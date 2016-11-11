@@ -4,6 +4,7 @@ using Selama.Areas.Forums.Controllers;
 using Selama.Areas.Forums.Models;
 using Selama.Areas.Forums.Models.DAL;
 using Selama.Areas.Forums.ViewModels;
+using Selama.Controllers;
 using Selama.Models;
 using Selama.Tests.Areas.Forums.Models.DAL;
 using Selama.Tests.Controllers;
@@ -225,7 +226,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
             await AssertForumViewModelForSpecificPageMatchesExpected(expectedForum, 1, ForumController.PAGE_SIZE);
             await AssertForumViewModelForSpecificPageMatchesExpected(expectedForum, 2, expectedForum.GetThreads().Count() - ForumController.PAGE_SIZE);
             #endregion
-        }        
+        }
 
         [TestMethod]
         public async Task ThreadsWithValidIdReturnsCorrectResult()
@@ -404,12 +405,14 @@ namespace Selama.Tests.Areas.Forums.Controllers
             #endregion
 
             #region Act
-            HttpStatusCodeResult result = await Controller.PostReply(reply, threadId) as HttpStatusCodeResult;
+            PartialViewResult result = await Controller.PostReply(reply, threadId);
             #endregion
 
             #region Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.NotFound, result.StatusCode);
+            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
+            Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
+            Assert.AreEqual(reply, result.Model);
             #endregion
         }
 
@@ -424,12 +427,14 @@ namespace Selama.Tests.Areas.Forums.Controllers
             #endregion
 
             #region Act
-            HttpStatusCodeResult result = await Controller.PostReply(reply, threadId) as HttpStatusCodeResult;
+            PartialViewResult result = await Controller.PostReply(reply, threadId);
             #endregion
 
             #region Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.NotFound, result.StatusCode);
+            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
+            Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
+            Assert.AreEqual(reply, result.Model);
             #endregion
         }
 
@@ -444,12 +449,14 @@ namespace Selama.Tests.Areas.Forums.Controllers
             #endregion
 
             #region Act
-            HttpStatusCodeResult result = await Controller.PostReply(reply, threadId) as HttpStatusCodeResult;
+            PartialViewResult result = await Controller.PostReply(reply, threadId);
             #endregion
 
             #region Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(ForumController.HTTP_UNPROCESSABLE_ENTITY, result.StatusCode);
+            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
+            Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
+            Assert.AreEqual(reply, result.Model);
             #endregion
         }
         #endregion

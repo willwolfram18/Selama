@@ -23,6 +23,8 @@ namespace Selama.Tests.Controllers
 
         protected Mock<HttpContextBase> MockHttpContext { get; private set; }
 
+        protected Mock<HttpResponseBase> MockReponse { get; private set; }
+
         protected InMemorySession Session { get; private set; }
 
         protected Mock<IPrincipal> MockUser { get; private set; }
@@ -52,6 +54,10 @@ namespace Selama.Tests.Controllers
         {
             return new Mock<HttpContextBase>();
         }
+        protected virtual Mock<HttpResponseBase> SetupResponse()
+        {
+            return new Mock<HttpResponseBase>();
+        }
         protected virtual InMemorySession SetupSession()
         {
             return new InMemorySession();
@@ -71,8 +77,10 @@ namespace Selama.Tests.Controllers
             Session = SetupSession();
             MockUser = SetupUser();
             MockHttpContext = SetupHttpContext();
+            MockReponse = SetupResponse();
             MockHttpContext.Setup(ctxt => ctxt.Session).Returns(Session);
             MockHttpContext.Setup(ctxt => ctxt.User).Returns(MockUser.Object);
+            MockHttpContext.Setup(ctxt => ctxt.Response).Returns(MockReponse.Object);
         }
 
         private void InitializeControllerContext()

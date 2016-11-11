@@ -136,7 +136,7 @@ namespace Selama.Areas.Forums.Controllers
             if (ModelState.IsValid)
             {
                 Thread dbThread = _db.CreateNewThread(thread, User, forumId);
-                
+
                 if (await _db.TrySaveChangesAsync())
                 {
                     await _db.AddNewThreadToNewsFeedAsync(dbThread,
@@ -153,21 +153,12 @@ namespace Selama.Areas.Forums.Controllers
         [HttpPost]
         [Route("Thread/{id:int}/PostReply")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PostReply(ThreadReplyViewModel reply, [Bind(Prefix = "id")] int threadId = 0)
+        public async Task<PartialViewResult> PostReply(ThreadReplyViewModel reply, [Bind(Prefix = "id")] int threadId = 0)
         {
             Thread thread = await _db.Threads.FindByIdAsync(threadId);
-            if (thread == null || !thread.IsActive)
+            if (thread == null || !thread.IsActive || thread.IsLocked || threadId != reply.ThreadID)
             {
-                return HttpNotFound();
-            }
-            if (thread.IsLocked)
-            {
-                return HttpUnprocessable("Thread is locked");
-            }
-
-            if (threadId != reply.ThreadID)
-            {
-                ModelState.AddModelError("ThreadID", "Invalid thread selected");
+                ModelState.AddModelError("", "You cannot post to that thread");
             }
 
             reply.ValidateModel(ModelState);
@@ -178,13 +169,14 @@ namespace Selama.Areas.Forums.Controllers
                 if (await _db.TrySaveChangesAsync())
                 {
                     dbReply.Author = await _db.Authors.FindByIdAsync(User.Identity.GetUserId());
-                    Response.StatusCode = 200;
 
+                    Response.StatusCode = HTTP_OK;
                     return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply));
                 }
             }
 
-            return HttpBadRequest();
+            Response.StatusCode = HTTP_BAD_REQUEST;
+            return PartialView("EditorTemplates/ThreadReplyViewModel", reply);
         }
 
         #region Thread editing
