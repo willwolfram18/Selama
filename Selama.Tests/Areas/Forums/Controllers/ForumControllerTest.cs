@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -397,7 +398,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
 
         #region PostReply
         [TestMethod]
-        public async Task PostReplyToInvalidThreadIdGivesNotFound()
+        public async Task PostReplyToInvalidThreadIdGivesBadRequest()
         {
             #region Arrange
             int threadId = 0;
@@ -409,15 +410,12 @@ namespace Selama.Tests.Areas.Forums.Controllers
             #endregion
 
             #region Assert
-            Assert.IsNotNull(result);
-            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
-            Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
-            Assert.AreEqual(reply, result.Model);
+            AssertPostReplyIsBadRequest(reply, result);
             #endregion
         }
 
         [TestMethod]
-        public async Task PostReplyToInactiveThreadGivesNotFound()
+        public async Task PostReplyToInactiveThreadGivesBadRequest()
         {
             #region Arrange
             int threadId = 1;
@@ -457,6 +455,52 @@ namespace Selama.Tests.Areas.Forums.Controllers
             MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
             Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
             Assert.AreEqual(reply, result.Model);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task PostReplyToMismatchedThreadGivesBadRequest()
+        {
+            #region Arrange
+            int threadId = 1;
+            int replyThreadId = 2;
+            ThreadReplyViewModel reply = CreatePostedReplyForThread(replyThreadId);
+            #endregion
+
+            #region Act
+            PartialViewResult result = await Controller.PostReply(reply, threadId);
+            #endregion
+
+            #region Assert
+            AssertPostReplyIsBadRequest(reply, result);
+            #endregion
+        }
+
+        [TestMethod]
+        public async Task PostReplyPlacesValueInThread()
+        {
+            #region Arrange
+            int threadId = 1;
+            ThreadReplyViewModel reply = CreatePostedReplyForThread(threadId);
+            Thread threadPostedTo = ControllerDb.Threads.FindById(threadId);
+            int startingNumReplies = ControllerDb.ThreadReplies.Get().Count();
+            ApplicationUser replyAuthor = ControllerDb.Authors.Get().ToList()[0];
+            MockUser.Setup(c => c.Identity).Returns(new ClaimsIdentity(new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, replyAuthor.Id)
+            }));
+            #endregion
+
+            #region Act
+            PartialViewResult result = await Controller.PostReply(reply, threadId);
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(result);
+            ThreadReplyViewModel Model = result.Model as ThreadReplyViewModel;
+            Assert.AreEqual(reply.Content, Model.Content);
+            Assert.AreEqual(replyAuthor.UserName, Model.Author);
+            Assert.AreEqual(startingNumReplies + 1, ControllerDb.ThreadReplies.Get().Count());
             #endregion
         }
         #endregion
@@ -649,6 +693,14 @@ namespace Selama.Tests.Areas.Forums.Controllers
                 Content = "This is a posted reply for thread " + threadId.ToString(),
                 ThreadID = threadId,
             };
+        }
+
+        private void AssertPostReplyIsBadRequest(ThreadReplyViewModel reply, PartialViewResult result)
+        {
+            Assert.IsNotNull(result);
+            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
+            Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
+            Assert.AreEqual(reply, result.Model);
         }
         #endregion
         #endregion

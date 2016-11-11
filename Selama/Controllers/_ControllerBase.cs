@@ -18,19 +18,6 @@ namespace Selama.Controllers
         public const int HTTP_UNPROCESSABLE_ENTITY = 422;
         public const int HTTP_SERVER_ERROR = 500;
 
-        protected bool TrySaveChanges(DbContext db)
-        {
-            try
-            {
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
-
         protected async Task<bool> TrySaveChangesAsync(DbContext db)
         {
             try
@@ -50,33 +37,6 @@ namespace Selama.Controllers
             {
             }
             return false;
-        }
-
-        protected bool TrySaveChanges(DbContext db, out SaveChangeError result)
-        {
-            try
-            {
-                db.SaveChanges();
-                result = SaveChangeError.None;
-                return true;
-            }
-            catch (Exception e)
-            {
-                if (e is DbUpdateConcurrencyException)
-                {
-                    result = SaveChangeError.ConcurrencyError;
-                    DbUpdateConcurrencyException concurrentError = e as DbUpdateConcurrencyException;
-                    foreach (var entity in concurrentError.Entries)
-                    {
-                        entity.Reload();
-                    }
-                }
-                else
-                {
-                    result = SaveChangeError.Unknown;
-                }
-                return false;
-            }
         }
 
         protected void CompareProperties<TIn>(string propertyName, TIn dbValue, TIn modelValue, Func<TIn, TIn, bool> areEqualComp)

@@ -164,7 +164,7 @@ namespace Selama.Areas.Forums.Controllers
             reply.ValidateModel(ModelState);
             if (ModelState.IsValid)
             {
-                ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), threadId, thread.Replies.Count + 1);
+                ThreadReply dbReply = new ThreadReply(reply, User.Identity.GetUserId(), thread);
                 _db.ThreadReplies.Add(dbReply);
                 if (await _db.TrySaveChangesAsync())
                 {

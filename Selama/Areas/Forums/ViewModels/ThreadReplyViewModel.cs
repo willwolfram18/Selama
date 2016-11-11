@@ -18,12 +18,12 @@ namespace Selama.Areas.Forums.ViewModels
             ID = reply.Id;
             ThreadID = reply.ThreadId;
             Content = reply.Content;
-            
+
             HtmlContent = new HtmlString(Util.Markdown.Transform(Content));
             PostDate = reply.PostDate;
             AuthorID = reply.AuthorId;
             Author = reply.Author.UserName;
-            // Add 2 because index has a base 0, and want base 1, and the thread content
+            // Add 1 because index has a base 0, and want base 1, and the thread content
             // itself is part of the index
             ReplyIndex = reply.ReplyIndex + 1;
             IsThreadLocked = reply.Thread.IsLocked;
@@ -35,7 +35,7 @@ namespace Selama.Areas.Forums.ViewModels
         [HiddenInput(DisplayValue = false)]
         public int ThreadID { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = ForumsConstants.ThreadReplyNotEmptyErrorMsg)]
         [AllowHtml]
         [Display(Name = "Reply Content")]
         [MinLength(ForumsConstants.ThreadReplyContentMinLen, ErrorMessage = ForumsConstants.ThreadReplyContentLenErrorMsg)]

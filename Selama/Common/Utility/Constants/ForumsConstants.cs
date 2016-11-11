@@ -16,5 +16,6 @@ namespace Selama.Common.Utility.Constants
 
         public const int ThreadReplyContentMinLen = 1;
         public const string ThreadReplyContentLenErrorMsg = "A reply to a thread must contain at least {1} characters";
+        public const string ThreadReplyNotEmptyErrorMsg = "A reply cannot be empty";
     }
 }

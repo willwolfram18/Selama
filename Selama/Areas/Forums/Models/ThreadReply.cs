@@ -50,13 +50,14 @@ namespace Selama.Areas.Forums.Models
         #endregion
 
         public ThreadReply() { }
-        public ThreadReply(ThreadReplyViewModel model, string authorId, int threadId, int replyIndex)
+        public ThreadReply(ThreadReplyViewModel model, string authorId, Thread thread)
         {
             Content = model.Content;
             PostDate = DateTime.Now;
-            ThreadId = threadId;
+            ThreadId = thread.Id;
+            Thread = thread;
             AuthorId = authorId;
-            ReplyIndex = replyIndex;
+            ReplyIndex = thread.Replies.Count + 1;
             IsActive = true;
         }
 
