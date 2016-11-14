@@ -430,7 +430,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
 
             #region Assert
             Assert.IsNotNull(result);
-            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
+            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HttpBadRequestStatus);
             Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
             Assert.AreEqual(reply, result.Model);
             #endregion
@@ -452,7 +452,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
 
             #region Assert
             Assert.IsNotNull(result);
-            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
+            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HttpBadRequestStatus);
             Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
             Assert.AreEqual(reply, result.Model);
             #endregion
@@ -698,7 +698,7 @@ namespace Selama.Tests.Areas.Forums.Controllers
         private void AssertPostReplyIsBadRequest(ThreadReplyViewModel reply, PartialViewResult result)
         {
             Assert.IsNotNull(result);
-            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HTTP_BAD_REQUEST);
+            MockReponse.VerifySet(r => r.StatusCode = _ControllerBase.HttpBadRequestStatus);
             Assert.AreEqual("EditorTemplates/ThreadReplyViewModel", result.ViewName);
             Assert.AreEqual(reply, result.Model);
         }

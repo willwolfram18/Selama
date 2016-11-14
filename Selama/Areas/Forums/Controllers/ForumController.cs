@@ -6,6 +6,7 @@ using Selama.Common.Extensions;
 using Selama.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -170,28 +171,25 @@ namespace Selama.Areas.Forums.Controllers
                 {
                     dbReply.Author = await _db.Authors.FindByIdAsync(User.Identity.GetUserId());
 
-                    Response.StatusCode = HTTP_OK;
+                    Response.StatusCode = HttpOkStatus;
                     return PartialView("DisplayTemplates/ThreadReplyViewModel", new ThreadReplyViewModel(dbReply));
                 }
             }
 
-            Response.StatusCode = HTTP_BAD_REQUEST;
+            Response.StatusCode = _ControllerBase.HttpBadRequestStatus;
             return PartialView("EditorTemplates/ThreadReplyViewModel", reply);
         }
 
         #region Thread editing
         // GET: Forums/EditThread/2
         [Route("Thread/{id:int}/Edit")]
-        public async Task<ActionResult> EditThread([Bind(Prefix = "id")] int threadId = 0)
+        public async Task<PartialViewResult> EditThread([Bind(Prefix = "id")] int threadId = 0)
         {
             Thread thread = await _db.Threads.FindByIdAsync(threadId);
-            if (thread == null || !thread.IsActive)
+            if (thread == null || !thread.IsActive || thread.IsLocked)
             {
-                return HttpNotFound("Invalid ID");
-            }
-            else if (thread.IsLocked)
-            {
-                return HttpUnprocessable("Thread is locked");
+                Response.StatusCode = (int)HttpStatusCode.NotFound;
+                return PartialView("_InvalidThread");
             }
 
             return PartialView("EditorTemplates/ThreadEditViewModel", new ThreadEditViewModel(thread));

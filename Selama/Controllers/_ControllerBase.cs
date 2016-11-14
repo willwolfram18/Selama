@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -13,10 +14,34 @@ namespace Selama.Controllers
     [RequireHttps]
     public class _ControllerBase : Controller
     {
-        public const int HTTP_OK = 200;
-        public const int HTTP_BAD_REQUEST = 400;
-        public const int HTTP_UNPROCESSABLE_ENTITY = 422;
-        public const int HTTP_SERVER_ERROR = 500;
+        public static int HttpOkStatus
+        {
+            get
+            {
+                return (int)HttpStatusCode.OK;
+            }
+        }
+        public static int HttpBadRequestStatus
+        {
+            get
+            {
+                return (int)HttpStatusCode.BadRequest;
+            }
+        }
+        public static int HttpUnprocessableStatus
+        {
+            get
+            {
+                return 422;
+            }
+        }
+        public static int HttpServerErrorStatus
+        {
+            get
+            {
+                return (int)HttpStatusCode.InternalServerError;
+            }
+        }
 
         protected async Task<bool> TrySaveChangesAsync(DbContext db)
         {
@@ -53,20 +78,20 @@ namespace Selama.Controllers
 
         protected HttpStatusCodeResult HttpBadRequest()
         {
-            return new HttpStatusCodeResult(HTTP_BAD_REQUEST);
+            return new HttpStatusCodeResult(HttpBadRequestStatus);
         }
         protected HttpStatusCodeResult HttpBadRequest(string description)
         {
-            return new HttpStatusCodeResult(HTTP_BAD_REQUEST, description);
+            return new HttpStatusCodeResult(HttpBadRequestStatus, description);
         }
 
         protected HttpStatusCodeResult HttpUnprocessable()
         {
-            return new HttpStatusCodeResult(HTTP_UNPROCESSABLE_ENTITY);
+            return new HttpStatusCodeResult(HttpUnprocessableStatus);
         }
         protected HttpStatusCodeResult HttpUnprocessable(string description)
         {
-            return new HttpStatusCodeResult(HTTP_UNPROCESSABLE_ENTITY, description);
+            return new HttpStatusCodeResult(HttpUnprocessableStatus, description);
         }
     }
 }
