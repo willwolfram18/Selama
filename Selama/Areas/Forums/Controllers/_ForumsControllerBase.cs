@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace Selama.Areas.Forums.Controllers
 {
-    [RouteArea("Forums")]
+    [RouteArea("forums")]
     public class _ForumsControllerBase : _AuthorizeControllerBase
     {
-        
+
     }
 }
