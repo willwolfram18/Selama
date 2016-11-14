@@ -186,9 +186,10 @@ namespace Selama.Areas.Forums.Controllers
         public async Task<PartialViewResult> EditThread([Bind(Prefix = "id")] int threadId = 0)
         {
             Thread thread = await _db.Threads.FindByIdAsync(threadId);
-            if (thread == null || !thread.IsActive || thread.IsLocked)
+            if (UserCanEditThread(thread))
             {
-                Response.StatusCode = (int)HttpStatusCode.NotFound;
+                Response.StatusCode = HttpBadRequestStatus;
+                ViewBag.ThreadAction = "edit";
                 return PartialView("_InvalidThread");
             }
 
@@ -199,23 +200,15 @@ namespace Selama.Areas.Forums.Controllers
         [HttpPost]
         [Route("thread/{id:int}/edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditThread(ThreadEditViewModel thread)
+        public async Task<PartialViewResult> EditThread(ThreadEditViewModel thread)
         {
             Thread dbThread = await _db.Threads.FindByIdAsync(thread.ID);
-            if (dbThread == null || !dbThread.IsActive)
+            if (UserCanEditThread(dbThread))
             {
-                return HttpNotFound("Invalid ID");
-            }
-            else if (dbThread.IsLocked)
-            {
-                return HttpUnprocessable("Thread is locked");
+                ModelState.AddModelError("", "You cannot edit this post");
             }
 
             thread.ValidateModel(ModelState);
-            if (dbThread.AuthorId != User.Identity.GetUserId())
-            {
-                ModelState.AddModelError("", "You are not the author of this post");
-            }
             if (ModelState.IsValid)
             {
                 dbThread.UpdateFromViewModel(thread);
@@ -223,11 +216,14 @@ namespace Selama.Areas.Forums.Controllers
                 if (await _db.TrySaveChangesAsync())
                 {
                     await _db.ReloadAsync(dbThread);
-                    return Json(new ThreadViewModel(dbThread, PAGE_SIZE, 0).HtmlContent.ToString());
+                    return PartialView("DisplayTemplates/ThreadPostViewModel", new ThreadPostViewModel(
+                        new ThreadViewModel(dbThread, PAGE_SIZE, 0)
+                    ));
                 }
             }
 
-            return HttpUnprocessable();
+            Response.StatusCode = HttpBadRequestStatus;
+            return PartialView("EditorTemplates/ThreadEditViewModel");
         }
         #endregion
 
@@ -458,6 +454,15 @@ namespace Selama.Areas.Forums.Controllers
             return PartialView("DisplayTemplates/ThreadReplyQuoteViewModel", new ThreadReplyQuoteViewModel(reply, page));
         }
 
+        #region Protected methods
+        protected override void Dispose(bool disposing)
+        {
+            _db.Dispose();
+            base.Dispose(disposing);
+        }
+        #endregion
+
+        #region Private methods
         private string SelectErrorMessageFromRedirect(string redirectedFrom)
         {
             switch (redirectedFrom)
@@ -474,10 +479,10 @@ namespace Selama.Areas.Forums.Controllers
             }
         }
 
-        protected override void Dispose(bool disposing)
+        private bool UserCanEditThread(Thread thread)
         {
-            _db.Dispose();
-            base.Dispose(disposing);
+            return thread == null || !thread.IsActive || thread.IsLocked || thread.AuthorId != User.Identity.GetUserId();
         }
+        #endregion
     }
 }

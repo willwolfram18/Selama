@@ -25,16 +25,16 @@
             $(".btn.btn-post-reply").on("click", "", Selama.Forums.Thread.OnPostReplyClickCallback);
 
             // #region Thread & Reply edit/delete clicks
-            $(".row.thread-post[data-thread] .post-options-list")
-                .on("click", ".thread-post-edit",
+            $("body")
+                .on("click", ".row.thread-post[data-thread] .post-options-list .thread-post-edit",
                     {
                         url: '@Url.Action("EditThread", "Forum", new { area = "Forums", id = Model.ID })',
                     },
                     Selama.Forums.Thread.OnThreadEditLinkClickCallback
                 )
                 .on("click", ".thread-post-delete", Selama.Forums.Thread.OnThreadDeleteLinkClickCallback);
-            $(".row.thread-post[data-thread-reply] .post-options-list")
-                .on("click", ".thread-post-edit",
+            $("body")
+                .on("click", ".row.thread-post[data-thread-reply] .post-options-list .thread-post-edit",
                     {
                         url: '@Url.Action("EditReply", "Forum", new { area = "Forums" })',
                     },
@@ -43,8 +43,8 @@
                 .on("click", ".thread-post-delete", Selama.Forums.Thread.OnReplyDeleteLinkClickCallback);
             // #endregion
 
-            $(".row.thread-post .post-options-list").on(
-                "click", ".thread-post-quote",
+            $("body").on(
+                "click", ".row.thread-post .post-options-list .thread-post-quote",
                 {
                     replyUrl: '@Url.Action("GetReplyQuote", "Forum", new { area = "Forums", page = Model.ViewPageNum })',
                     threadUrl: '@Url.Action("GetThreadQuote", new { area = "Forums", id = Model.ID })',
@@ -195,7 +195,6 @@
                     @Html.AntiForgeryToken()
 
                     <div class="modal-body">
-                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                         The editor goes here
                     </div>
                     <div class="modal-footer">

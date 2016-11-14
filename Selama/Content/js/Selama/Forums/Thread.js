@@ -57,7 +57,7 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
         {
             $editor.val(currentVal + "\n\n" + response).trigger("change");
         }
-        // Triggers transfromation of the content
+        // Triggers transformation of the content
         var m = new MarkdownDeepEditor.Editor($editor[0], $editor.next(".mdd_preview")[0]);
     },
 
@@ -84,19 +84,13 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
 
     _onThreadUpdateRequestSuccess: function Selama_Forums_Thread_OnThreadUpdateRequestSuccess(response)
     {
-        $(".row.thread[data-thread]").find(".thread-content").html(response);
+        $(".row.thread[data-thread]").replaceWith(response);
         $("#ThreadEditModal").modal("hide");
     },
     _onThreadUpdateRequestFailure: function Selama_Forums_Thread_OnThreadUpdateRequestFailure(response)
     {
-        if (response.statusText === "Thread is locked")
-        {
-            Selama.Core.Alert.raiseAlert("The thread is locked for editing.", "Thread is locked");
-        }
-        else
-        {
-            Selama.Core.Alert.raiseAlert("An error occurred while updating");
-        }
+        $("#ThreadEditModal .modal-body").html(response.responseText);
+        $("#ThreadEditModal").trigger("shown.bs.modal");
     },
 
     _onReplyUpdateRequestSuccess: function Selama_Forums_Thread_OnReplyUpdateRequestSuccess(response)
@@ -113,7 +107,7 @@ Selama.Forums.Thread = Selama.Forums.Thread || {
         }
         else
         {
-            Selama.Core.Alert.raiseAlert("An error occured while updating");
+            Selama.Core.Alert.raiseAlert("An error occurred while updating");
         }
     },
 
